@@ -45875,10 +45875,10 @@
 							"containerExtending": false,
 							"left": 640,
 							"top": 448,
-							"width": 100,
-							"height": 77,
+							"width": 73,
+							"height": 90,
 							"autoResize": false,
-							"text": "user can add reply if he write the post?",
+							"text": "user can add reply only to his own posts",
 							"wordWrap": true
 						},
 						{
@@ -45903,7 +45903,7 @@
 								"$ref": "AAAAAAFfdJV04xrRdFA="
 							},
 							"lineStyle": 1,
-							"points": "590:456;639:471"
+							"points": "587:459;639:478"
 						},
 						{
 							"_type": "UMLAssociationView",

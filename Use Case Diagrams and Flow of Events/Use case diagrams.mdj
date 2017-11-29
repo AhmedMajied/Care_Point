@@ -47109,6 +47109,18 @@
 					"isAbstract": false,
 					"isFinalSpecialization": false,
 					"isLeaf": false
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAFgBaVCfY2ahnI=",
+					"_parent": {
+						"$ref": "AAAAAAFfgz40vxZLPr4="
+					},
+					"name": "Redirect SOS",
+					"visibility": "public",
+					"isAbstract": false,
+					"isFinalSpecialization": false,
+					"isLeaf": false
 				}
 			],
 			"visibility": "public"

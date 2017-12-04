@@ -4438,7 +4438,7 @@
 									"containerExtending": false,
 									"left": 167.5,
 									"top": 452.5,
-									"width": 111.84814453125,
+									"width": 111,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -4753,7 +4753,7 @@
 									"containerExtending": false,
 									"left": 405,
 									"top": 412.5,
-									"width": 101.74267578125,
+									"width": 101,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -5212,7 +5212,7 @@
 									"containerExtending": false,
 									"left": 417.5,
 									"top": 476.5,
-									"width": 84.42626953125,
+									"width": 84,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -5527,7 +5527,7 @@
 									"containerExtending": false,
 									"left": 411.5,
 									"top": 532.5,
-									"width": 93.078125,
+									"width": 92,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -6130,7 +6130,7 @@
 									"containerExtending": false,
 									"left": 581.5,
 									"top": 492.5,
-									"width": 179.0634765625,
+									"width": 178,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -6589,7 +6589,7 @@
 									"containerExtending": false,
 									"left": 372.5,
 									"top": 204.5,
-									"width": 136.40087890625,
+									"width": 135,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -6904,7 +6904,7 @@
 									"containerExtending": false,
 									"left": 366.5,
 									"top": 356.5,
-									"width": 145.052734375,
+									"width": 144,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -7507,7 +7507,7 @@
 									"containerExtending": false,
 									"left": 30,
 									"top": 412.5,
-									"width": 106.07177734375,
+									"width": 106,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -7822,7 +7822,7 @@
 									"containerExtending": false,
 									"left": 354,
 									"top": 260.5,
-									"width": 163.88623046875,
+									"width": 163,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -8137,7 +8137,7 @@
 									"containerExtending": false,
 									"left": 637.5,
 									"top": 164.5,
-									"width": 219.5107421875,
+									"width": 219,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -8873,7 +8873,7 @@
 									"containerExtending": false,
 									"left": 336.5,
 									"top": 36.5,
-									"width": 116.91357421875,
+									"width": 116,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -9188,7 +9188,7 @@
 									"containerExtending": false,
 									"left": 720,
 									"top": 108.5,
-									"width": 74.99365234375,
+									"width": 74,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -9503,7 +9503,7 @@
 									"containerExtending": false,
 									"left": 728.5,
 									"top": 12.5,
-									"width": 78.61181640625,
+									"width": 78,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -9818,7 +9818,7 @@
 									"containerExtending": false,
 									"left": 721,
 									"top": 60.5,
-									"width": 80.77001953125,
+									"width": 80,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -11547,7 +11547,7 @@
 									"containerExtending": false,
 									"left": 347.5,
 									"top": 308.5,
-									"width": 169.63720703125,
+									"width": 168,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -16082,7 +16082,7 @@
 									"containerExtending": false,
 									"left": 245,
 									"top": 140.5,
-									"width": 137.892578125,
+									"width": 137,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -18923,7 +18923,7 @@
 									"containerExtending": false,
 									"left": 363.5,
 									"top": 172.5,
-									"width": 132.103515625,
+									"width": 131,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -20854,7 +20854,7 @@
 									"containerExtending": false,
 									"left": 366.5,
 									"top": 60.5,
-									"width": 184.83349609375,
+									"width": 184,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -21590,7 +21590,7 @@
 									"containerExtending": false,
 									"left": 309.5,
 									"top": 308.5,
-									"width": 142.20263671875,
+									"width": 142,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -23035,7 +23035,7 @@
 									"containerExtending": false,
 									"left": 294.5,
 									"top": 400.5,
-									"width": 184.1162109375,
+									"width": 183,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -25816,7 +25816,7 @@
 									"containerExtending": false,
 									"left": 296,
 									"top": 124.5,
-									"width": 114.04443359375,
+									"width": 113,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -26552,7 +26552,7 @@
 									"containerExtending": false,
 									"left": 285.5,
 									"top": 380.5,
-									"width": 141.51708984375,
+									"width": 141,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -27288,7 +27288,7 @@
 									"containerExtending": false,
 									"left": 591,
 									"top": 356.5,
-									"width": 108.95361328125,
+									"width": 108,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -27747,7 +27747,7 @@
 									"containerExtending": false,
 									"left": 547.5,
 									"top": 52.5,
-									"width": 93.078125,
+									"width": 92,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -28377,7 +28377,7 @@
 									"containerExtending": false,
 									"left": 545.5,
 									"top": 148.5,
-									"width": 121.9853515625,
+									"width": 121,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -28692,7 +28692,7 @@
 									"containerExtending": false,
 									"left": 541.5,
 									"top": 204.5,
-									"width": 141.47265625,
+									"width": 141,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -29583,7 +29583,7 @@
 									"containerExtending": false,
 									"left": 614,
 									"top": 428.5,
-									"width": 105.392578125,
+									"width": 105,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -30042,7 +30042,7 @@
 									"containerExtending": false,
 									"left": 569.5,
 									"top": 268.5,
-									"width": 83.67724609375,
+									"width": 83,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -33244,7 +33244,7 @@
 									"containerExtending": false,
 									"left": 346,
 									"top": 132.5,
-									"width": 124.8671875,
+									"width": 124,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -33980,7 +33980,7 @@
 									"containerExtending": false,
 									"left": 346,
 									"top": 92.5,
-									"width": 124.130859375,
+									"width": 123,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -34716,7 +34716,7 @@
 									"containerExtending": false,
 									"left": 347.5,
 									"top": 172.5,
-									"width": 131.38623046875,
+									"width": 130,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -35499,7 +35499,7 @@
 									"containerExtending": false,
 									"left": 335,
 									"top": 236.5,
-									"width": 148.75341796875,
+									"width": 148,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -43735,9 +43735,9 @@
 							"left": 640,
 							"top": 392,
 							"width": 100,
-							"height": 142,
+							"height": 168,
 							"autoResize": false,
-							"text": "Doctor can view care request status, accept or deny a care request only when he is a member of the a hospital",
+							"text": "Doctor can view care requests, accept or deny a care request only if he is a member of the a hospital that provides the care service",
 							"wordWrap": true
 						},
 						{
@@ -43762,7 +43762,7 @@
 								"$ref": "AAAAAAFgBZH3GHr/Nd0="
 							},
 							"lineStyle": 1,
-							"points": "767:336;733:391"
+							"points": "769:336;738:391"
 						}
 					]
 				},
@@ -44383,7 +44383,7 @@
 									"containerExtending": false,
 									"left": 624,
 									"top": 84.5,
-									"width": 114.75537109375,
+									"width": 114,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -46116,7 +46116,7 @@
 									"containerExtending": false,
 									"left": 503,
 									"top": 428.5,
-									"width": 72.12451171875,
+									"width": 72,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -48020,7 +48020,7 @@
 									"containerExtending": false,
 									"left": 673.5,
 									"top": 292.5,
-									"width": 83.708984375,
+									"width": 83,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -50631,7 +50631,7 @@
 									"containerExtending": false,
 									"left": 54,
 									"top": 196.5,
-									"width": 143.6435546875,
+									"width": 143,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -53288,7 +53288,7 @@
 											"containerExtending": false,
 											"left": 32,
 											"top": -64,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -53334,7 +53334,7 @@
 									"containerExtending": false,
 									"left": 311.5,
 									"top": 84.5,
-									"width": 72.84814453125,
+									"width": 72,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -53603,7 +53603,7 @@
 											"containerExtending": false,
 											"left": 128,
 											"top": 32,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -53649,7 +53649,7 @@
 									"containerExtending": false,
 									"left": 377.5,
 									"top": 196.5,
-									"width": 83.6962890625,
+									"width": 83,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -53918,7 +53918,7 @@
 											"containerExtending": false,
 											"left": 128,
 											"top": -240,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -53964,7 +53964,7 @@
 									"containerExtending": false,
 									"left": 355.5,
 									"top": 124.5,
-									"width": 92.34814453125,
+									"width": 91,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -54233,7 +54233,7 @@
 											"containerExtending": false,
 											"left": -208,
 											"top": 208,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -54279,7 +54279,7 @@
 									"containerExtending": false,
 									"left": 185.5,
 									"top": 420.5,
-									"width": 84.41357421875,
+									"width": 84,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -54548,7 +54548,7 @@
 											"containerExtending": false,
 											"left": 144,
 											"top": -176,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -54836,7 +54836,7 @@
 											"containerExtending": false,
 											"left": -224,
 											"top": -336,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -55124,7 +55124,7 @@
 											"containerExtending": false,
 											"left": 192,
 											"top": -464,
-											"width": 80.9072265625,
+											"width": 81,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,

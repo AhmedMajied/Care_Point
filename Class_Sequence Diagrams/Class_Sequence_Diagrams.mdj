@@ -10492,7 +10492,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+category: ServiceCategory",
+											"text": "-category: ServiceCategory",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -15754,7 +15754,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+workdays: ICollection<Workday>",
+											"text": "-workdays: ICollection<Workday>",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -24249,7 +24249,7 @@
 								"$ref": "AAAAAAFfnEVyoWneWfg="
 							},
 							"name": "workdays",
-							"visibility": "public",
+							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
 							"type": "ICollection<Workday>",

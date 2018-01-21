@@ -1,0 +1,1558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CarePointModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActiveIngredients">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Attachments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TypeID" Type="bigint" Nullable="false" />
+    <Property Name="File" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="IsRead" Type="bit" />
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AttachmentTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BloodTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CareRequests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RequestMakerID" Type="bigint" Nullable="false" />
+    <Property Name="MedicalPlaceID" Type="bigint" Nullable="false" />
+    <Property Name="CareUnitID" Type="bigint" Nullable="false" />
+    <Property Name="CaseDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StatusID" Type="bigint" Nullable="false" />
+    <Property Name="RequestTime" Type="datetime" Nullable="false" />
+    <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CareUnitMembershipRequests">
+    <Key>
+      <PropertyRef Name="SpecialistID" />
+      <PropertyRef Name="CareUnitID" />
+    </Key>
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+    <Property Name="CareUnitID" Type="bigint" Nullable="false" />
+    <Property Name="RequestTime" Type="datetime" Nullable="false" />
+    <Property Name="IsConfirmed" Type="bit" />
+  </EntityType>
+  <EntityType Name="CareUnitRatings">
+    <Key>
+      <PropertyRef Name="CitizenID" />
+      <PropertyRef Name="CareUnitID" />
+    </Key>
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="CareUnitID" Type="bigint" Nullable="false" />
+    <Property Name="Rating" Type="int" />
+  </EntityType>
+  <EntityType Name="CareUnits">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProviderID" Type="bigint" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Cost" Type="money" />
+    <Property Name="AvailableRoomCount" Type="int" />
+    <Property Name="LastUpdate" Type="datetime" />
+    <Property Name="CareUnitTypeID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CareUnitTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Citizens">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BloodTypeID" Type="bigint" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="DateOfBirth" Type="date" />
+  </EntityType>
+  <EntityType Name="Diseases">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GeneticVotes" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Doses">
+    <Key>
+      <PropertyRef Name="HistoryRecordID" />
+      <PropertyRef Name="MedicineID" />
+    </Key>
+    <Property Name="HistoryRecordID" Type="bigint" Nullable="false" />
+    <Property Name="MedicineID" Type="bigint" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="HistoryRecordDiseases">
+    <Key>
+      <PropertyRef Name="HistoryRecordID" />
+      <PropertyRef Name="DiseaseID" />
+    </Key>
+    <Property Name="HistoryRecordID" Type="bigint" Nullable="false" />
+    <Property Name="DiseaseID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistoryRecords">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="IsRead" Type="bit" />
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="MedicalPlaceID" Type="bigint" />
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistoryRecordSymptoms">
+    <Key>
+      <PropertyRef Name="HistoryRecordID" />
+      <PropertyRef Name="SymptomID" />
+    </Key>
+    <Property Name="HistoryRecordID" Type="bigint" Nullable="false" />
+    <Property Name="SymptomID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MedicalPlace">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TypeID" Type="bigint" Nullable="false" />
+    <Property Name="Location" Type="geography" Nullable="false" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+    <Property Name="Permission" Type="image" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="OwnerID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="MedicalPlaceAdmins">
+    <Key>
+      <PropertyRef Name="SpecialistID" />
+      <PropertyRef Name="MedicalPlaceID" />
+    </Key>
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+    <Property Name="MedicalPlaceID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MedicalPlaceTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="MedicineActiveIngredients">
+    <Key>
+      <PropertyRef Name="MedicineID" />
+      <PropertyRef Name="ActiveIngredientID" />
+    </Key>
+    <Property Name="MedicineID" Type="bigint" Nullable="false" />
+    <Property Name="ActiveIngredientID" Type="bigint" Nullable="false" />
+    <Property Name="Concentration" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MedicineForms">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medicines">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="money" Nullable="false" />
+    <Property Name="Usage" Type="nvarchar(max)" />
+    <Property Name="SideEffects" Type="nvarchar(max)" />
+    <Property Name="FormID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="Read" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pharmacies">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OwnerID" Type="bigint" />
+    <Property Name="Location" Type="geography" Nullable="false" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+    <Property Name="Permission" Type="image" />
+    <Property Name="MedicalPlaceID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="PharmacyMedicines">
+    <Key>
+      <PropertyRef Name="PharmacyID" />
+      <PropertyRef Name="MedicineID" />
+      <PropertyRef Name="ExpirationDate" />
+    </Key>
+    <Property Name="PharmacyID" Type="bigint" Nullable="false" />
+    <Property Name="MedicineID" Type="bigint" Nullable="false" />
+    <Property Name="ExpirationDate" Type="date" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PharmacyMembershipRequests">
+    <Key>
+      <PropertyRef Name="SpecialistID" />
+      <PropertyRef Name="PharmacyID" />
+      <PropertyRef Name="RequestTime" />
+    </Key>
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+    <Property Name="PharmacyID" Type="bigint" Nullable="false" />
+    <Property Name="RequestTime" Type="datetime" Nullable="false" />
+    <Property Name="IsConfirmed" Type="bit" />
+  </EntityType>
+  <EntityType Name="PharmacyRatings">
+    <Key>
+      <PropertyRef Name="CitizenID" />
+      <PropertyRef Name="PharmacyID" />
+    </Key>
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="PharmacyID" Type="bigint" Nullable="false" />
+    <Property Name="Rating" Type="int" />
+  </EntityType>
+  <EntityType Name="ReceiptMedicines">
+    <Key>
+      <PropertyRef Name="ReceiptID" />
+      <PropertyRef Name="MedicineID" />
+    </Key>
+    <Property Name="ReceiptID" Type="bigint" Nullable="false" />
+    <Property Name="MedicineID" Type="bigint" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Receipts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PharmacyID" Type="bigint" Nullable="false" />
+    <Property Name="PharmacistID" Type="bigint" Nullable="false" />
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RelationTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Relatives">
+    <Key>
+      <PropertyRef Name="CitizenID" />
+      <PropertyRef Name="RelativeID" />
+    </Key>
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="RelativeID" Type="bigint" Nullable="false" />
+    <Property Name="IsRead" Type="bit" />
+    <Property Name="RelationTypeID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequestStatuses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiceCategories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ServiceMembershipRequests">
+    <Key>
+      <PropertyRef Name="SpecialistID" />
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="SpecialistID" Type="bigint" Nullable="false" />
+    <Property Name="ServiceID" Type="bigint" Nullable="false" />
+    <Property Name="RequestTime" Type="datetime" Nullable="false" />
+    <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiceRatings">
+    <Key>
+      <PropertyRef Name="CitizenID" />
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="ServiceID" Type="bigint" Nullable="false" />
+    <Property Name="Rating" Type="float" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="CategoryID" Type="bigint" Nullable="false" />
+    <Property Name="Cost" Type="money" />
+    <Property Name="ProviderID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="SOSs">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Location" Type="geography" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="IsAccepted" Type="bit" Nullable="false" />
+    <Property Name="StatusID" Type="bigint" Nullable="false" />
+    <Property Name="SenderID" Type="bigint" Nullable="false" />
+    <Property Name="MedicalPlaceID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Specialists">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="ProfessionLicense" Type="image" />
+    <Property Name="SpecialityID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Specialities">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Symptoms">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TimeSlots">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Start" Type="time" Precision="7" />
+    <Property Name="Finish" Type="time" Precision="7" />
+    <Property Name="WorkdayID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="UserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="bigint" Nullable="false" />
+    <Property Name="RoleId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WorkSlots">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DayName" Type="nvarchar(max)" />
+    <Property Name="EndTime" Type="time" Precision="7" />
+    <Property Name="StartTime" Type="time" Precision="7" />
+    <Property Name="ServiceID" Type="bigint" />
+  </EntityType>
+  <Association Name="FK_Attachments_AttachmentTypes">
+    <End Role="AttachmentTypes" Type="Self.AttachmentTypes" Multiplicity="1" />
+    <End Role="Attachments" Type="Self.Attachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AttachmentTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Attachments">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attachments_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attachments" Type="Self.Attachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attachments">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attachments_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="Attachments" Type="Self.Attachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Attachments">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareRequests_CareUnit">
+    <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="1" />
+    <End Role="CareRequests" Type="Self.CareRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CareUnits">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareRequests">
+        <PropertyRef Name="CareUnitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareRequests_MedicalPlace">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="1" />
+    <End Role="CareRequests" Type="Self.CareRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareRequests">
+        <PropertyRef Name="MedicalPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareRequests_RequestStatuses">
+    <End Role="RequestStatuses" Type="Self.RequestStatuses" Multiplicity="1" />
+    <End Role="CareRequests" Type="Self.CareRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatuses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareRequests">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareRequests_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareRequests" Type="Self.CareRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareRequests">
+        <PropertyRef Name="RequestMakerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareUnit_CareUnitTypes">
+    <End Role="CareUnitTypes" Type="Self.CareUnitTypes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CareUnitTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnits">
+        <PropertyRef Name="CareUnitTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareUnitRatings_CareUnits">
+    <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="1" />
+    <End Role="CareUnitRatings" Type="Self.CareUnitRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CareUnits">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnitRatings">
+        <PropertyRef Name="CareUnitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareUnitRatings_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+    <End Role="CareUnitRatings" Type="Self.CareUnitRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CareUnitRatings">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareUnitSpecialists_CareUnit">
+    <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareUnitMembershipRequests" Type="Self.CareUnitMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CareUnits">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnitMembershipRequests">
+        <PropertyRef Name="CareUnitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CareUnitSpecialists_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="CareUnitMembershipRequests" Type="Self.CareUnitMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnitMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Citizens_BloodTypes">
+    <End Role="BloodTypes" Type="Self.BloodTypes" Multiplicity="0..1" />
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BloodTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Citizens">
+        <PropertyRef Name="BloodTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserClaims_dbo_Citizens_UserId">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserLogins_dbo_Citizens_UserId">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserRoles_dbo_Citizens_UserId">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserRoles_dbo_Roles_RoleId">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doctors_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doses_HistoryRecords">
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Doses" Type="Self.Doses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistoryRecords">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Doses">
+        <PropertyRef Name="HistoryRecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Doses_Medicines">
+    <End Role="Medicines" Type="Self.Medicines" Multiplicity="1" />
+    <End Role="Doses" Type="Self.Doses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Doses">
+        <PropertyRef Name="MedicineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecordDiseases_Diseases">
+    <End Role="Diseases" Type="Self.Diseases" Multiplicity="1" />
+    <End Role="HistoryRecordDiseases" Type="Self.HistoryRecordDiseases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Diseases">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecordDiseases">
+        <PropertyRef Name="DiseaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecordDiseases_HistoryRecords">
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HistoryRecordDiseases" Type="Self.HistoryRecordDiseases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistoryRecords">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecordDiseases">
+        <PropertyRef Name="HistoryRecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecords_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryRecords">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecords_MedicalPlace">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1" />
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecords">
+        <PropertyRef Name="MedicalPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecords_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecords">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecordSymptoms_HistoryRecords">
+    <End Role="HistoryRecords" Type="Self.HistoryRecords" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HistoryRecordSymptoms" Type="Self.HistoryRecordSymptoms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HistoryRecords">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecordSymptoms">
+        <PropertyRef Name="HistoryRecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryRecordSymptoms_Symptoms">
+    <End Role="Symptoms" Type="Self.Symptoms" Multiplicity="1" />
+    <End Role="HistoryRecordSymptoms" Type="Self.HistoryRecordSymptoms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Symptoms">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HistoryRecordSymptoms">
+        <PropertyRef Name="SymptomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroup_Citizens">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlace">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroup_MedicalGroupTypes">
+    <End Role="MedicalPlaceTypes" Type="Self.MedicalPlaceTypes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlaceTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlace">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroupAdmins_Citizens">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="MedicalPlaceAdmins" Type="Self.MedicalPlaceAdmins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlaceAdmins">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroupAdmins_MedicalGroup">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalPlaceAdmins" Type="Self.MedicalPlaceAdmins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlaceAdmins">
+        <PropertyRef Name="MedicalPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroupDoctors_Doctors">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServiceMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalGroupDoctors_MedicalGroup">
+    <End Role="Services" Type="Self.Services" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServiceMembershipRequests">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineActiveIngredients_ActiveIngredients">
+    <End Role="ActiveIngredients" Type="Self.ActiveIngredients" Multiplicity="1" />
+    <End Role="MedicineActiveIngredients" Type="Self.MedicineActiveIngredients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActiveIngredients">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicineActiveIngredients">
+        <PropertyRef Name="ActiveIngredientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicineActiveIngredients_Medicines">
+    <End Role="Medicines" Type="Self.Medicines" Multiplicity="1" />
+    <End Role="MedicineActiveIngredients" Type="Self.MedicineActiveIngredients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicineActiveIngredients">
+        <PropertyRef Name="MedicineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medicines_MedicineForms">
+    <End Role="MedicineForms" Type="Self.MedicineForms" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Medicines" Type="Self.Medicines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicineForms">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Medicines">
+        <PropertyRef Name="FormID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notifications_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notifications">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pharmacies_MedicalPlace">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1" />
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Pharmacies">
+        <PropertyRef Name="MedicalPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pharmacies_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Pharmacies">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacyMedicines_Medicines">
+    <End Role="Medicines" Type="Self.Medicines" Multiplicity="1" />
+    <End Role="PharmacyMedicines" Type="Self.PharmacyMedicines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PharmacyMedicines">
+        <PropertyRef Name="MedicineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacyMedicines_Pharmacies">
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+    <End Role="PharmacyMedicines" Type="Self.PharmacyMedicines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PharmacyMedicines">
+        <PropertyRef Name="PharmacyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacyRatings_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+    <End Role="PharmacyRatings" Type="Self.PharmacyRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PharmacyRatings">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacyRatings_Pharmacies">
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+    <End Role="PharmacyRatings" Type="Self.PharmacyRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PharmacyRatings">
+        <PropertyRef Name="PharmacyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacySpecialists_Pharmacies">
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+    <End Role="PharmacyMembershipRequests" Type="Self.PharmacyMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PharmacyMembershipRequests">
+        <PropertyRef Name="PharmacyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PharmacySpecialists_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="PharmacyMembershipRequests" Type="Self.PharmacyMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PharmacyMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptMedicines_Medicines">
+    <End Role="Medicines" Type="Self.Medicines" Multiplicity="1" />
+    <End Role="ReceiptMedicines" Type="Self.ReceiptMedicines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReceiptMedicines">
+        <PropertyRef Name="MedicineID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptMedicines_Receipts">
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ReceiptMedicines" Type="Self.ReceiptMedicines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receipts">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReceiptMedicines">
+        <PropertyRef Name="ReceiptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_Pharmacies">
+    <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacies">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="PharmacyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Receipts_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Receipts">
+        <PropertyRef Name="PharmacistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relatives_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Relatives" Type="Self.Relatives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relatives">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relatives_Citizens1">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+    <End Role="Relatives" Type="Self.Relatives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relatives">
+        <PropertyRef Name="RelativeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relatives_RelationTypes">
+    <End Role="RelationTypes" Type="Self.RelationTypes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Relatives" Type="Self.Relatives" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RelationTypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Relatives">
+        <PropertyRef Name="RelationTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceRatings_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+    <End Role="ServiceRatings" Type="Self.ServiceRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceRatings">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceRatings_Services">
+    <End Role="Services" Type="Self.Services" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ServiceRatings" Type="Self.ServiceRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServiceRatings">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Services_MedicalGroup">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Services" Type="Self.Services" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="ProviderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Services_ServiceCategories">
+    <End Role="ServiceCategories" Type="Self.ServiceCategories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Services" Type="Self.Services" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSs_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SOSs">
+        <PropertyRef Name="SenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSs_MedicalPlace">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1" />
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SOSs">
+        <PropertyRef Name="MedicalPlaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSs_SOSStatuses">
+    <End Role="RequestStatuses" Type="Self.RequestStatuses" Multiplicity="1" />
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatuses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SOSs">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Specialists_Specialities">
+    <End Role="Specialities" Type="Self.Specialities" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialities">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Specialists">
+        <PropertyRef Name="SpecialityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeSlots_Workdays">
+    <End Role="WorkSlots" Type="Self.WorkSlots" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TimeSlots" Type="Self.TimeSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkSlots">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeSlots">
+        <PropertyRef Name="WorkdayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workdays_Services">
+    <End Role="Services" Type="Self.Services" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="WorkSlots" Type="Self.WorkSlots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WorkSlots">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CarePointModelStoreContainer">
+    <EntitySet Name="ActiveIngredients" EntityType="Self.ActiveIngredients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AttachmentTypes" EntityType="Self.AttachmentTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BloodTypes" EntityType="Self.BloodTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareRequests" EntityType="Self.CareRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareUnitMembershipRequests" EntityType="Self.CareUnitMembershipRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareUnitRatings" EntityType="Self.CareUnitRatings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareUnits" EntityType="Self.CareUnits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareUnitTypes" EntityType="Self.CareUnitTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Citizens" EntityType="Self.Citizens" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Diseases" EntityType="Self.Diseases" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doses" EntityType="Self.Doses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistoryRecordDiseases" EntityType="Self.HistoryRecordDiseases" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistoryRecords" EntityType="Self.HistoryRecords" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HistoryRecordSymptoms" EntityType="Self.HistoryRecordSymptoms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicalPlace" EntityType="Self.MedicalPlace" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicalPlaceAdmins" EntityType="Self.MedicalPlaceAdmins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicalPlaceTypes" EntityType="Self.MedicalPlaceTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicineActiveIngredients" EntityType="Self.MedicineActiveIngredients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicineForms" EntityType="Self.MedicineForms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medicines" EntityType="Self.Medicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PharmacyRatings" EntityType="Self.PharmacyRatings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptMedicines" EntityType="Self.ReceiptMedicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RelationTypes" EntityType="Self.RelationTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Relatives" EntityType="Self.Relatives" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestStatuses" EntityType="Self.RequestStatuses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceCategories" EntityType="Self.ServiceCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceMembershipRequests" EntityType="Self.ServiceMembershipRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceRatings" EntityType="Self.ServiceRatings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOSs" EntityType="Self.SOSs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Specialists" EntityType="Self.Specialists" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Specialities" EntityType="Self.Specialities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Symptoms" EntityType="Self.Symptoms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimeSlots" EntityType="Self.TimeSlots" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkSlots" EntityType="Self.WorkSlots" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequests" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PharmacyMembershipRequests].[SpecialistID] AS [SpecialistID], 
+    [PharmacyMembershipRequests].[PharmacyID] AS [PharmacyID], 
+    [PharmacyMembershipRequests].[RequestTime] AS [RequestTime], 
+    [PharmacyMembershipRequests].[IsConfirmed] AS [IsConfirmed]
+    FROM [dbo].[PharmacyMembershipRequests] AS [PharmacyMembershipRequests]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Attachments_AttachmentTypes" Association="Self.FK_Attachments_AttachmentTypes">
+      <End Role="AttachmentTypes" EntitySet="AttachmentTypes" />
+      <End Role="Attachments" EntitySet="Attachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attachments_Citizens" Association="Self.FK_Attachments_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Attachments" EntitySet="Attachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attachments_Specialists" Association="Self.FK_Attachments_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="Attachments" EntitySet="Attachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareRequests_CareUnit" Association="Self.FK_CareRequests_CareUnit">
+      <End Role="CareUnits" EntitySet="CareUnits" />
+      <End Role="CareRequests" EntitySet="CareRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareRequests_MedicalPlace" Association="Self.FK_CareRequests_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="CareRequests" EntitySet="CareRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareRequests_RequestStatuses" Association="Self.FK_CareRequests_RequestStatuses">
+      <End Role="RequestStatuses" EntitySet="RequestStatuses" />
+      <End Role="CareRequests" EntitySet="CareRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareRequests_Specialists" Association="Self.FK_CareRequests_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="CareRequests" EntitySet="CareRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnit_CareUnitTypes" Association="Self.FK_CareUnit_CareUnitTypes">
+      <End Role="CareUnitTypes" EntitySet="CareUnitTypes" />
+      <End Role="CareUnits" EntitySet="CareUnits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnitRatings_CareUnits" Association="Self.FK_CareUnitRatings_CareUnits">
+      <End Role="CareUnits" EntitySet="CareUnits" />
+      <End Role="CareUnitRatings" EntitySet="CareUnitRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnitRatings_Citizens" Association="Self.FK_CareUnitRatings_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="CareUnitRatings" EntitySet="CareUnitRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnitSpecialists_CareUnit" Association="Self.FK_CareUnitSpecialists_CareUnit">
+      <End Role="CareUnits" EntitySet="CareUnits" />
+      <End Role="CareUnitMembershipRequests" EntitySet="CareUnitMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnitSpecialists_Specialists" Association="Self.FK_CareUnitSpecialists_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="CareUnitMembershipRequests" EntitySet="CareUnitMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Citizens_BloodTypes" Association="Self.FK_Citizens_BloodTypes">
+      <End Role="BloodTypes" EntitySet="BloodTypes" />
+      <End Role="Citizens" EntitySet="Citizens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserClaims_dbo_Citizens_UserId" Association="Self.FK_dbo_UserClaims_dbo_Citizens_UserId">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="UserClaims" EntitySet="UserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserLogins_dbo_Citizens_UserId" Association="Self.FK_dbo_UserLogins_dbo_Citizens_UserId">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="UserLogins" EntitySet="UserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserRoles_dbo_Citizens_UserId" Association="Self.FK_dbo_UserRoles_dbo_Citizens_UserId">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserRoles_dbo_Roles_RoleId" Association="Self.FK_dbo_UserRoles_dbo_Roles_RoleId">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doctors_Citizens" Association="Self.FK_Doctors_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Specialists" EntitySet="Specialists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doses_HistoryRecords" Association="Self.FK_Doses_HistoryRecords">
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+      <End Role="Doses" EntitySet="Doses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Doses_Medicines" Association="Self.FK_Doses_Medicines">
+      <End Role="Medicines" EntitySet="Medicines" />
+      <End Role="Doses" EntitySet="Doses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecordDiseases_Diseases" Association="Self.FK_HistoryRecordDiseases_Diseases">
+      <End Role="Diseases" EntitySet="Diseases" />
+      <End Role="HistoryRecordDiseases" EntitySet="HistoryRecordDiseases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecordDiseases_HistoryRecords" Association="Self.FK_HistoryRecordDiseases_HistoryRecords">
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+      <End Role="HistoryRecordDiseases" EntitySet="HistoryRecordDiseases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecords_Citizens" Association="Self.FK_HistoryRecords_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecords_MedicalPlace" Association="Self.FK_HistoryRecords_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecords_Specialists" Association="Self.FK_HistoryRecords_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecordSymptoms_HistoryRecords" Association="Self.FK_HistoryRecordSymptoms_HistoryRecords">
+      <End Role="HistoryRecords" EntitySet="HistoryRecords" />
+      <End Role="HistoryRecordSymptoms" EntitySet="HistoryRecordSymptoms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryRecordSymptoms_Symptoms" Association="Self.FK_HistoryRecordSymptoms_Symptoms">
+      <End Role="Symptoms" EntitySet="Symptoms" />
+      <End Role="HistoryRecordSymptoms" EntitySet="HistoryRecordSymptoms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroup_Citizens" Association="Self.FK_MedicalGroup_Citizens">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroup_MedicalGroupTypes" Association="Self.FK_MedicalGroup_MedicalGroupTypes">
+      <End Role="MedicalPlaceTypes" EntitySet="MedicalPlaceTypes" />
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroupAdmins_Citizens" Association="Self.FK_MedicalGroupAdmins_Citizens">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="MedicalPlaceAdmins" EntitySet="MedicalPlaceAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroupAdmins_MedicalGroup" Association="Self.FK_MedicalGroupAdmins_MedicalGroup">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="MedicalPlaceAdmins" EntitySet="MedicalPlaceAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroupDoctors_Doctors" Association="Self.FK_MedicalGroupDoctors_Doctors">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalGroupDoctors_MedicalGroup" Association="Self.FK_MedicalGroupDoctors_MedicalGroup">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineActiveIngredients_ActiveIngredients" Association="Self.FK_MedicineActiveIngredients_ActiveIngredients">
+      <End Role="ActiveIngredients" EntitySet="ActiveIngredients" />
+      <End Role="MedicineActiveIngredients" EntitySet="MedicineActiveIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicineActiveIngredients_Medicines" Association="Self.FK_MedicineActiveIngredients_Medicines">
+      <End Role="Medicines" EntitySet="Medicines" />
+      <End Role="MedicineActiveIngredients" EntitySet="MedicineActiveIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medicines_MedicineForms" Association="Self.FK_Medicines_MedicineForms">
+      <End Role="MedicineForms" EntitySet="MedicineForms" />
+      <End Role="Medicines" EntitySet="Medicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notifications_Citizens" Association="Self.FK_Notifications_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Notifications" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pharmacies_MedicalPlace" Association="Self.FK_Pharmacies_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pharmacies_Specialists" Association="Self.FK_Pharmacies_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacyMedicines_Medicines" Association="Self.FK_PharmacyMedicines_Medicines">
+      <End Role="Medicines" EntitySet="Medicines" />
+      <End Role="PharmacyMedicines" EntitySet="PharmacyMedicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacyMedicines_Pharmacies" Association="Self.FK_PharmacyMedicines_Pharmacies">
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+      <End Role="PharmacyMedicines" EntitySet="PharmacyMedicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacyRatings_Citizens" Association="Self.FK_PharmacyRatings_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="PharmacyRatings" EntitySet="PharmacyRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacyRatings_Pharmacies" Association="Self.FK_PharmacyRatings_Pharmacies">
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+      <End Role="PharmacyRatings" EntitySet="PharmacyRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacySpecialists_Pharmacies" Association="Self.FK_PharmacySpecialists_Pharmacies">
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+      <End Role="PharmacyMembershipRequests" EntitySet="PharmacyMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PharmacySpecialists_Specialists" Association="Self.FK_PharmacySpecialists_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="PharmacyMembershipRequests" EntitySet="PharmacyMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptMedicines_Medicines" Association="Self.FK_ReceiptMedicines_Medicines">
+      <End Role="Medicines" EntitySet="Medicines" />
+      <End Role="ReceiptMedicines" EntitySet="ReceiptMedicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptMedicines_Receipts" Association="Self.FK_ReceiptMedicines_Receipts">
+      <End Role="Receipts" EntitySet="Receipts" />
+      <End Role="ReceiptMedicines" EntitySet="ReceiptMedicines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Citizens" Association="Self.FK_Receipts_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Pharmacies" Association="Self.FK_Receipts_Pharmacies">
+      <End Role="Pharmacies" EntitySet="Pharmacies" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Receipts_Specialists" Association="Self.FK_Receipts_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="Receipts" EntitySet="Receipts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relatives_Citizens" Association="Self.FK_Relatives_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Relatives" EntitySet="Relatives" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relatives_Citizens1" Association="Self.FK_Relatives_Citizens1">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Relatives" EntitySet="Relatives" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relatives_RelationTypes" Association="Self.FK_Relatives_RelationTypes">
+      <End Role="RelationTypes" EntitySet="RelationTypes" />
+      <End Role="Relatives" EntitySet="Relatives" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceRatings_Citizens" Association="Self.FK_ServiceRatings_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="ServiceRatings" EntitySet="ServiceRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceRatings_Services" Association="Self.FK_ServiceRatings_Services">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="ServiceRatings" EntitySet="ServiceRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Services_MedicalGroup" Association="Self.FK_Services_MedicalGroup">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Services_ServiceCategories" Association="Self.FK_Services_ServiceCategories">
+      <End Role="ServiceCategories" EntitySet="ServiceCategories" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSs_Citizens" Association="Self.FK_SOSs_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="SOSs" EntitySet="SOSs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSs_MedicalPlace" Association="Self.FK_SOSs_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="SOSs" EntitySet="SOSs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSs_SOSStatuses" Association="Self.FK_SOSs_SOSStatuses">
+      <End Role="RequestStatuses" EntitySet="RequestStatuses" />
+      <End Role="SOSs" EntitySet="SOSs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Specialists_Specialities" Association="Self.FK_Specialists_Specialities">
+      <End Role="Specialities" EntitySet="Specialities" />
+      <End Role="Specialists" EntitySet="Specialists" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeSlots_Workdays" Association="Self.FK_TimeSlots_Workdays">
+      <End Role="WorkSlots" EntitySet="WorkSlots" />
+      <End Role="TimeSlots" EntitySet="TimeSlots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workdays_Services" Association="Self.FK_Workdays_Services">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="WorkSlots" EntitySet="WorkSlots" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

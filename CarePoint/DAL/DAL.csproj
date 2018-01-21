@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D4039A1-1357-4CDF-8A90-CFE4DB921BDE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActiveIngredient.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Attachment.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AttachmentType.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BloodType.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarePointModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarePointModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarePointModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarePointModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CarePointModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CareRequest.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CareUnit.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CareUnitMembershipRequest.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CareUnitRating.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CareUnitType.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Citizen.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Disease.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dose.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryRecord.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalPlace.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalPlaceType.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicineActiveIngredient.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MedicineForm.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Notification.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pharmacy.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyMedicine.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyMembershipRequest.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyRating.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receipt.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiptMedicine.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RelationType.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Relative.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestStatus.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceCategory.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceMembershipRequest.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceRating.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SOS.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Specialist.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Speciality.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Symptom.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TimeSlot.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserClaim.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogin.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkSlot.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="CarePointModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CarePointModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="CarePointModel.edmx.diagram">
+      <DependentUpon>CarePointModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CarePointModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarePointModel.edmx</DependentUpon>
+      <LastGenOutput>CarePointModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CarePointModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CarePointModel.edmx</DependentUpon>
+      <LastGenOutput>CarePointModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

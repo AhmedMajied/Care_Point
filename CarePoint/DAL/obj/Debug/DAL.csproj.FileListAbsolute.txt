@@ -5,6 +5,5 @@ C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\bin\Debug\Ent
 C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\bin\Debug\EntityFramework.xml
 C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\obj\Debug\DAL.dll
 C:\Users\andre\Documents\Visual Studio 2017\Projects\CarePoint\DAL\obj\Debug\DAL.pdb

@@ -150,7 +150,7 @@
     <Property Name="GeneticVotes" Type="Int64" />
     <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
   </EntityType>
-  <EntityType Name="Dose">
+  <EntityType Name="Dos">
     <Key>
       <PropertyRef Name="HistoryRecordID" />
       <PropertyRef Name="MedicineID" />
@@ -194,12 +194,12 @@
     <Property Name="OwnerID" Type="Int64" />
     <NavigationProperty Name="CareRequests" Relationship="Self.FK_CareRequests_MedicalPlace" FromRole="MedicalPlace" ToRole="CareRequests" />
     <NavigationProperty Name="HistoryRecords" Relationship="Self.FK_HistoryRecords_MedicalPlace" FromRole="MedicalPlace" ToRole="HistoryRecords" />
-    <NavigationProperty Name="Owner" Relationship="Self.FK_MedicalGroup_Citizens" FromRole="MedicalPlace" ToRole="Specialists" />
     <NavigationProperty Name="MedicalPlaceType" Relationship="Self.FK_MedicalGroup_MedicalGroupTypes" FromRole="MedicalPlace" ToRole="MedicalPlaceTypes" />
+    <NavigationProperty Name="Specialist" Relationship="Self.FK_MedicalPlace_Owner" FromRole="MedicalPlace" ToRole="Specialists" />
     <NavigationProperty Name="Pharmacies" Relationship="Self.FK_Pharmacies_MedicalPlace" FromRole="MedicalPlace" ToRole="Pharmacies" />
     <NavigationProperty Name="Services" Relationship="Self.FK_Services_MedicalGroup" FromRole="MedicalPlace" ToRole="Services" />
     <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_MedicalPlace" FromRole="MedicalPlace" ToRole="SOSs" />
-    <NavigationProperty Name="Admins" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
+    <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
   </EntityType>
   <EntityType Name="MedicalPlaceType">
     <Key>
@@ -286,6 +286,18 @@
     <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Medicine" Relationship="Self.FK_PharmacyMedicines_Medicines" FromRole="PharmacyMedicines" ToRole="Medicines" />
     <NavigationProperty Name="Pharmacy" Relationship="Self.FK_PharmacyMedicines_Pharmacies" FromRole="PharmacyMedicines" ToRole="Pharmacies" />
+  </EntityType>
+  <EntityType Name="PharmacyMembershipRequest">
+    <Key>
+      <PropertyRef Name="SpecialistID" />
+      <PropertyRef Name="PharmacyID" />
+    </Key>
+    <Property Name="SpecialistID" Type="Int64" Nullable="false" />
+    <Property Name="PharmacyID" Type="Int64" Nullable="false" />
+    <Property Name="RequestTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsConfirmed" Type="Boolean" />
+    <NavigationProperty Name="Pharmacy" Relationship="Self.FK_PharmacySpecialists_Pharmacies" FromRole="PharmacyMembershipRequests" ToRole="Pharmacies" />
+    <NavigationProperty Name="Specialist" Relationship="Self.FK_PharmacySpecialists_Specialists" FromRole="PharmacyMembershipRequests" ToRole="Specialists" />
   </EntityType>
   <EntityType Name="PharmacyRating">
     <Key>
@@ -378,8 +390,8 @@
     <Property Name="ServiceID" Type="Int64" Nullable="false" />
     <Property Name="RequestTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Specialist" Relationship="Self.FK_MedicalGroupDoctors_Doctors" FromRole="ServiceMembershipRequests" ToRole="Specialists" />
     <NavigationProperty Name="Service" Relationship="Self.FK_MedicalGroupDoctors_MedicalGroup" FromRole="ServiceMembershipRequests" ToRole="Services" />
+    <NavigationProperty Name="Specialist" Relationship="Self.FK_MedicalPlaceMembers_Specialists" FromRole="ServiceMembershipRequests" ToRole="Specialists" />
   </EntityType>
   <EntityType Name="ServiceRating">
     <Key>
@@ -408,7 +420,7 @@
     <NavigationProperty Name="ServiceRatings" Relationship="Self.FK_ServiceRatings_Services" FromRole="Services" ToRole="ServiceRatings" />
     <NavigationProperty Name="WorkSlots" Relationship="Self.FK_Workdays_Services" FromRole="Services" ToRole="WorkSlots" />
   </EntityType>
-  <EntityType Name="SOS">
+  <EntityType Name="SOSs">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
@@ -431,13 +443,13 @@
     <NavigationProperty Name="CareRequests" Relationship="Self.FK_CareRequests_Specialists" FromRole="Specialists" ToRole="CareRequests" />
     <NavigationProperty Name="CareUnitMembershipRequests" Relationship="Self.FK_CareUnitSpecialists_Specialists" FromRole="Specialists" ToRole="CareUnitMembershipRequests" />
     <NavigationProperty Name="HistoryRecordsAdded" Relationship="Self.FK_HistoryRecords_Specialists" FromRole="Specialists" ToRole="HistoryRecords" />
-    <NavigationProperty Name="MedicalPlacesOwned" Relationship="Self.FK_MedicalGroup_Citizens" FromRole="Specialists" ToRole="MedicalPlace" />
+    <NavigationProperty Name="MedicalPlaces" Relationship="Self.FK_MedicalPlace_Owner" FromRole="Specialists" ToRole="MedicalPlace" />
     <NavigationProperty Name="Pharmacies" Relationship="Self.FK_Pharmacies_Specialists" FromRole="Specialists" ToRole="Pharmacies" />
-    <NavigationProperty Name="ReceiptsAdded" Relationship="Self.FK_Receipts_Specialists" FromRole="Specialists" ToRole="Receipts" />
-    <NavigationProperty Name="ServiceMembershipRequests" Relationship="Self.FK_MedicalGroupDoctors_Doctors" FromRole="Specialists" ToRole="ServiceMembershipRequests" />
     <NavigationProperty Name="PharmacyMembershipRequests" Relationship="Self.FK_PharmacySpecialists_Specialists" FromRole="Specialists" ToRole="PharmacyMembershipRequests" />
+    <NavigationProperty Name="ReceiptsAdded" Relationship="Self.FK_Receipts_Specialists" FromRole="Specialists" ToRole="Receipts" />
+    <NavigationProperty Name="ServiceMembershipRequests" Relationship="Self.FK_MedicalPlaceMembers_Specialists" FromRole="Specialists" ToRole="ServiceMembershipRequests" />
     <NavigationProperty Name="Speciality" Relationship="Self.FK_Specialists_Specialities" FromRole="Specialists" ToRole="Specialities" />
-    <NavigationProperty Name="AdministratedMedicalPlaces" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
+    <NavigationProperty Name="MedicalPlaces1" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
   </EntityType>
   <EntityType Name="Speciality">
     <Key>
@@ -497,19 +509,6 @@
     <Property Name="ServiceID" Type="Int64" />
     <NavigationProperty Name="Service" Relationship="Self.FK_Workdays_Services" FromRole="WorkSlots" ToRole="Services" />
     <NavigationProperty Name="TimeSlots" Relationship="Self.FK_TimeSlots_Workdays" FromRole="WorkSlots" ToRole="TimeSlots" />
-  </EntityType>
-  <EntityType Name="PharmacyMembershipRequest">
-    <Key>
-      <PropertyRef Name="SpecialistID" />
-      <PropertyRef Name="PharmacyID" />
-      <PropertyRef Name="RequestTime" />
-    </Key>
-    <Property Name="SpecialistID" Type="Int64" Nullable="false" />
-    <Property Name="PharmacyID" Type="Int64" Nullable="false" />
-    <Property Name="RequestTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IsConfirmed" Type="Boolean" />
-    <NavigationProperty Name="Pharmacy" Relationship="Self.FK_PharmacySpecialists_Pharmacies" FromRole="PharmacyMembershipRequests" ToRole="Pharmacies" />
-    <NavigationProperty Name="Specialist" Relationship="Self.FK_PharmacySpecialists_Specialists" FromRole="PharmacyMembershipRequests" ToRole="Specialists" />
   </EntityType>
   <Association Name="FK_MedicineActiveIngredients_ActiveIngredients">
     <End Role="ActiveIngredients" Type="Self.ActiveIngredient" Multiplicity="1" />
@@ -809,7 +808,7 @@
     <End Role="Citizens" Type="Self.Citizen" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="SOSs" Type="CarePointModel.SOS" Multiplicity="*" />
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Citizens">
         <PropertyRef Name="Id" />
@@ -823,7 +822,7 @@
     <End Role="HistoryRecords" Type="Self.HistoryRecord" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Doses" Type="CarePointModel.Dose" Multiplicity="*" />
+    <End Role="Doses" Type="Self.Dos" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="HistoryRecords">
         <PropertyRef Name="ID" />
@@ -835,7 +834,7 @@
   </Association>
   <Association Name="FK_Doses_Medicines">
     <End Role="Medicines" Type="Self.Medicine" Multiplicity="1" />
-    <End Role="Doses" Type="CarePointModel.Dose" Multiplicity="*" />
+    <End Role="Doses" Type="Self.Dos" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Medicines">
         <PropertyRef Name="ID" />
@@ -869,20 +868,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MedicalGroup_Citizens">
-    <End Role="Specialists" Type="Self.Specialist" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="MedicalPlace">
-        <PropertyRef Name="OwnerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_MedicalGroup_MedicalGroupTypes">
     <End Role="MedicalPlaceTypes" Type="Self.MedicalPlaceType" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -894,6 +879,20 @@
       </Principal>
       <Dependent Role="MedicalPlace">
         <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalPlace_Owner">
+    <End Role="Specialists" Type="Self.Specialist" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MedicalPlace">
+        <PropertyRef Name="OwnerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -925,7 +924,7 @@
   </Association>
   <Association Name="FK_SOSs_MedicalPlace">
     <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1" />
-    <End Role="SOSs" Type="CarePointModel.SOS" Multiplicity="*" />
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MedicalPlace">
         <PropertyRef Name="ID" />
@@ -1047,6 +1046,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PharmacySpecialists_Specialists">
+    <End Role="Specialists" Type="Self.Specialist" Multiplicity="1" />
+    <End Role="PharmacyMembershipRequests" Type="Self.PharmacyMembershipRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PharmacyMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ReceiptMedicines_Receipts">
     <End Role="Receipts" Type="Self.Receipt" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1089,7 +1100,7 @@
   </Association>
   <Association Name="FK_SOSs_SOSStatuses">
     <End Role="RequestStatuses" Type="Self.RequestStatus" Multiplicity="1" />
-    <End Role="SOSs" Type="CarePointModel.SOS" Multiplicity="*" />
+    <End Role="SOSs" Type="Self.SOSs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RequestStatuses">
         <PropertyRef Name="ID" />
@@ -1113,18 +1124,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MedicalGroupDoctors_Doctors">
-    <End Role="Specialists" Type="Self.Specialist" Multiplicity="1" />
-    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ServiceMembershipRequests">
-        <PropertyRef Name="SpecialistID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_MedicalGroupDoctors_MedicalGroup">
     <End Role="Services" Type="Self.Service" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1136,6 +1135,18 @@
       </Principal>
       <Dependent Role="ServiceMembershipRequests">
         <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalPlaceMembers_Specialists">
+    <End Role="Specialists" Type="Self.Specialist" Multiplicity="1" />
+    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1164,18 +1175,6 @@
       </Principal>
       <Dependent Role="WorkSlots">
         <PropertyRef Name="ServiceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PharmacySpecialists_Specialists">
-    <End Role="Specialists" Type="Self.Specialist" Multiplicity="1" />
-    <End Role="PharmacyMembershipRequests" Type="Self.PharmacyMembershipRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PharmacyMembershipRequests">
-        <PropertyRef Name="SpecialistID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1216,8 +1215,8 @@
     <End Role="Symptoms" Type="Self.Symptom" Multiplicity="*" />
   </Association>
   <Association Name="MedicalPlaceAdmins">
-    <End Role="Specialists" Type="Self.Specialist" Multiplicity="*" />
     <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
+    <End Role="Specialists" Type="Self.Specialist" Multiplicity="*" />
   </Association>
   <Association Name="UserRoles">
     <End Role="Citizens" Type="Self.Citizen" Multiplicity="*" />
@@ -1235,7 +1234,7 @@
     <EntitySet Name="CareUnitTypes" EntityType="Self.CareUnitType" />
     <EntitySet Name="Citizens" EntityType="Self.Citizen" />
     <EntitySet Name="Diseases" EntityType="Self.Disease" />
-    <EntitySet Name="Doses" EntityType="CarePointModel.Dose" />
+    <EntitySet Name="Doses" EntityType="Self.Dos" />
     <EntitySet Name="HistoryRecords" EntityType="Self.HistoryRecord" />
     <EntitySet Name="MedicalPlaces" EntityType="Self.MedicalPlace" />
     <EntitySet Name="MedicalPlaceTypes" EntityType="Self.MedicalPlaceType" />
@@ -1245,6 +1244,7 @@
     <EntitySet Name="Notifications" EntityType="Self.Notification" />
     <EntitySet Name="Pharmacies" EntityType="Self.Pharmacy" />
     <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicine" />
+    <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequest" />
     <EntitySet Name="PharmacyRatings" EntityType="Self.PharmacyRating" />
     <EntitySet Name="ReceiptMedicines" EntityType="Self.ReceiptMedicine" />
     <EntitySet Name="Receipts" EntityType="Self.Receipt" />
@@ -1256,14 +1256,13 @@
     <EntitySet Name="ServiceMembershipRequests" EntityType="Self.ServiceMembershipRequest" />
     <EntitySet Name="ServiceRatings" EntityType="Self.ServiceRating" />
     <EntitySet Name="Services" EntityType="Self.Service" />
-    <EntitySet Name="SOS" EntityType="CarePointModel.SOS" />
+    <EntitySet Name="SOSses" EntityType="Self.SOSs" />
     <EntitySet Name="Specialities" EntityType="Self.Speciality" />
     <EntitySet Name="Symptoms" EntityType="Self.Symptom" />
     <EntitySet Name="TimeSlots" EntityType="Self.TimeSlot" />
     <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
     <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
     <EntitySet Name="WorkSlots" EntityType="Self.WorkSlot" />
-    <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequest" />
     <AssociationSet Name="FK_MedicineActiveIngredients_ActiveIngredients" Association="Self.FK_MedicineActiveIngredients_ActiveIngredients">
       <End Role="ActiveIngredients" EntitySet="ActiveIngredients" />
       <End Role="MedicineActiveIngredients" EntitySet="MedicineActiveIngredients" />
@@ -1358,7 +1357,7 @@
     </AssociationSet>
     <AssociationSet Name="FK_SOSs_Citizens" Association="Self.FK_SOSs_Citizens">
       <End Role="Citizens" EntitySet="Citizens" />
-      <End Role="SOSs" EntitySet="SOS" />
+      <End Role="SOSs" EntitySet="SOSses" />
     </AssociationSet>
     <AssociationSet Name="FK_Doses_HistoryRecords" Association="Self.FK_Doses_HistoryRecords">
       <End Role="HistoryRecords" EntitySet="HistoryRecords" />
@@ -1376,12 +1375,12 @@
       <End Role="Specialists" EntitySet="Citizens" />
       <End Role="HistoryRecords" EntitySet="HistoryRecords" />
     </AssociationSet>
-    <AssociationSet Name="FK_MedicalGroup_Citizens" Association="Self.FK_MedicalGroup_Citizens">
-      <End Role="Specialists" EntitySet="Citizens" />
-      <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
-    </AssociationSet>
     <AssociationSet Name="FK_MedicalGroup_MedicalGroupTypes" Association="Self.FK_MedicalGroup_MedicalGroupTypes">
       <End Role="MedicalPlaceTypes" EntitySet="MedicalPlaceTypes" />
+      <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalPlace_Owner" Association="Self.FK_MedicalPlace_Owner">
+      <End Role="Specialists" EntitySet="Citizens" />
       <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
     </AssociationSet>
     <AssociationSet Name="FK_Pharmacies_MedicalPlace" Association="Self.FK_Pharmacies_MedicalPlace">
@@ -1394,7 +1393,7 @@
     </AssociationSet>
     <AssociationSet Name="FK_SOSs_MedicalPlace" Association="Self.FK_SOSs_MedicalPlace">
       <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
-      <End Role="SOSs" EntitySet="SOS" />
+      <End Role="SOSs" EntitySet="SOSses" />
     </AssociationSet>
     <AssociationSet Name="FK_MedicineActiveIngredients_Medicines" Association="Self.FK_MedicineActiveIngredients_Medicines">
       <End Role="Medicines" EntitySet="Medicines" />
@@ -1432,6 +1431,10 @@
       <End Role="Pharmacies" EntitySet="Pharmacies" />
       <End Role="Receipts" EntitySet="Receipts" />
     </AssociationSet>
+    <AssociationSet Name="FK_PharmacySpecialists_Specialists" Association="Self.FK_PharmacySpecialists_Specialists">
+      <End Role="Specialists" EntitySet="Citizens" />
+      <End Role="PharmacyMembershipRequests" EntitySet="PharmacyMembershipRequests" />
+    </AssociationSet>
     <AssociationSet Name="FK_ReceiptMedicines_Receipts" Association="Self.FK_ReceiptMedicines_Receipts">
       <End Role="Receipts" EntitySet="Receipts" />
       <End Role="ReceiptMedicines" EntitySet="ReceiptMedicines" />
@@ -1446,18 +1449,18 @@
     </AssociationSet>
     <AssociationSet Name="FK_SOSs_SOSStatuses" Association="Self.FK_SOSs_SOSStatuses">
       <End Role="RequestStatuses" EntitySet="RequestStatuses" />
-      <End Role="SOSs" EntitySet="SOS" />
+      <End Role="SOSs" EntitySet="SOSses" />
     </AssociationSet>
     <AssociationSet Name="FK_Services_ServiceCategories" Association="Self.FK_Services_ServiceCategories">
       <End Role="ServiceCategories" EntitySet="ServiceCategories" />
       <End Role="Services" EntitySet="Services" />
     </AssociationSet>
-    <AssociationSet Name="FK_MedicalGroupDoctors_Doctors" Association="Self.FK_MedicalGroupDoctors_Doctors">
-      <End Role="Specialists" EntitySet="Citizens" />
-      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
-    </AssociationSet>
     <AssociationSet Name="FK_MedicalGroupDoctors_MedicalGroup" Association="Self.FK_MedicalGroupDoctors_MedicalGroup">
       <End Role="Services" EntitySet="Services" />
+      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalPlaceMembers_Specialists" Association="Self.FK_MedicalPlaceMembers_Specialists">
+      <End Role="Specialists" EntitySet="Citizens" />
       <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
     </AssociationSet>
     <AssociationSet Name="FK_ServiceRatings_Services" Association="Self.FK_ServiceRatings_Services">
@@ -1467,10 +1470,6 @@
     <AssociationSet Name="FK_Workdays_Services" Association="Self.FK_Workdays_Services">
       <End Role="Services" EntitySet="Services" />
       <End Role="WorkSlots" EntitySet="WorkSlots" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PharmacySpecialists_Specialists" Association="Self.FK_PharmacySpecialists_Specialists">
-      <End Role="Specialists" EntitySet="Citizens" />
-      <End Role="PharmacyMembershipRequests" EntitySet="PharmacyMembershipRequests" />
     </AssociationSet>
     <AssociationSet Name="FK_Specialists_Specialities" Association="Self.FK_Specialists_Specialities">
       <End Role="Specialities" EntitySet="Specialities" />
@@ -1489,8 +1488,8 @@
       <End Role="Symptoms" EntitySet="Symptoms" />
     </AssociationSet>
     <AssociationSet Name="MedicalPlaceAdmins" Association="Self.MedicalPlaceAdmins">
-      <End Role="Specialists" EntitySet="Citizens" />
       <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
+      <End Role="Specialists" EntitySet="Citizens" />
     </AssociationSet>
     <AssociationSet Name="UserRoles" Association="Self.UserRoles">
       <End Role="Citizens" EntitySet="Citizens" />

@@ -21,8 +21,8 @@ namespace DAL
             this.HistoryRecords = new HashSet<HistoryRecord>();
             this.Pharmacies = new HashSet<Pharmacy>();
             this.Services = new HashSet<Service>();
-            this.SOSses = new HashSet<SOS>();
-            this.Admins = new HashSet<Specialist>();
+            this.SOSses = new HashSet<SOSs>();
+            this.Specialists = new HashSet<Specialist>();
         }
     
         public long ID { get; set; }
@@ -39,15 +39,15 @@ namespace DAL
         public virtual ICollection<CareRequest> CareRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryRecord> HistoryRecords { get; set; }
-        public virtual Specialist Owner { get; set; }
         public virtual MedicalPlaceType MedicalPlaceType { get; set; }
+        public virtual Specialist Specialist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pharmacy> Pharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Service> Services { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOS> SOSses { get; set; }
+        public virtual ICollection<SOSs> SOSses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Specialist> Admins { get; set; }
+        public virtual ICollection<Specialist> Specialists { get; set; }
     }
 }

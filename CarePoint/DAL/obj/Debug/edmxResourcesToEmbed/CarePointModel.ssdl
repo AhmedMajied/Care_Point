@@ -243,13 +243,10 @@
     <Property Name="ExpirationDate" Type="date" Nullable="false" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="PharmacyMembershipRequests">
     <Key>
       <PropertyRef Name="SpecialistID" />
       <PropertyRef Name="PharmacyID" />
-      <PropertyRef Name="RequestTime" />
     </Key>
     <Property Name="SpecialistID" Type="bigint" Nullable="false" />
     <Property Name="PharmacyID" Type="bigint" Nullable="false" />
@@ -783,20 +780,6 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MedicalGroup_Citizens">
-    <End Role="Specialists" Type="Self.Specialists" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="MedicalPlace">
-        <PropertyRef Name="OwnerID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_MedicalGroup_MedicalGroupTypes">
     <End Role="MedicalPlaceTypes" Type="Self.MedicalPlaceTypes" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -808,18 +791,6 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
       </Principal>
       <Dependent Role="MedicalPlace">
         <PropertyRef Name="TypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MedicalGroupAdmins_Citizens">
-    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
-    <End Role="MedicalPlaceAdmins" Type="Self.MedicalPlaceAdmins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="MedicalPlaceAdmins">
-        <PropertyRef Name="SpecialistID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -837,18 +808,6 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MedicalGroupDoctors_Doctors">
-    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
-    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequests" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Specialists">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="ServiceMembershipRequests">
-        <PropertyRef Name="SpecialistID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_MedicalGroupDoctors_MedicalGroup">
     <End Role="Services" Type="Self.Services" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -860,6 +819,44 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
       </Principal>
       <Dependent Role="ServiceMembershipRequests">
         <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalPlace_Owner">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlace">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalPlaceAdmins_Admins">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="MedicalPlaceAdmins" Type="Self.MedicalPlaceAdmins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MedicalPlaceAdmins">
+        <PropertyRef Name="SpecialistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MedicalPlaceMembers_Specialists">
+    <End Role="Specialists" Type="Self.Specialists" Multiplicity="1" />
+    <End Role="ServiceMembershipRequests" Type="Self.ServiceMembershipRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specialists">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServiceMembershipRequests">
+        <PropertyRef Name="SpecialistID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1274,6 +1271,7 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
     <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicines" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PharmacyRatings" EntityType="Self.PharmacyRatings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReceiptMedicines" EntityType="Self.ReceiptMedicines" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
@@ -1294,14 +1292,6 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
     <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkSlots" EntityType="Self.WorkSlots" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequests" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [PharmacyMembershipRequests].[SpecialistID] AS [SpecialistID], 
-    [PharmacyMembershipRequests].[PharmacyID] AS [PharmacyID], 
-    [PharmacyMembershipRequests].[RequestTime] AS [RequestTime], 
-    [PharmacyMembershipRequests].[IsConfirmed] AS [IsConfirmed]
-    FROM [dbo].[PharmacyMembershipRequests] AS [PharmacyMembershipRequests]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Attachments_AttachmentTypes" Association="Self.FK_Attachments_AttachmentTypes">
       <End Role="AttachmentTypes" EntitySet="AttachmentTypes" />
       <End Role="Attachments" EntitySet="Attachments" />
@@ -1410,28 +1400,28 @@ warning 6002: The table/view 'CarePoint.dbo.PharmacyMembershipRequests' does not
       <End Role="Symptoms" EntitySet="Symptoms" />
       <End Role="HistoryRecordSymptoms" EntitySet="HistoryRecordSymptoms" />
     </AssociationSet>
-    <AssociationSet Name="FK_MedicalGroup_Citizens" Association="Self.FK_MedicalGroup_Citizens">
-      <End Role="Specialists" EntitySet="Specialists" />
-      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
-    </AssociationSet>
     <AssociationSet Name="FK_MedicalGroup_MedicalGroupTypes" Association="Self.FK_MedicalGroup_MedicalGroupTypes">
       <End Role="MedicalPlaceTypes" EntitySet="MedicalPlaceTypes" />
       <End Role="MedicalPlace" EntitySet="MedicalPlace" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MedicalGroupAdmins_Citizens" Association="Self.FK_MedicalGroupAdmins_Citizens">
-      <End Role="Specialists" EntitySet="Specialists" />
-      <End Role="MedicalPlaceAdmins" EntitySet="MedicalPlaceAdmins" />
     </AssociationSet>
     <AssociationSet Name="FK_MedicalGroupAdmins_MedicalGroup" Association="Self.FK_MedicalGroupAdmins_MedicalGroup">
       <End Role="MedicalPlace" EntitySet="MedicalPlace" />
       <End Role="MedicalPlaceAdmins" EntitySet="MedicalPlaceAdmins" />
     </AssociationSet>
-    <AssociationSet Name="FK_MedicalGroupDoctors_Doctors" Association="Self.FK_MedicalGroupDoctors_Doctors">
-      <End Role="Specialists" EntitySet="Specialists" />
-      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
-    </AssociationSet>
     <AssociationSet Name="FK_MedicalGroupDoctors_MedicalGroup" Association="Self.FK_MedicalGroupDoctors_MedicalGroup">
       <End Role="Services" EntitySet="Services" />
+      <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalPlace_Owner" Association="Self.FK_MedicalPlace_Owner">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalPlaceAdmins_Admins" Association="Self.FK_MedicalPlaceAdmins_Admins">
+      <End Role="Specialists" EntitySet="Specialists" />
+      <End Role="MedicalPlaceAdmins" EntitySet="MedicalPlaceAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MedicalPlaceMembers_Specialists" Association="Self.FK_MedicalPlaceMembers_Specialists">
+      <End Role="Specialists" EntitySet="Specialists" />
       <End Role="ServiceMembershipRequests" EntitySet="ServiceMembershipRequests" />
     </AssociationSet>
     <AssociationSet Name="FK_MedicineActiveIngredients_ActiveIngredients" Association="Self.FK_MedicineActiveIngredients_ActiveIngredients">

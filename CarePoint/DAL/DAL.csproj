@@ -97,7 +97,7 @@
     <Compile Include="Disease.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dose.cs">
+    <Compile Include="Dos.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HistoryRecord.cs">
@@ -164,7 +164,7 @@
     <Compile Include="ServiceRating.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SOS.cs">
+    <Compile Include="SOSs.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Specialist.cs">

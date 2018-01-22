@@ -12,13 +12,19 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Dose
+    public partial class SOSs
     {
-        public long HistoryRecordID { get; set; }
-        public long MedicineID { get; set; }
+        public long ID { get; set; }
         public string Description { get; set; }
+        public System.Data.Entity.Spatial.DbGeography Location { get; set; }
+        public System.DateTime Time { get; set; }
+        public bool IsAccepted { get; set; }
+        public long StatusID { get; set; }
+        public long SenderID { get; set; }
+        public Nullable<long> MedicalPlaceID { get; set; }
     
-        public virtual HistoryRecord HistoryRecord { get; set; }
-        public virtual Medicine Medicine { get; set; }
+        public virtual Citizen Citizen { get; set; }
+        public virtual MedicalPlace MedicalPlace { get; set; }
+        public virtual RequestStatus RequestStatus { get; set; }
     }
 }

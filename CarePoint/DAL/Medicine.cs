@@ -17,7 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Medicine()
         {
-            this.Doses = new HashSet<Dose>();
+            this.Doses = new HashSet<Dos>();
             this.MedicineActiveIngredients = new HashSet<MedicineActiveIngredient>();
             this.PharmacyMedicines = new HashSet<PharmacyMedicine>();
             this.ReceiptMedicines = new HashSet<ReceiptMedicine>();
@@ -31,7 +31,7 @@ namespace DAL
         public long FormID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Dose> Doses { get; set; }
+        public virtual ICollection<Dos> Doses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MedicineActiveIngredient> MedicineActiveIngredients { get; set; }
         public virtual MedicineForm MedicineForm { get; set; }

@@ -21,12 +21,12 @@ namespace DAL
             this.CareRequests = new HashSet<CareRequest>();
             this.CareUnitMembershipRequests = new HashSet<CareUnitMembershipRequest>();
             this.HistoryRecordsAdded = new HashSet<HistoryRecord>();
-            this.MedicalPlacesOwned = new HashSet<MedicalPlace>();
+            this.MedicalPlaces = new HashSet<MedicalPlace>();
             this.Pharmacies = new HashSet<Pharmacy>();
+            this.PharmacyMembershipRequests = new HashSet<PharmacyMembershipRequest>();
             this.ReceiptsAdded = new HashSet<Receipt>();
             this.ServiceMembershipRequests = new HashSet<ServiceMembershipRequest>();
-            this.PharmacyMembershipRequests = new HashSet<PharmacyMembershipRequest>();
-            this.AdministratedMedicalPlaces = new HashSet<MedicalPlace>();
+            this.MedicalPlaces1 = new HashSet<MedicalPlace>();
         }
     
         public byte[] ProfessionLicense { get; set; }
@@ -41,17 +41,17 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryRecord> HistoryRecordsAdded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalPlace> MedicalPlacesOwned { get; set; }
+        public virtual ICollection<MedicalPlace> MedicalPlaces { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pharmacy> Pharmacies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PharmacyMembershipRequest> PharmacyMembershipRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> ReceiptsAdded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceMembershipRequest> ServiceMembershipRequests { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyMembershipRequest> PharmacyMembershipRequests { get; set; }
         public virtual Speciality Speciality { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalPlace> AdministratedMedicalPlaces { get; set; }
+        public virtual ICollection<MedicalPlace> MedicalPlaces1 { get; set; }
     }
 }

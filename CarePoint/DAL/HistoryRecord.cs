@@ -17,7 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HistoryRecord()
         {
-            this.Doses = new HashSet<Dose>();
+            this.Doses = new HashSet<Dos>();
             this.Diseases = new HashSet<Disease>();
             this.Symptoms = new HashSet<Symptom>();
         }
@@ -32,7 +32,7 @@ namespace DAL
     
         public virtual Citizen Citizen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Dose> Doses { get; set; }
+        public virtual ICollection<Dos> Doses { get; set; }
         public virtual MedicalPlace MedicalPlace { get; set; }
         public virtual Specialist Specialist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

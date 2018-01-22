@@ -28,7 +28,7 @@ namespace DAL
             this.Relatives = new HashSet<Relative>();
             this.Relatives1 = new HashSet<Relative>();
             this.ServiceRatings = new HashSet<ServiceRating>();
-            this.SOSses = new HashSet<SOS>();
+            this.SOSses = new HashSet<SOSs>();
             this.Roles = new HashSet<Role>();
         }
     
@@ -74,7 +74,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRating> ServiceRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOS> SOSses { get; set; }
+        public virtual ICollection<SOSs> SOSses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
     }

@@ -118,6 +118,7 @@
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(CarePointModel.Specialist)">
         <MappingFragment StoreEntitySet="Specialists">
+          <ScalarProperty Name="Id" ColumnName="ID" />
           <ScalarProperty Name="SpecialityID" ColumnName="SpecialityID" />
           <ScalarProperty Name="ProfessionLicense" ColumnName="ProfessionLicense" />
         </MappingFragment>
@@ -133,7 +134,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Doses">
-      <EntityTypeMapping TypeName="CarePointModel.Dose">
+      <EntityTypeMapping TypeName="CarePointModel.Dos">
         <MappingFragment StoreEntitySet="Doses">
           <ScalarProperty Name="HistoryRecordID" ColumnName="HistoryRecordID" />
           <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
@@ -241,6 +242,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PharmacyMembershipRequests">
+      <EntityTypeMapping TypeName="CarePointModel.PharmacyMembershipRequest">
+        <MappingFragment StoreEntitySet="PharmacyMembershipRequests">
+          <ScalarProperty Name="SpecialistID" ColumnName="SpecialistID" />
+          <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
+          <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PharmacyRatings">
       <EntityTypeMapping TypeName="CarePointModel.PharmacyRating">
         <MappingFragment StoreEntitySet="PharmacyRatings">
@@ -343,8 +354,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SOS">
-      <EntityTypeMapping TypeName="CarePointModel.SOS">
+    <EntitySetMapping Name="SOSses">
+      <EntityTypeMapping TypeName="CarePointModel.SOSs">
         <MappingFragment StoreEntitySet="SOSs">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -413,16 +424,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PharmacyMembershipRequests">
-      <EntityTypeMapping TypeName="CarePointModel.PharmacyMembershipRequest">
-        <MappingFragment StoreEntitySet="PharmacyMembershipRequests">
-          <ScalarProperty Name="SpecialistID" ColumnName="SpecialistID" />
-          <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
-          <ScalarProperty Name="RequestTime" ColumnName="RequestTime" />
-          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="HistoryRecordDiseases" TypeName="CarePointModel.HistoryRecordDiseases" StoreEntitySet="HistoryRecordDiseases">
       <EndProperty Name="Diseases">
         <ScalarProperty Name="ID" ColumnName="DiseaseID" />
@@ -447,6 +448,13 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="MedicalPlaceAdmins" TypeName="CarePointModel.MedicalPlaceAdmins" StoreEntitySet="MedicalPlaceAdmins" />
+    <AssociationSetMapping Name="MedicalPlaceAdmins" TypeName="CarePointModel.MedicalPlaceAdmins" StoreEntitySet="MedicalPlaceAdmins">
+      <EndProperty Name="Specialists">
+        <ScalarProperty Name="Id" ColumnName="SpecialistID" />
+      </EndProperty>
+      <EndProperty Name="MedicalPlace">
+        <ScalarProperty Name="ID" ColumnName="MedicalPlaceID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

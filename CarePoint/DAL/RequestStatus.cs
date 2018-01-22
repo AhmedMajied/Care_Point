@@ -18,7 +18,7 @@ namespace DAL
         public RequestStatus()
         {
             this.CareRequests = new HashSet<CareRequest>();
-            this.SOSses = new HashSet<SOS>();
+            this.SOSses = new HashSet<SOSs>();
         }
     
         public long ID { get; set; }
@@ -27,6 +27,6 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CareRequest> CareRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOS> SOSses { get; set; }
+        public virtual ICollection<SOSs> SOSses { get; set; }
     }
 }

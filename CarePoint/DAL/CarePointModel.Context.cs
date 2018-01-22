@@ -36,7 +36,7 @@ namespace DAL
         public virtual DbSet<CareUnitType> CareUnitTypes { get; set; }
         public virtual DbSet<Citizen> Citizens { get; set; }
         public virtual DbSet<Disease> Diseases { get; set; }
-        public virtual DbSet<Dose> Doses { get; set; }
+        public virtual DbSet<Dos> Doses { get; set; }
         public virtual DbSet<HistoryRecord> HistoryRecords { get; set; }
         public virtual DbSet<MedicalPlace> MedicalPlaces { get; set; }
         public virtual DbSet<MedicalPlaceType> MedicalPlaceTypes { get; set; }
@@ -46,6 +46,7 @@ namespace DAL
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Pharmacy> Pharmacies { get; set; }
         public virtual DbSet<PharmacyMedicine> PharmacyMedicines { get; set; }
+        public virtual DbSet<PharmacyMembershipRequest> PharmacyMembershipRequests { get; set; }
         public virtual DbSet<PharmacyRating> PharmacyRatings { get; set; }
         public virtual DbSet<ReceiptMedicine> ReceiptMedicines { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
@@ -57,13 +58,12 @@ namespace DAL
         public virtual DbSet<ServiceMembershipRequest> ServiceMembershipRequests { get; set; }
         public virtual DbSet<ServiceRating> ServiceRatings { get; set; }
         public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<SOS> SOS { get; set; }
+        public virtual DbSet<SOSs> SOSses { get; set; }
         public virtual DbSet<Speciality> Specialities { get; set; }
         public virtual DbSet<Symptom> Symptoms { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<WorkSlot> WorkSlots { get; set; }
-        public virtual DbSet<PharmacyMembershipRequest> PharmacyMembershipRequests { get; set; }
     }
 }

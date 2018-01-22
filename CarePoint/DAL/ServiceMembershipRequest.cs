@@ -19,7 +19,7 @@ namespace DAL
         public System.DateTime RequestTime { get; set; }
         public bool IsConfirmed { get; set; }
     
-        public virtual Specialist Specialist { get; set; }
         public virtual Service Service { get; set; }
+        public virtual Specialist Specialist { get; set; }
     }
 }

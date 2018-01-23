@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fabca2c69a8d4eb4b16d32f30e83aba9" Name="Diagram1">
+        <EntityTypeShape EntityType="CarePointModel.ActiveIngredient" Width="1.5" PointX="13.5" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Attachment" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.AttachmentType" Width="1.5" PointX="3" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.BloodType" Width="1.5" PointX="0.75" PointY="31" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.CareRequest" Width="1.5" PointX="10.5" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.CareUnitMembershipRequest" Width="1.5" PointX="13.5" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.CareUnitRating" Width="1.5" PointX="8.25" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.CareUnit" Width="1.5" PointX="6" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.CareUnitType" Width="1.5" PointX="3.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Citizen" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Disease" Width="1.5" PointX="8.25" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Dose" Width="1.5" PointX="15.75" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.HistoryRecord" Width="1.5" PointX="10.5" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.MedicalPlace" Width="1.5" PointX="13.5" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.MedicalPlaceType" Width="1.5" PointX="11.25" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.MedicineActiveIngredient" Width="1.5" PointX="15.75" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.MedicineForm" Width="1.5" PointX="11.25" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Medicine" Width="1.5" PointX="13.5" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Notification" Width="1.5" PointX="5.25" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Pharmacy" Width="1.5" PointX="15.75" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.PharmacyMedicine" Width="1.5" PointX="18" PointY="34.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.PharmacyMembershipRequest" Width="1.5" PointX="18" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.PharmacyRating" Width="1.5" PointX="21" PointY="26.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.ReceiptMedicine" Width="1.5" PointX="26.25" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Receipt" Width="1.5" PointX="24" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.RelationType" Width="1.5" PointX="6" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Relative" Width="1.5" PointX="8.25" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.RequestStatus" Width="1.5" PointX="16.5" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Role" Width="1.5" PointX="5.25" PointY="39.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.ServiceCategory" Width="1.5" PointX="16.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.ServiceMembershipRequest" Width="1.5" PointX="21" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.ServiceRating" Width="1.5" PointX="21" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Service" Width="1.5" PointX="18.75" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.SOSs" Width="1.5" PointX="18.75" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Specialist" Width="1.5" PointX="8.25" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Speciality" Width="1.5" PointX="6" PointY="36.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Symptom" Width="1.5" PointX="12.75" PointY="37.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.TimeSlot" Width="1.5" PointX="23.25" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.UserClaim" Width="1.5" PointX="5.25" PointY="46.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.UserLogin" Width="1.5" PointX="5.25" PointY="49.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.WorkSlot" Width="1.5" PointX="21" PointY="36.25" IsExpanded="true" />
+        <AssociationConnector Association="CarePointModel.FK_MedicineActiveIngredients_ActiveIngredients" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Attachments_AttachmentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Attachments_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Attachments_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Citizens_BloodTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareRequests_CareUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareRequests_MedicalPlace" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareRequests_RequestStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareRequests_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnitSpecialists_CareUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnitSpecialists_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnitRatings_CareUnits" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnitRatings_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnit_CareUnitTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_dbo_UserClaims_dbo_Citizens_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_dbo_UserLogins_dbo_Citizens_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_HistoryRecords_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Notifications_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacyRatings_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Receipts_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Relatives_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Relatives_Citizens1" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_ServiceRatings_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_SOSs_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Doses_HistoryRecords" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Doses_Medicines" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_HistoryRecords_MedicalPlace" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_HistoryRecords_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_MedicalGroup_MedicalGroupTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_MedicalPlace_Owner" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Pharmacies_MedicalPlace" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Services_MedicalGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_SOSs_MedicalPlace" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_MedicineActiveIngredients_Medicines" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Medicines_MedicineForms" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacyMedicines_Medicines" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_ReceiptMedicines_Medicines" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Pharmacies_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacyMedicines_Pharmacies" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacyRatings_Pharmacies" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacySpecialists_Pharmacies" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Receipts_Pharmacies" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_PharmacySpecialists_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_ReceiptMedicines_Receipts" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Receipts_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Relatives_RelationTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_SOSs_SOSStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Services_ServiceCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_MedicalGroupDoctors_MedicalGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_MedicalPlaceMembers_Specialists" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_ServiceRatings_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Workdays_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_Specialists_Specialities" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.FK_TimeSlots_Workdays" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.HistoryRecordDiseases" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.HistoryRecordSymptoms" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.MedicalPlaceAdmins" ManuallyRouted="false" />
+        <AssociationConnector Association="CarePointModel.UserRoles" ManuallyRouted="false" />
+        <InheritanceConnector EntityType="CarePointModel.Specialist" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -134,7 +134,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Doses">
-      <EntityTypeMapping TypeName="CarePointModel.Dos">
+      <EntityTypeMapping TypeName="CarePointModel.Dose">
         <MappingFragment StoreEntitySet="Doses">
           <ScalarProperty Name="HistoryRecordID" ColumnName="HistoryRecordID" />
           <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />

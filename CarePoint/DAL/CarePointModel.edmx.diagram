@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="CarePointModel.CareUnitType" Width="1.5" PointX="3.75" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Citizen" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Disease" Width="1.5" PointX="8.25" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarePointModel.Dos" Width="1.5" PointX="15.75" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Dose" Width="1.5" PointX="15.75" PointY="30" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.HistoryRecord" Width="1.5" PointX="10.5" PointY="29.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.MedicalPlace" Width="1.5" PointX="13.5" PointY="29.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.MedicalPlaceType" Width="1.5" PointX="11.25" PointY="26" IsExpanded="true" />

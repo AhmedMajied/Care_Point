@@ -21,12 +21,12 @@ namespace DAL
             this.CareRequests = new HashSet<CareRequest>();
             this.CareUnitMembershipRequests = new HashSet<CareUnitMembershipRequest>();
             this.HistoryRecordsAdded = new HashSet<HistoryRecord>();
-            this.MedicalPlaces = new HashSet<MedicalPlace>();
+            this.OwnedMedicalPlaces = new HashSet<MedicalPlace>();
             this.Pharmacies = new HashSet<Pharmacy>();
             this.PharmacyMembershipRequests = new HashSet<PharmacyMembershipRequest>();
             this.ReceiptsAdded = new HashSet<Receipt>();
             this.ServiceMembershipRequests = new HashSet<ServiceMembershipRequest>();
-            this.MedicalPlaces1 = new HashSet<MedicalPlace>();
+            this.WorkingMedicalPlaces = new HashSet<MedicalPlace>();
         }
     
         public byte[] ProfessionLicense { get; set; }
@@ -41,7 +41,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryRecord> HistoryRecordsAdded { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalPlace> MedicalPlaces { get; set; }
+        public virtual ICollection<MedicalPlace> OwnedMedicalPlaces { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pharmacy> Pharmacies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,6 +52,6 @@ namespace DAL
         public virtual ICollection<ServiceMembershipRequest> ServiceMembershipRequests { get; set; }
         public virtual Speciality Speciality { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalPlace> MedicalPlaces1 { get; set; }
+        public virtual ICollection<MedicalPlace> WorkingMedicalPlaces { get; set; }
     }
 }

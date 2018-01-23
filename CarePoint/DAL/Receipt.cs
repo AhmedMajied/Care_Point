@@ -30,6 +30,6 @@ namespace DAL
         public virtual Pharmacy Pharmacy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReceiptMedicine> ReceiptMedicines { get; set; }
-        public virtual Specialist Specialist { get; set; }
+        public virtual Specialist Pharmacist { get; set; }
     }
 }

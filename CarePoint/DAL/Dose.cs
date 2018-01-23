@@ -12,7 +12,7 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Dos
+    public partial class Dose
     {
         public long HistoryRecordID { get; set; }
         public long MedicineID { get; set; }

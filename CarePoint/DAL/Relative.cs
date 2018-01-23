@@ -20,7 +20,7 @@ namespace DAL
         public long RelationTypeID { get; set; }
     
         public virtual Citizen Citizen { get; set; }
-        public virtual Citizen Citizen1 { get; set; }
+        public virtual Citizen RelativeCitizen { get; set; }
         public virtual RelationType RelationType { get; set; }
     }
 }

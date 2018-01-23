@@ -36,7 +36,7 @@ namespace DAL
         public virtual DbSet<CareUnitType> CareUnitTypes { get; set; }
         public virtual DbSet<Citizen> Citizens { get; set; }
         public virtual DbSet<Disease> Diseases { get; set; }
-        public virtual DbSet<Dos> Doses { get; set; }
+        public virtual DbSet<Dose> Doses { get; set; }
         public virtual DbSet<HistoryRecord> HistoryRecords { get; set; }
         public virtual DbSet<MedicalPlace> MedicalPlaces { get; set; }
         public virtual DbSet<MedicalPlaceType> MedicalPlaceTypes { get; set; }

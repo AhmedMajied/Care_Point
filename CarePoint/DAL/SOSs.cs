@@ -23,7 +23,7 @@ namespace DAL
         public long SenderID { get; set; }
         public Nullable<long> MedicalPlaceID { get; set; }
     
-        public virtual Citizen Citizen { get; set; }
+        public virtual Citizen Sender { get; set; }
         public virtual MedicalPlace MedicalPlace { get; set; }
         public virtual RequestStatus RequestStatus { get; set; }
     }

@@ -7,9 +7,14 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , Id = "ilink-usr-profile" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a id="ilink-medical-history" href="#"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-attachments" href="#"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-relatives" href="#"><span class="fa fa-users fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-prognosis" href="#"><span class="fa fa-heart-o fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-notif" href="#"><span class="fa fa-bell fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-logout" href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out fa-2x" style="color: #ffffff;"></span></a></li>
     </ul>
     }
 }

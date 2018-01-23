@@ -1,0 +1,16 @@
+.navbar-header{
+    padding: 0.5%;
+}
+
+.navbar-default {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 20px;
+    margin: 0px;
+    border-radius: 0;
+}
+.navbar-default .navbar-nav > li > a{
+    height:59px;
+}

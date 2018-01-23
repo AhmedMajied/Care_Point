@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/guest-home.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/guest-home.css" />
+    <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
+    <title>Carepoint</title>
+</head>
+
+<body data-spy="scroll" target="#inav">
+    <nav class="navbar navbar-default" style="background-color: #FFFFFF;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img id="iimg-logo" src="../resources/logo-navbar.ico" class="img-rounded img-responsive">
+            </div>
+            <ul id="inav" class="nav navbar-nav">
+                <li><a id="ilink-features" href="#idiv-middle" style="color: #008000; font-weight: bold;">Features</a></li>
+                <li><a id="ilink-support" href="#idiv-bottom" style="color: #008000; font-weight: bold;">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="idiv-top" class="jumbotron container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <label id="ilbl-slog">Single place,<br>Much care</label>
+                <button id="ibtn-sign-up" class="btn btn-success btn-lg">Create an Account</button>
+            </div>
+            <div class="col-md-3">
+                <div id="idiv-login-frm" class="container">
+                    <form id="ifrm-login">
+                        <div class="form-group">
+                            <input id="itext-mail-phone" type="text" class="cinp-login-frm form-control input-lg" placeholder="Email or phone">
+                            <input id="ipasswd" type="password" class="cinp-login-frm form-control input-lg" placeholder="Password">
+                            <input id="ibtn-login" type="submit" value=" Sign in" class="cinp-login-frm btn btn-primary">
+                            <a href="#">Recover account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="idiv-middle" class="container-fluid">
+        <center><h1 style=" font-size: 4em;">Discover our services</h1></center>
+        <center><h3>We connect doctors, pharmacists and patients with each other</h3></center>
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service">
+                <img class="cimg-service img-responsive" src="../resources/medical-history.png">
+                <h3>Medical history</h3>
+                <p style="font-size: 1.4em;">Maintain a fully-detailed medical history.. It will be updated whenever you go to your doctor</p>
+            </div>
+             <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service" style="margin-left: 10%;">
+                <img class="cimg-service img-responsive" src="../resources/location.png">
+                <h3>Search anywhere</h3>
+                <p style="font-size: 1.4em;">You are able to search for medicines and medical services</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service">
+                <img class="cimg-service img-responsive" src="../resources/ambulance.png">
+                <h3>Send an SOS</h3>
+                <p style="font-size: 1.4em;">In emergency situations, use this feature to ask for a quick help</p>
+            </div>
+             <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service" style="margin-left: 10%;">
+                <img class="cimg-service img-responsive" src="../resources/doctor.png">
+                <h3>More patients</h3>
+                <p style="font-size: 1.4em;">Are you a specialist? People will rate your medical service, and we will recommend top rated services for all people</p>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service">
+                <img class="cimg-service img-responsive" src="../resources/pharmacy.png">
+                <h3>More customers</h3>
+                <p style="font-size: 1.4em;">Do you work in a pharmacy? People who are looking for some drug will know if you have it in your pharmacy, so they will reach you more easily</p>
+            </div>
+             <div class="col-md-1"></div>
+            <div class="col-md-4 cdiv-service" style="margin-left: 10%;">
+                <img class="cimg-service img-responsive" src="../resources/plus.png">
+                <h3>Much more !</h3>
+                <p style="font-size: 1.4em;">Don't have an account yet? Start using Carepoint and keep a safe and healthy life</p>
+            </div>
+        </div>
+    </div>
+    <div id="idiv-bottom" class="container-fluid">
+            <center>
+                <h1 style="font-size: 4em;">Contact Us</h1>
+                <p style="font-size: 1.5em;">If you have a suggestion or need help, we are here for you</p>
+            </center>
+            <div id="idiv-contact">
+                <input id="itext-mail" type="email" class="form-control cfrm-contact-inp" placeholder="Your email">
+                <input id="itext-subj" type="text" class="form-control cfrm-contact-inp" placeholder="Subject">
+                <textarea id="itextarea-msg" class="form-control input-lg cfrm-contact-inp" placeholder="How can we help you?" rows=7 cols=45 style='resize: none;'></textarea>
+                <center><input type="submit" id="ibtn-contact" class="btn btn-default" value="Send message"></center>
+            </div>
+            <div style="display: table; margin: 0% auto;">
+                <a id="ilink-facebook" target="blank" href="https://www.facebook.com/Carepoint-1771561712864359/" style="color: #FFFFFF;">
+                    <li class="fa fa-facebook fa-2x"></li>
+                </a>
+                <a id="ilink-twitter" target="blank" href="https://twitter.com/CarePoint_Eg" style="color: #FFFFFF;">
+                    <li class="fa fa-twitter fa-2x"></li>
+                </a>
+                <a id="ilink-new-gplus" target="blank" href="https://plus.google.com/110436616662774730763" style="color: #FFFFFF;">
+                    <li class="fa fa-google-plus fa-2x"></li>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

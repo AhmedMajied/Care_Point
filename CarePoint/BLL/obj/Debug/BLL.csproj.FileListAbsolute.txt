@@ -1,6 +1,0 @@
-E:\GP\CarePoint\BLL\bin\Debug\BLL.dll
-E:\GP\CarePoint\BLL\bin\Debug\BLL.pdb
-E:\GP\CarePoint\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
-E:\GP\CarePoint\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
-E:\GP\CarePoint\BLL\obj\Debug\BLL.dll
-E:\GP\CarePoint\BLL\obj\Debug\BLL.pdb

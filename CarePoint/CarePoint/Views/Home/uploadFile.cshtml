@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "uploadFile";
+}
+
+<h2>uploadFile</h2>
+
+@using (Html.BeginForm("file", "MedicalHistory", FormMethod.Post,
+                                                             new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" id="file" /><br><br>
+    <input type="submit" value="Upload file" />
+    <br><br>
+}

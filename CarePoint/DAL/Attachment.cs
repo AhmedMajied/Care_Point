@@ -15,13 +15,14 @@ namespace DAL
     public partial class Attachment
     {
         public long ID { get; set; }
-        public string Title { get; set; }
+        public string fileName { get; set; }
+        public string filePath { get; set; }
         public long TypeID { get; set; }
-        public byte[] File { get; set; }
         public System.DateTime Date { get; set; }
         public Nullable<bool> IsRead { get; set; }
         public long SpecialistID { get; set; }
         public long CitizenID { get; set; }
+        
     
         public virtual AttachmentType AttachmentType { get; set; }
         public virtual Citizen Citizen { get; set; }

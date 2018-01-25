@@ -18,8 +18,8 @@ namespace Extensions
         public static Citizen GetCitizen(this IIdentity identity)
         {
             long id = Microsoft.AspNet.Identity.IdentityExtensions.GetUserId<long>(identity);
-            CitizenController citizenController = new CitizenController();
-            return citizenController.GetCitizen(id);
+            CitizenBusinessLayer citizenBL = new CitizenBusinessLayer();
+            return citizenBL.GetCitizen(id);
         }
     }
 }

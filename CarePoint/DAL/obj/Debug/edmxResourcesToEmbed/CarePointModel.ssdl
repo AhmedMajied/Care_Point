@@ -12,13 +12,13 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
     <Property Name="TypeID" Type="bigint" Nullable="false" />
-    <Property Name="File" Type="varbinary(max)" Nullable="false" />
     <Property Name="Date" Type="date" Nullable="false" />
     <Property Name="IsRead" Type="bit" />
     <Property Name="SpecialistID" Type="bigint" Nullable="false" />
     <Property Name="CitizenID" Type="bigint" Nullable="false" />
+    <Property Name="filePath" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="fileName" Type="varchar" MaxLength="1000" Nullable="false" />
   </EntityType>
   <EntityType Name="AttachmentTypes">
     <Key>

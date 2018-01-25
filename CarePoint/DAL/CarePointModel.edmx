@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CarePointModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CarePointModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActiveIngredients">
           <Key>
             <PropertyRef Name="ID" />
@@ -17,13 +17,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TypeID" Type="bigint" Nullable="false" />
-          <Property Name="File" Type="varbinary(max)" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="IsRead" Type="bit" />
           <Property Name="SpecialistID" Type="bigint" Nullable="false" />
           <Property Name="CitizenID" Type="bigint" Nullable="false" />
+          <Property Name="filePath" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="fileName" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
         <EntityType Name="AttachmentTypes">
           <Key>
@@ -1550,8 +1550,7 @@
             <End Role="WorkSlots" EntitySet="WorkSlots" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CarePointModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1568,9 +1567,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TypeID" Type="Int64" Nullable="false" />
-          <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IsRead" Type="Boolean" />
           <Property Name="SpecialistID" Type="Int64" Nullable="false" />
@@ -1578,6 +1575,8 @@
           <NavigationProperty Name="AttachmentType" Relationship="Self.FK_Attachments_AttachmentTypes" FromRole="Attachments" ToRole="AttachmentTypes" />
           <NavigationProperty Name="Citizen" Relationship="Self.FK_Attachments_Citizens" FromRole="Attachments" ToRole="Citizens" />
           <NavigationProperty Name="Specialist" Relationship="Self.FK_Attachments_Specialists" FromRole="Attachments" ToRole="Specialists" />
+          <Property Name="filePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="fileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AttachmentType">
           <Key>
@@ -3068,10 +3067,10 @@
           <EntitySetMapping Name="Attachments">
             <EntityTypeMapping TypeName="CarePointModel.Attachment">
               <MappingFragment StoreEntitySet="Attachments">
+                <ScalarProperty Name="fileName" ColumnName="fileName" />
+                <ScalarProperty Name="filePath" ColumnName="filePath" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-                <ScalarProperty Name="File" ColumnName="File" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="IsRead" ColumnName="IsRead" />
                 <ScalarProperty Name="SpecialistID" ColumnName="SpecialistID" />

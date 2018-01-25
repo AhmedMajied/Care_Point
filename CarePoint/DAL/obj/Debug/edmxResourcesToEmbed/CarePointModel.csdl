@@ -13,9 +13,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="TypeID" Type="Int64" Nullable="false" />
-    <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
     <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="IsRead" Type="Boolean" />
     <Property Name="SpecialistID" Type="Int64" Nullable="false" />
@@ -23,6 +21,8 @@
     <NavigationProperty Name="AttachmentType" Relationship="Self.FK_Attachments_AttachmentTypes" FromRole="Attachments" ToRole="AttachmentTypes" />
     <NavigationProperty Name="Citizen" Relationship="Self.FK_Attachments_Citizens" FromRole="Attachments" ToRole="Citizens" />
     <NavigationProperty Name="Specialist" Relationship="Self.FK_Attachments_Specialists" FromRole="Attachments" ToRole="Specialists" />
+    <Property Name="filePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="fileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="AttachmentType">
     <Key>

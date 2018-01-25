@@ -365,3 +365,9 @@ D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\Care-Point\CarePoint\CarePoint\bin\Micro
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\Care-Point\CarePoint\CarePoint\obj\Debug\CarePoint.csprojResolveAssemblyReference.cache
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\Care-Point\CarePoint\CarePoint\obj\Debug\CarePoint.dll
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\Care-Point\CarePoint\CarePoint\obj\Debug\CarePoint.pdb
+E:\GP\CarePoint\CarePoint\bin\BLL.dll
+E:\GP\CarePoint\CarePoint\bin\DAL.dll
+E:\GP\CarePoint\CarePoint\bin\BLL.pdb
+E:\GP\CarePoint\CarePoint\bin\BLL.dll.config
+E:\GP\CarePoint\CarePoint\bin\DAL.pdb
+E:\GP\CarePoint\CarePoint\bin\DAL.dll.config

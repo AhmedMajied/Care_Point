@@ -1,41 +1,133 @@
 ﻿@model CarePoint.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Sign Up";
+    Layout = "";
 }
+<html>
+<head>
+    <link rel="icon" href="~/Images/logo-navbar.ico" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/guest-sign up.css" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
 
-<h2>@ViewBag.Title.</h2>
+    <div class="container-fluid">
+        <div class="row" style="background-color: #21c2eb; padding-bottom: 1em; margin-bottom: 3em;">
+            <img id="iimg-logo" class="img-responsive" src="~/Images/logo-sign up.png">
+            <center><h1 style="color: #ffffff; font-weight: bold;">Create Your Carepoint Account</h1></center>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary("", new { @class = "text-danger" })
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(model => model.Name, new { @Id = "itext-full-name" , @Class = "form-control" , @Placeholder = "Full Name" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(model => model.Username, new { @Id = "itext-usrname", @Class = "form-control", @Placeholder = "Username" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        @Html.TextBoxFor(model => model.Email, new { @Id = "itext-mail", @Class = "form-control", @Placeholder = "Email" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                        @Html.TextBoxFor(model => model.Phone, new { @Id = "itext-phone", @Class = "form-control", @Placeholder = "Phone Number" })
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.TextBoxFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
+                    </div>
+                    <h4>Birthdate:</h4>
+                    <div class='form-group'>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="day">
+                                <option value="" disabled selected>Day</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="month">
+                                <option value="" disabled selected>Month</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="year">
+                                <option value="" disabled selected>Year</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <h4>Gender:</h4>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-male" type="radio" name="radio-gender">
+                        <label>Male</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-female" type="radio" name="radio-gender">
+                        <label>Female</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-other" type="radio" name="radio-gender">
+                        <label>Other</label>
+                    </span>
+                    <div class="file-loading">
+                        <b><label>National ID</label></b>
+                        <input id="ifile-national-id" type="file">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <h4>Specialty:</h4>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-none" type="radio" name="radio-specialty" checked="checked">
+                        <label>None</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-doc" type="radio" name="radio-specialty">
+                        <label>Doctor</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-pharmacist" type="radio" name="radio-specialty">
+                        <label>Pharmacist</label>
+                    </span>
+                    <div class="file-loading">
+                        <b><label>Profession license</label></b>
+                        <input id="ifile-license" type="file">
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn-lg btn-primary" style="font-weight: bold;margin:20px"></center>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
 
-@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

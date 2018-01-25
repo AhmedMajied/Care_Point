@@ -4,3 +4,16 @@ E:\GP\CarePoint\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 E:\GP\CarePoint\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\BLL\obj\Debug\BLL.dll
 E:\GP\CarePoint\BLL\obj\Debug\BLL.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\BLL.dll.config
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\BLL.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\BLL.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\DAL.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\EntityFramework.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\EntityFramework.SqlServer.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\DAL.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\DAL.dll.config
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\EntityFramework.xml
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\bin\Debug\EntityFramework.SqlServer.xml
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\obj\Debug\BLL.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\BLL\obj\Debug\BLL.pdb

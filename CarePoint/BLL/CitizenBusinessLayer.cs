@@ -27,5 +27,10 @@ namespace BLL
             return DBEntities.HistoryRecords.Where(record => record.CitizenID == citizenID).ToList();
             // not tested
         }
+
+        public Citizen GetCitizen(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

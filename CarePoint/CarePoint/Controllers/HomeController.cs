@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using BLL;
-using System.IO;
 
 namespace CarePoint.Controllers
 {

@@ -32,5 +32,10 @@ namespace BLL
         {
             throw new NotImplementedException();
         }
+
+        public ICollection<Speciality> GetSpecialities()
+        {
+            return DBEntities.Specialities.ToList();
+        }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CarePoint.Extensions;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
+using System.Web.Mvc;
 
 namespace CarePoint.Models
 {
@@ -62,6 +65,7 @@ namespace CarePoint.Models
         public bool RememberMe { get; set; }
     }
 
+    [ContainsDate(Day:"Day",Month:"Month",Year:"Year",ErrorMessage = "Date is not valid !")]
     public class RegisterViewModel
     {
         [Display(Name = "Full Name")]
@@ -80,6 +84,38 @@ namespace CarePoint.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Day")]
+        public int Day { get; set; }
+
+        [Required]
+        [Display(Name = "Month")]
+        public int Month { get; set; }
+
+        [Required]
+        [Display(Name = "Year")]
+        public int Year { get; set; }
+
+        [Required]
+        [Display(Name = "Male")]
+        public bool IsMale { get; set; }
+
+        [Required]
+        [Display(Name = "Female")]
+        public bool IsFemale { get; set; }
+
+        [Required]
+        [Display(Name = "National ID")]
+        public HttpPostedFile NationalID { get; set; }
+
+        [Required]
+        [Display(Name = "Profession License")]
+        public HttpPostedFile License { get; set; }
+
+        [Required]
+        [Display(Name = "Speciality")]
+        public string Speciality { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -87,8 +123,13 @@ namespace CarePoint.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public List<SelectListItem> Days { get; set; }
+        public List<SelectListItem> Months { get; set; }
+        public List<SelectListItem> Years { get; set; }
+        public List<SelectListItem> Specialities { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -106,7 +147,7 @@ namespace CarePoint.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

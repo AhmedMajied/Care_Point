@@ -13,6 +13,11 @@ namespace CarePoint.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser<long,CPUserLogin,CPUserRole,CPUserClaim>
     {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public Nullable<long> BloodTypeID { get; set; }
+        public byte[] Photo { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser,long> manager)
         {

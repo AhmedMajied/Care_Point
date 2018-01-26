@@ -16,7 +16,7 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
-        public void addAttachment(Attachment attachment)
+        public void AddAttachment(Attachment attachment)
         {
             DBEntities.Attachments.Add(attachment);
             DBEntities.SaveChanges();
@@ -24,7 +24,12 @@ namespace BLL
             // not tested
         }
 
-        public void addPrescription(HistoryRecord historyRecord)
+        public ICollection<AttachmentType> GetAttachmentTypes()
+        {
+            return DBEntities.AttachmentTypes.ToList();
+        }
+
+        public void AddPrescription(HistoryRecord historyRecord)
         {
             DBEntities.HistoryRecords.Add(historyRecord);
             DBEntities.SaveChanges();
@@ -32,9 +37,14 @@ namespace BLL
             // not tested
         }
 
-        public ICollection<Disease> getAllDiseases()
+        public ICollection<Disease> GetAllDiseases()
         {
             return DBEntities.Diseases.ToList();
+        }
+
+        public ICollection<Symptom> GetAllSymptoms()
+        {
+            return DBEntities.Symptoms.ToList();
         }
 
     }

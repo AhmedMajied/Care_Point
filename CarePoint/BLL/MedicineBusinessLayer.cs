@@ -16,7 +16,7 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
-        public ICollection<Medicine> getAllMedicines()
+        public ICollection<Medicine> GetAllMedicines()
         {
             return DBEntities.Medicines.ToList();
         }

@@ -52,7 +52,7 @@ namespace CarePoint.Controllers
         public ActionResult patientAttachments(long citizenID)
         {
             CitizenBusinessLayer businessLayer = new CitizenBusinessLayer();
-            ICollection<Attachment> patientAttachments = businessLayer.getPatientAttachments(citizenID);
+            ICollection<Attachment> patientAttachments = businessLayer.GetPatientAttachments(citizenID);
             
             return View(patientAttachments);
         }

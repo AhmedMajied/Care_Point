@@ -64,6 +64,16 @@ namespace CarePoint.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "Full Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string Phone { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

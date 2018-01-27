@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
+using System;
 
 namespace CarePoint.Models
 {
@@ -65,17 +66,29 @@ namespace CarePoint.Models
         public bool RememberMe { get; set; }
     }
 
-    [ContainsDate(Day:"Day",Month:"Month",Year:"Year",ErrorMessage = "Date is not valid !")]
     public class RegisterViewModel
     {
-        [Display(Name = "Full Name")]
-        public string Name { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [RegularExpression("^[a-zA-Z\u0621-\u064A]*$", ErrorMessage = "First Name must contain alphabetical characters only!")]
+        public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        [Display(Name = "Middle Name")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [RegularExpression("^[a-zA-Z\u0621-\u064A]*$", ErrorMessage = "First Name must contain alphabetical characters only!")]
+        public string MiddleName { get; set; }
 
+        [Required]
+        [Display(Name = "Last Name")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [RegularExpression("^[a-zA-Z\u0621-\u064A]*$", ErrorMessage = "First Name must contain alphabetical characters only!")]
+        public string LastName { get; set; }
+
+        [Required]
         [Display(Name = "Phone Number")]
+        [RegularExpression("[0-9]{11}$",ErrorMessage = "Phone must contain 11 numbers only!")]
         public string Phone { get; set; }
 
         [Required]
@@ -85,6 +98,7 @@ namespace CarePoint.Models
 
         [Required]
         [Display(Name = "Day")]
+        [CalendarDay("Month", "Year", ErrorMessage = "The Birthdate is not a valid date !")]
         public int Day { get; set; }
 
         [Required]
@@ -95,25 +109,38 @@ namespace CarePoint.Models
         [Display(Name = "Year")]
         public int Year { get; set; }
 
+        public DateTime DateOfBirth {
+            get
+            {
+                return DateTime.Now;
+            }
+            private set { }
+        }
+
+
         [Required]
-        [Display(Name = "Male")]
+        [Display(Name = "Gender")]
         public bool IsMale { get; set; }
 
         [Required]
-        [Display(Name = "Female")]
-        public bool IsFemale { get; set; }
+        [Display(Name = "National ID Photo")]
+        public HttpPostedFileWrapper NationalIDPhoto { get; set; }
 
         [Required]
-        [Display(Name = "National ID")]
-        public HttpPostedFile NationalID { get; set; }
+        [Display(Name = "National ID Number")]
+        [RegularExpression("[0-9]{14}$", ErrorMessage = "National Id Number must contain 14 numbers only!")]
+        public string NationalIDNumber { get; set; }
 
         [Required]
+        [Display(Name = "Blood Type")]
+        public long BloodTypeID { get; set; }
+
         [Display(Name = "Profession License")]
         public HttpPostedFile License { get; set; }
 
         [Required]
         [Display(Name = "Speciality")]
-        public string Speciality { get; set; }
+        public string SpecialityID { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -130,6 +157,7 @@ namespace CarePoint.Models
         public List<SelectListItem> Months { get; set; }
         public List<SelectListItem> Years { get; set; }
         public List<SelectListItem> Specialities { get; set; }
+        public List<SelectListItem> BloodTypes { get; set; }
     }
 
     public class ResetPasswordViewModel

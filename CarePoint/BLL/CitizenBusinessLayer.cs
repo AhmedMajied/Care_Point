@@ -62,5 +62,11 @@ namespace BLL
             return DBEntities.Specialities.ToList();
         }
 
+        public ICollection<BloodType> GetBloodTypes()
+        {
+            return DBEntities.BloodTypes.ToList();
+        }
+
+
     }
 }

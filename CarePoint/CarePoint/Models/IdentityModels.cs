@@ -18,6 +18,8 @@ namespace CarePoint.Models
         public Nullable<long> BloodTypeID { get; set; }
         public byte[] Photo { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string NationalIDNumber { get; set; }
+        public byte[] NationalIDPhoto { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser,long> manager)
         {

@@ -43,12 +43,14 @@ namespace DAL
         public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
-        public string UserName { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
         public Nullable<long> BloodTypeID { get; set; }
         public byte[] Photo { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string NationalIDNumber { get; set; }
+        public byte[] NationalIDPhoto { get; set; }
+        public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attachment> Attachments { get; set; }

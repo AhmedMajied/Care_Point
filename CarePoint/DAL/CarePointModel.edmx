@@ -106,12 +106,14 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BloodTypeID" Type="bigint" />
           <Property Name="Photo" Type="image" />
           <Property Name="DateOfBirth" Type="date" />
+          <Property Name="NationalIDNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="NationalIDPhoto" Type="image" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Diseases">
           <Key>
@@ -1674,7 +1676,6 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BloodTypeID" Type="Int64" />
@@ -1694,6 +1695,9 @@
           <NavigationProperty Name="ServiceRatings" Relationship="Self.FK_ServiceRatings_Citizens" FromRole="Citizens" ToRole="ServiceRatings" />
           <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_Citizens" FromRole="Citizens" ToRole="SOSs" />
           <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Citizens" ToRole="Roles" />
+          <Property Name="NationalIDNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="NationalIDPhoto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Disease">
           <Key>
@@ -3152,13 +3156,15 @@
           <EntitySetMapping Name="Citizens">
             <EntityTypeMapping TypeName="IsTypeOf(CarePointModel.Citizen)">
               <MappingFragment StoreEntitySet="Citizens">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="NationalIDPhoto" ColumnName="NationalIDPhoto" />
+                <ScalarProperty Name="NationalIDNumber" ColumnName="NationalIDNumber" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="BloodTypeID" ColumnName="BloodTypeID" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />

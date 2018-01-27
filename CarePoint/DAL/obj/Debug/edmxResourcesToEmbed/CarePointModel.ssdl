@@ -101,12 +101,14 @@
     <Property Name="LockoutEndDateUtc" Type="datetime" />
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" />
     <Property Name="Gender" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BloodTypeID" Type="bigint" />
     <Property Name="Photo" Type="image" />
     <Property Name="DateOfBirth" Type="date" />
+    <Property Name="NationalIDNumber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="NationalIDPhoto" Type="image" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Diseases">
     <Key>

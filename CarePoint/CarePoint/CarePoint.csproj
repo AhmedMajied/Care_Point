@@ -249,6 +249,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

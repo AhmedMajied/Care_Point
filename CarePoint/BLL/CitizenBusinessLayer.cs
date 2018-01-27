@@ -56,6 +56,11 @@ namespace BLL
             return DBEntities.HistoryRecords.Where(record => record.CitizenID == citizenID).ToList();
             // not tested
         }
-        
+
+        public ICollection<Speciality> GetSpecialities()
+        {
+            return DBEntities.Specialities.ToList();
+        }
+
     }
 }

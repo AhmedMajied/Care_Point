@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CarePoint.Models;
+using System.Collections.Generic;
+using BLL;
 
 namespace CarePoint.Controllers
 {
@@ -17,15 +19,16 @@ namespace CarePoint.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private CitizenBusinessLayer _citizenBusinessLayer;
 
         public AccountController()
         {
         }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, CitizenBusinessLayer citizenBusinessLayer)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _citizenBusinessLayer = citizenBusinessLayer;
         }
 
         public ApplicationSignInManager SignInManager
@@ -49,6 +52,18 @@ namespace CarePoint.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        public CitizenBusinessLayer citizenBusinessLayer
+        {
+            get
+            {
+                return _citizenBusinessLayer ?? new CitizenBusinessLayer();
+            }
+            private set
+            {
+                _citizenBusinessLayer = value;
             }
         }
 
@@ -139,7 +154,43 @@ namespace CarePoint.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var days = new List<SelectListItem>();
+            days.Add(new SelectListItem() { Text = "Day", Value = "", Disabled = true, Selected = true });
+            for (int i = 1; i <= 31; ++i)
+            {
+                days.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+            }
+            var months = new List<SelectListItem>();
+            months.Add(new SelectListItem() { Text = "Month", Value = "", Disabled = true, Selected = true });
+            for (int i = 1; i <= 12; ++i)
+            {
+                months.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+            }
+            var years = new List<SelectListItem>();
+            years.Add(new SelectListItem() { Text = "Year", Value = "", Disabled = true, Selected = true });
+            for (int i = 1900; i <= DateTime.Now.Year - 5; ++i)
+            {
+                years.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+            }
+            var specialities = citizenBusinessLayer.GetSpecialities();
+            var specialitiesOptions = new List<SelectListItem>();
+            specialitiesOptions.Add(new SelectListItem() { Text = "Speciality", Value = "", Disabled = true, Selected = true });
+            specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "0" });
+
+            foreach (var speciality in specialities)
+            {
+                specialitiesOptions.Add(new SelectListItem() { Text = speciality.Name, Value = speciality.ID.ToString() });
+            }
+
+
+            RegisterViewModel model = new RegisterViewModel()
+            {
+                Specialities = specialitiesOptions,
+                Days = days,
+                Months = months,
+                Years = years
+            };
+            return View(model);
         }
 
         //

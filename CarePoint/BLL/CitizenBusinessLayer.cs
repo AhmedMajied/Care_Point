@@ -62,5 +62,25 @@ namespace BLL
             return DBEntities.Specialities.ToList();
         }
 
+        public ICollection<BloodType> GetBloodTypes()
+        {
+            return DBEntities.BloodTypes.ToList();
+        }
+
+        public bool IsEmailExists(string email)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.Email == email);
+        }
+
+        public bool IsPhoneNumberExists(string phone)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.PhoneNumber == phone);
+        }
+
+        public bool IsNationalIDExists(string id)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.NationalIDNumber == id);
+        }
+        
     }
 }

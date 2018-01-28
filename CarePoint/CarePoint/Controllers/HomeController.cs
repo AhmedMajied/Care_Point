@@ -32,7 +32,8 @@ namespace CarePoint.Controllers
 
             //// Delete the temporary file
             ////fileInfo.Delete();
-            return View();
+
+           return View();
         }
 
         public ActionResult About()

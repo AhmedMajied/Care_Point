@@ -39,7 +39,7 @@
         <EntityTypeShape EntityType="CarePointModel.ServiceRating" Width="1.5" PointX="21" PointY="29.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Service" Width="1.5" PointX="18.75" PointY="30.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.SOSs" Width="1.5" PointX="18.75" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarePointModel.Specialist" Width="1.5" PointX="8.25" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CarePointModel.Specialist" Width="1.5" PointX="8.25" PointY="39.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Speciality" Width="1.5" PointX="6" PointY="36.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Symptom" Width="1.5" PointX="12.75" PointY="37.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.TimeSlot" Width="1.5" PointX="23.25" PointY="36.5" IsExpanded="true" />

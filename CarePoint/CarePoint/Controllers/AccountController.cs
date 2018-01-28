@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using CarePoint.Models;
 using System.Collections.Generic;
 using BLL;
+using System.IO;
 
 namespace CarePoint.Controllers
 {
@@ -149,47 +150,79 @@ namespace CarePoint.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
+        private void ResetRegisterViewModel(RegisterViewModel model)
         {
             var days = new List<SelectListItem>();
-            days.Add(new SelectListItem() { Text = "Day", Value = "", Disabled = true, Selected = true });
             for (int i = 1; i <= 31; ++i)
             {
                 days.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
             var months = new List<SelectListItem>();
-            months.Add(new SelectListItem() { Text = "Month", Value = "", Disabled = true, Selected = true });
             for (int i = 1; i <= 12; ++i)
             {
                 months.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
             var years = new List<SelectListItem>();
-            years.Add(new SelectListItem() { Text = "Year", Value = "", Disabled = true, Selected = true });
             for (int i = 1900; i <= DateTime.Now.Year - 5; ++i)
             {
                 years.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
+
+            var bloodTypes = citizenBusinessLayer.GetBloodTypes();
+            var bloodTypesOptions = new List<SelectListItem>();
+            foreach (var type in bloodTypes)
+            {
+                bloodTypesOptions.Add(new SelectListItem() { Text = type.Name, Value = type.ID.ToString() });
+            }
+
             var specialities = citizenBusinessLayer.GetSpecialities();
             var specialitiesOptions = new List<SelectListItem>();
-            specialitiesOptions.Add(new SelectListItem() { Text = "Speciality", Value = "", Disabled = true, Selected = true });
-            specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "0" });
+            specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "-1" });
 
             foreach (var speciality in specialities)
             {
                 specialitiesOptions.Add(new SelectListItem() { Text = speciality.Name, Value = speciality.ID.ToString() });
             }
+            model.Days = days;
+            model.Months = months;
+            model.Years = years;
+            model.BloodTypes = bloodTypesOptions;
+            model.Specialities = specialitiesOptions;
+            model.IsMale = true;
+        }
+        [AllowAnonymous]
+        public ActionResult IsEmailExists(string Email)
+        {
+            if (citizenBusinessLayer.IsEmailExists(Email))
+                return Json(false, JsonRequestBehavior.AllowGet);
+            else
+                return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
+        [AllowAnonymous]
+        public ActionResult IsPhoneNumberExists(string Phone)
+        {
+            if (citizenBusinessLayer.IsPhoneNumberExists(Phone))
+                return Json(false, JsonRequestBehavior.AllowGet);
+            else
+                return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
-            RegisterViewModel model = new RegisterViewModel()
-            {
-                Specialities = specialitiesOptions,
-                Days = days,
-                Months = months,
-                Years = years
-            };
+        [AllowAnonymous]
+        public ActionResult IsNationalIDExists(string NationalIDNumber)
+        {
+            if (citizenBusinessLayer.IsNationalIDExists(NationalIDNumber))
+                return Json(false, JsonRequestBehavior.AllowGet);
+            else
+                return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            RegisterViewModel model = new RegisterViewModel();
+            ResetRegisterViewModel(model);
             return View(model);
         }
 
@@ -202,12 +235,35 @@ namespace CarePoint.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new Specialist
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.FirstName + " " + model.MiddleName + " " + model.LastName,
+                    Gender = model.IsMale ? "Male" : "Female",
+                    BloodTypeID = model.BloodTypeID,
+                    NationalIDNumber = model.NationalIDNumber,
+                    DateOfBirth = model.DateOfBirth,
+                    PhoneNumber = model.Phone
+                };
+                using (var binaryReader = new BinaryReader(model.NationalIDPhoto.InputStream))
+                {
+                    user.NationalIDPhoto = binaryReader.ReadBytes(model.NationalIDPhoto.ContentLength);
+                }
+                if (model.SpecialityID != -1)
+                {
+                    user.SpecialityID = model.SpecialityID;
+                    using (var binaryReader = new BinaryReader(model.License.InputStream))
+                    {
+                        user.ProfessionLicense = binaryReader.ReadBytes(model.License.ContentLength);
+                    }
+                }
+
+                var result = await UserManager.CreateAsync(model.SpecialityID != -1 ? user : (ApplicationUser)user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(model.SpecialityID != -1 ? user : (ApplicationUser)user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -220,6 +276,7 @@ namespace CarePoint.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            ResetRegisterViewModel(model);
             return View(model);
         }
 

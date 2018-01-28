@@ -7,38 +7,32 @@ using System.Web.Mvc;
 
 namespace CarePoint.Extensions
 {
-    public class ContainsDate : ValidationAttribute, IClientValidatable
+    public class CalendarDay : ValidationAttribute, IClientValidatable
     {
-        private string _day;
         private string _month;
         private string _year;
 
-        public ContainsDate(string Day,string Month,string Year)
+        public CalendarDay(string Month,string Year)
         {
             if(!string.IsNullOrEmpty(Month) && !string.IsNullOrEmpty(Year))
             {
-                _day = Day;
                 _month = Month;
                 _year = Year;
             }
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object dayValue, ValidationContext validationContext)
         {
-            var dayProperty = validationContext.ObjectType.GetProperty(_day);
             var monthProperty = validationContext.ObjectType.GetProperty(_month);
             var yearProperty = validationContext.ObjectType.GetProperty(_year);
-            if (dayProperty == null)
-                return new ValidationResult(string.Format("Property '{0}' is undefined.", _day));
             if (monthProperty == null)
                 return new ValidationResult(string.Format("Property '{0}' is undefined.", _month));
             if (yearProperty == null)
                 return new ValidationResult(string.Format("Property '{0}' is undefined.", _year));
-            var dayValue = monthProperty.GetValue(validationContext.ObjectInstance, null);
             var monthValue = monthProperty.GetValue(validationContext.ObjectInstance, null);
             var yearValue = yearProperty.GetValue(validationContext.ObjectInstance, null);
 
-            String DateString = String.Format("{0}/{1}/{2}", dayValue, monthValue, yearValue);
+            String DateString = String.Format("{0}/{1}/{2}", monthValue, dayValue, yearValue);
 
             DateTime dateTime;
             if (!DateTime.TryParse(DateString, out dateTime))
@@ -49,11 +43,14 @@ namespace CarePoint.Extensions
         }
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            yield return new ModelClientValidationRule
+            var rule = new ModelClientValidationRule
             {
                 ErrorMessage = this.ErrorMessage,
-                ValidationType = "Date"
+                ValidationType = "datevalidator"
             };
+            rule.ValidationParameters.Add("param", metadata.PropertyName+','+_month+','+_year);
+            
+            yield return rule;
         }
     }
 }

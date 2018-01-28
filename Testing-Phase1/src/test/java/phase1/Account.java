@@ -13,31 +13,33 @@ public class Account
 	{
 		Browser browser=new Browser();
 		WebDriver firefox=browser.openBrowser();
-		String url=firefox.getCurrentUrl();
 		XSSFSheet sheet=browser.openFile("login.xlsx");
 		int numOfRows=sheet.getLastRowNum();
 		String mail,password,state;
 		String results="";
+		firefox.findElement(By.id("loginLink")).click();
 		for(int row=0;row<=numOfRows;row++)
 		{
-			Thread.sleep(1000);
-			firefox.findElement(By.id("itext-mail-phone")).clear();
-			firefox.findElement(By.id("ipasswd")).clear();
+			Thread.sleep(3000);
+			String url=firefox.getCurrentUrl();
+			firefox.findElement(By.id("Email")).clear();
+			firefox.findElement(By.id("Password")).clear();
 			
 			mail=sheet.getRow(row).getCell(0).getStringCellValue();
 			password=sheet.getRow(row).getCell(1).getStringCellValue();
 			state=sheet.getRow(row).getCell(2).getStringCellValue();
 			
-			firefox.findElement(By.id("itext-mail-phone")).sendKeys(mail);
-			firefox.findElement(By.id("ipasswd")).sendKeys(password);
-			firefox.findElement(By.id("ibtn-login")).click();
+			firefox.findElement(By.id("Email")).sendKeys(mail);
+			firefox.findElement(By.id("Password")).sendKeys(password);
+			firefox.findElement(By.cssSelector("input[type='submit'][value='Log in']")).click();
+			Thread.sleep(10000);
 			String currentUrl=firefox.getCurrentUrl();
-			Thread.sleep(5000);
 			
 			if(!url.equals(currentUrl))
 			{
 				firefox.findElement(By.id("ilink-logout")).click();
 				Thread.sleep(3000);
+				firefox.findElement(By.id("loginLink")).click();
 			}
 			// pass means logged in to website
 			if((url.equals(currentUrl)&&(state.equals("not")))||(!url.equals(currentUrl))&&(state.equals("pass")))

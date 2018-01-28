@@ -16,7 +16,7 @@ public class Browser
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
 		WebDriver firefox=new FirefoxDriver();
 		firefox.manage().window().maximize();
-		firefox.get("file:///C:/Users/MariamAshraf/Desktop/Design/guest-home.html");
+		firefox.get("http://localhost:51902/");
 		Thread.sleep(3000);
 		return firefox;
 	}

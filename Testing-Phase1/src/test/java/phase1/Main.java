@@ -16,14 +16,14 @@ public class Main
 		//  end test login
 		
 		// start test signUp
-		String signUp=Account.SignUp();
+		/*String signUp=Account.SignUp();
 		Files.write(Paths.get("signUpResult.txt"), signUp.getBytes(), StandardOpenOption.CREATE);
 		// end signUp
 		
 		// start Ask For Support
 		String askForSupport=Account.AskForSupport();
 		Files.write(Paths.get("askResult.txt"), askForSupport.getBytes(), StandardOpenOption.CREATE);
-		// end Ask For Support
+		// end Ask For Support*/
 	}
 
 }

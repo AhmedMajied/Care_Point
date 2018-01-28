@@ -89,11 +89,13 @@ namespace CarePoint.Models
         [Required]
         [Display(Name = "Phone Number")]
         [RegularExpression("[0-9]{11}$",ErrorMessage = "Phone must contain 11 numbers only!")]
+        [Remote("IsPhoneNumberExists", "Account", ErrorMessage = "Phone Number Already Exist.")]
         public string Phone { get; set; }
 
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [Remote("IsEmailExists", "Account", ErrorMessage = "Email Already Exist.")]
         public string Email { get; set; }
 
         [Required]
@@ -129,6 +131,7 @@ namespace CarePoint.Models
         [Required]
         [Display(Name = "National ID Number")]
         [RegularExpression("[0-9]{14}$", ErrorMessage = "National Id Number must contain 14 numbers only!")]
+        [Remote("IsNationalIDExists", "Account", ErrorMessage = "National Id Already Exist.")]
         public string NationalIDNumber { get; set; }
 
         [Required]
@@ -136,11 +139,11 @@ namespace CarePoint.Models
         public long BloodTypeID { get; set; }
 
         [Display(Name = "Profession License")]
-        public HttpPostedFile License { get; set; }
+        public HttpPostedFileWrapper License { get; set; }
 
         [Required]
         [Display(Name = "Speciality")]
-        public string SpecialityID { get; set; }
+        public int SpecialityID { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

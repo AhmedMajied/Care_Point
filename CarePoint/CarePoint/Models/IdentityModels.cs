@@ -30,6 +30,12 @@ namespace CarePoint.Models
         }
     }
 
+    public class Specialist : ApplicationUser
+    {
+        public byte[] ProfessionLicense { get; set; }
+        public long SpecialityID { get; set; }
+    }
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser,CPRole,long,CPUserLogin,CPUserRole,CPUserClaim>
     {
         public ApplicationDbContext()
@@ -46,11 +52,11 @@ namespace CarePoint.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicationUser>().ToTable("Citizens");
+            modelBuilder.Entity<Specialist>().ToTable("Specialists");
             modelBuilder.Entity<CPRole>().ToTable("Roles");
             modelBuilder.Entity<CPUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<CPUserClaim>().ToTable("UserClaims");
             modelBuilder.Entity<CPUserRole>().ToTable("UserRoles");
-
             modelBuilder.Entity<CPRole>().Property(r => r.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<CPUserClaim>().Property(r => r.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 

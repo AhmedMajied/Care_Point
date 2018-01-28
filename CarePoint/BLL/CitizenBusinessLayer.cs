@@ -81,6 +81,10 @@ namespace BLL
         {
             return DBEntities.Citizens.Any(citizen => citizen.NationalIDNumber == id);
         }
-        
+
+        public Citizen GetCitizenByPhone(string phone)
+        {
+            return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
+        }
     }
 }

@@ -30,18 +30,22 @@
 }
 
 #idiv-top{
-    background-color: #21c2eb;
+    /*background-color: #21c2eb;*/
     margin-bottom: 0px;
+    background-image:url("../Images/div-bg.jpg");
+    background-size:cover
 }
 
-#idiv-login-frm{
+#idiv-login-frm {
     background-color: #a6e9ff;
     border: 2px solid #ffffff;
     border-radius: 30px 0%;
-    margin-top: 25%;
+    margin-top: 30%;
     margin-left: 20%;
     padding: 10%;
     padding-bottom: 5%;
+    box-shadow: -.5px .5px 10px .5px #000;
+    
 }
 
 #ibtn-login{
@@ -52,23 +56,26 @@
     padding-right: 10%;
     margin-top: 5%;
     margin-bottom: 0px;
+    margin-left:30%
 }
 
-#ilbl-slog{
+#ilbl-slog {
     display: block;
     font-weight: bolder;
     font-size: 5em;
-    color: #ffffff;
+    color: #fff;
     margin-left: 15%;
     margin-top: 10%;
     margin-bottom: 10%;
+    text-shadow: 0px 0px 5px #000;
 }
 
-#ibtn-sign-up{
+#ibtn-sign-up {
     margin-left: 15%;
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 4%;
+    box-shadow: -.5px .5px 10px .5px #000;
 }
 
 #idiv-middle{

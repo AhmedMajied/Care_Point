@@ -4,6 +4,9 @@
 @{
     ViewBag.Title = "Carepoint";
 }
+@section styles{ 
+    <link rel="stylesheet" href="~/Content/citizen-medical-history.css" />
+}
 <body>
     @{ var user = User.Identity.GetCitizen();}
     @if ( user is Specialist)
@@ -22,8 +25,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-md-2">//MedicalPlacePhoto</div>
-                    <div class="col-md-6">//MedicalPlaceName+\n+DrName+\n+historyRecordDate</div>
+                    <div class="col-md-2"><img src="" id="iimg-medical-place" /></div>
+                    <div class="col-md-6" id="idiv-record-header">//MedicalPlaceName+\n+DrName+\n+historyRecordDate</div>
                 </div>
             </div>
             <div class="panel-body">
@@ -92,7 +95,7 @@
                             medicines += ',' + dose.Medicine.Name + "(" + dose.Description + ")";
                         }
                         
-                        <tr id="itbl-row-@cnt++" onclick="populatePanel('@Html.Image(record.MedicalPlace.Photo)','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString()','@symptoms','@diseases','@medicines','@record.Remarks');">
+                        <tr id="itbl-row-@cnt++" onclick="populatePanel('@Convert.ToBase64String(record.MedicalPlace.Photo)','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString()','@symptoms','@diseases','@medicines','@record.Remarks');">
                             <td>@record.Date.Date.ToString()</td>
                             <td>@record.MedicalPlace.Name</td>
                             <td>@record.Specialist.Name</td>

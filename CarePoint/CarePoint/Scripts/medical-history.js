@@ -1,4 +1,5 @@
-﻿function populatePanel(img,medicalPlaceName,specialistName,date,symptom, disease, medicine, remarks) {
+﻿function populatePanel(img,medicalPlaceName, specialistName, date, symptom, disease, medicine, remarks) {
+
     var symptoms = symptom.split(',');
     var diseases = disease.split(',');
     var medicines = medicine.split(',');
@@ -14,9 +15,9 @@
     for (var i = 0; i < medicines.length; ++i){
         $("#iul-medicines").append($("<li>").text(medicines[i]));
     }
-    $(".panel-heading row").empty();
-    $(".panel-heading row").append('<div class="col-md-2">' + img + '</div>');
-    $(".panel-heading row").append('<div class="col-md-6">' + medicalPlaceName + '<br/>' + specialistName + '<br/>' + date + '</div>');
+    
+    $("#iimg-medical-place").attr("src","data:image/gif;base64,"+img);
+    $("#idiv-record-header").html( medicalPlaceName + ' <br/> ' + specialistName + ' <br/> ' + date);
     $("#remarks").text(remarks);
 
 }

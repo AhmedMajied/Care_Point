@@ -10,18 +10,18 @@ public class Main
 	public static void main(String[]args) throws InterruptedException, IOException
 	{
 		// start test login
-		String login=Account.Login();
+		/*String login=Account.Login();
 		
 		Files.write(Paths.get("loginResult.txt"), login.getBytes(), StandardOpenOption.CREATE);
 		//  end test login
-		
+		*/
 		// start test signUp
-		/*String signUp=Account.SignUp();
+		String signUp=Account.SignUp();
 		Files.write(Paths.get("signUpResult.txt"), signUp.getBytes(), StandardOpenOption.CREATE);
 		// end signUp
 		
 		// start Ask For Support
-		String askForSupport=Account.AskForSupport();
+		/*String askForSupport=Account.AskForSupport();
 		Files.write(Paths.get("askResult.txt"), askForSupport.getBytes(), StandardOpenOption.CREATE);
 		// end Ask For Support*/
 	}

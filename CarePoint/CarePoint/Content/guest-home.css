@@ -30,10 +30,12 @@
 }
 
 #idiv-top{
-    /*background-color: #21c2eb;*/
+    background-color: #21c2eb;
     margin-bottom: 0px;
-    background-image:url("../Images/div-bg.jpg");
-    background-size:cover
+    /*background-image:url("../Images/care.jpg");
+    background-size:cover;
+    border:1px groove #eee;
+    border-radius:5px;*/
 }
 
 #idiv-login-frm {

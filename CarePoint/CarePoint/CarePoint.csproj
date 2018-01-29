@@ -240,6 +240,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
+    <Content Include="Images\care.jpg" />
     <Content Include="Images\div-bg.jpg" />
     <Content Include="Images\doctor.png" />
     <Content Include="Images\location.png" />

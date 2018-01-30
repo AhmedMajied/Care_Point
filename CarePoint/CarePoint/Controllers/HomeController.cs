@@ -50,47 +50,43 @@ namespace CarePoint.Controllers
             return View();
         }
 
-        public ActionResult patientAttachments(long citizenID)
-        {
-            CitizenBusinessLayer businessLayer = new CitizenBusinessLayer();
-            ICollection<Attachment> patientAttachments = businessLayer.GetPatientAttachments(citizenID);
-            
-            return View(patientAttachments);
-        }
-
         [HttpPost]
-        public string uploadFile(HttpPostedFileBase file)
+        public string uploadFile(HttpPostedFileBase[] files)
         {
 
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    // save file on server
-                    string path = Path.Combine(Server.MapPath("~/Content/files"), file.FileName);
-                    file.SaveAs(path);
-
-                    Attachment attachment = new Attachment {
-                        fileName = file.FileName,
-                        filePath = ("~/Content/files/") + file.FileName
-
-                        // TODO you should assign rest of attributes 
-                    };
-
-                    return "succeed";
-                }
-                catch (Exception ex)
-                {
-                    return "ERROR:" + ex.Message.ToString();
-                }
-            else
+            foreach (HttpPostedFileBase file in files)
             {
-                return "You have not specified a file.";
+                if (file != null)
+                {
+                    try
+                    {
+                        // save file on server
+                        string path = Path.Combine(Server.MapPath("~/Content/files"), file.FileName);
+                        file.SaveAs(path);
+
+                        Attachment attachment = new Attachment
+                        {
+                            fileName = file.FileName,
+                            filePath = ("~/Content/files/") + file.FileName
+
+                            // TODO you should assign rest of attributes 
+                        };
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        return "ERROR:" + ex.Message.ToString();
+                    }
+                }        
             }
+            
+            return "succeed";
         }
 
         public FileResult showFile(String path, String fileName)
         {
-            String mimeType = System.Web.MimeMapping.GetMimeMapping(path);
+            String mimeType = MimeMapping.GetMimeMapping(path);
 
             return new FilePathResult(path, mimeType);
         }

@@ -160,6 +160,8 @@
     <EntitySetMapping Name="MedicalPlaces">
       <EntityTypeMapping TypeName="CarePointModel.MedicalPlace">
         <MappingFragment StoreEntitySet="MedicalPlace">
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TypeID" ColumnName="TypeID" />

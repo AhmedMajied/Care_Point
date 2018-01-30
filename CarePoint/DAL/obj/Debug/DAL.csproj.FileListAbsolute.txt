@@ -8,3 +8,14 @@ F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Debug\EntityFramework
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.dll
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.pdb
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\GP\CarePoint\DAL\bin\Debug\DAL.dll.config
+E:\GP\CarePoint\DAL\bin\Debug\DAL.dll
+E:\GP\CarePoint\DAL\bin\Debug\DAL.pdb
+E:\GP\CarePoint\DAL\bin\Debug\EntityFramework.dll
+E:\GP\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\GP\CarePoint\DAL\bin\Debug\EntityFramework.xml
+E:\GP\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\GP\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\GP\CarePoint\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+E:\GP\CarePoint\DAL\obj\Debug\DAL.dll
+E:\GP\CarePoint\DAL\obj\Debug\DAL.pdb

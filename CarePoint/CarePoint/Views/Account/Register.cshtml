@@ -20,7 +20,7 @@
             <img id="iimg-logo" class="img-responsive" src="~/Images/logo-sign up.png">
             <center><h1 style="color: #ffffff; font-weight: bold;">Create Your Carepoint Account</h1></center>
         </div>
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" , enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken();
             @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -30,11 +30,19 @@
                 <div class="col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        @Html.TextBoxFor(model => model.Name, new { @Id = "itext-full-name" , @Class = "form-control" , @Placeholder = "Full Name" })
+                        @Html.TextBoxFor(model => model.FirstName, new { @Id = "itext-first-name", @Class = "form-control", @Placeholder = "First Name" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        @Html.TextBoxFor(model => model.Username, new { @Id = "itext-usrname", @Class = "form-control", @Placeholder = "Username" })
+                        @Html.TextBoxFor(model => model.MiddleName, new { @Id = "itext-middle-name", @Class = "form-control", @Placeholder = "Middle Name" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(model => model.LastName, new { @Id = "itext-last-name", @Class = "form-control", @Placeholder = "Last Name" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(model => model.NationalIDNumber, new { @Id = "itext-national-id", @Class = "form-control", @Placeholder = "National Id Number" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -49,28 +57,26 @@
                 <div class="col-md-4">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        @Html.TextBoxFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
+                        @Html.PasswordFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.DropDownListFor(model => model.BloodTypeID,Model.BloodTypes,"Blood Type" ,new { @Id = "iselect-blood-type", @Class = "form-control" })
                     </div>
                     <h4>Birthdate:</h4>
                     <div class='form-group'>
                         <div class="col-xs-4 selectContainer">
-                            <select class="form-control" name="day">
-                                <option value="" disabled selected>Day</option>
-                            </select>
+                            @Html.DropDownListFor(model => model.Day, Model.Days,"Day",new { @Id = "iselect-day", @Class = "form-control" })
                         </div>
                         <div class="col-xs-4 selectContainer">
-                            <select class="form-control" name="month">
-                                <option value="" disabled selected>Month</option>
-                            </select>
+                            @Html.DropDownListFor(model => model.Month, Model.Months, "Month", new { @Id = "iselect-month", @Class = "form-control" })
                         </div>
                         <div class="col-xs-4 selectContainer">
-                            <select class="form-control" name="year">
-                                <option value="" disabled selected>Year</option>
-                            </select>
+                            @Html.DropDownListFor(model => model.Year, Model.Years, "Year", new { @Id = "iselect-year", @Class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -81,40 +87,24 @@
                 <div class="col-md-4">
                     <h4>Gender:</h4>
                     <span class="cspn-radio-btn">
-                        <input id="iradio-gender-male" type="radio" name="radio-gender">
+                        @Html.RadioButtonFor(model => model.IsMale,true, new { @Id = "iradio-gender-male" })
                         <label>Male</label>
                     </span>
                     <span class="cspn-radio-btn">
-                        <input id="iradio-gender-female" type="radio" name="radio-gender">
+                        @Html.RadioButtonFor(model => model.IsMale,false, new { @Id = "iradio-gender-female" })
                         <label>Female</label>
                     </span>
-                    <span class="cspn-radio-btn">
-                        <input id="iradio-gender-other" type="radio" name="radio-gender">
-                        <label>Other</label>
-                    </span>
                     <div class="file-loading">
-                        <b><label>National ID</label></b>
-                        <input id="ifile-national-id" type="file">
+                        <b>@Html.LabelFor(model => model.NationalIDPhoto)</b>
+                        @Html.TextBoxFor(model => model.NationalIDPhoto,new { @Type = "file" , @Id = "ifile-national-id" })
                     </div>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <h4>Specialty:</h4>
-                    <span class="cspn-radio-btn">
-                        <input id="iradio-specialty-none" type="radio" name="radio-specialty" checked="checked">
-                        <label>None</label>
-                    </span>
-                    <span class="cspn-radio-btn">
-                        <input id="iradio-specialty-doc" type="radio" name="radio-specialty">
-                        <label>Doctor</label>
-                    </span>
-                    <span class="cspn-radio-btn">
-                        <input id="iradio-specialty-pharmacist" type="radio" name="radio-specialty">
-                        <label>Pharmacist</label>
-                    </span>
+                    @Html.DropDownListFor(model => model.SpecialityID, Model.Specialities, "Speciality", new { @Id = "iselect-speciality" , @Class = "form-control" })
                     <div class="file-loading">
-                        <b><label>Profession license</label></b>
-                        <input id="ifile-license" type="file">
+                        <b>@Html.LabelFor(model => model.License)</b>
+                        @Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license" })
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -128,6 +118,12 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/datevalidator.js"></script>
 
 </body>
 </html>

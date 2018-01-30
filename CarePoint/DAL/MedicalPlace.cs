@@ -27,6 +27,8 @@ namespace DAL
     
         public long ID { get; set; }
         public string Name { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
         public long TypeID { get; set; }
         public System.Data.Entity.Spatial.DbGeography Location { get; set; }
         public byte[] Photo { get; set; }
@@ -34,6 +36,7 @@ namespace DAL
         public byte[] Permission { get; set; }
         public string Description { get; set; }
         public Nullable<long> OwnerID { get; set; }
+        
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CareRequest> CareRequests { get; set; }

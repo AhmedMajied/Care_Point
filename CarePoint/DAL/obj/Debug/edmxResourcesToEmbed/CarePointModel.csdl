@@ -120,7 +120,6 @@
     <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
     <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
     <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="BloodTypeID" Type="Int64" />
@@ -140,6 +139,9 @@
     <NavigationProperty Name="ServiceRatings" Relationship="Self.FK_ServiceRatings_Citizens" FromRole="Citizens" ToRole="ServiceRatings" />
     <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_Citizens" FromRole="Citizens" ToRole="SOSs" />
     <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Citizens" ToRole="Roles" />
+    <Property Name="NationalIDNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
+    <Property Name="NationalIDPhoto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Disease">
     <Key>
@@ -200,6 +202,8 @@
     <NavigationProperty Name="Services" Relationship="Self.FK_Services_MedicalGroup" FromRole="MedicalPlace" ToRole="Services" />
     <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_MedicalPlace" FromRole="MedicalPlace" ToRole="SOSs" />
     <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="MedicalPlaceType">
     <Key>

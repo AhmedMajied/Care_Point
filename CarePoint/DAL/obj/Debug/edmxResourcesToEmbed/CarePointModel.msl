@@ -97,13 +97,15 @@
     <EntitySetMapping Name="Citizens">
       <EntityTypeMapping TypeName="IsTypeOf(CarePointModel.Citizen)">
         <MappingFragment StoreEntitySet="Citizens">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="NationalIDPhoto" ColumnName="NationalIDPhoto" />
+          <ScalarProperty Name="NationalIDNumber" ColumnName="NationalIDNumber" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
           <ScalarProperty Name="Photo" ColumnName="Photo" />
           <ScalarProperty Name="BloodTypeID" ColumnName="BloodTypeID" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
           <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
@@ -158,6 +160,8 @@
     <EntitySetMapping Name="MedicalPlaces">
       <EntityTypeMapping TypeName="CarePointModel.MedicalPlace">
         <MappingFragment StoreEntitySet="MedicalPlace">
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TypeID" ColumnName="TypeID" />

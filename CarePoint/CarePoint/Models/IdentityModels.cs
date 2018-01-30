@@ -13,6 +13,13 @@ namespace CarePoint.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser<long,CPUserLogin,CPUserRole,CPUserClaim>
     {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public Nullable<long> BloodTypeID { get; set; }
+        public byte[] Photo { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string NationalIDNumber { get; set; }
+        public byte[] NationalIDPhoto { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser,long> manager)
         {
@@ -21,6 +28,12 @@ namespace CarePoint.Models
             // Add custom user claims here
             return userIdentity;
         }
+    }
+
+    public class Specialist : ApplicationUser
+    {
+        public byte[] ProfessionLicense { get; set; }
+        public long SpecialityID { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser,CPRole,long,CPUserLogin,CPUserRole,CPUserClaim>
@@ -39,11 +52,11 @@ namespace CarePoint.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicationUser>().ToTable("Citizens");
+            modelBuilder.Entity<Specialist>().ToTable("Specialists");
             modelBuilder.Entity<CPRole>().ToTable("Roles");
             modelBuilder.Entity<CPUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<CPUserClaim>().ToTable("UserClaims");
             modelBuilder.Entity<CPUserRole>().ToTable("UserRoles");
-
             modelBuilder.Entity<CPRole>().Property(r => r.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<CPUserClaim>().Property(r => r.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 

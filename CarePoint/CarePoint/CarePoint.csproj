@@ -171,6 +171,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -200,6 +203,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
+    <Compile Include="Extensions\CalendarDay.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -245,6 +249,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

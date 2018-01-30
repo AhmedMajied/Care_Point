@@ -44,17 +44,30 @@ namespace BLL
 
             //not tested and need to be checked 
         }
-
-        public ICollection<Attachment> GetPatientAttachments(long citizenID)
+        
+        public ICollection<Speciality> GetSpecialities()
         {
-            return DBEntities.Attachments.Where(attachment => attachment.CitizenID == citizenID).ToList();
-            // not tested
+            return DBEntities.Specialities.ToList();
         }
 
-        public ICollection<HistoryRecord> GetPatientHistory(long citizenID)
+        public ICollection<BloodType> GetBloodTypes()
         {
-            return DBEntities.HistoryRecords.Where(record => record.CitizenID == citizenID).ToList();
-            // not tested
+            return DBEntities.BloodTypes.ToList();
+        }
+
+        public bool IsEmailExists(string email)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.Email == email);
+        }
+
+        public bool IsPhoneNumberExists(string phone)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.PhoneNumber == phone);
+        }
+
+        public bool IsNationalIDExists(string id)
+        {
+            return DBEntities.Citizens.Any(citizen => citizen.NationalIDNumber == id);
         }
         
     }

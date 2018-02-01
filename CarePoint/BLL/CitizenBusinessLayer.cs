@@ -44,19 +44,7 @@ namespace BLL
 
             //not tested and need to be checked 
         }
-
-        public ICollection<Attachment> GetPatientAttachments(long citizenID)
-        {
-            return DBEntities.Attachments.Where(attachment => attachment.CitizenID == citizenID).ToList();
-            // not tested
-        }
-
-        public ICollection<HistoryRecord> GetPatientHistory(long citizenID)
-        {
-            return DBEntities.HistoryRecords.Where(record => record.CitizenID == citizenID).ToList();
-            // not tested
-        }
-
+        
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();

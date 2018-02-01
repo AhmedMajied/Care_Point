@@ -1,10 +1,10 @@
 ﻿@using Extensions
 @using DAL
+@model ICollection<Attachment>
 @{
     ViewBag.Title = "Attachements";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{ Citizen user = User.Identity.GetCitizen();}
 <div class="container-fluid">
     <ul class="nav nav-pills">
         <li class="active"><a id="itab-analysis" href="#div-analysis-tab" data-toggle="tab">Analysis</a></li>
@@ -14,9 +14,9 @@
     <div class="tab-content">
         <div id="idiv-analysis-tab" class="tab-pane fade in active">
             <ul class="list-group">
-            @{var analysisAttachments = user.Attachments.Where(attachment => attachment.AttachmentType.Name.Equals("Analysis")); }
-            @{var radiolodyAttachments = user.Attachments.Where(attachment => attachment.AttachmentType.Name.Equals("Radiology")); }
-            @{var otherAttachments = user.Attachments.Except(analysisAttachments).Except(radiolodyAttachments); }
+            @{var analysisAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Analysis")); }
+            @{var radiolodyAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Radiology")); }
+            @{var otherAttachments = Model.Except(analysisAttachments).Except(radiolodyAttachments); }
             @foreach (var attachment in analysisAttachments)
             {
                 <li class="list-group-item">
@@ -30,7 +30,7 @@
                             {<span class="fa fa-file-word-o fa-fw"></span>}
                             else
                             {<span class="fa fa-file-alt-o fa-fw"></span>}
-                            <a href="@attachment.filePath">@attachment.fileName</a>
+                            @Html.ActionLink(attachment.fileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.filePath, fileName = attachment.filePath }, null)
                         </div>
                         <div class="col-md-3">@attachment.Specialist.Name</div>
                         <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
@@ -55,7 +55,7 @@
                             {<span class="fa fa-file-word-o fa-fw"></span>}
                             else
                             {<span class="fa fa-file-alt-o fa-fw"></span>}
-                            <a href="@attachment.filePath">@attachment.fileName</a>
+                            @Html.ActionLink(attachment.fileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.filePath, fileName = attachment.filePath }, null)
                         </div>
                         <div class="col-md-3">@attachment.Specialist.Name</div>
                         <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
@@ -81,7 +81,7 @@
                                 {<span class="fa fa-file-word-o fa-fw"></span>}
                                 else
                                 {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                <a href="@attachment.filePath">@attachment.fileName</a>
+                                @Html.ActionLink(attachment.fileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.filePath, fileName = attachment.filePath }, null)
                             </div>
                             <div class="col-md-3">@attachment.Specialist.Name</div>
                             <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>

@@ -1,6 +1,7 @@
 ﻿@using Extensions
 @using CarePoint.Custom_HtmlHelpers
 @using DAL
+@model ICollection<HistoryRecord>
 @{
     ViewBag.Title = "Carepoint";
 }
@@ -8,7 +9,6 @@
     <link rel="stylesheet" href="~/Content/citizen-medical-history.css" />
 }
 <body>
-    @{ var user = User.Identity.GetCitizen();}
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
@@ -60,7 +60,7 @@
             </thead>
             <tbody>
                 @{int cnt = 1;}
-                @foreach (var record in user.HistoryRecords)
+                @foreach (var record in Model)
                 {
                     string symptoms = record.Symptoms.FirstOrDefault().Name;
                     foreach(var symptom in record.Symptoms.Skip(1))
@@ -78,7 +78,7 @@
                         medicines += ',' + dose.Medicine.Name + "(" + dose.Description + ")";
                     }
                         
-                    <tr id="itbl-row-@cnt++" onclick="populatePanel('@Convert.ToBase64String(record.MedicalPlace.Photo)','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString()','@symptoms','@diseases','@medicines','@record.Remarks');">
+                    <tr id="itbl-row-@cnt++" onclick="populatePanel('@Convert.ToBase64String(record.MedicalPlace.Photo)','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString("dd/MM/yyyy")','@symptoms','@diseases','@medicines','@record.Remarks');">
                         <td>@record.Date.Date.ToString()</td>
                         <td>@record.MedicalPlace.Name</td>
                         <td>@record.Specialist.Name</td>

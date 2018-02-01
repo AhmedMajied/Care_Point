@@ -14,33 +14,6 @@ namespace CarePoint.Controllers
     {
         public ActionResult Index()
         {
-            //var db = new DAL.CarePointEntities();
-            //var ct = db.Citizens.FirstOrDefault(c => c.Id == 1);
-            //FileInfo fileInfo = new FileInfo("F:\\1432320.jpg");
-            //var mp = new MedicalPlace()
-            //{
-            //    Name = "Nile Hospital",
-            //    Description = "hospital",
-            //    Location = DbGeography.FromText("POINT(0 0)"),
-            //    TypeID = 1,
-            //    OwnerID = 15
-            //};
-            //// The byte[] to save the data in
-            //byte[] data = new byte[fileInfo.Length];
-
-            //// Load a filestream and put its content into the byte[]
-            //using (FileStream fs = fileInfo.OpenRead())
-            //{
-            //    fs.Read(data, 0, data.Length);
-            //    mp.Photo = data;
-            //    mp.Permission = data;
-            //    db.MedicalPlaces.Add(mp);
-            //    db.SaveChanges();
-            //}
-
-            //// Delete the temporary file
-            ////fileInfo.Delete();
-
             return View();
         }
 
@@ -58,14 +31,7 @@ namespace CarePoint.Controllers
             return View();
         }
 
-        public ActionResult patientAttachments(long citizenID)
-        {
-            CitizenBusinessLayer businessLayer = new CitizenBusinessLayer();
-            ICollection<Attachment> patientAttachments = businessLayer.GetPatientAttachments(citizenID);
-            
-            return View(patientAttachments);
-        }
-
+        
         [HttpPost]
         public string uploadFile(HttpPostedFileBase file)
         {

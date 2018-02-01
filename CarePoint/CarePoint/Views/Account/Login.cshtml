@@ -42,10 +42,10 @@
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-group">
-                            @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
                             @Html.TextBoxFor(model => model.EmailOrPhone, new { @Id = "itext-mail-phone", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Email or Phone" })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
                             @Html.PasswordFor(model => model.Password, new { @Id = "ipasswd", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Password" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
                             @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember" })
                             @Html.LabelFor(model => model.RememberMe)
                             <br />

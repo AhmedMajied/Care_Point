@@ -23,7 +23,6 @@
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" , enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken();
-            @Html.ValidationSummary("", new { @class = "text-danger" })
 
             <div class="row">
                 <div class="col-md-1"></div>
@@ -31,26 +30,32 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.FirstName, new { @Id = "itext-first-name", @Class = "form-control", @Placeholder = "First Name" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "",new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.MiddleName, new { @Id = "itext-middle-name", @Class = "form-control", @Placeholder = "Middle Name" })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.LastName, new { @Id = "itext-last-name", @Class = "form-control", @Placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.NationalIDNumber, new { @Id = "itext-national-id", @Class = "form-control", @Placeholder = "National Id Number" })
+                        @Html.ValidationMessageFor(model => model.NationalIDNumber, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                         @Html.TextBoxFor(model => model.Email, new { @Id = "itext-mail", @Class = "form-control", @Placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                         @Html.TextBoxFor(model => model.Phone, new { @Id = "itext-phone", @Class = "form-control", @Placeholder = "Phone Number" })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @Class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -58,14 +63,17 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         @Html.PasswordFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         @Html.PasswordFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         @Html.DropDownListFor(model => model.BloodTypeID,Model.BloodTypes,"Blood Type" ,new { @Id = "iselect-blood-type", @Class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BloodTypeID, "", new { @Class = "text-danger" })
                     </div>
                     <h4>Birthdate:</h4>
                     <div class='form-group'>
@@ -78,6 +86,7 @@
                         <div class="col-xs-4 selectContainer">
                             @Html.DropDownListFor(model => model.Year, Model.Years, "Year", new { @Id = "iselect-year", @Class = "form-control" })
                         </div>
+                        @Html.ValidationMessageFor(model => model.Day, "", new { @Class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -97,14 +106,17 @@
                     <div class="file-loading">
                         <b>@Html.LabelFor(model => model.NationalIDPhoto)</b>
                         @Html.TextBoxFor(model => model.NationalIDPhoto,new { @Type = "file" , @Id = "ifile-national-id" })
+                        @Html.ValidationMessageFor(model => model.NationalIDPhoto, "", new { @Class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.SpecialityID, Model.Specialities, "Speciality", new { @Id = "iselect-speciality" , @Class = "form-control" })
-                    <div class="file-loading">
+                    @Html.ValidationMessageFor(model => model.SpecialityID, "", new { @Class = "text-danger" })
+                   <div class="file-loading">
                         <b>@Html.LabelFor(model => model.License)</b>
                         @Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license" })
+                        @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-1"></div>

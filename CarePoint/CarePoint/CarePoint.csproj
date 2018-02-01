@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
@@ -247,6 +248,7 @@
     <Content Include="Images\logo-navbar.ico" />
     <Content Include="Images\logo-sign up.png" />
     <Content Include="Images\medical-history.png" />
+    <Content Include="Images\notfound.png" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\plus.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -264,7 +266,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\medical-history.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -286,7 +287,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -309,6 +309,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\uploadFile.cshtml" />
     <Content Include="Views\Home\patientAttachments.cshtml" />
+    <Content Include="Views\MedicalHistory\Attachments.cshtml" />
+    <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,11 +11,11 @@
         <li>
             <a href="/ManageController/Index" id="ilink-usr-profile" title="Manage">
                 @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iuser-img" })
-                Name @User.Identity.GetCitizen().Name
+                @User.Identity.GetCitizen().Name
             </a>
         </li>
-        <li><a id="ilink-medical-history" href="#"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-attachments" href="#"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@User.Identity.GetUserId()"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
+        <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@User.Identity.GetUserId()"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
         <li><a id="ilink-relatives" href="#"><span class="fa fa-users fa-2x" style="color: #ffffff;"></span></a></li>
         <li><a id="ilink-prognosis" href="#"><span class="fa fa-heart-o fa-2x" style="color: #ffffff;"></span></a></li>
         <li><a id="ilink-notif" href="#"><span class="fa fa-bell fa-2x" style="color: #ffffff;"></span></a></li>
@@ -27,6 +27,5 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

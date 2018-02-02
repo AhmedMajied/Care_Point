@@ -10,11 +10,10 @@ public class Main
 	public static void main(String[]args) throws InterruptedException, IOException
 	{
 		// start test login
-		/*String login=Account.Login();
+	/*	String login=Account.Login();
 		
 		Files.write(Paths.get("loginResult.txt"), login.getBytes(), StandardOpenOption.CREATE);
-		//  end test login
-		*/
+		//  end test login*/
 		// start test signUp
 		String signUp=Account.SignUp();
 		Files.write(Paths.get("signUpResult.txt"), signUp.getBytes(), StandardOpenOption.CREATE);

@@ -15,21 +15,20 @@ public class Account
 		int numOfRows=sheet.getLastRowNum();
 		String mail,password,state;
 		String results="";
-		firefox.findElement(By.id("loginLink")).click();
 		for(int row=0;row<=numOfRows;row++)
 		{
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			String url=firefox.getCurrentUrl();
-			firefox.findElement(By.id("Email")).clear();
-			firefox.findElement(By.id("Password")).clear();
+			firefox.findElement(By.id("itext-mail-phone")).clear();
+			firefox.findElement(By.id("ipasswd")).clear();
 			
 			mail=sheet.getRow(row).getCell(0).getStringCellValue();
 			password=sheet.getRow(row).getCell(1).getStringCellValue();
 			state=sheet.getRow(row).getCell(2).getStringCellValue();
 			
-			firefox.findElement(By.id("Email")).sendKeys(mail);
-			firefox.findElement(By.id("Password")).sendKeys(password);
-			firefox.findElement(By.cssSelector("input[type='submit'][value='Log in']")).click();
+			firefox.findElement(By.id("itext-mail-phone")).sendKeys(mail);
+			firefox.findElement(By.id("ipasswd")).sendKeys(password);
+			firefox.findElement(By.id("ibtn-login")).click();
 			Thread.sleep(10000);
 			String currentUrl=firefox.getCurrentUrl();
 			
@@ -37,7 +36,6 @@ public class Account
 			{
 				firefox.findElement(By.id("ilink-logout")).click();
 				Thread.sleep(3000);
-				firefox.findElement(By.id("loginLink")).click();
 			}
 			// pass means logged in to website
 			if((url.equals(currentUrl)&&(state.equals("not")))||(!url.equals(currentUrl))&&(state.equals("pass")))
@@ -60,14 +58,30 @@ public class Account
 		int numOfRows=sheet.getLastRowNum()+1;
 		String result="";
 		Thread.sleep(3000);
-		firefox.findElement(By.id("registerLink")).click();
+		firefox.findElement(By.id("ibtn-sign-up")).click();
 		Thread.sleep(3000);
 		String url=firefox.getCurrentUrl();
 		for(int row=0;row<numOfRows;row++)
 		{
 			String fName,mName,lName,nationalIDNum,email,phone,gender,nationalPhoto,
 				   password,cPassword,bloodType,date,speciality,professionLicense,state;
-			Thread.sleep(7000);
+			Thread.sleep(10000);
+			
+			firefox.findElement(By.id("itext-first-name")).clear();
+			firefox.findElement(By.id("itext-middle-name")).clear();
+			firefox.findElement(By.id("itext-last-name")).clear();
+			firefox.findElement(By.id("itext-national-id")).clear();
+			firefox.findElement(By.id("ifile-national-id")).clear();
+			firefox.findElement(By.id("itext-mail")).clear();
+			firefox.findElement(By.id("itext-phone")).clear();
+			firefox.findElement(By.id("itext-passwd")).clear();
+			firefox.findElement(By.id("itext-passwd-confirm")).clear();
+			firefox.findElement(By.id("iselect-blood-type")).sendKeys("Blood Type");
+			firefox.findElement(By.id("iselect-day")).sendKeys("Day");
+			firefox.findElement(By.id("iselect-month")).sendKeys("Month");
+			firefox.findElement(By.id("iselect-year")).sendKeys("Year");
+			firefox.findElement(By.id("iselect-speciality")).sendKeys("Speciality");
+			firefox.findElement(By.id("ifile-license")).clear();
 			
 			fName=sheet.getRow(row).getCell(0).getStringCellValue();
 			mName=sheet.getRow(row).getCell(1).getStringCellValue();
@@ -143,27 +157,9 @@ public class Account
 				catch (NoSuchElementException e){}
 				Thread.sleep(4000);
 				try {
-					firefox.findElement(By.id("registerLink")).click();
+					firefox.findElement(By.id("ibtn-sign-up")).click();
 				}
 				catch (NoSuchElementException e){}
-			}
-			else
-			{
-				firefox.findElement(By.id("itext-first-name")).clear();
-				firefox.findElement(By.id("itext-middle-name")).clear();
-				firefox.findElement(By.id("itext-last-name")).clear();
-				firefox.findElement(By.id("itext-national-id")).clear();
-				firefox.findElement(By.id("ifile-national-id")).clear();
-				firefox.findElement(By.id("itext-mail")).clear();
-				firefox.findElement(By.id("itext-phone")).clear();
-				firefox.findElement(By.id("itext-passwd")).clear();
-				firefox.findElement(By.id("itext-passwd-confirm")).clear();
-				firefox.findElement(By.id("iselect-blood-type")).sendKeys("Blood Type");
-				firefox.findElement(By.id("iselect-day")).sendKeys("Day");
-				firefox.findElement(By.id("iselect-month")).sendKeys("Month");
-				firefox.findElement(By.id("iselect-year")).sendKeys("Year");
-				firefox.findElement(By.id("iselect-speciality")).sendKeys("Speciality");
-				firefox.findElement(By.id("ifile-license")).clear();
 			}
 			Thread.sleep(20000);
 			

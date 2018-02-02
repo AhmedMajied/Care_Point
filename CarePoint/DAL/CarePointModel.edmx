@@ -22,8 +22,8 @@
           <Property Name="IsRead" Type="bit" />
           <Property Name="SpecialistID" Type="bigint" Nullable="false" />
           <Property Name="CitizenID" Type="bigint" Nullable="false" />
-          <Property Name="filePath" Type="varchar" MaxLength="1000" Nullable="false" />
-          <Property Name="fileName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="FilePath" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
         <EntityType Name="AttachmentTypes">
           <Key>
@@ -1579,8 +1579,8 @@
           <NavigationProperty Name="AttachmentType" Relationship="Self.FK_Attachments_AttachmentTypes" FromRole="Attachments" ToRole="AttachmentTypes" />
           <NavigationProperty Name="Citizen" Relationship="Self.FK_Attachments_Citizens" FromRole="Attachments" ToRole="Citizens" />
           <NavigationProperty Name="Specialist" Relationship="Self.FK_Attachments_Specialists" FromRole="Attachments" ToRole="Specialists" />
-          <Property Name="filePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="fileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FilePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AttachmentType">
           <Key>
@@ -3075,8 +3075,8 @@
           <EntitySetMapping Name="Attachments">
             <EntityTypeMapping TypeName="CarePointModel.Attachment">
               <MappingFragment StoreEntitySet="Attachments">
-                <ScalarProperty Name="fileName" ColumnName="fileName" />
-                <ScalarProperty Name="filePath" ColumnName="filePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />

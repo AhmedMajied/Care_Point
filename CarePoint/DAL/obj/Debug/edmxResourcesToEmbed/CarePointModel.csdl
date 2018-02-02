@@ -21,8 +21,8 @@
     <NavigationProperty Name="AttachmentType" Relationship="Self.FK_Attachments_AttachmentTypes" FromRole="Attachments" ToRole="AttachmentTypes" />
     <NavigationProperty Name="Citizen" Relationship="Self.FK_Attachments_Citizens" FromRole="Attachments" ToRole="Citizens" />
     <NavigationProperty Name="Specialist" Relationship="Self.FK_Attachments_Specialists" FromRole="Attachments" ToRole="Specialists" />
-    <Property Name="filePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="fileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="FilePath" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="AttachmentType">
     <Key>

@@ -12,8 +12,8 @@
     <EntitySetMapping Name="Attachments">
       <EntityTypeMapping TypeName="CarePointModel.Attachment">
         <MappingFragment StoreEntitySet="Attachments">
-          <ScalarProperty Name="fileName" ColumnName="fileName" />
-          <ScalarProperty Name="filePath" ColumnName="filePath" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TypeID" ColumnName="TypeID" />
           <ScalarProperty Name="Date" ColumnName="Date" />

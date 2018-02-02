@@ -48,8 +48,8 @@ namespace CarePoint.Controllers
 
                         Attachment attachment = new Attachment
                         {
-                            fileName = file.FileName,
-                            filePath = ("~/Content/files/") + file.FileName
+                            FileName = file.FileName,
+                            FilePath = ("~/Content/files/") + file.FileName
 
                             // TODO you should assign rest of attributes 
                         };

@@ -17,8 +17,8 @@
     <Property Name="IsRead" Type="bit" />
     <Property Name="SpecialistID" Type="bigint" Nullable="false" />
     <Property Name="CitizenID" Type="bigint" Nullable="false" />
-    <Property Name="filePath" Type="varchar" MaxLength="1000" Nullable="false" />
-    <Property Name="fileName" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="FilePath" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="FileName" Type="varchar" MaxLength="1000" Nullable="false" />
   </EntityType>
   <EntityType Name="AttachmentTypes">
     <Key>

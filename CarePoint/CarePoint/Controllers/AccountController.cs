@@ -88,10 +88,12 @@ namespace CarePoint.Controllers
             {
                 return View(model);
             }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            string email = model.EmailOrPhone;
+            if (model.EmailOrPhone.All(char.IsDigit) && citizenBusinessLayer.IsPhoneNumberExists(model.EmailOrPhone))
+            {
+                email = citizenBusinessLayer.GetCitizenByPhone(model.EmailOrPhone).Email;
+            }
+            var result = await SignInManager.PasswordSignInAsync(email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -235,7 +237,7 @@ namespace CarePoint.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Specialist
+                var specialist = new Specialist
                 {
                     UserName = model.Email,
                     Email = model.Email,
@@ -244,25 +246,36 @@ namespace CarePoint.Controllers
                     BloodTypeID = model.BloodTypeID,
                     NationalIDNumber = model.NationalIDNumber,
                     DateOfBirth = model.DateOfBirth,
-                    PhoneNumber = model.Phone
+                    PhoneNumber = model.Phone,
+                    SpecialityID = model.SpecialityID
+                };
+                var citizen = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.FirstName + " " + model.MiddleName + " " + model.LastName,
+                    Gender = model.IsMale ? "Male" : "Female",
+                    BloodTypeID = model.BloodTypeID,
+                    NationalIDNumber = model.NationalIDNumber,
+                    DateOfBirth = model.DateOfBirth,
+                    PhoneNumber = model.Phone,
                 };
                 using (var binaryReader = new BinaryReader(model.NationalIDPhoto.InputStream))
                 {
-                    user.NationalIDPhoto = binaryReader.ReadBytes(model.NationalIDPhoto.ContentLength);
+                    specialist.NationalIDPhoto = binaryReader.ReadBytes(model.NationalIDPhoto.ContentLength);
                 }
+                citizen.NationalIDPhoto = specialist.NationalIDPhoto;
                 if (model.SpecialityID != -1)
                 {
-                    user.SpecialityID = model.SpecialityID;
                     using (var binaryReader = new BinaryReader(model.License.InputStream))
                     {
-                        user.ProfessionLicense = binaryReader.ReadBytes(model.License.ContentLength);
+                        specialist.ProfessionLicense = binaryReader.ReadBytes(model.License.ContentLength);
                     }
                 }
-
-                var result = await UserManager.CreateAsync(model.SpecialityID != -1 ? user : (ApplicationUser)user, model.Password);
+                var result = await UserManager.CreateAsync(model.SpecialityID != -1 ? specialist : citizen, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(model.SpecialityID != -1 ? user : (ApplicationUser)user, isPersistent: false, rememberBrowser: false);
+                    await SignInManager.SignInAsync(model.SpecialityID != -1 ? specialist : citizen, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -500,7 +513,7 @@ namespace CarePoint.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

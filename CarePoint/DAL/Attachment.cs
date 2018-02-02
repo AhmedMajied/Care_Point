@@ -20,8 +20,8 @@ namespace DAL
         public Nullable<bool> IsRead { get; set; }
         public long SpecialistID { get; set; }
         public long CitizenID { get; set; }
-        public string filePath { get; set; }
-        public string fileName { get; set; }
+        public string FilePath { get; set; }
+        public string FileName { get; set; }
     
         public virtual AttachmentType AttachmentType { get; set; }
         public virtual Citizen Citizen { get; set; }

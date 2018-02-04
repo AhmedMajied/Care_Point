@@ -1,19 +1,19 @@
 .cinp-login-frm {
-    border-color: #FFFFFF;
+    border-color: #ffffff;
     border-radius: 15px 0%;
     margin-bottom: 5%;
 }
 
 .cdiv-service{
     display: inline;
-    border-radius: 1.5em;
+    border-radius: 1em;
     padding: 1%;
     line-height: 2em;
 }
 
-.cdiv-service:hover{
-    background-color: #FFFFFF;
-}
+    .cdiv-service:hover {
+        background-color: #d7f0fc;
+    }
 
 .cimg-service{
     float: left;
@@ -46,8 +46,6 @@
     margin-left: 20%;
     padding: 10%;
     padding-bottom: 5%;
-    box-shadow: -.5px .5px 10px .5px #000;
-    
 }
 
 #ibtn-login{
@@ -69,7 +67,6 @@
     margin-left: 15%;
     margin-top: 10%;
     margin-bottom: 10%;
-    text-shadow: 0px 0px 5px #000;
 }
 
 #ibtn-sign-up {
@@ -77,7 +74,6 @@
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 4%;
-    box-shadow: -.5px .5px 10px .5px #000;
 }
 
 #idiv-middle{

@@ -28,32 +28,27 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.FirstName, new { @Id = "itext-first-name", @Class = "form-control", @Placeholder = "First Name" })
                         @Html.ValidationMessageFor(model => model.FirstName, "",new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.MiddleName, new { @Id = "itext-middle-name", @Class = "form-control", @Placeholder = "Middle Name" })
                         @Html.ValidationMessageFor(model => model.MiddleName, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.LastName, new { @Id = "itext-last-name", @Class = "form-control", @Placeholder = "Last Name" })
                         @Html.ValidationMessageFor(model => model.LastName, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.NationalIDNumber, new { @Id = "itext-national-id", @Class = "form-control", @Placeholder = "National Id Number" })
                         @Html.ValidationMessageFor(model => model.NationalIDNumber, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                        @Html.TextBoxFor(model => model.Email, new { @Id = "itext-mail", @Class = "form-control", @Placeholder = "Email" })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @Class = "text-danger" })
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-mobile fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.Phone, new { @Id = "itext-phone", @Class = "form-control", @Placeholder = "Phone Number" })
                         @Html.ValidationMessageFor(model => model.Phone, "", new { @Class = "text-danger" })
                     </div>
@@ -61,24 +56,29 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                        @Html.TextBoxFor(model => model.Email, new { @Id = "itext-mail", @Class = "form-control", @Placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @Class = "text-danger" })
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
                         @Html.PasswordFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
                         @Html.PasswordFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
                         @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @Class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        @Html.DropDownListFor(model => model.BloodTypeID,Model.BloodTypes,"Blood Type" ,new { @Id = "iselect-blood-type", @Class = "form-control" })
+                        <span class="input-group-addon"><i class="fa fa-tint fa-fw"></i></span>
+                        @Html.DropDownListFor(model => model.BloodTypeID, Model.BloodTypes, "Blood Type", new { @Id = "iselect-blood-type", @Class = "form-control" })
                         @Html.ValidationMessageFor(model => model.BloodTypeID, "", new { @Class = "text-danger" })
                     </div>
                     <h4>Birthdate:</h4>
                     <div class='form-group'>
                         <div class="col-xs-4 selectContainer">
-                            @Html.DropDownListFor(model => model.Day, Model.Days,"Day",new { @Id = "iselect-day", @Class = "form-control" })
+                            @Html.DropDownListFor(model => model.Day, Model.Days, "Day", new { @Id = "iselect-day", @Class = "form-control" })
                         </div>
                         <div class="col-xs-4 selectContainer">
                             @Html.DropDownListFor(model => model.Month, Model.Months, "Month", new { @Id = "iselect-month", @Class = "form-control" })
@@ -96,7 +96,7 @@
                 <div class="col-md-4">
                     <h4>Gender:</h4>
                     <span class="cspn-radio-btn">
-                        @Html.RadioButtonFor(model => model.IsMale,true, new { @Id = "iradio-gender-male" })
+                        @Html.RadioButtonFor(model => model.IsMale,false, new { @Id = "iradio-gender-male" })
                         <label>Male</label>
                     </span>
                     <span class="cspn-radio-btn">
@@ -121,7 +121,7 @@
                 </div>
                 <div class="col-md-1"></div>
             </div>
-            <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn-lg btn-primary" style="font-weight: bold;margin:20px"></center>
+            <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn btn-lg btn-primary" style="font-weight: bold; margin:20px"></center>
         }
     </div>
 

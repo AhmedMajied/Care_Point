@@ -8,3 +8,4 @@ E:\GP\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.xml
 E:\GP\CarePoint\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\DAL\obj\Debug\DAL.dll
 E:\GP\CarePoint\DAL\obj\Debug\DAL.pdb
+E:\GP\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache

@@ -113,10 +113,12 @@
             <p style="font-size: 1.5em;">If you have a suggestion or need help, we are here for you</p>
         </center>
         <div id="idiv-contact">
-            <input id="itext-mail" type="email" class="form-control cfrm-contact-inp" placeholder="Your email">
-            <input id="itext-subj" type="text" class="form-control cfrm-contact-inp" placeholder="Subject">
-            <textarea id="itextarea-msg" class="form-control input-lg cfrm-contact-inp" placeholder="How can we help you?" rows=7 cols=45 style='resize: none;'></textarea>
-            <center><input type="submit" id="ibtn-contact" class="btn btn-default" value="Send message"></center>
+            <form>
+                <input id="itext-mail" type="email" class="form-control cfrm-contact-inp" placeholder="Your email" required>
+                <input id="itext-subj" type="text" class="form-control cfrm-contact-inp" placeholder="Subject">
+                <textarea id="itextarea-msg" class="form-control input-lg cfrm-contact-inp" placeholder="How can we help you?" rows=7 cols=45 style='resize: none;' required></textarea>
+                <center><input type="submit" id="ibtn-contact" class="btn btn-default" value="Send message"></center>
+            </form>
         </div>
         <div style="display: table; margin: 0% auto;">
             <a id="ilink-facebook" class="clink-contact" target="blank" href="https://www.facebook.com/Carepoint-1771561712864359/">

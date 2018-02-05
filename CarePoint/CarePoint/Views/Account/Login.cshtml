@@ -43,14 +43,18 @@
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             @Html.TextBoxFor(model => model.EmailOrPhone, new { @Id = "itext-mail-phone", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Email or Phone" })
-                            @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
+                            <div class="cdiv-err">
+                                @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
+                            </div>
                             @Html.PasswordFor(model => model.Password, new { @Id = "ipasswd", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Password" })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
+                            <div class="cdiv-err">
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
+                            </div>
+                            
                             @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember" })
                             @Html.LabelFor(model => model.RememberMe)
                             <br />
                             <input id="ibtn-login" type="submit" value=" Sign in" class="cinp-login-frm btn btn-primary">
-                            <!--<a href="#">Recover account</a>-->
                         </div>
                     }
                 </div>
@@ -115,13 +119,13 @@
             <center><input type="submit" id="ibtn-contact" class="btn btn-default" value="Send message"></center>
         </div>
         <div style="display: table; margin: 0% auto;">
-            <a id="ilink-facebook" target="blank" href="https://www.facebook.com/Carepoint-1771561712864359/" style="color: #FFFFFF;">
+            <a id="ilink-facebook" class="clink-contact" target="blank" href="https://www.facebook.com/Carepoint-1771561712864359/">
                 <li class="fa fa-facebook fa-2x"></li>
             </a>
-            <a id="ilink-twitter" target="blank" href="https://twitter.com/CarePoint_Eg" style="color: #FFFFFF;">
+            <a id="ilink-twitter" class="clink-contact" target="blank" href="https://twitter.com/CarePoint_Eg">
                 <li class="fa fa-twitter fa-2x"></li>
             </a>
-            <a id="ilink-new-gplus" target="blank" href="https://plus.google.com/110436616662774730763" style="color: #FFFFFF;">
+            <a id="ilink-gplus" class="clink-contact" target="blank" href="https://plus.google.com/110436616662774730763">
                 <li class="fa fa-google-plus fa-2x"></li>
             </a>
         </div>

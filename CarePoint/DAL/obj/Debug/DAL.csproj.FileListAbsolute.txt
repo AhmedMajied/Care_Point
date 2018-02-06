@@ -9,3 +9,14 @@ E:\GP\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 E:\GP\CarePoint\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\DAL\obj\Debug\DAL.dll
 E:\GP\CarePoint\DAL\obj\Debug\DAL.pdb
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\DAL.dll.config
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\DAL.dll
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\DAL.pdb
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\EntityFramework.dll
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\EntityFramework.xml
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\obj\Debug\DAL.dll
+D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\DAL\obj\Debug\DAL.pdb

@@ -1,7 +1,7 @@
 .cinp-login-frm {
     border-color: #ffffff;
     border-radius: 15px 0%;
-    margin-bottom: 5%;
+    margin-bottom: 1em;
 }
 
 .cdiv-service{
@@ -11,9 +11,9 @@
     line-height: 2em;
 }
 
-    .cdiv-service:hover {
-        background-color: #d7f0fc;
-    }
+.cdiv-service:hover {
+    background-color: #d7f0fc;
+}
 
 .cimg-service{
     float: left;
@@ -23,6 +23,15 @@
 .cfrm-contact-inp{
     border-radius: 0em;
     margin-bottom: 2%;
+}
+
+.clink-contact{
+    color: #ffffff;
+    margin-right: 0.5em;
+}
+
+.clink-contact:hover {
+    color: #000000;
 }
 
 #ilink-logo{

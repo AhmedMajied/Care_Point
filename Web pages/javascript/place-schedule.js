@@ -7,7 +7,7 @@ $(document).ready(function () {
         if (this.value == 0) {
             $("#iselect-workday").prop('disabled', true);
             $("#ibtn-plus").prop('disabled', true);
-        } else {
+        } else{
             $("#iselect-workday").prop('disabled', false);
             $("#ibtn-plus").prop('disabled', false);
         }
@@ -25,5 +25,4 @@ $(document).ready(function () {
             $(this).find('.cinp-time').clockface('toggle');
         });
     });
-
 });

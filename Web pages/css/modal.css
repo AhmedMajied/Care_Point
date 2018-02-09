@@ -1,3 +1,16 @@
 .modal-title{
     font-weight: bold;
 }
+
+
+.cscrollbar-container
+{
+    height: 65vh;
+    max-height: 65vh;
+}
+
+.cscrollbar-modal::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #7cd67c;
+}

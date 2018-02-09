@@ -9,3 +9,13 @@
     float: none;
 }
 
+input[readonly]{
+    background-color: #ffffff !important;
+    text-align: center;
+}
+
+.cspn-time{
+    background-color: #c0fab5;
+    color: #5e5e5e;
+    font-size: 1.4em;
+}

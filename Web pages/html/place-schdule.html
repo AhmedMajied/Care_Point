@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/timepicker.js"></script>
+    <script src="../javascript/modal.js" type="application/javascript"></script>
     <script src="../javascript/place-schedule.js" type="application/javascript"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../css/timepicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/modal.css" />
     <link rel="stylesheet" type="text/css" href="../css/place-schedule.css" />
     <title>@depends on open page</title>
 </head>
 
-<body>
+<body class="cscrollbar-container cscrollbar">
     <div class="container-fluid">
         <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule">Edit schedule</button>
 
@@ -30,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
                         <div class="row">
                             <div class="col-md-6">
                                 <select id="iselect-service" class="form-control" name="service">
@@ -58,27 +62,23 @@
                         </div>
                         <h4 id="ih-curr-slots">Current workslots:</h4>
                         <div class="row">
-                            <div class="col-md-5">From</div>
-                            <div class="col-md-5">To</div>
+                            <div class="col-md-5"><b>From:</b></div>
+                            <div class="col-md-5"><b>To:</b></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" value="@currentStartTime 1"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
+                                    <div class='input-group date cdiv-time'>
+                                        <input type='text' class="form-control cinp-time" value="@currentStartTime 1" readonly/>
+                                        <span class="input-group-addon cspn-time"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" value="@currentEndTime 1"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
+                                    <div class='input-group date cdiv-time'>
+                                            <input type='text' class="form-control cinp-time" value="@currentEndTime 1" readonly/>
+                                            <span class="input-group-addon cspn-time"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -91,21 +91,17 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" value="@currentStartTime 2"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
+                                    <div class='input-group date cdiv-time'>
+                                            <input type='text' class="form-control cinp-time" value="@currentStartTime 2" readonly/>
+                                            <span class="input-group-addon cspn-time"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' class="form-control" value="@currentEndTime 2"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
+                                    <div class='input-group date cdiv-time'>
+                                            <input type='text' class="form-control cinp-time" value="@currentEndTime 2" readonly/>
+                                            <span class="input-group-addon cspn-time"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
                             </div>

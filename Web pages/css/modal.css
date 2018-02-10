@@ -1,12 +1,7 @@
-.modal-title{
-    font-weight: bold;
-}
-
-
-.cscrollbar-container
+.modal-body
 {
-    height: 65vh;
-    max-height: 65vh;
+    height: 72vh;
+    max-height: 72vh;
 }
 
 .cscrollbar-modal::-webkit-scrollbar-thumb

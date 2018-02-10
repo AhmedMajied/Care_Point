@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/timepicker.js"></script>
+    <script src="../javascript/modal.js" type="application/javascript"></script>
+    <script src="../javascript/place-profile-modal.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../css/timepicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="../css/edit-schedules.css" />
+    <link rel="stylesheet" type="text/css" href="../css/place-profile-modal.css" />
+    <title>@depends on open page</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule">Edit schedule</button>
+
+        <div id="imodal-schedule" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#itab-services" role="tab" data-toggle="tab">Services</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#itab-care-units" role="tab" data-toggle="tab">Care units</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#itab-schedules" role="tab" data-toggle="tab">Schedules</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="tab-content">
+                            <div id="itab-services" role="tabpanel" class="tab-pane active">@include edit-services.html here</div>
+                            <div id="itab-care-units" role="tabpanel" class="tab-pane">@include edit-care-units.html here</div>
+                            <div id="itab-schedules" role="tabpanel" class="tab-pane">@include edit-schedules.html here</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

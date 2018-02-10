@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-6">
+        <select id="iselect-service" class="form-control" name="service">
+            <option value="0" disabled selected>Choose service</option>
+            <option>@Service1</option>
+            <option>@Service2</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select id="iselect-workday" class="form-control" name="workday" disabled>
+            <option value="0" selected>Saturday</option>
+            <option value="1">Sunday</option>
+            <option value="2">Monday</option>
+            <option value="3">Tuesday</option>
+            <option value="4">Wednesday</option>
+            <option value="5">Thursday</option>
+            <option value="6">Friday</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button id="ibtn-plus" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="New workslot" disabled>
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+<h4 id="ih-curr-slots">Current workslots:</h4>
+<div class="row">
+    <div class="col-md-5">
+        <b>From:</b>
+    </div>
+    <div class="col-md-5">
+        <b>To:</b>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <div class='input-group date cdiv-time'>
+                <input type='text' class="form-control cinp-time" value="@currentStartTime 1" readonly/>
+                <span class="input-group-addon cspn-time">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <div class='input-group date cdiv-time'>
+                <input type='text' class="form-control cinp-time" value="@currentEndTime 1" readonly/>
+                <span class="input-group-addon cspn-time">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Remove workslot">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <div class='input-group date cdiv-time'>
+                <input type='text' class="form-control cinp-time" value="@currentStartTime 2" readonly/>
+                <span class="input-group-addon cspn-time">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <div class='input-group date cdiv-time'>
+                <input type='text' class="form-control cinp-time" value="@currentEndTime 2" readonly/>
+                <span class="input-group-addon cspn-time">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Remove workslot">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+</div>

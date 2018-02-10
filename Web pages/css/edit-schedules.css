@@ -2,13 +2,6 @@
     margin: 1em auto;
 }
 
-
-.cdiv-vcenter{
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-
 input[readonly]{
     background-color: #ffffff !important;
     text-align: center;

@@ -13,12 +13,24 @@ h4{
     margin-bottom: 1em;
 }
 
+.cfrm-sign-up-inp{
+    margin-bottom: 1em;
+}
+
 .input-group-addon{
     background-color: #dafffa;
 }
 
 .cspn-radio-btn{
     margin-left: 1em;
+}
+
+.cdiv-err{
+    margin-bottom: 1em;
+}
+
+#ifile-license, #ilbl-license{
+    display: none;
 }
 
 input[type=radio]{

@@ -1,0 +1,22 @@
+.cscrollbar-container
+{
+	overflow-y: auto;
+}
+
+::-webkit-scrollbar-track
+{
+	border-radius: 5em;
+	background-color: #ebdfdfa2;
+}
+
+::-webkit-scrollbar
+{
+    width: 0.6em;
+    background-color: #ebdfdfa2;
+}
+
+.cscrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 5em;
+	background-color: #a8aaaa;
+}

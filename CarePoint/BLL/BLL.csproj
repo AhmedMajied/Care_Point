@@ -49,12 +49,13 @@
   <ItemGroup>
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />
+    <Compile Include="MedicalPlaceBusinessLayer.cs" />
     <Compile Include="MedicineBusinessLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
-    <Project>{2d4039a1-1357-4cdf-8a90-cfe4db921bde}</Project>
+      <Project>{2d4039a1-1357-4cdf-8a90-cfe4db921bde}</Project>
       <Name>DAL</Name>
     </ProjectReference>
   </ItemGroup>

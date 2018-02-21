@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL;
+using CarePoint.Models;
 
 namespace CarePoint.Controllers
 {
@@ -35,6 +36,12 @@ namespace CarePoint.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult ProfilePage(long id)
+        {
+            MedicalPlaceProfileViewModel model = new MedicalPlaceProfileViewModel();
+            return View(model);
         }
     }
 }

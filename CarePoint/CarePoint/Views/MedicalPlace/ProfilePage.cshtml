@@ -15,28 +15,32 @@
 }
 
 <div class="container-fluid">
-    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule">Edit schedule</button>
+    @for (int i=0;i<Model.Services.Count;++i)
+        {
+            var service = Model.Services.ElementAt(i);
+    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule-@service.ID">Edit schedule</button>
 
-    <div id="imodal-schedule" class="modal fade" role="dialog">
+    <div id="imodal-schedule-@service.ID" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#itab-services" role="tab" data-toggle="tab">About service</a>
+                            <a href="#itab-services-@service.ID" role="tab" data-toggle="tab">About service</a>
                         </li>
                         <li role="presentation">
-                            <a href="#itab-schedules" role="tab" data-toggle="tab">Schedule</a>
+                            <a href="#itab-schedules-@service.ID" role="tab" data-toggle="tab">Schedule</a>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="tab-content">
-                        <div id="itab-services" role="tabpanel" class="tab-pane active">
+                        <div id="itab-services-@service.ID" role="tabpanel" class="tab-pane active">
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <input id="iinp-service-name" type="text" class="form-control" placeholder="Service name">
+                                    @Html.HiddenFor(model => model.Services.ElementAt(i),new { @Name = "Services[0].ID", @Value = service.ID })
+                                    @Html.TextBoxFor(model => model.Services.ElementAt(i),new { @Id = "iinp-service-name" + service.ID, @Class = "form-control", @Placeholder="Service name",@Name = "Services[0].Name", @Value = service.Name })
                                 </div>
                                 <div class="col-md-4">
                                     <input id="iinp-service-type" type="text" class="form-control" placeholder="Service type">
@@ -170,6 +174,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
 

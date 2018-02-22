@@ -388,16 +388,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TimeSlots">
-      <EntityTypeMapping TypeName="CarePointModel.TimeSlot">
-        <MappingFragment StoreEntitySet="TimeSlots">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Start" ColumnName="Start" />
-          <ScalarProperty Name="Finish" ColumnName="Finish" />
-          <ScalarProperty Name="WorkdayID" ColumnName="WorkdayID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserClaims">
       <EntityTypeMapping TypeName="CarePointModel.UserClaim">
         <MappingFragment StoreEntitySet="UserClaims">

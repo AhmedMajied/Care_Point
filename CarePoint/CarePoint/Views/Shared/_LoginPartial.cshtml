@@ -5,22 +5,29 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="/Manage/Index" id="ilink-usr-profile" title="Manage">
-                @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iuser-img" })
-                @User.Identity.GetCitizen().Name
-            </a>
-        </li>
-        <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@User.Identity.GetUserId()"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@User.Identity.GetUserId()"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-relatives" href="#"><span class="fa fa-users fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-prognosis" href="#"><span class="fa fa-heart-o fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-notif" href="#"><span class="fa fa-bell fa-2x" style="color: #ffffff;"></span></a></li>
-        <li><a id="ilink-logout" href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out fa-2x" style="color: #ffffff;"></span></a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@User.Identity.GetUserId()"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
+            <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@User.Identity.GetUserId()"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
+            <li><a id="ilink-relatives" href="#"><span class="fa fa-users fa-2x" style="color: #ffffff;"></span></a></li>
+            <li><a id="ilink-prognosis" href="#"><span class="fa fa-heart-o fa-2x" style="color: #ffffff;"></span></a></li>
+            <li><a id="ilink-notif" href="#"><span class="fa fa-bell fa-2x" style="color: #ffffff;"></span></a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown"  style="background-color: #21c2eb; color: #ffffff;">
+                    @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iuser-img" })
+                    <span class="fa fa-chevron-down fa-fw"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a>@User.Identity.GetCitizen().Name</a></li>
+                    <li class="divider"></li>
+                    <li><a href="@Link-to-download-patient-card">Get my card</a></li>
+                    <li><a href="/Manage/Index" id="ilink-usr-profile">Account settings</a></li>
+                    <li class="divider"></li>
+                    <li><a id="ilink-logout" href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out fa-fw"></span>Logout</a></li>
+                </ul>
+            </li>
+        </ul>
     }
 }
 else

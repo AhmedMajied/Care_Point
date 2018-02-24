@@ -8,13 +8,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="../javascript/file-dialog.js" type="application/javascript"></script>
+    <script src="../javascript/tooltip.js" type="application/javascript"></script>
     <script src="../javascript/sos.js" type="application/javascript"></script>
     <script src="../javascript/citizen-medical history.js" type="application/javascript"></script>
+    <script src="../javascript/current-patient.js" type="application/javascript"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/navbar.css" />
     <link rel="stylesheet" type="text/css" href="../css/tab.css" />
+    <link rel="stylesheet" type="text/css" href="../css/file-dialog.css" />
+    <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/modal.css" />
 
     <title>@It depends on which slave page is open</title>
 </head>
@@ -44,6 +50,41 @@
             </div>
             <div class="col-md-8">
                 @here you can include slave pages
+                <div class="row">
+                    <div class="col-md-2">@Patient's photo here</div>
+                    <div class="col-md-8">
+                        <h4><b>Name:</b> @Patient'sName</h4>
+                        <h4><b>Gender:</b> @Patient'sGender</h4>
+                        <h4><b>Age:</b> @Years Y @Months M @Days D</h4>
+                        <h4><b>Blood type:</b> Patient'sBloodType</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add to medical history"><span class="fa fa-pencil-square-o"></span></button>
+                        <button id="ibtn-upload-attachment" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Upload attachment"><span class="fa fa-file-text-o"></span></button>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a id="itab-medical-history" href="#idiv-medical-history-tab" data-toggle="tab">Medical History</a></li>
+                        <li><a id="itab-analysis" href="#idiv-analysis-tab" data-toggle="tab">Analysis</a></li>
+                        <li><a id="itab-radiology" href="#idiv-radiology-tab" data-toggle="tab">Radiology</a></li>
+                        <li><a id="itab-other" href="#idiv-other-tab" data-toggle="tab">Others</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="idiv-medical-history-tab" class="tab-pane fade in active">
+                            @same content as the &lt;BODY&gt; of "MedicalHistory.cshtml"
+                        </div>
+                        <div id="idiv-analysis-tab" class="tab-pane fade">
+                            @same content as "Analysis" tab in "Attachments.chtml"
+                        </div>
+                        <div id="idiv-radiology-tab" class="tab-pane fade">
+                            @same content as "Radiology" tab in "Attachments.chtml"
+                        </div>
+                        <div id="idiv-other-tab" class="tab-pane fade">
+                            @same content as "Other" tab in "Attachments.chtml"
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-2">This is for Adds</div>
         </div>

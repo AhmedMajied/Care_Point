@@ -16,164 +16,120 @@
 
 <div class="container-fluid">
     @for (int i=0;i<Model.Services.Count;++i)
+    {
+        var service = Model.Services.ElementAt(i);
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule-@service.ID">Edit schedule</button>
+        using (Html.BeginForm("UpdateSchedule", "MedicalPlace", FormMethod.Post))
         {
-            var service = Model.Services.ElementAt(i);
-    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule-@service.ID">Edit schedule</button>
-
-    <div id="imodal-schedule-@service.ID" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#itab-services-@service.ID" role="tab" data-toggle="tab">About service</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#itab-schedules-@service.ID" role="tab" data-toggle="tab">Schedule</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                    <div class="tab-content">
-                        <div id="itab-services-@service.ID" role="tabpanel" class="tab-pane active">
-                            <div class="row form-group">
-                                <div class="col-md-4">
-                                    @Html.HiddenFor(model => model.Services.ElementAt(i),new { @Name = "Services[0].ID", @Value = service.ID })
-                                    @Html.TextBoxFor(model => model.Services.ElementAt(i),new { @Id = "iinp-service-name" + service.ID, @Class = "form-control", @Placeholder="Service name",@Name = "Services[0].Name", @Value = service.Name })
+        <div id="imodal-schedule-@service.ID" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#itab-services-@service.ID" role="tab" data-toggle="tab">About service</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#itab-schedules-@service.ID" role="tab" data-toggle="tab">Schedule</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="tab-content">
+                            <div id="itab-services-@service.ID" role="tabpanel" class="tab-pane active">
+                                <div class="row form-group">
+                                    <div class="col-md-4">
+                                        @Html.HiddenFor(model => model.Services.ElementAt(i).ID, new { @Name = "Services[0].ID", @Value = service.ID })
+                                        @Html.TextBoxFor(model => model.Services.ElementAt(i).Name, new { @Id = "iinp-service-name-" + service.ID, @Class = "form-control", @Placeholder = "Service name", @Name = "Services[0].Name", @Value = service.Name })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.Services.ElementAt(i).CategoryID, new { @Id = "iinp-service-type-" + service.ID, @Class = "form-control", @Placeholder = "Service type", @Name = "Services[0].CategoryID", @Value = service.CategoryID })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.Services.ElementAt(i).Cost, new { @Id = "iinp-service-cost-" + service.ID, @Class = "form-control", @Placeholder = "Cost", @Name = "Services[0].Cost", @Value = service.Cost, @Type = "number", @Min = "0", @Step = "0.01" })
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input id="iinp-service-type" type="text" class="form-control" placeholder="Service type">
-                                </div>
-                                <div class="col-md-4">
-                                    <input id="iinp-service-cost" type="number" min="0" step="0.01" class="form-control" placeholder="cost">
-                                </div>
+                                @Html.TextAreaFor(model => model.Services.ElementAt(i).Description, new { @Id = "iinp-service-desc-" + service.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Name = "Services[0].Description", @Value = service.CategoryID, @Rows = "18" })
                             </div>
-                            <textarea id="itextarea-service-desc" class="form-control" rows="18" placeholder="Add some description ..."></textarea>
-                        </div>
-                        <div id="itab-schedules" role="tabpanel" class="tab-pane">
-                            <div class="container-fluid cdiv-workslot">
-                                <div class="row cdiv-timing-row">
-                                    <div class="col-md-1 cdiv-vcenter">
-                                        <b>Start:</b>
-                                    </div>
-                                    <div class="col-md-3 cdiv-vcenter">
-                                        <div class="form-group cdiv-frm-group">
-                                            <div class='input-group date cdiv-time'>
-                                                <input type='text' class="form-control cinp-time" value="currentStartTime 1" readonly />
-                                                <span class="input-group-addon cspn-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </span>
+                            <div id="itab-schedules" role="tabpanel" class="tab-pane">
+                                @for (int j = 0; j < service.WorkSlots.Count; ++j)
+                                {
+                                <div class="container-fluid cdiv-workslot">
+                                    <div class="row cdiv-timing-row">
+                                        <div class="col-md-1 cdiv-vcenter">
+                                            <b>Start:</b>
+                                        </div>
+                                        <div class="col-md-3 cdiv-vcenter">
+                                            <div class="form-group cdiv-frm-group">
+                                                <div class='input-group date cdiv-time'>
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).StartTime, new { @Id = "iinp-slot-start-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots["+j+"].StartTime", @Value = service.WorkSlots.ElementAt(j).StartTime.ToString("d/M/yyyy"), @Readonly = "readonly" })
+                                                    <span class="input-group-addon cspn-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-1 cdiv-vcenter">
-                                        <b>End:</b>
-                                    </div>
-                                    <div class="col-md-3 cdiv-vcenter">
-                                        <div class="form-group cdiv-frm-group">
-                                            <div class='input-group date cdiv-time'>
-                                                <input type='text' class="form-control cinp-time" value="currentEndTime 1" readonly />
-                                                <span class="input-group-addon cspn-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </span>
+                                        <div class="col-md-1 cdiv-vcenter">
+                                            <b>End:</b>
+                                        </div>
+                                        <div class="col-md-3 cdiv-vcenter">
+                                            <div class="form-group cdiv-frm-group">
+                                                <div class='input-group date cdiv-time'>
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).EndTime, new { @Id = "iinp-slot-end-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots[" + j + "].EndTime", @Value = service.WorkSlots.ElementAt(j).EndTime.ToString("d/M/yyyy"), @Readonly = "readonly" })
+                                                    <span class="input-group-addon cspn-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <button class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>&nbsp;&nbsp;Remove workslot
+                                        </button>
                                     </div>
-                                    <button class="btn btn-danger">
-                                        <i class="fa fa-trash"></i>&nbsp;&nbsp;Remove workslot
-                                    </button>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsSaturday, new { @Name = "Services[0].WorkSlots[" + j + "].IsSaturday" })
+                                            Saturday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsSunday, new { @Name = "Services[0].WorkSlots[" + j + "].IsSunday" })
+                                            Sunday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsMonday, new { @Name = "Services[0].WorkSlots[" + j + "].IsMonday" })
+                                            Monday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsTuesday, new { @Name = "Services[0].WorkSlots[" + j + "].IsTuesday" })
+                                            Tuesday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsWednesday, new { @Name = "Services[0].WorkSlots[" + j + "].IsWednesday" })
+                                            Wednesday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsThursday, new { @Name = "Services[0].WorkSlots[" + j + "].IsThursday" })
+                                            Thursday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsFriday, new { @Name = "Services[0].WorkSlots[" + j + "].IsFriday" })
+                                            Friday
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Saturday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Sunday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Monday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Tuesday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Wednesday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Thursday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Friday
-                                    </label>
-                                </div>
+                                }
+                                <button id="ibtn-plus" class="btn btn-default">New Workslot</button>
                             </div>
-                            <div class="container-fluid cdiv-workslot">
-                                <div class="row cdiv-timing-row">
-                                    <div class="col-md-1 cdiv-vcenter">
-                                        <b>Start:</b>
-                                    </div>
-                                    <div class="col-md-3 cdiv-vcenter">
-                                        <div class="form-group cdiv-frm-group">
-                                            <div class='input-group date cdiv-time'>
-                                                <input type='text' class="form-control cinp-time" value="currentStartTime 2" readonly />
-                                                <span class="input-group-addon cspn-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1 cdiv-vcenter">
-                                        <b>End:</b>
-                                    </div>
-                                    <div class="col-md-3 cdiv-vcenter">
-                                        <div class="form-group cdiv-frm-group">
-                                            <div class='input-group date cdiv-time'>
-                                                <input type='text' class="form-control cinp-time" value="currentEndTime 2" readonly />
-                                                <span class="input-group-addon cspn-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-danger">
-                                        <i class="fa fa-trash"></i>&nbsp;&nbsp;Remove workslot
-                                    </button>
-                                </div>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Saturday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Sunday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Monday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Tuesday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Wednesday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Thursday
-                                    </label>
-                                    <label class="btn btn-default">
-                                        <input type="checkbox">Friday
-                                    </label>
-                                </div>
-                            </div>
-                            <button id="ibtn-plus" class="btn btn-default">New workslot</button>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Done</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-dismiss="modal">Done</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        }
     }
 </div>
 

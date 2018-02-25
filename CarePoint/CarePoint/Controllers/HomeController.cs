@@ -31,41 +31,6 @@ namespace CarePoint.Controllers
             return View();
         }
 
-
-        [HttpPost]
-        public string uploadFile(HttpPostedFileBase[] files)
-        {
-
-            foreach (HttpPostedFileBase file in files)
-            {
-                if (file != null)
-                {
-                    try
-                    {
-                        // save file on server
-                        string path = Path.Combine(Server.MapPath("~/Content/files"), file.FileName);
-                        file.SaveAs(path);
-
-                        Attachment attachment = new Attachment
-                        {
-                            FileName = file.FileName,
-                            FilePath = ("~/Content/files/") + file.FileName
-
-                            // TODO you should assign rest of attributes 
-                        };
-
-
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR:" + ex.Message.ToString();
-                    }
-                }        
-            }
-            
-            return "succeed";
-        }
-
         public FileResult ShowAttachmentFile(String path, String fileName)
         {
             String mimeType = MimeMapping.GetMimeMapping(path);

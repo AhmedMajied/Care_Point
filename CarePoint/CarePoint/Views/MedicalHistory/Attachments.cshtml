@@ -17,7 +17,8 @@
             <ul class="list-group">
                 @{var analysisAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Analysis")); }
                 @{var radiolodyAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Radiology")); }
-                @{var otherAttachments = Model.Except(analysisAttachments).Except(radiolodyAttachments); }
+                @{var prescriptions = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Prescription")); }
+                @{var otherAttachments = Model.Except(analysisAttachments).Except(radiolodyAttachments).Except(prescriptions); }
                 @foreach (var attachment in analysisAttachments)
             {
                 <li class="list-group-item">
@@ -38,7 +39,7 @@
                         <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
                     </div>
                 </li>
-        }
+    }
             </ul>
         </div>
         <div id="idiv-radiology-tab" class="tab-pane fade">
@@ -68,22 +69,17 @@
         </div>
         <div id="idiv-prescriptions-tab" class="tab-pane fade">
             <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@Prescription1.jpg</div>
-                        <div class="col-md-3">@Doctor1</div>
-                        <div class="col-md-3">@Date1</div>
-                        <div class="col-md-1"><a id="ilink-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-5"><span class="fa fa-file-pdf-o fa-fw"></span>@Prescription2.jpg</div>
-                        <div class="col-md-3">@Doctor2</div>
-                        <div class="col-md-3">@Date2</div>
-                        <div class="col-md-1"><a id="ilink-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
-                    </div>
-                </li>
+                @foreach (var attachment in prescriptions)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@Server.MapPath("~/Attachments/Prescriptions/pic.png")</div>
+                            <div class="col-md-3">@attachment.Specialist.Name</div>
+                            <div class="col-md-3">@attachment.Date</div>
+                            <div class="col-md-1"><a id="ilink-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+                        </div>
+                    </li>
+                }
             </ul>
         </div>
         <div id="idiv-other-tab" class="tab-pane fade">

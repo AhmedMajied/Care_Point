@@ -1,0 +1,37 @@
+﻿@using DAL 
+@model List<CareUnit>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("UpdateCareUnitsCount", "CareUnit", FormMethod.Post))
+{
+    <div class="col-md-3" style="background-color: aquamarine;">
+        <h5>
+            <b>How many rooms are available in your care units, now ?</b>
+        </h5>
+        
+
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <div class="container" style="background-color: #ffffff; width: auto; margin-bottom: 1em;">
+            @Html.HiddenFor(careUnits => careUnits[i].ID)
+            @Html.HiddenFor(careUnits => careUnits[i].Name)
+
+            @Model[i].Name
+            @Html.TextBoxFor(careUnits => careUnits[i].AvailableRoomCount,
+                                                            new { @Type = "number" })
+        </div>
+    }
+        
+        <div class="row" style="margin-bottom: 1em;">
+            <div class="col-md-1">
+                <button>Update</button>
+            </div>
+        </div>
+    </div>
+}
+

@@ -8,6 +8,7 @@ using DAL;
 
 namespace CarePoint.Controllers
 {
+    
     public class CareUnitController : Controller
     {
         private CareUnitBusinessLayer _careUnitBusinessLayer;
@@ -30,5 +31,6 @@ namespace CarePoint.Controllers
         {
             _careUnitBusinessLayer.updateAvailableRoomCount(careUnits);
         }
+        
     }
 }

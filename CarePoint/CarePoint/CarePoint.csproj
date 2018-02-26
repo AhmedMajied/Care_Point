@@ -203,6 +203,7 @@
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
     <Compile Include="Extensions\CalendarDay.cs" />
@@ -316,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Medicine\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

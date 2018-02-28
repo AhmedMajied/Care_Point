@@ -63,6 +63,7 @@ namespace CarePoint.Controllers
                     WorkSlotViewModel wmodel = new WorkSlotViewModel();
                     wmodel.StartTime = element.Key.StartTime ?? TimeSpan.Zero;
                     wmodel.EndTime = element.Key.EndTime ?? TimeSpan.Zero;
+                    wmodel.ServiceID = service.ID;
                     foreach(var day in element)
                     {
                         switch (day.DayName)
@@ -89,10 +90,10 @@ namespace CarePoint.Controllers
                                 wmodel.IsFriday = true;
                                 break;
                         }
-                        smodel.WorkSlots.Add(wmodel);
                     }
-                    model.Services.Add(smodel);
+                    smodel.WorkSlots.Add(wmodel);
                 }
+                model.Services.Add(smodel);
             }
             return View(model);
         }

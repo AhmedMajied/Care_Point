@@ -31,11 +31,13 @@ namespace CarePoint.Models
 
         public ICollection<WorkSlotViewModel> WorkSlots { get; set; }
 
-        public WorkSlot NewWorkSlot { get; set; }
+        public WorkSlotViewModel NewWorkSlot { get; set; }
     }
 
     public class WorkSlotViewModel
     {
+        public long ServiceID { get; set; }
+
         public bool IsSaturday { get; set; }
 
         public bool IsSunday { get; set; }
@@ -50,10 +52,8 @@ namespace CarePoint.Models
 
         public bool IsFriday { get; set; }
 
-        [Required]
         public TimeSpan StartTime { get; set; }
 
-        [Required]
         public TimeSpan EndTime { get; set; }
     }
 }

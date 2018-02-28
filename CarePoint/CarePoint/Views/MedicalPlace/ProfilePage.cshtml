@@ -52,10 +52,13 @@
                                 </div>
                                 @Html.TextAreaFor(model => model.Services.ElementAt(i).Description, new { @Id = "iinp-service-desc-" + service.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Name = "Services[0].Description", @Value = service.CategoryID, @Rows = "18" })
                             </div>
-                            <div id="itab-schedules" role="tabpanel" class="tab-pane">
+                            <div id="itab-schedules-@service.ID" role="tabpanel" class="tab-pane">
+
+
+
                                 @for (int j = 0; j < service.WorkSlots.Count; ++j)
                                 {
-                                <div class="container-fluid cdiv-workslot">
+                                <div class="container-fluid cdiv-workslot cdiv-workslot-@service.ID" data-count="@j">
                                     <div class="row cdiv-timing-row">
                                         <div class="col-md-1 cdiv-vcenter">
                                             <b>Start:</b>
@@ -63,7 +66,7 @@
                                         <div class="col-md-3 cdiv-vcenter">
                                             <div class="form-group cdiv-frm-group">
                                                 <div class='input-group date cdiv-time'>
-                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).StartTime, new { @Id = "iinp-slot-start-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots["+j+"].StartTime", @Value = service.WorkSlots.ElementAt(j).StartTime.ToString("d/M/yyyy"), @Readonly = "readonly" })
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).StartTime, new { @Id = "iinp-slot-start-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots["+j+"].StartTime", @Value = service.WorkSlots.ElementAt(j).StartTime.ToString(@"hh\:mm"), @Disabled = "disabled" })
                                                     <span class="input-group-addon cspn-time">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
@@ -76,7 +79,7 @@
                                         <div class="col-md-3 cdiv-vcenter">
                                             <div class="form-group cdiv-frm-group">
                                                 <div class='input-group date cdiv-time'>
-                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).EndTime, new { @Id = "iinp-slot-end-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots[" + j + "].EndTime", @Value = service.WorkSlots.ElementAt(j).EndTime.ToString("d/M/yyyy"), @Readonly = "readonly" })
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).EndTime, new { @Id = "iinp-slot-end-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots[" + j + "].EndTime", @Value = service.WorkSlots.ElementAt(j).EndTime.ToString(@"hh\:mm"), @Disabled = "disabled" })
                                                     <span class="input-group-addon cspn-time">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
@@ -119,7 +122,72 @@
                                     </div>
                                 </div>
                                 }
-                                <button id="ibtn-plus" class="btn btn-default">New Workslot</button>
+
+                                <div class="container-fluid cdiv-workslot" id="idiv-new-workslot-@service.ID" style="display:none">
+                                    <div class="row cdiv-timing-row">
+                                        <div class="col-md-1 cdiv-vcenter">
+                                            <b>Start:</b>
+                                        </div>
+                                        <div class="col-md-3 cdiv-vcenter">
+                                            <div class="form-group cdiv-frm-group">
+                                                <div class='input-group date cdiv-time'>
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.StartTime, new { @Id = "iinp-new-slot-start-time-" + service.ID , @Class = "form-control cinp-time", @Name = "Services[0].NewWorkSlot.StartTime", @Value = DateTime.Now.TimeOfDay.ToString(@"hh\:mm") })
+                                                    <span class="input-group-addon cspn-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 cdiv-vcenter">
+                                            <b>End:</b>
+                                        </div>
+                                        <div class="col-md-3 cdiv-vcenter">
+                                            <div class="form-group cdiv-frm-group">
+                                                <div class='input-group date cdiv-time'>
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.EndTime, new { @Id = "iinp-new-slot-end-time-" + service.ID, @Class = "form-control cinp-time", @Name = "Services[0].NewWorkSlot.EndTime", @Value = DateTime.Now.TimeOfDay.ToString(@"hh\:mm") })
+                                                    <span class="input-group-addon cspn-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-success" onclick="addWorkslot('@service.ID');">
+                                            <i class="fa fa-save"></i>&nbsp;&nbsp;Save workslot
+                                        </button>
+                                    </div>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsSaturday, new { @Id = "chkbox-new-workslot-issaturday"+service.ID,@Name = "Services[0].NewWorkSlot.IsSaturday" })
+                                            Saturday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsSunday, new { @Id = "chkbox-new-workslot-issunday" + service.ID, @Name = "Services[0].NewWorkSlot.IsSunday" })
+                                            Sunday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsMonday, new { @Id = "chkbox-new-workslot-ismonday" + service.ID, @Name = "Services[0].NewWorkSlot.IsMonday" })
+                                            Monday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsTuesday, new { @Id = "chkbox-new-workslot-istuesday" + service.ID, @Name = "Services[0].NewWorkSlot.IsTuesday" })
+                                            Tuesday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsWednesday, new { @Id = "chkbox-new-workslot-iswednesday" + service.ID, @Name = "Services[0].NewWorkSlot.IsWednesday" })
+                                            Wednesday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsThursday, new { @Id = "chkbox-new-workslot-isthursday" + service.ID, @Name = "Services[0].NewWorkSlot.IsThursday" })
+                                            Thursday
+                                        </label>
+                                        <label class="btn btn-default">
+                                            @Html.CheckBoxFor(model => model.Services.ElementAt(i).NewWorkSlot.IsFriday, new { @Id = "chkbox-new-workslot-isfriday" + service.ID, @Name = "Services[0].NewWorkSlot.IsFriday" })
+                                            Friday
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="ibtn-plus" class="btn btn-default" onclick="showNewWorkslotPanel('#idiv-new-workslot-@service.ID');">New Workslot</button>
                             </div>
                         </div>
                     </div>
@@ -142,4 +210,69 @@
     <script src="~/Scripts/timepicker.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/place-edit schedule.js" type="application/javascript"></script>
+
+
+    <script>
+        function showNewWorkslotPanel(selector) {
+            $(selector).show();
+        }
+        function addWorkslot(serviceId) {
+            var startTime = $("#iinp-new-slot-start-time-" + serviceId).val();
+            var endTime = $("#iinp-new-slot-end-time-" + serviceId).val();
+            var isSaturday = $("#chkbox-new-workslot-issaturday" + serviceId).is(":checked");
+            var isSunday = $("#chkbox-new-workslot-issunday" + serviceId).is(":checked");
+            var isMonday = $("#chkbox-new-workslot-ismonday" + serviceId).is(":checked");
+            var isTuesday = $("#chkbox-new-workslot-istuesday" + serviceId).is(":checked");
+            var isWednesday = $("#chkbox-new-workslot-iswednesday" + serviceId).is(":checked");
+            var isThursday = $("#chkbox-new-workslot-isthursday" + serviceId).is(":checked");
+            var isFriday = $("#chkbox-new-workslot-isfriday" + serviceId).is(":checked");
+            var model = {
+                StartTime: startTime,
+                EndTime: endTime,
+                IsSaturday: isSaturday,
+                IsSunday: isSunday,
+                IsMonday: isMonday,
+                IsTuesday: isTuesday,
+                IsWednesday: isWednesday,
+                IsThursday: isThursday,
+                IsFriday: isFriday,
+                ServiceID: serviceId
+            }
+            $.post("/MedicalPlace/AddWorkslot", model, function () {
+                var newSlot = $(".cdiv-workslot-" + serviceId + ":last").clone(true);
+                var count = newSlot.data("count");
+
+                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count+1) + "].StartTime");
+                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("value", startTime);
+
+                newSlot.find("#iinp-slot-end-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].EndTime");
+                newSlot.find("#iinp-slot-end-time-" + serviceId + "-" + count).attr("value", startTime);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsSaturday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsSaturday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsSaturday").prop("checked", isSaturday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsSunday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsSunday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsSunday").prop("checked", isSunday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsMonday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsMonday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsMonday").prop("checked", isMonday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsTuesday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsTuesday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsTuesday").prop("checked", isTuesday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsWednesday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsWednesday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsWednesday").prop("checked", isWednesday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsThursday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsThursday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsThursday").prop("checked", isThursday);
+
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsFriday").attr("name", "Services[0].WorkSlots[" + (count + 1) + "].IsFriday");
+                newSlot.find("input[name=Services[0].WorkSlots[" + count + "].IsFriday").prop("checked", isFriday);
+
+
+                $("idiv-new-workslot-" + serviceId).before(newSlot);
+                $("idiv-new-workslot-" + serviceId).hide();
+            });
+        }
+    </script>
 }

@@ -1,0 +1,26 @@
+﻿@using Extensions
+@using CarePoint.Custom_HtmlHelpers
+@using DAL
+@{
+    ViewBag.Title = "Carepoint";
+}
+@section styles{ 
+    <link rel="stylesheet" href="~/Content/citizen-medical-history.css" />
+}
+<body>
+    @{ var user = User.Identity.GetCitizen();}
+    @if (user is Specialist)
+    {
+        <a id="ilink-new-patient" class="active" href="#"><i class="fa fa-user-plus fa-2x"></i></a>
+        <a id="ilink-curr-patient" href="#"><i class="fa fa-envelope fa-2x"></i></a>
+        <a id="ilink-patient-list" href="#"><i class="fa fa-envelope fa-2x"></i></a>
+        <a id="ilink-membership-req" href="#"><i class="fa fa-envelope fa-2x"></i></a>
+        <a id="ilink-new-workplace" href="/MedicalPlace/MedicalPlace"><i class="fa fa-plus-circle fa-2x"></i></a>
+        <a id="ilink-curr-workplace" href="#"><i class="fa fa-university fa-2x"></i></a>
+        <a id="ilink-switch-workplace" href="#"><i class="fa fa-envelope fa-2x"></i></a>
+    }
+    else
+    {
+        Response.Redirect("/MedicalHistory/MedicalHistory/"+user.Id.ToString(),false);
+    }
+</body>

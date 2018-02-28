@@ -1,0 +1,32 @@
+﻿@using DAL
+@model ICollection<Attachment>
+
+@{
+    ViewBag.Title = "patientAttachments";
+}
+
+<h2>patientAttachments</h2>
+
+
+<table border="1">
+    <tr>
+        <td>
+            <b>Name</b>
+        </td>
+        <td>
+            <b>Attachment</b>
+        </td>
+    </tr>
+    @foreach (Attachment attachment in @Model)
+    {
+        <tr>
+            <td>
+                @attachment.fileName
+            </td>
+            <td>
+                @attachment.filePath
+                @Html.ActionLink("Show File", "showFile", "MedicalHistory", new { path = attachment.filePath, fileName = attachment.filePath }, null)
+            </td>
+        </tr>
+    }
+</table>

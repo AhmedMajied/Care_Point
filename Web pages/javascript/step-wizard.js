@@ -12,6 +12,24 @@ function bar_progress(progress_line_object, direction) {
 	progress_line_object.attr('style', 'width: ' + new_value + '%;').data('now-value', new_value);
 }
 
+function update_step_nav_buttons(){
+	if(current_step == 1){
+		$("#ibtn-prev").prop('disabled', true);
+		$("#ibtn-nxt").css('display', 'inline-block');
+		$("#ibtn-submit").css('display', 'none');
+	}
+	else if(current_step == $('.f1').children().length){
+		$("#ibtn-prev").prop('disabled', false);
+		$("#ibtn-nxt").css('display', 'none');
+		$("#ibtn-submit").css('display', 'inline-block');
+	}
+	else{
+		$("#ibtn-prev").prop('disabled', false);
+		$("#ibtn-nxt").css('display', 'inline-block');
+		$("#ibtn-submit").css('display', 'none');
+	}
+}
+
 jQuery(document).ready(function() {
     //Form
     $('.f1 .cdiv-step:first').fadeIn('slow');
@@ -28,30 +46,13 @@ jQuery(document).ready(function() {
     	var current_active_step = $('.modal-header').find('.f1-step.active');
     	var progress_line = $('.modal-header').find('.f1-progress-line');
     	
-    	// fields validation
-    	parent_fieldset.find('input[type="text"], textarea').each(function() {
-    		if( $(this).val().trim() == "" ) {
-    			$(this).addClass('input-error');
-    			next_step = false;
-    		}
-    		else {
-    			$(this).removeClass('input-error');
-    		}
-    	});
-    	
     	if( next_step ) {
     		parent_fieldset.fadeOut(400, function() {
 				//update current step
 				current_step++;
-				if($('.f1').children().length == current_step){
-					$("#ibtn-nxt").css('display', 'none');
-					$("#ibtn-submit").css('display', 'inline-block');
-				}
-				if($("#ibtn-prev").is(':disabled')){
-					$("#ibtn-prev").prop('disabled', false);
-				}
+				update_step_nav_buttons();
     			// change icons
-    			current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+    			current_active_step.removeClass('active').addClass('activated').next().removeClass('activated').addClass('active');
     			// progress bar
     			bar_progress(progress_line, 'right');
     			// show next step
@@ -68,15 +69,9 @@ jQuery(document).ready(function() {
     	$('.f1 .cdiv-step:nth-child(' + current_step + ')').fadeOut(400, function() {
 			//update current step
 			current_step--;
-			if(current_step == 1){
-				$("#ibtn-prev").prop('disabled', true);
-			}
-			if($("#ibtn-submit").css('display') == 'inline-block'){
-				$("#ibtn-submit").css('display', 'none');
-				$("#ibtn-nxt").css('display', 'inline-block');
-			}
+			update_step_nav_buttons();
     		// change icons
-    		current_active_step.removeClass('active').prev().removeClass('activated').addClass('active');
+    		current_active_step.removeClass('active').addClass('activated').prev().removeClass('activated').addClass('active');
     		// progress bar
     		bar_progress(progress_line, 'left');
     		// show previous step
@@ -86,43 +81,36 @@ jQuery(document).ready(function() {
 	
 	$('.f1-step-icon').on('click', function(e){
 		e.preventDefault();
-		if($(this).parent().hasClass('activated')){
+		var selected_step = $(this).parent();
+		if(selected_step.hasClass('activated')){
 			var parent_fieldset = $('.f1 .cdiv-step:nth-child(' + current_step + ')');
-			var next_step = true;
 			// navigation steps / progress steps
 			var current_active_step = $('.modal-header').find('.f1-step.active');
 			var progress_line = $('.modal-header').find('.f1-progress-line');
-			
-			// fields validation
-			parent_fieldset.find('input[type="text"], textarea').each(function() {
-				if( $(this).val().trim() == "" ) {
-					$(this).addClass('input-error');
-					next_step = false;
+			var temp = current_step;
+			parent_fieldset.fadeOut(400, function() {
+				//update current step
+				current_step = selected_step.prevUntil('.f1-steps').length;
+				update_step_nav_buttons();
+				// change icons
+				current_active_step.removeClass('active').addClass('activated').next();
+				selected_step.removeClass('activated').addClass('active');
+				// progress bar
+				if(temp < current_step){
+					while(temp < current_step){
+						bar_progress(progress_line, 'right');
+						temp ++;
+					}
 				}
-				else {
-					$(this).removeClass('input-error');
+				else{
+					while(temp > current_step){
+						bar_progress(progress_line, 'left');
+						temp --;
+					}
 				}
+				// show next step
+				$('.f1 .cdiv-step:nth-child(' + current_step + ')').fadeIn();
 			});
-			
-			if( next_step ) {
-				parent_fieldset.fadeOut(400, function() {
-					//update current step
-					current_step++;
-					if($('.f1').children().length == current_step){
-						$("#ibtn-nxt").css('display', 'none');
-						$("#ibtn-submit").css('display', 'inline-block');
-					}
-					if($("#ibtn-prev").is(':disabled')){
-						$("#ibtn-prev").prop('disabled', false);
-					}
-					// change icons
-					current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-					// progress bar
-					bar_progress(progress_line, 'right');
-					// show next step
-					$(this).next().fadeIn();
-				});
-			}
 		}
 	});
 });

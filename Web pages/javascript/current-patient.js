@@ -11,4 +11,29 @@ $(document).ready(function () {
             title: "Upload Attachments"
         });
     });
+
+    $(".cbtn-add").click(function(){
+        var empty_input = false;
+        // fields validation
+    	$(this).closest('.cdiv-step').find('input').each(function() {
+    		if( $(this).val().trim() == "" && $(this).hasClass('cinp-dose') == false) {
+    			$(this).addClass('input-error');
+    			empty_input = true;
+    		}
+    		else {
+    			$(this).removeClass('input-error');
+    		}
+        });
+        if(empty_input == false){
+            var copy = $(this).closest('.row').clone(true);
+            copy.find("input").val("");
+            $(this).addClass('hidden');
+            $(this).prev().removeClass('hidden');
+            $(this).closest('.container-fluid').append(copy);
+        }
+    });
+
+    $('.btn-danger').click(function(){
+        $(this).closest('.row').remove();
+    });
 });  

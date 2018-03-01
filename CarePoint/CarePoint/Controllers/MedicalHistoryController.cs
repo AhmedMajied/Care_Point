@@ -61,12 +61,5 @@ namespace CarePoint.Controllers
             }
         }
 
-        public FileResult ShowAttachmentFile(String path, String fileName)
-        {
-            String mimeType = MimeMapping.GetMimeMapping(path);
-
-            return new FilePathResult(path, mimeType);
-        }
-
     }
 }

@@ -20,6 +20,8 @@ namespace BLL
         {
             DBEntities.Attachments.Add(attachment);
             DBEntities.SaveChanges();
+            
+            // not tested
         }
 
         public ICollection<AttachmentType> GetAttachmentTypes()
@@ -31,6 +33,8 @@ namespace BLL
         {
             DBEntities.HistoryRecords.Add(historyRecord);
             DBEntities.SaveChanges();
+            
+            // not tested
         }
 
         public ICollection<Disease> GetAllDiseases()

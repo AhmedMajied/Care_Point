@@ -33,15 +33,5 @@ namespace BLL
             DBEntities.SaveChanges();
         }
 
-        public ICollection<Disease> GetAllDiseases()
-        {
-            return DBEntities.Diseases.ToList();
-        }
-
-        public ICollection<Symptom> GetAllSymptoms()
-        {
-            return DBEntities.Symptoms.ToList();
-        }
-
     }
 }

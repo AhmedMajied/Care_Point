@@ -199,9 +199,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CareUnitController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
     <Compile Include="Extensions\CalendarDay.cs" />
@@ -225,8 +227,6 @@
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\scrollbar.css" />
-    <Content Include="Content\tab.css" />
-    <Content Include="Content\_Layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -310,14 +310,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\uploadFile.cshtml" />
-    <Content Include="Views\Home\patientAttachments.cshtml" />
     <Content Include="Views\MedicalHistory\Attachments.cshtml" />
     <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\CareUnit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Medicine\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

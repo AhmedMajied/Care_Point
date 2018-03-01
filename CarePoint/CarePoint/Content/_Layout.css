@@ -1,0 +1,19 @@
+﻿.cbtn-srch {
+    width: 100%;
+}
+
+.tab-content {
+    padding: 1em;
+}
+
+#ibtn-sos-pop {
+    color: #d9534f;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+#idiv-srch-options{
+    border: 1px solid #dddddd;
+    border-radius: 1em;
+}

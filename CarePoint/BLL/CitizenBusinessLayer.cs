@@ -20,7 +20,6 @@ namespace BLL
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
-            // not tested
         }
 
         public Specialist GetSpecialist(long specialistID)

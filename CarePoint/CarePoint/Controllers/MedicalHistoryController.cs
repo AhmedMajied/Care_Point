@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace CarePoint.Controllers
 {
-    [Authorize]
     public class MedicalHistoryController : Controller
     {
         private CitizenBusinessLayer _citizenBusinessLayer;

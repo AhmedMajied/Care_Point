@@ -31,7 +31,7 @@ namespace CarePoint.Controllers
             model.medicalPlaceTypes = dropDownList;
             return View("AddMedicalPlace", model);
         }
-        public void AddMedicalPlace(MedicalPlaceViewModels model)
+        public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
         {
             DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
             newPlace.Address = model.medicalPlace.Address;
@@ -54,23 +54,8 @@ namespace CarePoint.Controllers
             {
                 newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
             }
-            Debug.WriteLine("Name " + newPlace.Name);
-            Debug.WriteLine("adds " + newPlace.Address);
-            Debug.WriteLine("desc " + newPlace.Description);
-            Debug.WriteLine("conf " + newPlace.IsConfirmed);
-            Debug.WriteLine("lat " + newPlace.Location.Latitude + "  long  " + newPlace.Location.Longitude);
-            Debug.WriteLine("ownID " + newPlace.OwnerID);
-            Debug.WriteLine("perm " + newPlace.Permission);
-            Debug.WriteLine("phon " + newPlace.Phone);
-            Debug.WriteLine("photo" + newPlace.Photo);
-            Debug.WriteLine("tyID " + newPlace.TypeID);
-
-
-
-
-
             medicalPlaceBusinessLayer.addMedicalPlace(newPlace);
-            //return View("ProfilePage", newPlace.ID);
+            return View("ProfilePage", newPlace.ID);
         }
     }
 }

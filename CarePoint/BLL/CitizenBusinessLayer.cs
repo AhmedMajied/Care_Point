@@ -23,26 +23,10 @@ namespace BLL
             // not tested
         }
 
-        public void UpdateCitizen(Citizen modifiedCitizen)
-        {
-            DBEntities.Entry(modifiedCitizen).State = EntityState.Modified;
-            DBEntities.SaveChanges();
-            
-            // not tested
-        }
-
         public Specialist GetSpecialist(long specialistID)
         {
             return DBEntities.Citizens.OfType<Specialist>().Single(specialist => specialist.Id == specialistID);
             // not tested and need to be checked 
-        }
-
-        public void UpdateSpecialist(Specialist modifiedSpecialist)
-        {
-            DBEntities.Entry(modifiedSpecialist).State = EntityState.Modified;
-            DBEntities.SaveChanges();
-
-            //not tested and need to be checked 
         }
         
         public ICollection<Speciality> GetSpecialities()

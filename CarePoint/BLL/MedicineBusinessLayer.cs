@@ -20,5 +20,18 @@ namespace BLL
         {
             return DBEntities.Medicines.ToList();
         }
+
+        public ICollection<Medicine> getMedicineAlternatives(string medicineName)
+        {
+            Medicine medicine = DBEntities.Medicines.Single(m => m.Name == medicineName);
+
+            long activeIngredientID = (medicine.MedicineActiveIngredients.ToList())[0].ActiveIngredientID;
+
+            List<Medicine> medicineAlternatives = DBEntities.Medicines.Where
+                (m => m.MedicineActiveIngredients.Any(e => e.ActiveIngredientID == activeIngredientID)
+                    && m.Name != medicineName).ToList();
+
+            return medicineAlternatives;
+        }
     }
 }

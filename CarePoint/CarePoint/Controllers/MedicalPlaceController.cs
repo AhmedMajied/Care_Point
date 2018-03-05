@@ -29,9 +29,9 @@ namespace CarePoint.Controllers
                 dropDownList.Add(new SelectListItem { Text = medicalType.Name, Value = medicalType.ID.ToString() });
             }
             model.medicalPlaceTypes = dropDownList;
-            return View("AddMedicalPlace",model);
+            return View("AddMedicalPlace", model);
         }
-        public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
+        public void AddMedicalPlace(MedicalPlaceViewModels model)
         {
             DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
             newPlace.Address = model.medicalPlace.Address;
@@ -43,7 +43,7 @@ namespace CarePoint.Controllers
             newPlace.TypeID = model.medicalPlace.TypeID;
             double latitude = model.latitude;
             double longitude = model.longitude;
-            var pointString = string.Format("POINT({0} {1})",longitude.ToString(),latitude.ToString());
+            var pointString = string.Format("POINT({0} {1})", longitude.ToString(), latitude.ToString());
             var point = DbGeography.FromText(pointString);
             newPlace.Location = point;
             using (var binaryReader = new BinaryReader(model.medicalPlace.Photo.InputStream))
@@ -54,8 +54,23 @@ namespace CarePoint.Controllers
             {
                 newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
             }
-           medicalPlaceBusinessLayer.addMedicalPlace(newPlace);
-            return View("ProfilePage",newPlace.ID);
+            Debug.WriteLine("Name " + newPlace.Name);
+            Debug.WriteLine("adds " + newPlace.Address);
+            Debug.WriteLine("desc " + newPlace.Description);
+            Debug.WriteLine("conf " + newPlace.IsConfirmed);
+            Debug.WriteLine("lat " + newPlace.Location.Latitude + "  long  " + newPlace.Location.Longitude);
+            Debug.WriteLine("ownID " + newPlace.OwnerID);
+            Debug.WriteLine("perm " + newPlace.Permission);
+            Debug.WriteLine("phon " + newPlace.Phone);
+            Debug.WriteLine("photo" + newPlace.Photo);
+            Debug.WriteLine("tyID " + newPlace.TypeID);
+
+
+
+
+
+            medicalPlaceBusinessLayer.addMedicalPlace(newPlace);
+            //return View("ProfilePage", newPlace.ID);
         }
     }
 }

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />
     <Compile Include="MedicalPlaceBusinessLayer.cs" />

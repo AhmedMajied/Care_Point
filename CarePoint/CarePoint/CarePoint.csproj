@@ -225,6 +225,7 @@
     <Content Include="Content\citizen-medical-history.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
+    <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="favicon.ico" />

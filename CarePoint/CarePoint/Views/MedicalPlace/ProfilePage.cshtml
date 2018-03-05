@@ -66,7 +66,7 @@
                                         <div class="col-md-3 cdiv-vcenter">
                                             <div class="form-group cdiv-frm-group">
                                                 <div class='input-group date cdiv-time'>
-                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).StartTime, new { @Id = "iinp-slot-start-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots["+j+"].StartTime", @Value = service.WorkSlots.ElementAt(j).StartTime.ToString(@"hh\:mm"), @Disabled = "disabled" })
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).StartTime, new { @Id = "iinp-slot-start-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots["+j+"].StartTime", @Value = service.WorkSlots.ElementAt(j).StartTime.ToString(@"hh\:mm"), @Readonly = "readonly" })
                                                     <span class="input-group-addon cspn-time">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
@@ -79,7 +79,7 @@
                                         <div class="col-md-3 cdiv-vcenter">
                                             <div class="form-group cdiv-frm-group">
                                                 <div class='input-group date cdiv-time'>
-                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).EndTime, new { @Id = "iinp-slot-end-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots[" + j + "].EndTime", @Value = service.WorkSlots.ElementAt(j).EndTime.ToString(@"hh\:mm"), @Disabled = "disabled" })
+                                                    @Html.TextBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).EndTime, new { @Id = "iinp-slot-end-time-" + service.ID + "-" + j, @Class = "form-control cinp-time", @Name = "Services[0].WorkSlots[" + j + "].EndTime", @Value = service.WorkSlots.ElementAt(j).EndTime.ToString(@"hh\:mm"), @Readonly = "readonly" })
                                                     <span class="input-group-addon cspn-time">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>

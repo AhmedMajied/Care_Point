@@ -1,0 +1,11 @@
+.modal-body
+{
+    height: 72vh;
+    max-height: 72vh;
+}
+
+.cscrollbar-modal::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #7cd67c;
+}

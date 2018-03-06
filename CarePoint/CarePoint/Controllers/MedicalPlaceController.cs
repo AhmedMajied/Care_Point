@@ -4,9 +4,7 @@ using DAL;
 using Extensions;
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
-using System.Diagnostics;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 namespace CarePoint.Controllers
 {
@@ -18,7 +16,7 @@ namespace CarePoint.Controllers
         {
             medicalPlaceBusinessLayer = new MedicalPlaceBusinessLayer();
         }
-        // GET: MedicalPlace
+
         public ActionResult MedicalPlace()
         {
             MedicalPlaceViewModels model = new MedicalPlaceViewModels();

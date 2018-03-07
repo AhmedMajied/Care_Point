@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CarePoint.Models
 {
     public class MedicalPlaceProfileViewModel
     {
+        public bool IsAdmin { get; set; }
+
         public ICollection<ServiceViewModel> Services { get; set; }
+
+        public ICollection<ServiceCategory> ServiceCategories { get; set; }
 
         public Service NewService { get; set; }
     }
@@ -17,6 +22,8 @@ namespace CarePoint.Models
     public class ServiceViewModel
     {
         public long ID { get; set; }
+
+        public long ProviderID { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -27,6 +34,7 @@ namespace CarePoint.Models
         public long CategoryID { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Cost must be greater than or equal 1")]
         public decimal Cost { get; set; }
 
         public ICollection<WorkSlotViewModel> WorkSlots { get; set; }
@@ -55,5 +63,7 @@ namespace CarePoint.Models
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
+
+        public bool IsRemoved { get; set; }
     }
 }

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using BLL;
 using CarePoint.Models;
+using DAL;
+using Microsoft.AspNet.Identity;
 
 namespace CarePoint.Controllers
 {
@@ -43,19 +45,24 @@ namespace CarePoint.Controllers
             var medicalPlace = MedicalPlaceBusinessLayer.GetMedicalPlace(id);
             MedicalPlaceProfileViewModel model = new MedicalPlaceProfileViewModel()
             {
-                Services = new List<ServiceViewModel>()
+                Services = new List<ServiceViewModel>(),
+                ServiceCategories = MedicalPlaceBusinessLayer.GetServiceCategories(),
+                IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
+
             };
+            
             
             foreach (var service in medicalPlace.Services)
             {
                 var groupedSlots = service.WorkSlots.GroupBy(slot => new { slot.StartTime, slot.EndTime });
                 ServiceViewModel smodel = new ServiceViewModel()
                 {
-                    ID=service.ID,
-                    Name=service.Name,
-                    Cost=service.Cost??0,
-                    Description=service.Description,
-                    CategoryID=service.CategoryID,
+                    ID = service.ID,
+                    Name = service.Name,
+                    Cost = service.Cost ?? 0,
+                    Description = service.Description,
+                    CategoryID = service.CategoryID,
+                    ProviderID = service.ProviderID ?? 0,
                     WorkSlots = new List<WorkSlotViewModel>()
                 };
                 foreach (var element in groupedSlots)
@@ -95,7 +102,47 @@ namespace CarePoint.Controllers
                 }
                 model.Services.Add(smodel);
             }
-            return View(model);
+            return View("ProfilePage",model);
+        }
+        public void AddWorkslot(WorkSlotViewModel model)
+        {
+            foreach(var attribute in model.GetType().GetProperties()) {
+                if(attribute.PropertyType.Name=="Boolean" && (Boolean)attribute.GetValue(model) == true && attribute.Name.Substring(attribute.Name.Length-3) == "day")
+                {
+                    WorkSlot slot = new WorkSlot()
+                    {
+                        StartTime = model.StartTime,
+                        EndTime = model.EndTime,
+                        ServiceID = model.ServiceID,
+                        DayName = attribute.Name.Substring(2)
+                    };
+                    MedicalPlaceBusinessLayer.AddWorkSlot(slot);
+                }
+            }
+        }
+        public void RemoveWorkslot(long ServiceID,TimeSpan StartTime,TimeSpan EndTime)
+        {
+            MedicalPlaceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
+        }
+
+        public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                ServiceViewModel serviceModel = model.Services.First();
+                Service service = new Service()
+                {
+                    ID = serviceModel.ID,
+                    Name = serviceModel.Name,
+                    CategoryID = serviceModel.CategoryID,
+                    Cost = serviceModel.Cost,
+                    Description = serviceModel.Description,
+                    ProviderID = serviceModel.ProviderID
+                };
+                MedicalPlaceBusinessLayer.UpdateService(service);
+            }
+            return ProfilePage(model.Services.First().ProviderID);
         }
     }
+    
 }

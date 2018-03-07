@@ -1,22 +1,25 @@
-﻿
+﻿<!DocType html>
 @{
     ViewBag.Title = "Current Patient";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<head>
-    <script src="~/Scripts/jquery-3.2.1.js" type="application/javascript"></script>
-    <script src="~/Scripts/file-dialog.js" type="application/javascript"></script>
-    <script src="~/Scripts/modal.js" type="application/javascript"></script>
-    <script src="~/Scripts/step-wizard.js" type="application/javascript"></script>
-    <script src="~/Scripts/current-patient.js" type="application/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="~/Content/file-dialog.css" />
+@section styles{
+    <!--<link rel="stylesheet" type="text/css" href="~/Content/file-dialog.css" />-->
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/step-wizard.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/current-patient.css" />
-</head>
+}
 
+<!-- upload attachment form-->
+@using (Html.BeginForm("UploadAttachments", "MedicalHistory", FormMethod.Post,
+                                                                         new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="files" multiple /><br><br>
+    <input type="submit" value="Upload Attachment" />
+    <br><br>
+}
 
 <div class="row">
     <div class="col-md-2">Patient's photo here</div><!---->
@@ -28,43 +31,45 @@
     </div>
     <div class="col-md-2">
         <span data-toggle="modal" data-target="#imodal-history-record">
-            <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add to medical history"><span class="fa fa-pencil-square-o"></span></button>
+            <button id="ibtn-add-prescription" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add to medical history"><span class="fa fa-pencil-square-o"></span></button>
         </span>
         <button id="ibtn-upload-attachment" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Upload attachment"><span class="fa fa-file-text-o"></span></button>
 
         <div id="imodal-history-record" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div id="imodal-hdr" class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button><br />
-                        <div class="f1-steps">
-                            <div class="f1-progress">
-                                <div class="f1-progress-line" data-now-value="12.5" data-number-of-steps="4" style="width: 12.5%;"></div>
-                            </div>
-                            <div class="f1-step active">
-                                <a href="#idiv-step-1" class="f1-step-icon"><i class="fa fa-thermometer-three-quarters"></i></a>
-                                <p><b>Step 1:</b><br>Symptoms</p>
-                            </div>
-                            <div class="f1-step">
-                                <a href="#idiv-step-2" class="f1-step-icon"><i class="fa fa-bed"></i></a>
-                                <p><b>Step 2:</b><br>Diseases</p>
-                            </div>
-                            <div class="f1-step">
-                                <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
-                                <p><b>Step 3:</b><br>Drugs</p>
-                            </div>
-                            <div class="f1-step">
-                                <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
-                                <p><b>Step 4:</b><br>Remarks</p>
+                    @using (Html.BeginForm("UploadPrescription", "MedicalHistory", FormMethod.Post, new { @class = "f1" }))
+                    {
+                        <div id="imodal-hdr" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button><br />
+                            <div class="f1-steps">
+                                <div class="f1-progress">
+                                    <div class="f1-progress-line" data-now-value="12.5" data-number-of-steps="4" style="width: 12.5%;"></div>
+                                </div>
+                                <div class="f1-step active">
+                                    <a href="#idiv-step-1" class="f1-step-icon"><i class="fa fa-thermometer-three-quarters"></i></a>
+                                    <p><b>Step 1:</b><br>Symptoms</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-2" class="f1-step-icon"><i class="fa fa-bed"></i></a>
+                                    <p><b>Step 2:</b><br>Diseases</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
+                                    <p><b>Step 3:</b><br>Drugs</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
+                                    <p><b>Step 4:</b><br>Remarks</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
-                        <form role="form" action="" method="post" class="f1">
+
+                        <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
                             <div id="idiv-step-1" class="cdiv-step container-fluid">
                                 <div class="row cdiv-symptom">
                                     <div class="col-md-10">
-                                        <input id="itext-symptom-name" class="form-control" type="text" placeholder="symptom name">
+                                        <input name="symptomName" class="form-control" type="text" placeholder="symptom name">
                                     </div>
                                     <div class="col-md-2">
                                         <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
@@ -75,7 +80,7 @@
                             <div id="idiv-step-2" class="cdiv-step container-fluid">
                                 <div class="row cdiv-disease">
                                     <div class="col-md-10">
-                                        <input id="itext-disease-name" class="form-control" type="text" placeholder="disease name">
+                                        <input name="diseaseName" class="form-control" type="text" placeholder="disease name">
                                     </div>
                                     <div class="col-md-2">
                                         <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
@@ -84,12 +89,13 @@
                                 </div>
                             </div>
                             <div id="idiv-step-3" class="cdiv-step container-fluid">
+                                <datalist id="drugs"></datalist>
                                 <div class="row cdiv-drug">
                                     <div class="col-md-5">
-                                        <input id="itext-drug-name" class="form-control" type="text" placeholder="drug name">
+                                        <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
                                     </div>
                                     <div class="col-md-5">
-                                        <input class="form-control cinp-dose" type="text" placeholder="dose description">
+                                        <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
                                     </div>
                                     <div class="col-md-2">
                                         <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
@@ -99,23 +105,18 @@
                             </div>
                             <div id="idiv-step-4" class="cdiv-step container-fluid">
                                 <h4 id="ih4-alternatives">Which of the following drugs do you accept as alternatives ?</h4>
-                                <div class="panel panel-default">
-                                    <!----><div class="panel-heading">Medicine1</div>
-                                    <div class="panel-body">
-                                        <!----> <span class="cspn-alternative"><input type="checkbox"> alternative1</span>
-                                        <!----><span class="cspn-alternative"><input type="checkbox"> alternative2</span>
-                                    </div>
-                                </div>
-                                <h4 id="ih4-alternatives">Do you have any other reamrks or recommendations ?</h4>
-                                <textarea id="itxtarea-remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
+                                <div id="idiv-alternatives"></div>
+
+                                <h4 id="ih4-remarks">Do you have any other reamrks or recommendations ?</h4>
+                                <textarea id="itxtarea-remarks" name="remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="ibtn-prev" class="btn btn-default" disabled>Previous</button>
-                        <button id="ibtn-nxt" class="btn btn-success">Next</button>
-                        <button id="ibtn-submit" class="btn btn-success" data-dismiss="modal">Submit</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="ibtn-prev"  class="btn btn-default" disabled>Previous</button>
+                            <button id="ibtn-nxt"  class="btn btn-success">Next</button>
+                            <button id="ibtn-submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -143,3 +144,12 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script src="~/Scripts/file-dialog.js" type="application/javascript"></script>
+    <script src="~/Scripts/modal.js" type="application/javascript"></script>
+    <script src="~/Scripts/step-wizard.js" type="application/javascript"></script>
+    <script src="~/Scripts/current-patient.js" type="application/javascript"></script>
+}
+
+

@@ -1,4 +1,7 @@
+var drugs;
+
 $(document).ready(function () {
+    
     $("#ibtn-upload-attachment").click(function() {
         $.FileDialog({
             accept: "*", // Accept any file type
@@ -36,4 +39,26 @@ $(document).ready(function () {
     $('.btn-danger').click(function(){
         $(this).closest('.row').remove();
     });
+    
+    $("#ibtn-add-prescription").click(function () {
+        
+        if (drugs == null) {
+            $.ajaxSetup({ async: false });
+            $.post("/Medicine/GetAllMedicines", {}, function (data) {
+                var datalist = $("#drugs");
+                drugs = data;
+
+                for (var i = 0; i < drugs.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = drugs[i].Name;
+                    datalist.append(option);
+                }
+
+            });
+        }
+        
+    })  
 });  
+
+
+

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL;
+using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,19 @@ namespace CarePoint.Controllers
 {
     public class CitizenController : Controller
     {
-        // GET: Citizen
-        public ActionResult CurrentPatient()
+        private CitizenBusinessLayer _citizenBusinessLayer;
+
+        public CitizenController()
         {
-            return View();
+            _citizenBusinessLayer = new CitizenBusinessLayer();
+        }
+
+
+        public ActionResult CurrentPatient(long citizenID)
+        {
+            Citizen citizen = _citizenBusinessLayer.GetCitizen(citizenID);
+
+            return View(citizen);
         }
     }
 }

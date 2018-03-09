@@ -36,11 +36,11 @@ function createAlternativesDiv() {
     var alternativesDiv = $("#idiv-alternatives");
     var alternatives;
     var patientDrugName;
-    
+
     for (var i = 0; i < patientDrugs.length; i++) {
         patientDrugName = patientDrugs.eq(i).val();
         alternatives = getMedicineAlternatives(patientDrugName);
-        
+
         if (alternatives != null) {
             var panel = document.createElement("div");
             var panelBody = document.createElement("div");
@@ -61,7 +61,7 @@ function createAlternativesDiv() {
                 medicineAlternative.value = alternatives[alternativeIndex].Name;
 
                 var medicineAlternativeSpan = document.createElement("span");
-                var medicineAlternativeLabel = document.createTextNode(" "+alternatives[alternativeIndex].Name);
+                var medicineAlternativeLabel = document.createTextNode(" " + alternatives[alternativeIndex].Name);
                 medicineAlternativeSpan.className = "cspn-alternative";
                 medicineAlternativeSpan.appendChild(medicineAlternative);
                 medicineAlternativeSpan.appendChild(medicineAlternativeLabel);
@@ -87,7 +87,7 @@ function getMedicineAlternatives(drugName) {
     if (drugName !== "") {
         $.ajaxSetup({ async: false });
         $.post("/Medicine/GetMedicineAlternatives", { medicineName: drugName }, function (data) {
-            alternatives = data; 
+            alternatives = data;
         });
     }
     return alternatives;
@@ -107,7 +107,7 @@ function validateDrugsNames() {
 
         found = false;
         for (var drugIndex = 0; drugIndex < drugs.length; drugIndex++) {
-            if (patientDrugs.eq(writtenDrugIndex).val() === drugs[drugIndex].Name) { 
+            if (patientDrugs.eq(writtenDrugIndex).val() === drugs[drugIndex].Name) {
                 found = true;
                 break;
             }

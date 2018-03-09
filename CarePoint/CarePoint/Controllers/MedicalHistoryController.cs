@@ -8,6 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using Microsoft.AspNet.Identity;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CarePoint.Controllers
 {
@@ -64,14 +67,14 @@ namespace CarePoint.Controllers
                 return new HttpUnauthorizedResult();
             }
         }
-
+        
         public FileResult ShowAttachmentFile(string path, string fileName)
         {
             String mimeType = MimeMapping.GetMimeMapping(path);
 
             return new FilePathResult(path, mimeType);
         }
-
+        
         [HttpPost]
         public ActionResult UploadAttachments(HttpPostedFileBase[] files)
         {
@@ -82,7 +85,7 @@ namespace CarePoint.Controllers
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
                     file.FileName);
                     file.SaveAs(path);
-                    
+
                     /*Attachment a = new Attachment
                     {
                         TypeID = 1,
@@ -99,44 +102,71 @@ namespace CarePoint.Controllers
                 {
                     //return "ERROR:" + ex.Message.ToString();
                 }
-                
+
             }
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         [HttpPost]
-        public string UploadPrescription(FormCollection form)
+        public ActionResult UploadPrescription(FormCollection form)
         {
+            string prescriptionFilePath = "~/Attachments/Prescriptions/" +
+                                            Path.GetRandomFileName().Replace(".", "") + ".jpg";
             List<List<string>> medicinesAlternatives = new List<List<string>>();
-
-            
-
 
             string[] symptoms = form.GetValues("symptomName");
             string[] diseases = form.GetValues("diseaseName");
-            string[] medicines = form.GetValues("medicineName");
-            string[] doses = form.GetValues("dose");
+            string[] medicines = form.GetValues("drugName");
+            string[] dosesDescription = form.GetValues("dose");
             string remarks = form["remarks"];
-
-            // bind selected medicines alternatives
-            for(int i = 0; i < medicines.Length; i++)
-            {
-                medicinesAlternatives.Add(form.GetValues("medicineAlternativeFor" + i).ToList());
-            }
 
             HistoryRecord historyRecord = new HistoryRecord
             {
                 Date = DateTime.Now,
                 Remarks = remarks,
-                MedicalPlaceID = 1, //TODO get from session
-                CitizenID = 1, //TODO get from view (@hidden)
-                SpecialistID = 1,//TODO get from session
+                MedicalPlaceID = 4, //TODO get from session
+                CitizenID = Convert.ToInt64(form["Id"]),
+                SpecialistID = 15//User.Identity.GetUserId<long>()
             };
 
-            return symptoms[0] +symptoms[1]+diseases[0]+diseases[1]+medicines[0]+medicines[1]
-                +doses[0]+doses[1]+medicinesAlternatives[0][0]+medicinesAlternatives[1][1];
-            //return Redirect(Request.UrlReferrer.ToString());
-        }
+            // assign symptoms to history record
+            for (int i = 0; i < symptoms.Length; i++)
+            {
+                if (!symptoms[i].Equals("") && !symptoms[i].Equals(" "))
+                {
+                    historyRecord.Symptoms.Add(new Symptom { Name = symptoms[i] });
+                }
+            }
 
+            // assign diseases to history record
+            for (int i = 0; i < diseases.Length; i++)
+            {
+                if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
+                {
+                    historyRecord.Diseases.Add(new Disease { Name = diseases[i] });
+                }
+            }
+
+            // get selected medicines alternatives from form
+            for (int i = 0; i < medicines.Length; i++)
+            {
+                if (form.GetValues("medicineAlternativeFor" + i) != null)
+                {
+                    medicinesAlternatives.Add(form.GetValues("medicineAlternativeFor" + i).ToList());
+                }
+            }
+
+            // save history record to database
+            Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
+                medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath);
+
+            bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
+
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
+            {
+                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
+            };
+        }
+        
     }
 }

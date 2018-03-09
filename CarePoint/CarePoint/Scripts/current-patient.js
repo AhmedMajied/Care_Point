@@ -1,8 +1,8 @@
 var drugs;
 
 $(document).ready(function () {
-    
-    $("#ibtn-upload-attachment").click(function() {
+
+    $("#ibtn-upload-attachment").click(function () {
         $.FileDialog({
             accept: "*", // Accept any file type
             dragMessage: "Drop files here",
@@ -15,19 +15,19 @@ $(document).ready(function () {
         });
     });
 
-    $(".cbtn-add").click(function(){
+    $(".cbtn-add").click(function () {
         var empty_input = false;
         // fields validation
-    	$(this).closest('.cdiv-step').find('input').each(function() {
-    		if( $(this).val().trim() == "" && $(this).hasClass('cinp-dose') == false) {
-    			$(this).addClass('input-error');
-    			empty_input = true;
-    		}
-    		else {
-    			$(this).removeClass('input-error');
-    		}
+        $(this).closest('.cdiv-step').find('input').each(function () {
+            if ($(this).val().trim() == "" && $(this).hasClass('cinp-dose') == false) {
+                $(this).addClass('input-error');
+                empty_input = true;
+            }
+            else {
+                $(this).removeClass('input-error');
+            }
         });
-        if(empty_input == false){
+        if (empty_input == false) {
             var copy = $(this).closest('.row').clone(true);
             copy.find("input").val("");
             $(this).addClass('hidden');
@@ -36,12 +36,12 @@ $(document).ready(function () {
         }
     });
 
-    $('.btn-danger').click(function(){
+    $('.btn-danger').click(function () {
         $(this).closest('.row').remove();
     });
-    
+
     $("#ibtn-add-prescription").click(function () {
-        
+
         if (drugs == null) {
             $.ajaxSetup({ async: false });
             $.post("/Medicine/GetAllMedicines", {}, function (data) {
@@ -56,9 +56,9 @@ $(document).ready(function () {
 
             });
         }
-        
-    })  
-});  
+
+    })
+});
 
 
 

@@ -16,11 +16,11 @@ namespace CarePoint.Controllers
         {
             _medicineBusinessLayer = new MedicineBusinessLayer();
         }
-        
+
         public ActionResult GetAllMedicines()
         {
-            var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine => 
-                            new { medicine.ID,medicine.Name}).ToList();
+            var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>
+                            new { medicine.ID, medicine.Name }).ToList();
 
             return Json(medicines);
         }
@@ -34,7 +34,7 @@ namespace CarePoint.Controllers
 
                 return Json(medicineAlternatives);
             }
-            
+
             return null;
         }
 

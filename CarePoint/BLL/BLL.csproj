@@ -39,7 +39,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,10 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Canvas.cs" />
-=======
->>>>>>> master
     <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />

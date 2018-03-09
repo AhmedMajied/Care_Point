@@ -3,26 +3,19 @@ using CarePoint.Models;
 using Extensions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
-using Microsoft.AspNet.Identity;
-using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace CarePoint.Controllers
 {
-
+    [Authorize]
     public class MedicalHistoryController : Controller
     {
-        private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
-
         private CitizenBusinessLayer _citizenBusinessLayer;
         public MedicalHistoryController()
         {
-            _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
+
         }
         public MedicalHistoryController(CitizenBusinessLayer citizenBusinessLayer)
         {
@@ -44,7 +37,7 @@ namespace CarePoint.Controllers
         public ActionResult MedicalHistory(long id)
         {
             var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
+            if (user is Specialist || id == user.Id)
             {
                 return View(citizenBusinessLayer.GetCitizen(id).HistoryRecords);
             }
@@ -58,7 +51,7 @@ namespace CarePoint.Controllers
         public ActionResult Attachments(long id)
         {
             var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
+            if (user is Specialist || id == user.Id)
             {
                 return View(citizenBusinessLayer.GetCitizen(id).Attachments);
             }
@@ -67,109 +60,7 @@ namespace CarePoint.Controllers
                 return new HttpUnauthorizedResult();
             }
         }
-        
-        public FileResult ShowAttachmentFile(string path, string fileName)
-        {
-            String mimeType = MimeMapping.GetMimeMapping(path);
 
-            return new FilePathResult(path, mimeType);
-        }
-        
-        [HttpPost]
-        public ActionResult UploadAttachments(HttpPostedFileBase[] files)
-        {
-            foreach (HttpPostedFileBase file in files)
-            {
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("~/Attachments"),
-                    file.FileName);
-                    file.SaveAs(path);
-
-                    /*Attachment a = new Attachment
-                    {
-                        TypeID = 1,
-                        Date = DateTime.Now,
-                        SpecialistID = 1,
-                        CitizenID = 1,
-                        FilePath = path,
-                        FileName = file.FileName
-                    };
-                    */
-                    //TODO save to DB here  
-                }
-                catch (Exception ex)
-                {
-                    //return "ERROR:" + ex.Message.ToString();
-                }
-
-            }
-            return Redirect(Request.UrlReferrer.ToString());
-        }
-
-        [HttpPost]
-        public ActionResult UploadPrescription(FormCollection form)
-        {
-            string prescriptionFilePath = "~/Attachments/Prescriptions/" +
-                                            Path.GetRandomFileName().Replace(".", "") + ".jpg";
-            List<List<string>> medicinesAlternatives = new List<List<string>>();
-
-            string[] symptoms = form.GetValues("symptomName");
-            string[] diseases = form.GetValues("diseaseName");
-            string[] medicines = form.GetValues("drugName");
-            string[] dosesDescription = form.GetValues("dose");
-            string remarks = form["remarks"];
-
-<<<<<<< HEAD
-            HistoryRecord historyRecord = new HistoryRecord
-            {
-                Date = DateTime.Now,
-                Remarks = remarks,
-                MedicalPlaceID = 4, //TODO get from session
-                CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = 15//User.Identity.GetUserId<long>()
-            };
-
-            // assign symptoms to history record
-            for (int i = 0; i < symptoms.Length; i++)
-            {
-                if (!symptoms[i].Equals("") && !symptoms[i].Equals(" "))
-                {
-                    historyRecord.Symptoms.Add(new Symptom { Name = symptoms[i] });
-                }
-            }
-
-            // assign diseases to history record
-            for (int i = 0; i < diseases.Length; i++)
-            {
-                if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
-                {
-                    historyRecord.Diseases.Add(new Disease { Name = diseases[i] });
-                }
-            }
-
-            // get selected medicines alternatives from form
-            for (int i = 0; i < medicines.Length; i++)
-            {
-                if (form.GetValues("medicineAlternativeFor" + i) != null)
-                {
-                    medicinesAlternatives.Add(form.GetValues("medicineAlternativeFor" + i).ToList());
-                }
-            }
-
-            // save history record to database
-            Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
-                medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath);
-
-            bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
-
-            return new FilePathResult(prescriptionFilePath, "image/jpg")
-            {
-                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };
-        }
-        
-=======
         public FileResult ShowAttachmentFile(String path, String fileName)
         {
             String mimeType = MimeMapping.GetMimeMapping(path);
@@ -177,6 +68,5 @@ namespace CarePoint.Controllers
             return new FilePathResult(path, mimeType);
         }
 
->>>>>>> master
     }
 }

@@ -21,32 +21,24 @@
                 @{var otherAttachments = Model.Except(analysisAttachments).Except(radiolodyAttachments).Except(prescriptions); }
                 @foreach (var attachment in analysisAttachments)
             {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
+                        {<span class="fa fa-file-image-o fa-fw"></span>}
+                    else if (attachment.FilePath.EndsWith(".pdf"))
+                    {<span class="fa fa-file-pdf-o fa-fw"></span>}
                 else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
                 {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+            else
+            {<span class="fa fa-file-alt-o fa-fw"></span>}
+                            @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
                         </div>
-<<<<<<< HEAD
-                    </li>
-=======
                         <div class="col-md-3">@attachment.Specialist.Name</div>
                         <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
                         <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
                     </div>
                 </li>
->>>>>>> master
     }
             </ul>
         </div>
@@ -54,25 +46,25 @@
             <ul class="list-group">
                 @foreach (var attachment in radiolodyAttachments)
             {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
+                        {<span class="fa fa-file-image-o fa-fw"></span>}
+                    else if (attachment.FilePath.EndsWith(".pdf"))
+                    {<span class="fa fa-file-pdf-o fa-fw"></span>}
                 else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
                 {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+            else
+            {<span class="fa fa-file-alt-o fa-fw"></span>}
+                            @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
                         </div>
-                    </li>
-    }
+                        <div class="col-md-3">@attachment.Specialist.Name</div>
+                        <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
+                        <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+                    </div>
+                </li>
+        }
             </ul>
         </div>
         <div id="idiv-prescriptions-tab" class="tab-pane fade">
@@ -81,17 +73,6 @@
                 {
                     <li class="list-group-item">
                         <div class="row">
-<<<<<<< HEAD
-                            
-                            <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@attachment.FileName</div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
-                            
-                        </div>
-                    </li>
-    }
-=======
                             <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@Server.MapPath("~/Attachments/Prescriptions/pic.png")</div>
                             <div class="col-md-3">@attachment.Specialist.Name</div>
                             <div class="col-md-3">@attachment.Date</div>
@@ -99,34 +80,34 @@
                         </div>
                     </li>
                 }
->>>>>>> master
             </ul>
         </div>
         <div id="idiv-other-tab" class="tab-pane fade">
             <ul class="list-group">
                 @foreach (var attachment in otherAttachments)
             {
-                    <li class="list-group-item">
+                <li class="list-group-item">
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
+                    <div class="row">
+                        <div class="col-md-5">
+                            @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
+                        {<span class="fa fa-file-image-o fa-fw"></span>}
+                    else if (attachment.FilePath.EndsWith(".pdf"))
+                    {<span class="fa fa-file-pdf-o fa-fw"></span>}
                 else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
                 {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+            else
+            {<span class="fa fa-file-alt-o fa-fw"></span>}
+                            @Html.ActionLink(attachment.FileName, "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FilePath }, null)
                         </div>
-                    </li>
-    }
+                        <div class="col-md-3">@attachment.Specialist.Name</div>
+                        <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
+                        <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+                    </div>
+                </li>
+        }
             </ul>
         </div>
     </div>
 </div>
+

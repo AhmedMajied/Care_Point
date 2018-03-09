@@ -128,8 +128,6 @@ E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.csprojResolveAssemblyReference.cac
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.dll
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.pdb
-<<<<<<< HEAD
-=======
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\bin\ApplicationInsights.config
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\bin\CarePoint.dll.config
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\bin\CarePoint.dll
@@ -260,4 +258,3 @@ D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\obj\Debug\CarePoint.
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\obj\Debug\CarePoint.csproj.CoreCompileInputs.cache
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\obj\Debug\CarePoint.dll
 D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\CarePoint\obj\Debug\CarePoint.pdb
->>>>>>> master

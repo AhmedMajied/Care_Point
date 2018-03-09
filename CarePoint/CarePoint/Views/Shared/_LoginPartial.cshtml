@@ -8,6 +8,23 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a iclass="dropdown-toggle" data-toggle="dropdown" style="background-color: #21c2eb; color: #ffffff;">
+                    <span class="fa fa-briefcase fa-2x"></span>
+                    <span class="fa fa-chevron-down fa-fw"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="ilink-new-patient">New patient</a></li>
+                    <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
+                    <li><a href="#" id="ilink-patient-list">My patients</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="ilink-new-place">New workplace</a></li>
+                    <li><a href="#" id="ilink-place-settings">My workplace</a></li>
+                    <li><a href="#" id="ilink-change-place">Switch workplace</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" id="ilink-curr-patient">Membership requests</a></li>
+                </ul>
+            </li>
             <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@User.Identity.GetUserId()"><span class="fa fa-history fa-2x" style="color: #ffffff;"></span></a></li>
             <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@User.Identity.GetUserId()"><span class="fa fa-paperclip fa-2x" style="color: #ffffff;"></span></a></li>
             <li><a id="ilink-relatives" href="#"><span class="fa fa-users fa-2x" style="color: #ffffff;"></span></a></li>
@@ -19,9 +36,9 @@
                     <span class="fa fa-chevron-down fa-fw"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a>@User.Identity.GetCitizen().Name</a></li>
+                    <li><a>Signed in as<br /><b>@User.Identity.GetCitizen().Name</b></a></li>
                     <li class="divider"></li>
-                    <li><a href="@Link-to-download-patient-card">Get my card</a></li>
+                    <li><a href="Link-to-download-patient-card">Get my card</a></li>
                     <li><a href="/Manage/Index" id="ilink-usr-profile">Account settings</a></li>
                     <li class="divider"></li>
                     <li><a id="ilink-logout" href="javascript:document.getElementById('logoutForm').submit()"><span class="fa fa-sign-out fa-fw"></span>Logout</a></li>

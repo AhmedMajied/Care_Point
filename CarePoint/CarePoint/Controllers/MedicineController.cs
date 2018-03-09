@@ -17,6 +17,7 @@ namespace CarePoint.Controllers
             _medicineBusinessLayer = new MedicineBusinessLayer();
         }
 
+<<<<<<< HEAD
         public ActionResult GetAllMedicines()
         {
             var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>
@@ -36,6 +37,11 @@ namespace CarePoint.Controllers
             }
 
             return null;
+=======
+        public ICollection<Medicine> GetMedicineAlternatives(string medicineName)
+        {
+            return _medicineBusinessLayer.getMedicineAlternatives(medicineName);
+>>>>>>> master
         }
 
     }

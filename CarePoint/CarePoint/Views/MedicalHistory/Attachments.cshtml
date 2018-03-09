@@ -38,7 +38,15 @@
                             <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
                             <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
                         </div>
+<<<<<<< HEAD
                     </li>
+=======
+                        <div class="col-md-3">@attachment.Specialist.Name</div>
+                        <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
+                        <div class="col-md-1"><a id="ilink@{@attachment.ID}-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+                    </div>
+                </li>
+>>>>>>> master
     }
             </ul>
         </div>
@@ -73,6 +81,7 @@
                 {
                     <li class="list-group-item">
                         <div class="row">
+<<<<<<< HEAD
                             
                             <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@attachment.FileName</div>
                             <div class="col-md-3">@attachment.Specialist.Name</div>
@@ -82,6 +91,15 @@
                         </div>
                     </li>
     }
+=======
+                            <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@Server.MapPath("~/Attachments/Prescriptions/pic.png")</div>
+                            <div class="col-md-3">@attachment.Specialist.Name</div>
+                            <div class="col-md-3">@attachment.Date</div>
+                            <div class="col-md-1"><a id="ilink-download" href="#"><span class="fa fa-download fa-fw"></span></a></div>
+                        </div>
+                    </li>
+                }
+>>>>>>> master
             </ul>
         </div>
         <div id="idiv-other-tab" class="tab-pane fade">

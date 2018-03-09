@@ -9,7 +9,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
     @RenderSection("styles", false)
+<<<<<<< HEAD
+=======
+    @Scripts.Render("~/bundles/modernizr")
+>>>>>>> master
 
 </head>
 <body>
@@ -18,15 +26,77 @@
             <div class="navbar-header">
                 <img id="iimg-logo" src="~/Images/logo-navbar.ico" class="img-rounded img-responsive">
             </div>
+<<<<<<< HEAD
             
+=======
+
+            @Html.Partial("_LoginPartial")
+>>>>>>> master
 
         </div>
     </nav>
     <div class="container-fluid">
         <div class="row" style="margin-top: 7em;">
             <div class="col-md-2">
-                <button id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right" style="color: #d9534f; font-weight: bold;"><span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS</button>
-                <br>This is for search
+                <div class="row">
+                    <div class="container-fluid">
+                        <button id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
+                            <span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS
+                        </button>
+                    </div>
+                    <div class="container-fluid">
+                        <div id="idiv-srch-options">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#itab-srch-location" role="tab" data-toggle="tab"><span class="fa fa-map-marker fa-2x"></span></a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#itab-srch-drug" role="tab" data-toggle="tab"><span class="fa fa-flask fa-2x"></span></a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#itab-srch-account" role="tab" data-toggle="tab"><span class="fa fa-user fa-2x"></span></a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="itab-srch-location" role="tabpanel" class="tab-pane active">
+                                    <label>Service type:</label>
+                                    <input id="iinp-service-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
+                                    <br />
+                                    <label>Place:</label>
+                                    <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
+                                    <br />
+                                    <label>Priority:</label>
+                                    <br /><input id="ichk-distane" type="checkbox" checked /> Distance
+                                    <br /><input id="ichk-cost" type="checkbox" /> Cost
+                                    <br /><input id="ichk-rate" type="checkbox" /> Rate
+                                    <br /><input id="ichk-popularity" type="checkbox" /> Popularity
+                                    <br /><br />
+                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
+                                </div>
+                                <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
+                                    Search options for drugs
+                                    <br /><br />
+                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
+                                </div>
+                                <div id="itab-srch-account" role="tabpanel" class="tab-pane">
+                                    <label>Search by:</label>
+                                    <div class="selectContainer">
+                                        <select class="form-control" name="srch-by">
+                                            <option selected>Name</option>
+                                            <option>E-mail</option>
+                                            <option>Phone</option>
+                                        </select>
+                                    </div>
+                                    <br />
+                                    <label>Search for:</label>
+                                    <br /><input class="form-control" type="text" />
+                                    <br />
+                                    <button class="btn btn-success cbtn-srch" data-toggle="modal" data-target="#imodal-people-srch-result"><span class="fa fa-search"></span> Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
                 @RenderBody()
@@ -34,12 +104,132 @@
             <div class="col-md-2" style="background-color:#b6ff00">This is for Adds</div>
         </div>
     </div>
+    <div id="imodal-people-srch-result" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="imodal-hdr" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#itab-non-specialists" role="tab" data-toggle="tab">Non-specialists</a></li>
+                        <li role="presentation"><a href="#itab-doctors" role="tab" data-toggle="tab">Doctors</a></li>
+                        <li role="presentation"><a href="#itab-pharmacists" role="tab" data-toggle="tab">Pharmacists</a></li>
+                    </ul>
+                </div>
+                <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                    <div class="tab-content">
+                        <div id="itab-non-specialists" role="tabpanel" class="tab-pane active">
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                        </div>
+                        <div id="itab-doctors" role="tabpanel" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                        </div>
+                        <div id="itab-pharmacists" role="tabpanel" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                            <div class="row">
+                                <div class="col-md-2">@@User profile picture</div>
+                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-4 dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Mark as
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Friend</a></li>
+                                        <li><a href="#">Parent</a></li>
+                                        <li><a href="#">Sibling</a></li>
+                                        <li><a href="#">Non-relative</a></li>
+                                    </ul>
+                                </div>
+                            </div><hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    @Scripts.Render("~/bundles/jquery")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
     @RenderSection("scripts", required: false)
 

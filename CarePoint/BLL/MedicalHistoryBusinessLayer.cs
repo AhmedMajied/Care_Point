@@ -55,6 +55,7 @@ namespace BLL
             // save history record to database
             historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
             DBEntities.SaveChanges();
+<<<<<<< HEAD
 
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -74,6 +75,9 @@ namespace BLL
                 FilePath = savingPath,
                 FileName = Path.GetFileName(savingPath)
             };
+=======
+        }
+>>>>>>> master
 
             // save attachment to database
             SaveAttachment(attachment);

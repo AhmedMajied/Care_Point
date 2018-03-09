@@ -48,7 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Canvas.cs" />
+=======
+>>>>>>> master
     <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />

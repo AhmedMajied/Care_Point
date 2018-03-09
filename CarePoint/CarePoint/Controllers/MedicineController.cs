@@ -17,9 +17,25 @@ namespace CarePoint.Controllers
             _medicineBusinessLayer = new MedicineBusinessLayer();
         }
 
-        public ICollection<Medicine> GetMedicineAlternatives(string medicineName)
+        public ActionResult GetAllMedicines()
         {
-            return _medicineBusinessLayer.getMedicineAlternatives(medicineName);
+            var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>
+                            new { medicine.ID, medicine.Name }).ToList();
+
+            return Json(medicines);
+        }
+
+        public ActionResult GetMedicineAlternatives(string medicineName)
+        {
+            if (!medicineName.Equals(""))
+            {
+                var medicineAlternatives = _medicineBusinessLayer.getMedicineAlternatives(medicineName).
+                Select(medicine => new { medicine.Name }).ToList();
+
+                return Json(medicineAlternatives);
+            }
+
+            return null;
         }
 
     }

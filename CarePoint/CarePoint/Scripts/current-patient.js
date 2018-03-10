@@ -2,23 +2,22 @@ var drugs;
 
 $(document).ready(function () {
 
-    $("#ibtn-upload-attachment").click(function () {
-        $.FileDialog({
-            accept: "*", // Accept any file type
-            dragMessage: "Drop files here",
-            dropheight: 400,
-            errorMessage: "An error occured while loading file",
-            multiple: true, //enable uploading multiple files
-            readAs: "DataURL", // file reading mode: BinaryString, Text, DataURL or ArrayBuffer
-            removeMessage: "Remove&nbsp;file",
-            title: "Upload Attachments"
+    $(function () {
+        $(document).on('change', ':file', function () {
+            var input = $(this);
+            var fileName = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselected', fileName);
+        });
+
+        $(':file').on('fileselected', function (event, fileName) {
+            $(this).parents('.input-group').find(':text').val(fileName);
         });
     });
 
     $(".cbtn-add").click(function () {
         var empty_input = false;
         // fields validation
-        $(this).closest('.cdiv-step').find('input').each(function () {
+        $(this).closest('.cdiv-list').find('input').each(function () {
             if ($(this).val().trim() == "" && $(this).hasClass('cinp-dose') == false) {
                 $(this).addClass('input-error');
                 empty_input = true;
@@ -57,7 +56,7 @@ $(document).ready(function () {
             });
         }
 
-    })
+    });
 });
 
 

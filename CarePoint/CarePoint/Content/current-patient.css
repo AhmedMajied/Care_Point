@@ -1,9 +1,13 @@
-.cdiv-symptom,.cdiv-disease,.cdiv-drug{
+.cdiv-list-item{
     margin-bottom: 1em;
 }
 
 .cspn-alternative{
     margin-right: 1em;
+}
+
+.input-error {
+	border: 1px solid #e62a2a;
 }
 
 #imodal-hdr{

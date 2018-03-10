@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+@model CarePoint.Models.SearchViewModels
 <head>
     <title>@ViewBag.Title</title>
     <meta charset="utf-8" />
@@ -71,21 +72,29 @@
                                     <br /><br />
                                     <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
                                 </div>
-                                <div id="itab-srch-account" role="tabpanel" class="tab-pane">
-                                    <label>Search by:</label>
-                                    <div class="selectContainer">
-                                        <select class="form-control" name="srch-by">
-                                            <option selected>Name</option>
-                                            <option>E-mail</option>
-                                            <option>Phone</option>
-                                        </select>
-                                    </div>
-                                    <br />
-                                    <label>Search for:</label>
-                                    <br /><input class="form-control" type="text" />
-                                    <br />
-                                    <button class="btn btn-success cbtn-srch" data-toggle="modal" data-target="#imodal-people-srch-result"><span class="fa fa-search"></span> Search</button>
+                                    <div id="itab-srch-account" role="tabpanel" class="tab-pane">
+                                    @using (Html.BeginForm("","",FormMethod.Post,new { @Id = "iform-search-account" , @OnClick = "return false" }))
+                                    {
+                                        <label>Search by:</label>
+                                        List<SelectListItem> list = new List<SelectListItem>();
+                                        list.Add(new SelectListItem { Text = "Name", Value = "Name", Selected = true });
+                                        list.Add(new SelectListItem { Text = "E-mail", Value = "E-mail" });
+                                        list.Add(new SelectListItem { Text = "Phone", Value = "Phone" });
+
+                                        <div class="selectContainer">
+                                            @Html.DropDownListFor(model => model.SearchAccount.searchBy, list, new { @Class = "form-control", @Id = "iselect-srch-by", @Name = "srch-by" })
+                                            @Html.ValidationMessageFor(model => model.SearchAccount.searchBy, "", new { @Class = "cspan-error" })
+                                        </div>
+                                        <br />
+                                        <label>Search for:</label>
+                                        <br />
+                                        @Html.TextBoxFor(model => model.SearchAccount.searchFor, new { @Class = "form-control", @Id = "idiv-searchfor" })
+                                        @Html.ValidationMessageFor(model => model.SearchAccount.searchFor, "", new { @Class = "cspan-error" , @Id = "cspan-searchby-error" })
+                                        <br />
+                                        <button type="submit" class="btn btn-success cbtn-srch" id="ibtn-acc"><span class="fa fa-search"></span> Search</button>
+                                    }
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -101,7 +110,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div id="imodal-hdr" class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="ibtn-close"type="button" class="close" data-dismiss="modal">&times;</button>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#itab-non-specialists" role="tab" data-toggle="tab">Non-specialists</a></li>
                         <li role="presentation"><a href="#itab-doctors" role="tab" data-toggle="tab">Doctors</a></li>
@@ -111,106 +120,10 @@
                 <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="tab-content">
                         <div id="itab-non-specialists" role="tabpanel" class="tab-pane active">
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
                         </div>
                         <div id="itab-doctors" role="tabpanel" class="tab-pane">
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
                         </div>
                         <div id="itab-pharmacists" role="tabpanel" class="tab-pane">
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
-                            <div class="row">
-                                <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
-                                <div class="col-md-4 dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Mark as
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Friend</a></li>
-                                        <li><a href="#">Parent</a></li>
-                                        <li><a href="#">Sibling</a></li>
-                                        <li><a href="#">Non-relative</a></li>
-                                    </ul>
-                                </div>
-                            </div><hr>
                         </div>
                     </div>
                 </div>
@@ -218,13 +131,19 @@
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
+    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/datevalidator.js"></script>
+    <script src="~/Scripts/searchResult.js"></script>
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

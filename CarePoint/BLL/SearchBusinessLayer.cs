@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BLL
 {
@@ -12,9 +13,12 @@ namespace BLL
         {
             dbEntities = new CarePointEntities();
         }
-        public ICollection<Citizen> searchAccounts(string searchBy, string searchValue)
+        public List<List<Citizen>> searchAccounts(string searchBy, string searchValue)
         {
-            ICollection<Citizen> result = new List<Citizen>();
+            List<Citizen> result = new List<Citizen>();
+            List<Citizen> doctors = new List<Citizen>();
+            List<Citizen> pharmacists = new List<Citizen>();
+            List<Citizen> non_specialists = new List<Citizen>();
             String[] split = searchValue.Split(' ');
             if (searchBy.Equals("Name"))
             {
@@ -22,15 +26,15 @@ namespace BLL
                 {
                     if (dbEntities.Citizens.Any(citizen => citizen.Name.Contains(val)))
                     {
-                        result.Union(dbEntities.Citizens.Where(citizen => citizen.Name.Contains(searchValue)));
+                        result =result.Union(dbEntities.Citizens.Where(citizen => citizen.Name.Contains(val)).ToList()).ToList();
                     }
                 }
                 if (dbEntities.Citizens.Any(citizen => citizen.Name.Contains(searchValue)))
                 {
-                    result.Union(dbEntities.Citizens.Where(citizen => citizen.Name.Contains(searchValue)));
+                    result = result.Union(dbEntities.Citizens.Where(citizen => citizen.Name.Contains(searchValue)).ToList()).ToList();
                 }
             }
-            else if (searchBy.Equals("E-mail") && (dbEntities.Citizens.Any(citizen => citizen.Email == searchValue)))
+            else if (searchBy.Equals("E-mail") && (dbEntities.Citizens.Any(citizen => citizen.Email.Contains(searchValue))))
             {
                 result = dbEntities.Citizens.Where(citizen => citizen.Email.Contains(searchValue)).ToList();
             }
@@ -38,7 +42,30 @@ namespace BLL
             {
                 result = dbEntities.Citizens.Where(citizen => citizen.PhoneNumber == searchValue).ToList();
             }
-            return result;
+            foreach (Citizen specialist in result)
+            {
+                if (specialist is Specialist)
+                {
+                    if (((Specialist)specialist).SpecialityID == 1)
+                    {
+                        doctors.Add(specialist);
+                    }
+                    else if (((Specialist)specialist).SpecialityID == 2)
+                    {
+                        pharmacists.Add(specialist);
+                    }
+                }
+                else
+                {
+                    non_specialists.Add(specialist);
+                   
+                }
+            }
+            List<List<Citizen>> allCitizens = new List<List<Citizen>>();
+            allCitizens.Add(non_specialists);//0
+            allCitizens.Add(doctors);//1
+            allCitizens.Add(pharmacists);//2
+            return allCitizens;
         }
 
     }

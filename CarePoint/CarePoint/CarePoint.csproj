@@ -231,6 +231,7 @@
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
+    <Content Include="Content\patient-list.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\mapAddPlace.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\patient-list.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

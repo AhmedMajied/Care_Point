@@ -38,5 +38,31 @@ namespace CarePoint.Controllers
             accounts.doctorsCount=accounts.doctors.Count;
             return Json(accounts);
         }
+        public JsonResult PatientsList(long doctorId)
+        {
+            Debug.WriteLine(doctorId);
+            PatientViewModel patients = new PatientViewModel();
+            List<Citizen> list = searchBusinessLayer.getPatientList(doctorId);
+            foreach(Citizen c in list)
+            {
+                Debug.WriteLine(c.Name + " --- " + c.Id);
+            }
+            List<Citizen> maleList = new List<Citizen>();
+            List<Citizen> femaleList = new List<Citizen>();
+            foreach (Citizen c in list)
+            {
+                if(c.Gender.ToLower().Equals("male"))
+                    maleList.Add(c);
+                else if(c.Gender.ToLower().Equals("female"))
+                    femaleList.Add(c);
+            }
+            patients.female = new List<UserAccount>();
+            patients.female = getUsers(femaleList);
+            patients.male = new List<UserAccount>();
+            patients.male = getUsers(maleList);
+            patients.femaleCount = patients.female.Count;
+            patients.maleCount = patients.male.Count;
+            return Json(patients);
+        }
     }
 }

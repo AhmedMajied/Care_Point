@@ -4,16 +4,19 @@
 @{
     ViewBag.Title = "Carepoint";
 }
-@section styles{ 
+@section styles{
     <link rel="stylesheet" href="~/Content/citizen-medical-history.css" />
+    <link rel="stylesheet" href="~/Content/patient-list.css" />
 }
 <body>
     @{ var user = User.Identity.GetCitizen();}
-    @if ( user is Specialist)
+    @if (user is Specialist)
     {
+        string id = user.Id.ToString();
+        @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
         <a id="ilink-new-patient" class="active" href="#"><i class="fa fa-user-plus fa-2x"></i></a>
         <a id="ilink-curr-patient" href="#"><i class="fa fa-envelope fa-2x"></i></a>
-        <a id="ilink-patient-list" href="#"><i class="fa fa-envelope fa-2x"></i></a>
+        <a id="ilink-patient-list"onclick="openModal();" href="#"><i class="fa fa-envelope fa-2x"></i></a>
         <a id="ilink-membership-req" href="#"><i class="fa fa-envelope fa-2x"></i></a>
         <a id="ilink-new-workplace" href="/MedicalPlace/MedicalPlace"><i class="fa fa-plus-circle fa-2x"></i></a>
         <a id="ilink-curr-workplace" href="#"><i class="fa fa-university fa-2x"></i></a>
@@ -21,6 +24,79 @@
     }
     else
     {
-        Response.Redirect("/MedicalHistory/MedicalHistory/"+user.Id.ToString(),false);
+        Response.Redirect("/MedicalHistory/MedicalHistory/" + user.Id.ToString(), false);
     }
+    <div class="container-fluid">
+        <div id="imodal-patient-list" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" id="patient-list-modal-button" class="close" data-dismiss="modal">&times;</button>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#itab-males" role="tab" data-toggle="tab">Males</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#itab-females" role="tab" data-toggle="tab">Females</a>
+                            </li>
+                            <div id="idiv-srch" class="input-group">
+                                <input id="iinp-srch" type="text" class="form-control" placeholder="Search">
+                                <span id="ispn-srch" class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="tab-content">
+                            <div id="itab-males" role="tabpanel" class="tab-pane active">
+                            </div>
+                            <div id="itab-females" role="tabpanel" class="tab-pane">  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/patient-list.js"></script>
+
+<script>
+    $("#patient-list-modal-button").click(function () {
+        $("#itab-females .row").remove();
+        $("#itab-females hr").remove();
+        $("#itab-males .row").remove();
+        $("#itab-males hr").remove();
+    });
+    function PatientsModalFill(parent, usrName,img, showHistoryHref, deleteHref) {
+        if (img == null)
+            img = "../Images/notfound.png";
+        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src=" + img + "/></div>")
+            .append($("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + usrName + "</label></div>")).append("<div class='col-md-4 cdiv-vcenter'><a href =" + showHistoryHref + "><button class='btn btn-default'>Open history</button></a> <button class='btn btn-danger'><span class='fa fa-trash'></span></button></div>");
+        $(parent).append(html);
+        $(parent).append("<hr>");
+    }
+    function openModal() {
+        var docId = $("#iinput-usr").val();
+        $.ajax({
+            type: 'POST',
+            url: '/Search/PatientsList',
+            data: { doctorId: docId },
+            dataType: 'json',
+            success: function (data) {
+                var femalecount = data.femaleCount;
+                for (var i = 0; i < femalecount; i++) {
+                    PatientsModalFill("#itab-females", data.female[i].Name, data.female[i].Photo, "/MedicalPlace/MedicalPlace", "/MedicalPlace/MedicalPlace");
+                }
+                var malecount = data.maleCount;
+                for (var i = 0; i < malecount; i++) {
+                    PatientsModalFill("#itab-males", data.male[i].Name, data.male[i].Photo, "/MedicalPlace/MedicalPlace", "/MedicalPlace/MedicalPlace");
+                }
+                $("#imodal-patient-list").modal('show');
+            },
+            error: function (msg) {
+                console.log(JSON.stringify(msg));
+            }
+        });
+    }
+</script>
 </body>

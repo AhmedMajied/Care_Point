@@ -36,4 +36,11 @@ namespace CarePoint.Models
         public List<UserAccount> pharmacists { get; set; }
 
     }
+    public class PatientViewModel {
+        public int femaleCount { get; set; }
+        public List<UserAccount> female { get; set; }
+        public int maleCount { get; set; }
+        public List<UserAccount> male { get; set; }
+    }
+
 }

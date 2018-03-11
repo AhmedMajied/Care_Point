@@ -67,6 +67,12 @@ namespace BLL
             allCitizens.Add(pharmacists);//2
             return allCitizens;
         }
+        public List<Citizen>getPatientList(long doctorId)
+        {
+            List<Citizen> patientList = new List<Citizen>();
+            patientList = dbEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p=>p.Citizen).ToList();
+            return patientList;
+        }
 
     }
 }

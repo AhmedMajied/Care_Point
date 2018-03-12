@@ -40,13 +40,8 @@ namespace CarePoint.Controllers
         }
         public JsonResult PatientsList(long doctorId)
         {
-            Debug.WriteLine(doctorId);
             PatientViewModel patients = new PatientViewModel();
             List<Citizen> list = searchBusinessLayer.getPatientList(doctorId);
-            foreach(Citizen c in list)
-            {
-                Debug.WriteLine(c.Name + " --- " + c.Id);
-            }
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)

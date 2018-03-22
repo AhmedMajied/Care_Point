@@ -6,23 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DocType html>
-
 @section styles{
-    <!--<link rel="stylesheet" type="text/css" href="~/Content/file-dialog.css" />-->
-    <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/step-wizard.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/current-patient.css" />
-}
-
-<!-- upload attachment form-->
-@using (Html.BeginForm("UploadAttachments", "MedicalHistory", FormMethod.Post,
-                                                                           new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="files" multiple /><br><br>
-    <input type="submit" value="Upload Attachment" />
-    <br><br>
 }
 
 <div class="row">
@@ -30,15 +16,16 @@
     <div class="col-md-8">
         <h4><b>Name:</b> @Model.Name</h4>
         <h4><b>Gender:</b> @Model.Gender</h4>
-        <h4><b>Age:</b> @Model.DateOfBirth.ToString()</h4>
+        <h4><b>Age:</b> @(@DateTime.Now.Year - @Model.DateOfBirth.Value.Year)</h4>
         <h4><b>Blood type:</b> @Model.BloodType.Name</h4>
     </div>
     <div class="col-md-2">
         <span data-toggle="modal" data-target="#imodal-history-record">
             <button id="ibtn-add-prescription" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add to medical history"><span class="fa fa-pencil-square-o"></span></button>
         </span>
-        <button id="ibtn-upload-attachment" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Upload attachment"><span class="fa fa-file-text-o"></span></button>
-
+        <span data-toggle="modal" data-target="#imodal-upload-attachment">
+            <button id="ibtn-upload-attachment" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Upload attachment"><span class="fa fa-file-text-o"></span></button>
+        </span>
         <div id="imodal-history-record" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -71,9 +58,9 @@
 
                         <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal f1">
 
-                            <div id="idiv-step-1" class="cdiv-step container-fluid">
-                                @Html.HiddenFor(citizen => citizen.Id);
-                                <div class="row cdiv-symptom">
+                            <div id="idiv-step-1" class="cdiv-step cdiv-list container-fluid form-group">
+                                @Html.HiddenFor(citizen => citizen.Id)
+                                <div class="row cdiv-list-item">
                                     <div class="col-md-10">
                                         <input name="symptomName" class="form-control" type="text" placeholder="symptom name">
                                     </div>
@@ -83,8 +70,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="idiv-step-2" class="cdiv-step container-fluid">
-                                <div class="row cdiv-disease">
+                            <div id="idiv-step-2" class="cdiv-step cdiv-list container-fluid form-group">
+                                <div class="row cdiv-list-item">
                                     <div class="col-md-10">
                                         <input name="diseaseName" class="form-control" type="text" placeholder="disease name">
                                     </div>
@@ -94,9 +81,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="idiv-step-3" class="cdiv-step container-fluid">
+                            <div id="idiv-step-3" class="cdiv-step cdiv-list container-fluid form-group">
                                 <datalist id="drugs"></datalist>
-                                <div class="row cdiv-drug">
+                                <div class="row cdiv-list-item">
                                     <div class="col-md-5">
                                         <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
                                     </div>
@@ -121,6 +108,57 @@
                             <button id="ibtn-prev" type="button" class="btn btn-default" disabled>Previous</button>
                             <button id="ibtn-nxt" type="button" class="btn btn-success">Next</button>
                             <input type="submit" id="ibtn-submit" class="btn btn-success" value="Submit">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="imodal-upload-attachment" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @using (Html.BeginForm("UploadAttachments", "MedicalHistory", FormMethod.Post,
+                                                           new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button><br />
+                            <h4 class="modal-title">Upload attachments</h4>
+                        </div>
+                        <div class="modal-body cscrollbar-container cscrollbar-modal">
+                            <div class="container-fluid cdiv-list">
+                                
+                                
+                                
+                                
+                                <div class="row cdiv-list-item">
+                                    <div class="col-md-4 selectContainer">
+                                        <select class="form-control" name="a@name">
+                                            <option class="form-control" value="" selected disabled>Select type</option>
+                                            <option class="form-control" value="">@@Type1</option>
+                                            <option class="form-control" value="">@@Type2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-success">
+                                                    Browse&hellip; <input type="file" name="files" style="display: none;">
+                                                </span>
+                                            </label>
+                                            <input type="text" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" id="ibtn-upload" class="btn btn-success" value="Upload">
                         </div>
                     }
                 </div>
@@ -152,14 +190,6 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/file-dialog.js" type="application/javascript"></script>
-    <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/step-wizard.js" type="application/javascript"></script>
     <script src="~/Scripts/current-patient.js" type="application/javascript"></script>
 }
-
-
-
-
-
-

@@ -224,10 +224,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\scrollbar.css" />
+    <Content Include="Content\step-wizard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

@@ -9,3 +9,4 @@ E:\GP\CarePoint\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\DAL\obj\Debug\DAL.csproj.CopyComplete
 E:\GP\CarePoint\DAL\obj\Debug\DAL.dll
 E:\GP\CarePoint\DAL\obj\Debug\DAL.pdb
+E:\GP\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache

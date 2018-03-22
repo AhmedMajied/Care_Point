@@ -81,11 +81,6 @@
 	text-align: left;
 }
 
-.f1 .input-error {
-	border: 1px solid #e62a2a;
-
-}
-
 #ibtn-submit{
 	display: none;
 }

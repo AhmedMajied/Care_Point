@@ -200,6 +200,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CareUnitController.cs" />
+    <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -225,7 +226,6 @@
     <Content Include="Content\citizen-medical-history.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
-    <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="favicon.ico" />
@@ -258,6 +258,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\current-patient.js" />
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sos.js" />
+    <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -315,6 +317,7 @@
     <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
+    <Content Include="Views\Citizen\CurrentPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

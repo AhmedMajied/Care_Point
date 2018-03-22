@@ -76,34 +76,36 @@ namespace CarePoint.Controllers
         }
         
         [HttpPost]
-        public ActionResult UploadAttachments(HttpPostedFileBase[] files)
+        public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {
-            foreach (HttpPostedFileBase file in files)
+            string[] typeIDs = form.GetValues("attachmentTypes");
+
+            for(int i=0;i<files.Length;i++)
             {
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
-                    file.FileName);
-                    file.SaveAs(path);
+                    files[i].FileName);
+                    files[i].SaveAs(path);
 
-                    /*Attachment a = new Attachment
+                    Attachment attachment = new Attachment
                     {
-                        TypeID = 1,
+                        TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = 1,
-                        CitizenID = 1,
+                        SpecialistID = 15,// User.Identity.GetUserId<long>() 
+                        CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
-                        FileName = file.FileName
+                        FileName = files[i].FileName
                     };
-                    */
-                    //TODO save to DB here  
+
+                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
                 }
                 catch (Exception ex)
                 {
                     //return "ERROR:" + ex.Message.ToString();
                 }
-
             }
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 
@@ -119,7 +121,7 @@ namespace CarePoint.Controllers
             string[] medicines = form.GetValues("drugName");
             string[] dosesDescription = form.GetValues("dose");
             string remarks = form["remarks"];
-
+            
             HistoryRecord historyRecord = new HistoryRecord
             {
                 Date = DateTime.Now,
@@ -162,11 +164,22 @@ namespace CarePoint.Controllers
 
             bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
+            if (medicines[0].Equals(""))
+                return Redirect(Request.UrlReferrer.ToString());
+
             return new FilePathResult(prescriptionFilePath, "image/jpg")
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
             };
         }
-        
+
+        public ActionResult GetAttachmentTypes()
+        {
+            var attachmentTypes = _medicalHistorBusinessLayer.GetAttachmentTypes().
+                Select(type => new { type.ID,type.Name }).ToList();
+
+            return Json(attachmentTypes);
+        }
+
     }
 }

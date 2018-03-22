@@ -224,11 +224,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
-    <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\scrollbar.css" />
+    <Content Include="Content\step-wizard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -259,6 +260,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\current-patient.js" />
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
@@ -277,6 +279,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sos.js" />
+    <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

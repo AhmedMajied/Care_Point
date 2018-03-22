@@ -10,19 +10,6 @@ E:\GP\CarePoint\BLL\bin\Debug\EntityFramework.xml
 E:\GP\CarePoint\BLL\bin\Debug\EntityFramework.SqlServer.xml
 E:\GP\CarePoint\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 E:\GP\CarePoint\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+E:\GP\CarePoint\BLL\obj\Debug\BLL.csproj.CopyComplete
 E:\GP\CarePoint\BLL\obj\Debug\BLL.dll
 E:\GP\CarePoint\BLL\obj\Debug\BLL.pdb
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\BLL.dll.config
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\BLL.dll
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\BLL.pdb
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\DAL.dll
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\EntityFramework.dll
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\EntityFramework.SqlServer.dll
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\DAL.pdb
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\DAL.dll.config
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\EntityFramework.xml
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\bin\Debug\EntityFramework.SqlServer.xml
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\obj\Debug\BLL.dll
-D:\Ahmed Hussein\Ahmed\Level4\GP\Gitlab\CarePoint\BLL\obj\Debug\BLL.pdb

@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="~/Images/logo-navbar.ico" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
@@ -64,12 +64,12 @@
                                     <br /><input id="ichk-rate" type="checkbox" /> Rate
                                     <br /><input id="ichk-popularity" type="checkbox" /> Popularity
                                     <br /><br />
-                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
+                                    <button class="btn btn-success cbtn-srch" type="button" data-toggle="modal" data-target="#imodal-place-srch-result"><span class="fa fa-search"></span> Search</button>
                                 </div>
                                 <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
                                     Search options for drugs
                                     <br /><br />
-                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
+                                    <button class="btn btn-success cbtn-srch" type="button"><span class="fa fa-search"></span> Search</button>
                                 </div>
                                 <div id="itab-srch-account" role="tabpanel" class="tab-pane">
                                     <label>Search by:</label>
@@ -84,7 +84,7 @@
                                     <label>Search for:</label>
                                     <br /><input class="form-control" type="text" />
                                     <br />
-                                    <button class="btn btn-success cbtn-srch" data-toggle="modal" data-target="#imodal-people-srch-result"><span class="fa fa-search"></span> Search</button>
+                                    <button class="btn btn-success cbtn-srch" type="button" data-toggle="modal" data-target="#imodal-people-srch-result"><span class="fa fa-search"></span> Search</button>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                         <div id="itab-non-specialists" role="tabpanel" class="tab-pane active">
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -129,7 +129,7 @@
                             </div><hr>
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -147,7 +147,7 @@
                         <div id="itab-doctors" role="tabpanel" class="tab-pane">
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -163,7 +163,7 @@
                             </div><hr>
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -181,7 +181,7 @@
                         <div id="itab-pharmacists" role="tabpanel" class="tab-pane">
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -197,7 +197,7 @@
                             </div><hr>
                             <div class="row">
                                 <div class="col-md-2">@@User profile picture</div>
-                                <div class="col-md-6">@@User full name</div>
+                                <div class="col-md-6"><label>@@User full name</label></div>
                                 <div class="col-md-4 dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         Mark as
@@ -217,11 +217,50 @@
             </div>
         </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <div id="imodal-place-srch-result" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="imodal-hdr" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Places that may be suitable for you</h4>
+                </div>
+                <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                    <div class="row">
+                        <div class="col-md-2">@@Place profile picture</div>
+                        <div class="col-md-7">
+                            <a href="a@placeURL">@@Place name</a> (@@Place type)
+                            <h5><b>Address: </b>@@Place address</h5>
+                            <h5><b>Phone: </b>@@Place phone</h5>
+                        </div>
+                        <div class="col-md-3">
+                            @@if specialist
+                            <button class="btn btn-default" type="button">Join staff</button>
+                            @@if specialist and already joined
+                            <span class="fa fa-check-circle-o"></span> joined
+                        </div>
+                    </div><hr />
+                    <div class="row">
+                        <div class="col-md-2">@@Place profile picture</div>
+                        <div class="col-md-7">
+                            <a href="a@placeURL">@@Place name</a> (@@Place type)
+                            <h5><b>Address: </b>@@Place address</h5>
+                            <h5><b>Phone: </b>@@Place phone</h5>
+                        </div>
+                        <div class="col-md-3">
+                            @@if specialist
+                            <button class="btn btn-default" type="button">Join staff</button>
+                            @@if specialist and already joined
+                            <span class="fa fa-check-circle-o"></span> joined
+                        </div>
+                    </div><hr />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
     @RenderSection("scripts", required: false)

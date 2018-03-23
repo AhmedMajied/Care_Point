@@ -34,6 +34,7 @@ namespace BLL
             string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath)
         {
             Canvas canvas = new Canvas();
+            Bitmap bitmap = null;
             string medicineName;
             int prescriptionTypeID = 3;
 
@@ -53,8 +54,8 @@ namespace BLL
             }
 
             // save history record to database
-            historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
-            DBEntities.SaveChanges();
+            //historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
+            //DBEntities.SaveChanges();
 
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -64,24 +65,28 @@ namespace BLL
             historyRecord.Specialist = DBEntities.Citizens.OfType<Specialist>().Single(specialist =>
                                         specialist.Id == historyRecord.SpecialistID);
             
-            // add prescription as an attachment
-            Attachment attachment = new Attachment
+            // create prescription only if doctor wrote drugs to patient
+            if(patientMedicines[0] != "")
             {
-                TypeID = prescriptionTypeID,
-                Date = historyRecord.Date,
-                SpecialistID = historyRecord.SpecialistID,
-                CitizenID = historyRecord.CitizenID,
-                FilePath = savingPath,
-                FileName = Path.GetFileName(savingPath)
-            };
+                // add prescription as an attachment
+                Attachment attachment = new Attachment
+                {
+                    TypeID = prescriptionTypeID,
+                    Date = historyRecord.Date,
+                    SpecialistID = historyRecord.SpecialistID,
+                    CitizenID = historyRecord.CitizenID,
+                    FilePath = savingPath,
+                    FileName = Path.GetFileName(savingPath)
+                };
 
-            // save attachment to database
-            SaveAttachment(attachment);
+                // save attachment to database
+                //SaveAttachment(attachment);
 
-            // Draw prescription as image
-            Bitmap bitmap = canvas.convertTextToImage(historyRecord, patientMedicines,
+                // Draw prescription as image
+                bitmap = canvas.convertTextToImage(historyRecord, patientMedicines,
                 medicinesAlternatives);
-
+            }
+            
             return bitmap;
         }
 

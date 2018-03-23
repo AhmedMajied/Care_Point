@@ -113,7 +113,7 @@ namespace CarePoint.Controllers
         public ActionResult UploadPrescription(FormCollection form)
         {
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
-                                            Path.GetRandomFileName().Replace(".", "") + ".jpg";
+                                     Path.GetRandomFileName().Replace(".", "") + ".jpg";
             List<List<string>> medicinesAlternatives = new List<List<string>>();
 
             string[] symptoms = form.GetValues("symptomName");
@@ -162,15 +162,17 @@ namespace CarePoint.Controllers
             Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
                 medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath);
 
-            bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
+            if(bitmap != null)
+                bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            if (medicines[0].Equals(""))
-                return Redirect(Request.UrlReferrer.ToString());
+            //           if (medicines[0].Equals(""))
+            return Redirect(Request.UrlReferrer.ToString());
 
-            return new FilePathResult(prescriptionFilePath, "image/jpg")
-            {
-                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };
+            /*         return new FilePathResult(prescriptionFilePath, "image/jpg")
+                     {
+                         FileDownloadName = historyRecord.Date.ToString() + ".jpg"
+                     };*/
+
         }
 
         public ActionResult GetAttachmentTypes()

@@ -21,8 +21,8 @@ namespace BLL
 
         public Canvas()
         {
-            regular = new Font("Times New Roman", 26, FontStyle.Regular, GraphicsUnit.Pixel);
-            bold = new Font("Times New Roman", 30, FontStyle.Bold, GraphicsUnit.Pixel);
+            regular = new Font("Helvetica", 24, FontStyle.Regular, GraphicsUnit.Pixel);
+            bold = new Font("Helvetica", 28, FontStyle.Bold, GraphicsUnit.Pixel);
 
             bitmap = new Bitmap(1, 1);
             graphics = Graphics.FromImage(bitmap);
@@ -40,15 +40,17 @@ namespace BLL
         {
 
             // decide page structure to know the sutable legth of it 
-            string pageStructure = "\n\n\nName \n Patient name \n Medicines " + "\n"
-                    + " Doctor \n Doctor name \n\n Address \n medicalPlaceAddress\n";
+            string pageStructure = "\n\n\nName \n Patient name \n Medicines " + "\n\n"
+                    + " Doctor \n Doctor name \n\n Address \n medicalPlaceAddress";
 
-            for (int i = 0; i < medicines.Length; i++)
+            for (int i = 0; i < medicinesAlternatives.Count; i++)
             {
-                pageStructure += "\n\n";
+                for(int c=0;c < medicinesAlternatives[i].Count -1;c++)
+                    pageStructure += "\n";
+                pageStructure += "\n";
             }
 
-            pageWidth = 900;
+            pageWidth = 700;
             pageHeight = (int)graphics.MeasureString(pageStructure, bold).Height + imageHeight;
 
             bitmap = new Bitmap(bitmap, new Size(pageWidth, pageHeight));
@@ -62,7 +64,7 @@ namespace BLL
             // Drawing
             DrawPrescriptionHeader(historyRecord.MedicalPlace.Name, historyRecord.MedicalPlace.Photo);
             DrawPrescriptionBody(historyRecord.Citizen.Name, historyRecord.Specialist.Name,
-                historyRecord.Date, medicines);
+                historyRecord.Date, medicines,medicinesAlternatives);
             DrawPrescriptionFooter(historyRecord.MedicalPlace.Address, historyRecord.MedicalPlace.Phone);
 
             graphics.Flush();
@@ -80,21 +82,20 @@ namespace BLL
             {
                 Image image = (Bitmap)((new ImageConverter()).ConvertFrom(medicalPlaceImg));
                 graphics.DrawImage(image, leftPadding, upperPadding, leftPadding + imageWidth, upperPadding + imageHeight);
-                graphics.DrawString(medicalPlaceName, new Font("Times New Roman", 50, FontStyle.Bold, GraphicsUnit.Pixel),
+                graphics.DrawString(medicalPlaceName, new Font("Helvetica", 40, FontStyle.Bold, GraphicsUnit.Pixel),
                     new SolidBrush(Color.Blue), imageWidth + leftPadding * 3, imageHeight / 3 + upperPadding);
             }
             else
             {// center medical place name
-                graphics.DrawString(medicalPlaceName, new Font("Times New Roman", 50, FontStyle.Bold, GraphicsUnit.Pixel),
+                graphics.DrawString(medicalPlaceName, new Font("Helvetica", 40, FontStyle.Bold, GraphicsUnit.Pixel),
                     new SolidBrush(Color.Blue), pageWidth / 2, imageHeight / 3 + upperPadding, alignmentCenter);
             }
-
-
         }
 
-        private void DrawPrescriptionBody(string patientName, string doctorName, DateTime date, string[] medicines)
+        private void DrawPrescriptionBody(string patientName, string doctorName, DateTime date, 
+                            string[] medicines, List<List<string>> medicinesAlternatives)
         {
-            graphics.DrawString(newLine + new String('_', pageWidth / 22), bold, new SolidBrush(Color.Red),
+            graphics.DrawString(newLine + new String('_', pageWidth / 14), bold, new SolidBrush(Color.Red),
                 pageWidth / 2, 0, alignmentCenter);
             newLine += "\n";
 
@@ -109,37 +110,62 @@ namespace BLL
                                                                 pageWidth - padding, 0, alignmentRight);
             newLine += "\n";
 
-            graphics.DrawString(newLine + "Medicines", bold, new SolidBrush(Color.Black), padding, 0);
-            newLine += "\n\n\n";
-
-            for (int i = 0; i < medicines.Length; i++)
+            if(medicines[0] != "")
             {
-                graphics.DrawString(newLine + "-" + medicines[i], regular, new SolidBrush(Color.Black), padding * 10, 0);
-                newLine += "\n";
+                if(medicinesAlternatives.Count == 0)
+                {
+                    graphics.DrawString(newLine + "Medicines", bold,
+                                    new SolidBrush(Color.Black), padding, 0);
+                }
+                else
+                {
+                    graphics.DrawString(newLine + "Medicines\t\t            Alternatives", bold,
+                                    new SolidBrush(Color.Black), padding, 0);
+                }
+                
+                newLine += "\n\n\n";
+            }
+
+            for (int medicineIndex = 0; medicineIndex < medicines.Length && 
+                medicines[medicineIndex] != ""; medicineIndex++)
+            {
+                graphics.DrawString(newLine + "- " + medicines[medicineIndex], regular,
+                    new SolidBrush(Color.Black), padding * 5, 0);
+
+                // write alternatives for each medicine
+                if(medicinesAlternatives.Count != 0)
+                {
+                    for (int alternativeIndex = 0; alternativeIndex < medicinesAlternatives[medicineIndex].Count; alternativeIndex++)
+                    {
+                        graphics.DrawString(newLine + "- "+ medicinesAlternatives[medicineIndex][alternativeIndex]
+                            , regular, new SolidBrush(Color.Black), pageWidth - padding * 11, 0, alignmentRight);
+                        newLine += "\n";
+                    }
+                }
             }
 
             graphics.DrawString(newLine + "Doctor Name", bold, new SolidBrush(Color.Black),
                 MeasureLeftPadding("Doctor Name", doctorName), 0, alignmentCenter);
             graphics.DrawString(newLine + "Signature", bold, new SolidBrush(Color.Black),
                 MeasureRightPadding("Signature", date.ToString()), 0, alignmentRight);
-            newLine += "\n\n";
+            newLine += "\n";
 
-            graphics.DrawString("\n" + newLine + doctorName, regular, new SolidBrush(Color.Black), padding * 2, 0);
-            graphics.DrawString(newLine + new String('_', pageWidth / 22), bold, new SolidBrush(Color.Red),
+            graphics.DrawString("\n\n" + newLine + doctorName, regular, new SolidBrush(Color.Black), padding * 2, 0);
+            graphics.DrawString(newLine + new String('_', pageWidth/14), bold, new SolidBrush(Color.Red),
                 pageWidth / 2, 0, alignmentCenter);
-            newLine += "\n\n\n\n";
+            newLine += "\n\n\n\n\n\n";
         }
 
         private void DrawPrescriptionFooter(string address, string phone)
         {
-            regular = new Font("Times New Roman", 20, FontStyle.Regular, GraphicsUnit.Pixel);
-            bold = new Font("Times New Roman", 25, FontStyle.Bold, GraphicsUnit.Pixel);
+            regular = new Font("Helvetica", 17, FontStyle.Regular, GraphicsUnit.Pixel);
+            bold = new Font("Helvetica", 21, FontStyle.Bold, GraphicsUnit.Pixel);
 
             graphics.DrawString(newLine + "Address", bold, new SolidBrush(Color.Black),
                 MeasureLeftPadding("Address", address), 0, alignmentCenter);
             graphics.DrawString(newLine + "Phone", bold, new SolidBrush(Color.Black),
                 MeasureRightPadding("Phone", phone), 0, alignmentRight);
-            newLine += "\n\n\n\n\n";
+            newLine += "\n\n\n\n\n\n";
 
             graphics.DrawString(newLine + address, regular, new SolidBrush(Color.Black), padding * 2, 0);
             graphics.DrawString(newLine + phone, regular, new SolidBrush(Color.Black),

@@ -1,7 +1,7 @@
 var drugs;
+var attachmentTypes;
 
 $(document).ready(function () {
-
     $(function () {
         $(document).on('change', ':file', function () {
             var input = $(this);
@@ -55,7 +55,24 @@ $(document).ready(function () {
 
             });
         }
+    });
 
+    $("#ibtn-upload-attachment").click(function () {
+        if (attachmentTypes == null) {
+            $.ajaxSetup({ async: false });
+            $.post("/MedicalHistory/GetAttachmentTypes", {}, function (data) {
+                var selectList = $("#iselect-attachment-types");
+                attachmentTypes = data;
+                
+                for (var i = 0; i < attachmentTypes.length-1; i++) {
+                    var option = document.createElement("option");
+                    option.value = attachmentTypes[i].ID;
+                    option.text = attachmentTypes[i].Name;
+                    selectList.append(option);
+                }
+
+            });
+        }
     });
 });
 

@@ -17,7 +17,6 @@ $(document).ready(function () {
     $(".cbtn-add").click(function () {
         var empty_input = false;
         // fields validation
-
         $(this).closest('.cdiv-list').find('input').each(function () {
             if ($(this).val().trim() == "" && $(this).hasClass('cinp-dose') == false) {
                 $(this).addClass('input-error');
@@ -75,7 +74,6 @@ $(document).ready(function () {
             });
         }
     });
-
 });
 
 

@@ -52,6 +52,7 @@
     <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />
+    <Compile Include="MedicalPlaceBusinessLayer.cs" />
     <Compile Include="MedicineBusinessLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

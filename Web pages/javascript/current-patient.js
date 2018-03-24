@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $("#ibtn-upload-attachment").click(function() {
+
         $.FileDialog({
+
             accept: "*", // Accept any file type
             dragMessage: "Drop files here",
             dropheight: 400,
@@ -10,6 +12,7 @@ $(document).ready(function () {
             removeMessage: "Remove&nbsp;file",
             title: "Upload Attachments"
         });
+
     });
 
     $(".cbtn-add").click(function(){

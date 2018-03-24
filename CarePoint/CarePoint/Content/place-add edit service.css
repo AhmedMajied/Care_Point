@@ -1,3 +1,8 @@
+.modal-header{
+    padding-bottom: 0%;
+    border-bottom: none;
+}
+
 .nav-tabs
 {
     border-bottom: 1px solid #dddddd;
@@ -16,7 +21,6 @@
 .nav-tabs > li > a:hover
 {
     color: #4285F4 !important;
-
     background: transparent;
 }
 

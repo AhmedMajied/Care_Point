@@ -14,12 +14,6 @@ namespace DAL
     
     public partial class WorkSlot
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WorkSlot()
-        {
-            this.TimeSlots = new HashSet<TimeSlot>();
-        }
-    
         public long ID { get; set; }
         public string DayName { get; set; }
         public Nullable<System.TimeSpan> EndTime { get; set; }
@@ -27,7 +21,5 @@ namespace DAL
         public Nullable<long> ServiceID { get; set; }
     
         public virtual Service Service { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeSlot> TimeSlots { get; set; }
     }
 }

@@ -15,7 +15,8 @@
 
 .nav-tabs > li > a:hover
 {
-    color: #4285F4;
+    color: #4285F4 !important;
+
     background: transparent;
 }
 

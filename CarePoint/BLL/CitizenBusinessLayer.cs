@@ -20,15 +20,6 @@ namespace BLL
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
-            // not tested
-        }
-
-        public void UpdateCitizen(Citizen modifiedCitizen)
-        {
-            DBEntities.Entry(modifiedCitizen).State = EntityState.Modified;
-            DBEntities.SaveChanges();
-            
-            // not tested
         }
 
         public Specialist GetSpecialist(long specialistID)
@@ -37,14 +28,6 @@ namespace BLL
             // not tested and need to be checked 
         }
 
-        public void UpdateSpecialist(Specialist modifiedSpecialist)
-        {
-            DBEntities.Entry(modifiedSpecialist).State = EntityState.Modified;
-            DBEntities.SaveChanges();
-
-            //not tested and need to be checked 
-        }
-        
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();

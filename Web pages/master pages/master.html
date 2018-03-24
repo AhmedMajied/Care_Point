@@ -44,6 +44,162 @@
             </div>
             <div class="col-md-8">
                 @here you can include slave pages
+                
+                <head>
+    @the following scripts should be the last included scripts
+        <script src="../javascript/file-dialog.js" type="application/javascript"></script>
+        <script src="../javascript/modal.js" type="application/javascript"></script> @if included in the contaier (parent page), you can remove it
+        <script src="../javascript/step-wizard.js" type="application/javascript"></script>
+        <script src="../javascript/current-patient.js" type="application/javascript"></script>
+    @the following styles should be the last included styles
+        <link rel="stylesheet" type="text/css" href="../css/file-dialog.css" />
+        <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" /> @if included in the contaier (parent page), you can remove it
+        <link rel="stylesheet" type="text/css" href="../css/modal.css" /> @if included in the contaier (parent page), you can remove it
+        <link rel="stylesheet" type="text/css" href="../css/step-wizard.css" />
+        <link rel="stylesheet" type="text/css" href="../css/current-patient.css" />
+</head>
+
+
+<div class="row">
+    <div class="col-md-2">@Patient's photo here</div>
+    <div class="col-md-8">
+        <h4><b>Name:</b> @Patient'sName</h4>
+        <h4><b>Gender:</b> @Patient'sGender</h4>
+        <h4><b>Age:</b> @Years Y @Months M @Days D</h4>
+        <h4><b>Blood type:</b> Patient'sBloodType</h4>
+    </div>
+    <div class="col-md-2">
+        <span data-toggle="modal" data-target="#imodal-history-record">
+            <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add to medical history"><span class="fa fa-pencil-square-o"></span></button>
+        </span>
+        <button id="ibtn-upload-attachment" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Upload attachment"><span class="fa fa-file-text-o"></span></button>
+        <div id="imodal-history-record" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" action="" method="post" class="f1">
+                        <div id="imodal-hdr" class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button><br/>
+                            <div class="f1-steps">
+                                <div class="f1-progress">
+                                    <div class="f1-progress-line" data-now-value="12.5" data-number-of-steps="4" style="width: 12.5%;"></div>
+                                </div>
+                                <div class="f1-step active">
+                                    <a href="#idiv-step-1" class="f1-step-icon"><i class="fa fa-thermometer-three-quarters"></i></a>
+                                    <p><b>Step 1:</b><br>Symptoms</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-2" class="f1-step-icon"><i class="fa fa-bed"></i></a>
+                                    <p><b>Step 2:</b><br>Diseases</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
+                                    <p><b>Step 3:</b><br>Drugs</p>
+                                </div>
+                                <div class="f1-step">
+                                    <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
+                                    <p><b>Step 4:</b><br>Remarks</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                        
+                            <div id="idiv-step-1" class="cdiv-step container-fluid">
+                                <div class="row cdiv-symptom">
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" placeholder="symptom name">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="idiv-step-2" class="cdiv-step container-fluid">
+                                <div class="row cdiv-disease">
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" placeholder="disease name">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="idiv-step-3" class="cdiv-step container-fluid">
+                                <div class="row cdiv-drug">
+                                    <div class="col-md-5">
+                                        <input class="form-control" type="text" placeholder="drug name">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class="form-control cinp-dose" type="text" placeholder="dose description">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="idiv-step-4" class="cdiv-step container-fluid">
+                                <h4 id="ih4-alternatives">Which of the following drugs do you accept as alternatives ?</h4>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">@Medicine1</div>
+                                    <div class="panel-body">
+                                        <span class="cspn-alternative"><input type="checkbox"> @alternative1</span>
+                                        <span class="cspn-alternative"><input type="checkbox"> @alternative2</span>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">@Medicine2</div>
+                                    <div class="panel-body">
+                                        <span class="cspn-alternative"><input type="checkbox"> @alternative1</span>
+                                        <span class="cspn-alternative"><input type="checkbox"> @alternative2</span>
+                                    </div>
+                                </div>
+                                <h4 id="ih4-alternatives">Do you have any other reamrks or recommendations ?</h4>
+                                <textarea id="itxtarea-remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button id="ibtn-prev" type="button" class="btn btn-default" disabled>Previous</button>
+                            <button id="ibtn-nxt" type="button" class="btn btn-success">Next</button>
+                            <button id="ibtn-submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                        
+            </div>
+            
+        </div>
+            
+    </div>
+</div>
+<div class="container-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a id="itab-medical-history" href="#idiv-medical-history-tab" data-toggle="tab">Medical History</a></li>
+        <li><a id="itab-analysis" href="#idiv-analysis-tab" data-toggle="tab">Analysis</a></li>
+        <li><a id="itab-radiology" href="#idiv-radiology-tab" data-toggle="tab">Radiology</a></li>
+        <li><a id="itab-other" href="#idiv-other-tab" data-toggle="tab">Others</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="idiv-medical-history-tab" class="tab-pane fade in active">
+            @same content as the &lt;BODY&gt; of "MedicalHistory.cshtml"
+        </div>
+        <div id="idiv-analysis-tab" class="tab-pane fade">
+            @same content as "Analysis" tab in "Attachments.chtml"
+        </div>
+        <div id="idiv-radiology-tab" class="tab-pane fade">
+            @same content as "Radiology" tab in "Attachments.chtml"
+        </div>
+        <div id="idiv-other-tab" class="tab-pane fade">
+            @same content as "Other" tab in "Attachments.chtml"
+        </div>
+    </div>
+</div>
+                
+                
+                
+                
             </div>
             <div class="col-md-2">This is for Adds</div>
         </div>

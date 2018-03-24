@@ -388,15 +388,6 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="TimeSlots">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Start" Type="time" Precision="7" />
-    <Property Name="Finish" Type="time" Precision="7" />
-    <Property Name="WorkdayID" Type="bigint" />
-  </EntityType>
   <EntityType Name="UserClaims">
     <Key>
       <PropertyRef Name="Id" />
@@ -1222,20 +1213,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TimeSlots_Workdays">
-    <End Role="WorkSlots" Type="Self.WorkSlots" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="TimeSlots" Type="Self.TimeSlots" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WorkSlots">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TimeSlots">
-        <PropertyRef Name="WorkdayID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Workdays_Services">
     <End Role="Services" Type="Self.Services" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1291,7 +1268,6 @@
     <EntitySet Name="Specialists" EntityType="Self.Specialists" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specialities" EntityType="Self.Specialities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Symptoms" EntityType="Self.Symptoms" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TimeSlots" EntityType="Self.TimeSlots" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
@@ -1539,10 +1515,6 @@
     <AssociationSet Name="FK_Specialists_Specialities" Association="Self.FK_Specialists_Specialities">
       <End Role="Specialities" EntitySet="Specialities" />
       <End Role="Specialists" EntitySet="Specialists" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TimeSlots_Workdays" Association="Self.FK_TimeSlots_Workdays">
-      <End Role="WorkSlots" EntitySet="WorkSlots" />
-      <End Role="TimeSlots" EntitySet="TimeSlots" />
     </AssociationSet>
     <AssociationSet Name="FK_Workdays_Services" Association="Self.FK_Workdays_Services">
       <End Role="Services" EntitySet="Services" />

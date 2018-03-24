@@ -471,16 +471,6 @@
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordSymptoms" FromRole="Symptoms" ToRole="HistoryRecords" />
   </EntityType>
-  <EntityType Name="TimeSlot">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Start" Type="Time" Precision="7" />
-    <Property Name="Finish" Type="Time" Precision="7" />
-    <Property Name="WorkdayID" Type="Int64" />
-    <NavigationProperty Name="WorkSlot" Relationship="Self.FK_TimeSlots_Workdays" FromRole="TimeSlots" ToRole="WorkSlots" />
-  </EntityType>
   <EntityType Name="UserClaim">
     <Key>
       <PropertyRef Name="Id" />
@@ -512,7 +502,6 @@
     <Property Name="StartTime" Type="Time" Precision="7" />
     <Property Name="ServiceID" Type="Int64" />
     <NavigationProperty Name="Service" Relationship="Self.FK_Workdays_Services" FromRole="WorkSlots" ToRole="Services" />
-    <NavigationProperty Name="TimeSlots" Relationship="Self.FK_TimeSlots_Workdays" FromRole="WorkSlots" ToRole="TimeSlots" />
   </EntityType>
   <Association Name="FK_MedicineActiveIngredients_ActiveIngredients">
     <End Role="ActiveIngredients" Type="Self.ActiveIngredient" Multiplicity="1" />
@@ -1196,20 +1185,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TimeSlots_Workdays">
-    <End Role="WorkSlots" Type="Self.WorkSlot" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="TimeSlots" Type="Self.TimeSlot" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="WorkSlots">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TimeSlots">
-        <PropertyRef Name="WorkdayID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="HistoryRecordDiseases">
     <End Role="Diseases" Type="Self.Disease" Multiplicity="*" />
     <End Role="HistoryRecords" Type="Self.HistoryRecord" Multiplicity="*" />
@@ -1263,7 +1238,6 @@
     <EntitySet Name="SOSses" EntityType="Self.SOSs" />
     <EntitySet Name="Specialities" EntityType="Self.Speciality" />
     <EntitySet Name="Symptoms" EntityType="Self.Symptom" />
-    <EntitySet Name="TimeSlots" EntityType="Self.TimeSlot" />
     <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
     <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
     <EntitySet Name="WorkSlots" EntityType="Self.WorkSlot" />
@@ -1478,10 +1452,6 @@
     <AssociationSet Name="FK_Specialists_Specialities" Association="Self.FK_Specialists_Specialities">
       <End Role="Specialities" EntitySet="Specialities" />
       <End Role="Specialists" EntitySet="Citizens" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TimeSlots_Workdays" Association="Self.FK_TimeSlots_Workdays">
-      <End Role="WorkSlots" EntitySet="WorkSlots" />
-      <End Role="TimeSlots" EntitySet="TimeSlots" />
     </AssociationSet>
     <AssociationSet Name="HistoryRecordDiseases" Association="Self.HistoryRecordDiseases">
       <End Role="Diseases" EntitySet="Diseases" />

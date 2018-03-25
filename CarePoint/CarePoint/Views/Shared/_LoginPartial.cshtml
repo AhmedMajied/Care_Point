@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
+﻿﻿@using Microsoft.AspNet.Identity
 @using CarePoint.Custom_HtmlHelpers
 @using Extensions
 @if (Request.IsAuthenticated)
@@ -14,7 +14,7 @@
             <li><a id="ilink-prognosis" href="#"><span class="fa fa-heart-o fa-2x" style="color: #ffffff;"></span></a></li>
             <li><a id="ilink-notif" href="#"><span class="fa fa-bell fa-2x" style="color: #ffffff;"></span></a></li>
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown"  style="background-color: #21c2eb; color: #ffffff;">
+                <a class="dropdown-toggle" data-toggle="dropdown" style="background-color: #21c2eb; color: #ffffff;">
                     @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iuser-img" })
                     <span class="fa fa-chevron-down fa-fw"></span>
                 </a>

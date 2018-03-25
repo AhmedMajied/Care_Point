@@ -55,7 +55,6 @@ namespace CarePoint.Controllers
                 _userManager = value;
             }
         }
-
         public CitizenBusinessLayer CitizenBusinessLayer
         {
             get
@@ -169,14 +168,12 @@ namespace CarePoint.Controllers
             {
                 years.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
-
             var bloodTypes = CitizenBusinessLayer.GetBloodTypes();
             var bloodTypesOptions = new List<SelectListItem>();
             foreach (var type in bloodTypes)
             {
                 bloodTypesOptions.Add(new SelectListItem() { Text = type.Name, Value = type.ID.ToString() });
             }
-
             var specialities = CitizenBusinessLayer.GetSpecialities();
             var specialitiesOptions = new List<SelectListItem>();
             specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "-1" });

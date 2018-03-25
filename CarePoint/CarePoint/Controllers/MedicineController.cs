@@ -16,7 +16,6 @@ namespace CarePoint.Controllers
         {
             _medicineBusinessLayer = new MedicineBusinessLayer();
         }
-
         public ActionResult GetAllMedicines()
         {
             var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>

@@ -1,8 +1,12 @@
 $(document).ready(function () {
     $("#ibtn-upload-attachment").click(function() {
+<<<<<<< HEAD
+        var chosen_files = $.FileDialog({
+=======
 
         $.FileDialog({
 
+>>>>>>> master
             accept: "*", // Accept any file type
             dragMessage: "Drop files here",
             dropheight: 400,
@@ -12,7 +16,16 @@ $(document).ready(function () {
             removeMessage: "Remove&nbsp;file",
             title: "Upload Attachments"
         });
+<<<<<<< HEAD
+        chosen_files.on('files.bs.filedialog', function(ev) {
+            var files_list = ev.files;
+            for(var i=0; i<files_list.length; i++){
+                console.log(files_list[i].name);
+            }
+        });
+=======
 
+>>>>>>> master
     });
 
     $(".cbtn-add").click(function(){

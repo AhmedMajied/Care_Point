@@ -1,4 +1,4 @@
-﻿using DAL;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +40,21 @@ namespace BLL
             DBEntities.Services.Attach(service);
             DBEntities.Entry(service).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
+        }
+        public void addMedicalPlace(MedicalPlace medicalPlace)
+        {
+            DBEntities.MedicalPlaces.Add(medicalPlace);
+            DBEntities.SaveChanges();
+        }
+        public MedicalPlace getMedicalPlace(long medicalPlaceId)
+        {
+            MedicalPlace medicalPlace = new MedicalPlace();
+            DBEntities.MedicalPlaces.Any(medical => medical.ID == medicalPlaceId);
+            return medicalPlace;
+        }
+        public ICollection<MedicalPlaceType> getAllTypes()
+        {
+            return DBEntities.MedicalPlaceTypes.ToList();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿function generateHTML(parent, userName, img, href) {
-    if (img == null)
+    if (img == null) {
         img = "../Images/notfound.png";
+    }
     html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src=" + img + "/></div>")
         .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>")).append("<div class='col-md-4 dropdown'><button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Mark As<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='" + href + "'>Friend</a></li><li><a href='" + href + "'>Parent</a></li><li><a href='" + href + "'>Sibling</a></li><li><a href='" + href + "'>Non-relative</a></li></ul></div>");
     $(parent).append(html);
@@ -21,12 +22,12 @@ $(function () {
         if (!(searchFor === "")) {
             $.ajax({
                 type: 'POST',
-                url: '/Search/SearchAccount',
+                url: '/Citizen/SearchAccount',
                 data: { key: searchBy, value: searchFor },
                 dataType: 'json',
                 success: function (data) {
                     var dcount = data.doctorsCount;
-                   
+
                     for (var i = 0; i < dcount; i++) {//data.doctors[i].Id
                         generateHTML("#itab-doctors", data.doctors[i].Name, data.doctors[i].Photo, "#");
                     }
@@ -45,5 +46,11 @@ $(function () {
                 }
             });
         }
+        else {
+            $("#cspan-searchfor-error").text("Please Enter This Field");
+        }
     });
+});
+$("#idiv-searchfor").keydown(function () {
+    $("#cspan-searchfor-error").text("");
 });

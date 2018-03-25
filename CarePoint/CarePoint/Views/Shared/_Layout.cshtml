@@ -1,22 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-@model CarePoint.Models.SearchViewModels
 <head>
     <title>@ViewBag.Title</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="~/Images/logo-navbar.ico" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
     @RenderSection("styles", false)
-    @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <nav class="navbar navbar-default" style="background-color: #21c2eb;">
@@ -24,9 +17,6 @@
             <div class="navbar-header">
                 <img id="iimg-logo" src="~/Images/logo-navbar.ico" class="img-rounded img-responsive">
             </div>
-
-            @Html.Partial("_LoginPartial")
-
         </div>
     </nav>
     <div class="container-fluid">
@@ -65,36 +55,34 @@
                                     <br /><input id="ichk-rate" type="checkbox" /> Rate
                                     <br /><input id="ichk-popularity" type="checkbox" /> Popularity
                                     <br /><br />
-                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
+                                    <button class="btn btn-success cbtn-srch" type="button" data-toggle="modal" data-target="#imodal-place-srch-result"><span class="fa fa-search"></span> Search</button>
                                 </div>
                                 <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
                                     Search options for drugs
                                     <br /><br />
                                     <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
                                 </div>
-                                    <div id="itab-srch-account" role="tabpanel" class="tab-pane">
-                                    @using (Html.BeginForm("","",FormMethod.Post,new { @Id = "iform-search-account" , @OnClick = "return false" }))
+                                <div id="itab-srch-account" role="tabpanel" class="tab-pane">
+                                    @using (Html.BeginForm("", "", FormMethod.Post, new { @Id = "iform-search-account", @OnClick = "return false" }))
                                     {
                                         <label>Search by:</label>
-                                        List<SelectListItem> list = new List<SelectListItem>();
-                                        list.Add(new SelectListItem { Text = "Name", Value = "Name", Selected = true });
-                                        list.Add(new SelectListItem { Text = "E-mail", Value = "E-mail" });
-                                        list.Add(new SelectListItem { Text = "Phone", Value = "Phone" });
-
                                         <div class="selectContainer">
-                                            @Html.DropDownListFor(model => model.SearchAccount.searchBy, list, new { @Class = "form-control", @Id = "iselect-srch-by", @Name = "srch-by" })
-                                            @Html.ValidationMessageFor(model => model.SearchAccount.searchBy, "", new { @Class = "cspan-error" })
+                                            <select class="form-control" name="srch-by" id = "iselect-srch-by">
+                                                <option selected>Name</option>
+                                                <option>E-mail</option>
+                                                <option>Phone</option>
+                                            </select>
+                                            <span class = "cspan-error"></span>
                                         </div>
                                         <br />
                                         <label>Search for:</label>
                                         <br />
-                                        @Html.TextBoxFor(model => model.SearchAccount.searchFor, new { @Class = "form-control", @Id = "idiv-searchfor" })
-                                        @Html.ValidationMessageFor(model => model.SearchAccount.searchFor, "", new { @Class = "cspan-error" , @Id = "cspan-searchby-error" })
+                                        <input class="form-control" id = "idiv-searchfor" type="text"/>
+                                        <span class="cspan-error" id ="cspan-searchfor-error"></span>
                                         <br />
                                         <button type="submit" class="btn btn-success cbtn-srch" id="ibtn-acc"><span class="fa fa-search"></span> Search</button>
                                     }
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -110,7 +98,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div id="imodal-hdr" class="modal-header">
-                    <button id="ibtn-close"type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="ibtn-close" type="button" class="close" data-dismiss="modal">&times;</button>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#itab-non-specialists" role="tab" data-toggle="tab">Non-specialists</a></li>
                         <li role="presentation"><a href="#itab-doctors" role="tab" data-toggle="tab">Doctors</a></li>
@@ -130,20 +118,61 @@
             </div>
         </div>
     </div>
-
+    <div id="imodal-place-srch-result" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="imodal-hdr" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Places that may be suitable for you</h4>
+                </div>
+                <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                    <div class="row">
+                        <div class="col-md-2">@@Place profile picture</div>
+                        <div class="col-md-7">
+                            <a href="a@placeURL">@@Place name</a> (@@Place type)
+                            <h5><b>Address: </b>@@Place address</h5>
+                            <h5><b>Phone: </b>@@Place phone</h5>
+                        </div>
+                        <div class="col-md-3">
+                            @@if specialist
+                            <button class="btn btn-default" type="button">Join staff</button>
+                            @@if specialist and already joined
+                            <span class="fa fa-check-circle-o"></span> joined
+                        </div>
+                    </div><hr />
+                    <div class="row">
+                        <div class="col-md-2">@@Place profile picture</div>
+                        <div class="col-md-7">
+                            <a href="a@placeURL">@@Place name</a> (@@Place type)
+                            <h5><b>Address: </b>@@Place address</h5>
+                            <h5><b>Phone: </b>@@Place phone</h5>
+                        </div>
+                        <div class="col-md-3">
+                            @@if specialist
+                            <button class="btn btn-default" type="button">Join staff</button>
+                            @@if specialist and already joined
+                            <span class="fa fa-check-circle-o"></span> joined
+                        </div>
+                    </div><hr />
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/Scripts/searchResult.js"></script>
     <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/datevalidator.js"></script>
-    <script src="~/Scripts/searchResult.js"></script>
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

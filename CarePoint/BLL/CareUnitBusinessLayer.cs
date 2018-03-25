@@ -17,13 +17,12 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
-        public ICollection<CareUnit> getMedicalPlaceCareUnits(long medicalPlaceID)
+        public ICollection<CareUnit> GetMedicalPlaceCareUnits(long medicalPlaceID)
         {
             return DBEntities.CareUnits.Where(careUnit => careUnit.ProviderID == 
                                                 medicalPlaceID).ToList();
         }
-
-        public void updateAvailableRoomCount(List<CareUnit> careUnits)
+        public void UpdateAvailableRoomCount(List<CareUnit> careUnits)
         {
             DateTime time = DateTime.Now;
             

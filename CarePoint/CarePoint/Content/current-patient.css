@@ -1,0 +1,32 @@
+.cdiv-list-item{
+    margin-bottom: 1em;
+}
+
+.cspn-alternative{
+    margin-right: 1em;
+}
+
+.input-error {
+	border: 1px solid #e62a2a;
+}
+
+#imodal-hdr{
+    border-bottom: none;
+    padding-bottom: 0%;
+}
+
+#imodal-bdy{
+    height: 58vh !important;
+    max-height: 58vh !important;
+}
+
+#ih4-alternatives{
+    margin-top: 0%;
+    margin-left: 0%;
+    display: none;
+}
+
+#itxtarea-remarks{
+    width: 100%;
+    resize: none;
+}

@@ -200,12 +200,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CareUnitController.cs" />
+    <Compile Include="Controllers\MedicalPlaceController.cs" />
+    <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
     <Compile Include="Extensions\CalendarDay.cs" />
@@ -227,12 +227,17 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\patient-list.css" />
+    <Content Include="Content\place-about service.css" />
+    <Content Include="Content\place-add edit service.css" />
+    <Content Include="Content\place-edit schedule.css" />
     <Content Include="Content\scrollbar.css" />
+    <Content Include="Content\step-wizard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -263,6 +268,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\current-patient.js" />
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
@@ -271,6 +277,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -278,12 +285,16 @@
     <Content Include="Scripts\mapAddPlace.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\patient-list.js" />
+    <Content Include="Scripts\modal.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\place-edit schedule.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\sos.js" />
+    <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -324,11 +335,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
+    <Content Include="Views\Citizen\CurrentPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Medicine\" />
-    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -20,7 +20,6 @@ namespace BLL
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
-            // not tested
         }
 
         public Specialist GetSpecialist(long specialistID)
@@ -28,7 +27,6 @@ namespace BLL
             return DBEntities.Citizens.OfType<Specialist>().Single(specialist => specialist.Id == specialistID);
             // not tested and need to be checked 
         }
-        
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();
@@ -57,6 +55,67 @@ namespace BLL
         public Citizen GetCitizenByPhone(string phone)
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
+        }
+
+        public List<List<Citizen>> searchAccounts(string searchBy, string searchValue)
+        {
+            List<Citizen> result = new List<Citizen>();
+            List<Citizen> doctors = new List<Citizen>();
+            List<Citizen> pharmacists = new List<Citizen>();
+            List<Citizen> non_specialists = new List<Citizen>();
+            String[] split = searchValue.Split(' ');
+            if (searchBy.Equals("Name"))
+            {
+                foreach (string val in split)
+                {
+                    if (DBEntities.Citizens.Any(citizen => citizen.Name.Contains(val)))
+                    {
+                        result = result.Union(DBEntities.Citizens.Where(citizen => citizen.Name.Contains(val)).ToList()).ToList();
+                    }
+                }
+                if (DBEntities.Citizens.Any(citizen => citizen.Name.Contains(searchValue)))
+                {
+                    result = result.Union(DBEntities.Citizens.Where(citizen => citizen.Name.Contains(searchValue)).ToList()).ToList();
+                }
+            }
+            else if (searchBy.Equals("E-mail") && (DBEntities.Citizens.Any(citizen => citizen.Email.Contains(searchValue))))
+            {
+                result = DBEntities.Citizens.Where(citizen => citizen.Email.Contains(searchValue)).ToList();
+            }
+            else if (searchBy.Equals("Phone") && (DBEntities.Citizens.Any(citizen => citizen.PhoneNumber == searchValue)))
+            {
+                result = DBEntities.Citizens.Where(citizen => citizen.PhoneNumber == searchValue).ToList();
+            }
+            foreach (Citizen specialist in result)
+            {
+                if (specialist is Specialist)
+                {
+                    if (((Specialist)specialist).SpecialityID == 1)
+                    {
+                        doctors.Add(specialist);
+                    }
+                    else if (((Specialist)specialist).SpecialityID == 2)
+                    {
+                        pharmacists.Add(specialist);
+                    }
+                }
+                else
+                {
+                    non_specialists.Add(specialist);
+
+                }
+            }
+            List<List<Citizen>> allCitizens = new List<List<Citizen>>();
+            allCitizens.Add(non_specialists);//0
+            allCitizens.Add(doctors);//1
+            allCitizens.Add(pharmacists);//2
+            return allCitizens;
+        }
+        public List<Citizen> getPatientList(long doctorId)
+        {
+            List<Citizen> patientList = new List<Citizen>();
+            patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
+            return patientList;
         }
     }
 }

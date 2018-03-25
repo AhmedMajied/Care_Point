@@ -42,7 +42,6 @@
         <EntityTypeShape EntityType="CarePointModel.Specialist" Width="1.5" PointX="8.25" PointY="39.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Speciality" Width="1.5" PointX="6" PointY="36.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.Symptom" Width="1.5" PointX="12.75" PointY="37.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CarePointModel.TimeSlot" Width="1.5" PointX="23.25" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.UserClaim" Width="1.5" PointX="5.25" PointY="46.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.UserLogin" Width="1.5" PointX="5.25" PointY="49.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CarePointModel.WorkSlot" Width="1.5" PointX="21" PointY="36.25" IsExpanded="true" />
@@ -99,7 +98,6 @@
         <AssociationConnector Association="CarePointModel.FK_ServiceRatings_Services" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_Workdays_Services" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_Specialists_Specialities" ManuallyRouted="false" />
-        <AssociationConnector Association="CarePointModel.FK_TimeSlots_Workdays" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.HistoryRecordDiseases" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.HistoryRecordSymptoms" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.MedicalPlaceAdmins" ManuallyRouted="false" />

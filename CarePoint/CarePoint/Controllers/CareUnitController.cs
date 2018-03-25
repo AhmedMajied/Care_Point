@@ -8,7 +8,6 @@ using DAL;
 
 namespace CarePoint.Controllers
 {
-    
     public class CareUnitController : Controller
     {
         private CareUnitBusinessLayer _careUnitBusinessLayer;
@@ -17,20 +16,18 @@ namespace CarePoint.Controllers
         {
             _careUnitBusinessLayer = new CareUnitBusinessLayer();
         }
-        
+
         // GET: CareUnit
         public ActionResult Index()
         {
-            ICollection<CareUnit> careUnits = _careUnitBusinessLayer.getMedicalPlaceCareUnits(4);
-
+            ICollection<CareUnit> careUnits = _careUnitBusinessLayer.GetMedicalPlaceCareUnits(4);
             return View(careUnits);
         }
 
         [HttpPost]
         public void UpdateCareUnitsCount(List<CareUnit> careUnits)
         {
-            _careUnitBusinessLayer.updateAvailableRoomCount(careUnits);
+            _careUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
         }
-        
     }
 }

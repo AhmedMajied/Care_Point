@@ -4,20 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarePoint.Models
 {
-
-    public class SearchViewModels
-    {
-        public SearchAccountViewModel SearchAccount { get; set; }
-    }
-    public class SearchAccountViewModel
-    {
-        [Required(ErrorMessage = "must choose this field")]
-        public string searchBy { get; set; }
-
-        [Required(ErrorMessage = "must fill this field")]
-        public string searchFor { get; set; }
-
-    }
     public class UserAccount
     {
         public string Name { get; set; }

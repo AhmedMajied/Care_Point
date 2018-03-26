@@ -1,8 +1,8 @@
 ﻿function generateHTML(parent, userName, img, href) {
     if (img == null) {
-        img = "../Images/notfound.png";
+        img = '../Images/notfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src=" + img + "/></div>")
+    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='"+img+"'/></div>")
         .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>")).append("<div class='col-md-4 dropdown'><button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Mark As<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='" + href + "'>Friend</a></li><li><a href='" + href + "'>Parent</a></li><li><a href='" + href + "'>Sibling</a></li><li><a href='" + href + "'>Non-relative</a></li></ul></div>");
     $(parent).append(html);
     $(parent).append("<hr>");
@@ -62,10 +62,10 @@ $("#place-close-button").click(function () {
     $("#idiv-search-place-result hr").remove();
 });
 function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
-    if (profilePicture == undefined || profilePicture == null) {
-        profilePicture = "../Images/placenotfound.png";
+    if (profilePicture == null) {
+        profilePicture = '../Images/placenotfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src=" + profilePicture + "/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
+    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
         .append("<div class='col-md-3'>")
     if (isSpecialist && (!isJoined)) {
         html.append("<a href="+joinStaffLink+"><button class='btn btn-default' type='button'>Join staff</button></div></a>")

@@ -184,7 +184,7 @@ namespace CarePoint.Controllers
                 newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
             }
             MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
-            return View("ProfilePage", newPlace.ID);
+            return ProfilePage(newPlace.ID);
         }
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {

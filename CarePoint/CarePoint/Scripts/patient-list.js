@@ -22,8 +22,8 @@
     });
     function PatientsModalFill(parent, usrName,img, showHistoryHref) {
         if (img == null)
-            img = "../Images/notfound.png";
-        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src=" + img + "/></div>")
+            img = '../Images/notfound.png';
+        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src='" + img + "'/></div>")
             .append($("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + usrName + "</label></div>")).append("<div class='col-md-4 cdiv-vcenter'><a href =" + showHistoryHref + "><button class='btn btn-default'>Open history</button></a></div>");
         $(parent).append(html);
         $(parent).append("<hr>");

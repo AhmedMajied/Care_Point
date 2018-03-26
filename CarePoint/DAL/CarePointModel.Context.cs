@@ -61,7 +61,6 @@ namespace DAL
         public virtual DbSet<SOSs> SOSses { get; set; }
         public virtual DbSet<Speciality> Specialities { get; set; }
         public virtual DbSet<Symptom> Symptoms { get; set; }
-        public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
         public virtual DbSet<WorkSlot> WorkSlots { get; set; }

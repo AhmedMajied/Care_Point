@@ -8,7 +8,6 @@ using DAL;
 
 namespace CarePoint.Controllers
 {
-
     public class CareUnitController : Controller
     {
         private CareUnitBusinessLayer _careUnitBusinessLayer;
@@ -22,7 +21,6 @@ namespace CarePoint.Controllers
         public ActionResult Index()
         {
             ICollection<CareUnit> careUnits = _careUnitBusinessLayer.GetMedicalPlaceCareUnits(4);
-
             return View(careUnits);
         }
 
@@ -31,6 +29,5 @@ namespace CarePoint.Controllers
         {
             _careUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
         }
-
     }
 }

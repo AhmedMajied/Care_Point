@@ -15,7 +15,12 @@
 
 .nav-tabs > li > a:hover
 {
+<<<<<<< HEAD
+    color: #4285F4;
+=======
     color: #4285F4 !important;
+
+>>>>>>> master
     background: transparent;
 }
 

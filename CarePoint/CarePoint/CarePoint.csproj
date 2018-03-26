@@ -200,6 +200,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CareUnitController.cs" />
+    <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -215,6 +216,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -232,7 +235,12 @@
 >>>>>>> master
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
+    <Content Include="Content\modal.css" />
     <Content Include="Content\navbar.css" />
+    <Content Include="Content\patient-list.css" />
+    <Content Include="Content\place-about service.css" />
+    <Content Include="Content\place-add edit service.css" />
+    <Content Include="Content\place-edit schedule.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
     <Content Include="favicon.ico" />
@@ -283,11 +291,17 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\mapAddPlace.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\patient-list.js" />
+    <Content Include="Scripts\modal.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\place-edit schedule.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\sos.js" />
     <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
@@ -329,6 +343,7 @@
     <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
+    <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>

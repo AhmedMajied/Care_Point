@@ -29,7 +29,7 @@ namespace CarePoint.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            _citizenBusinessLayer = citizenBusinessLayer;
+            CitizenBusinessLayer = citizenBusinessLayer;
         }
 
         public ApplicationSignInManager SignInManager
@@ -55,8 +55,7 @@ namespace CarePoint.Controllers
                 _userManager = value;
             }
         }
-
-        public CitizenBusinessLayer citizenBusinessLayer
+        public CitizenBusinessLayer CitizenBusinessLayer
         {
             get
             {
@@ -89,9 +88,9 @@ namespace CarePoint.Controllers
                 return View(model);
             }
             string email = model.EmailOrPhone;
-            if (model.EmailOrPhone.All(char.IsDigit) && citizenBusinessLayer.IsPhoneNumberExists(model.EmailOrPhone))
+            if (model.EmailOrPhone.All(char.IsDigit) && CitizenBusinessLayer.IsPhoneNumberExists(model.EmailOrPhone))
             {
-                email = citizenBusinessLayer.GetCitizenByPhone(model.EmailOrPhone).Email;
+                email = CitizenBusinessLayer.GetCitizenByPhone(model.EmailOrPhone).Email;
             }
             var result = await SignInManager.PasswordSignInAsync(email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
@@ -169,15 +168,13 @@ namespace CarePoint.Controllers
             {
                 years.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
-
-            var bloodTypes = citizenBusinessLayer.GetBloodTypes();
+            var bloodTypes = CitizenBusinessLayer.GetBloodTypes();
             var bloodTypesOptions = new List<SelectListItem>();
             foreach (var type in bloodTypes)
             {
                 bloodTypesOptions.Add(new SelectListItem() { Text = type.Name, Value = type.ID.ToString() });
             }
-
-            var specialities = citizenBusinessLayer.GetSpecialities();
+            var specialities = CitizenBusinessLayer.GetSpecialities();
             var specialitiesOptions = new List<SelectListItem>();
             specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "-1" });
 
@@ -195,7 +192,7 @@ namespace CarePoint.Controllers
         [AllowAnonymous]
         public ActionResult IsEmailExists(string Email)
         {
-            if (citizenBusinessLayer.IsEmailExists(Email))
+            if (CitizenBusinessLayer.IsEmailExists(Email))
                 return Json(false, JsonRequestBehavior.AllowGet);
             else
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -204,7 +201,7 @@ namespace CarePoint.Controllers
         [AllowAnonymous]
         public ActionResult IsPhoneNumberExists(string Phone)
         {
-            if (citizenBusinessLayer.IsPhoneNumberExists(Phone))
+            if (CitizenBusinessLayer.IsPhoneNumberExists(Phone))
                 return Json(false, JsonRequestBehavior.AllowGet);
             else
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -213,7 +210,7 @@ namespace CarePoint.Controllers
         [AllowAnonymous]
         public ActionResult IsNationalIDExists(string NationalIDNumber)
         {
-            if (citizenBusinessLayer.IsNationalIDExists(NationalIDNumber))
+            if (CitizenBusinessLayer.IsNationalIDExists(NationalIDNumber))
                 return Json(false, JsonRequestBehavior.AllowGet);
             else
                 return Json(true, JsonRequestBehavior.AllowGet);

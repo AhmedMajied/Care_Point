@@ -1,0 +1,63 @@
+﻿@model CarePoint.Models.MedicalPlaceViewModels
+@{
+    ViewBag.Title = "Add MedicalPlace";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using DAL;
+<div class="row">
+    @using (Html.BeginForm("AddMedicalPlace", "MedicalPlace", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="row form-group">
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.medicalPlace.Name, new { @Id = "iinp-workplace-name", @Class = "form-control", @Placeholder = "Workplace name" })
+                @Html.ValidationMessageFor(model => model.medicalPlace.Name, "", new { @Class = "cspan-error" })
+                <div class="selectContainer">
+                    @Html.DropDownListFor(model => model.medicalPlace.TypeID, Model.medicalPlaceTypes, "Organization type")
+                    @Html.ValidationMessageFor(model => model.medicalPlace.TypeID, "", new { @Class = "cspan-error" })
+                </div>
+                <div class="file-loading">
+                    <b><label>Logo</label></b>
+                    @Html.TextBoxFor(model => model.medicalPlace.Photo, new { @Type = "file", @Class = "cfile-photo" })
+                    @Html.ValidationMessageFor(model => model.medicalPlace.Photo, "", new { @Class = "cspan-error" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.medicalPlace.Phone, new { @Id = "iinp-workplace-phone", @Class = "form-control", @Placeholder = "Phone" })
+                @Html.ValidationMessageFor(model => model.medicalPlace.Phone, "", new { @Class = "cspan-error" })
+
+                @Html.TextBoxFor(model => model.medicalPlace.Address, new { @Id = "iinp-workplace-address", @Class = "form-control", @Placeholder = "Address" })
+                @Html.ValidationMessageFor(model => model.medicalPlace.Address, "", new { @Class = "cspan-error" })
+                <div class="file-loading">
+                    <b><label>Organizaton license</label></b>
+                    @Html.TextBoxFor(model => model.medicalPlace.Permission, new { @Type = "file", @Class = "cfile-permission" })
+                    @Html.ValidationMessageFor(model => model.medicalPlace.Permission, "", new { @Class = "cspan-error" })
+                </div>
+            </div>
+        </div>
+        <b>
+            <label>Organizaton location</label>
+        </b>
+        <div id="idiv-map" style="width:100%;height:500px;"></div>
+        @Html.TextAreaFor(model => model.medicalPlace.Description, new { @Id = "itextarea-service-desc", @Class = "form-control", @Placeholder = "Description" })
+        @Html.HiddenFor(model => model.latitude, new { @Class = "cinput-latitude", @Id = "iinput-latitude" })
+        @Html.HiddenFor(model => model.longitude, new { @Class = "cinput-longitude", @Id = "iinput-longitude" })
+
+        <input type="submit" value="Save" />
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/datevalidator.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknmD-bIczC5pP5WPolW9zsx8xA8Ty6Cw"></script>
+    <script src="~/Scripts/mapAddPlace.js"></script>
+}

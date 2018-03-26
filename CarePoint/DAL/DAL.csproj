@@ -176,9 +176,6 @@
     <Compile Include="Symptom.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TimeSlot.cs">
-      <DependentUpon>CarePointModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="UserClaim.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>

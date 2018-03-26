@@ -15,7 +15,8 @@
 }
 
 <div class="container-fluid">
-    @for (int i=0;i<Model.Services.Count;++i)
+    <!-- Begin Services -->
+    @for (int i = 0; i < Model.Services.Count; ++i)
     {
         var service = Model.Services.ElementAt(i);
         if (!Model.IsAdmin) { // Enable it After Testing
@@ -205,6 +206,97 @@
             }
         }
     }
+    <!-- End Services -->
+
+    <!-- Begin Add CareUnit -->
+    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
+    @using (Html.BeginForm("AddCareUnit","CareUnit",FormMethod.Post)) {
+    <div id="imodal-careunit-new" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">About Care Unit</h4>
+                </div>
+                <div class="modal-body cscrollbar-container cscrollbar-modal">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
+                            @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type"})
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NewCareUnit.Cost, new { @Id = "iinp-careunit-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                            @Html.ValidationMessageFor(model => model.NewCareUnit.Cost, "", new { @Class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NewCareUnit.AvailableRoomCount, new { @Id = "iinp-careunit-count-new", @Class = "form-control", @Placeholder = "Rooms Available Now", @Type = "number", @Min = "0", @Step = "1" })
+                            @Html.ValidationMessageFor(model => model.NewCareUnit.AvailableRoomCount, "", new {  @Class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.TextAreaFor(model => model.NewCareUnit.Description, new { @Id = "itextarea-careunit-desc-new" , @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    <!-- End Add CareUnit -->
+
+    <!-- Begin CareUnits -->
+    @for (int i = 0; i < Model.CareUnits.Count; ++i)
+    {
+        var careunit = Model.CareUnits.ElementAt(i);
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-@careunit.ID">Edit CareUnit</button>
+        using (Html.BeginForm("UpdateCareUnit","CareUnit",FormMethod.Post)) {
+            <div id="imodal-careunit-@careunit.ID" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">About Care Unit</h4>
+                        </div>
+                        <div class="modal-body cscrollbar-container cscrollbar-modal">
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ID, new { @Name = "CareUnits[0].ID", @Value = careunit.ID })
+                                    @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ProviderID, new { @Name = "CareUnits[0].ProviderID", @Value = careunit.ProviderID })
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Name, new { @Name = "CareUnits[0].Name",@Id = "iinp-careunit-name-"+@careunit.ID, @Class="form-control", @Placeholder="CareUnit Name" , @Value = careunit.Name})
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.CareUnits.ElementAt(i).CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name", careunit.CareUnitTypeID), new { @Id = "iinp-careunit-type-" + careunit.ID, @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type", @Name = "CareUnits[0].CareUnitTypeID", @Value = careunit.CareUnitTypeID })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Cost, new { @Id = "iinp-careunit-cost-" + careunit.ID, @Class = "form-control", @Placeholder = "Cost", @Name = "CareUnits[0].Cost", @Value = careunit.Cost, @Type = "number", @Min = "0", @Step = "0.01" })
+                                    @Html.ValidationMessageFor(model => model.CareUnits.ElementAt(i).Cost, "", new { @Data_valmsg_for = "CareUnits[0].Cost", @Class = "text-danger" })
+
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).AvailableRoomCount, new { @Id = "iinp-careunit-count-" + careunit.ID, @Class = "form-control", @Placeholder = "Rooms Available Now", @Name = "CareUnits[0].AvailableRoomCount", @Value = careunit.AvailableRoomCount, @Type = "number", @Min = "0", @Step = "1" })
+                                    @Html.ValidationMessageFor(model => model.CareUnits.ElementAt(i).AvailableRoomCount, "", new { @Data_valmsg_for = "CareUnits[0].AvailableRoomCount", @Class = "text-danger" })
+                                </div>
+                            </div>
+                            @Html.TextAreaFor(model => model.CareUnits.ElementAt(i).Description, new { @Name = "CareUnits[0].Description", @Id = "itextarea-careunit-desc-" + @careunit.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Value = careunit.Description,@Rows = "18" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" data-dismiss="modal">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <!-- End CareUnits -->
+
 </div>
 
 

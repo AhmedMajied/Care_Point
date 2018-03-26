@@ -103,6 +103,7 @@
         <AssociationConnector Association="CarePointModel.MedicalPlaceAdmins" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.UserRoles" ManuallyRouted="false" />
         <InheritanceConnector EntityType="CarePointModel.Specialist" />
+        <AssociationConnector Association="CarePointModel.FK_CareUnits_MedicalPlace" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

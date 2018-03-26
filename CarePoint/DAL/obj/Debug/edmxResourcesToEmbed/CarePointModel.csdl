@@ -96,6 +96,7 @@
     <NavigationProperty Name="CareUnitMembershipRequests" Relationship="Self.FK_CareUnitSpecialists_CareUnit" FromRole="CareUnits" ToRole="CareUnitMembershipRequests" />
     <NavigationProperty Name="CareUnitRatings" Relationship="Self.FK_CareUnitRatings_CareUnits" FromRole="CareUnits" ToRole="CareUnitRatings" />
     <NavigationProperty Name="CareUnitType" Relationship="Self.FK_CareUnit_CareUnitTypes" FromRole="CareUnits" ToRole="CareUnitTypes" />
+    <NavigationProperty Name="MedicalPlace" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="CareUnit" ToRole="MedicalPlace" />
   </EntityType>
   <EntityType Name="CareUnitType">
     <Key>
@@ -204,6 +205,7 @@
     <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
     <Property Name="Address" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Phone" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CareUnits" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="MedicalPlace" ToRole="CareUnit" />
   </EntityType>
   <EntityType Name="MedicalPlaceType">
     <Key>
@@ -1469,5 +1471,23 @@
       <End Role="Citizens" EntitySet="Citizens" />
       <End Role="Roles" EntitySet="Roles" />
     </AssociationSet>
+    <AssociationSet Name="FK_CareUnits_MedicalPlace" Association="CarePointModel.FK_CareUnits_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
+      <End Role="CareUnit" EntitySet="CareUnits" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_CareUnits_MedicalPlace">
+    <End Type="CarePointModel.MedicalPlace" Role="MedicalPlace" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CarePointModel.CareUnit" Role="CareUnit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnit">
+        <PropertyRef Name="ProviderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

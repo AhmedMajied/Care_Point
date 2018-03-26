@@ -41,5 +41,6 @@ namespace BLL
             DBEntities.Entry(service).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
+
     }
 }

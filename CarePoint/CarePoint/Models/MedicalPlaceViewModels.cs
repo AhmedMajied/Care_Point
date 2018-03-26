@@ -10,11 +10,19 @@ namespace CarePoint.Models
 {
     public class MedicalPlaceProfileViewModel
     {
+        public long MedicalPlaceID { get; set; }
+
         public bool IsAdmin { get; set; }
 
         public ICollection<ServiceViewModel> Services { get; set; }
 
+        public CareUnitViewModel NewCareUnit { get; set; }
+
+        public ICollection<CareUnitViewModel> CareUnits { get; set; }
+
         public ICollection<ServiceCategory> ServiceCategories { get; set; }
+
+        public ICollection<CareUnitType> CareUnitTypes { get; set; }
 
         public Service NewService { get; set; }
     }
@@ -66,4 +74,25 @@ namespace CarePoint.Models
 
         public bool IsRemoved { get; set; }
     }
+
+
+    public class CareUnitViewModel
+    {
+        public long ID { get; set; }
+
+        public long? ProviderID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public Nullable<decimal> Cost { get; set; }
+
+        public int AvailableRoomCount { get; set; }
+
+        public DateTime? LastUpdate { get; set; }
+
+        public long CareUnitTypeID { get; set; }
+    }
+
 }

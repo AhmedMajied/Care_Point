@@ -14,14 +14,17 @@ namespace CarePoint.Controllers
     {
         // GET: MedicalPlace
         private MedicalPlaceBusinessLayer _medicalPlaceBusinessLayer;
+        private CareUnitBusinessLayer _careUnitBusinessLayer;
+
         public MedicalPlaceController()
         {
                 
         }
 
-        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer)
+        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer, CareUnitBusinessLayer careUnitBusinessLayer)
         {
             _medicalPlaceBusinessLayer = medicalPlaceBusinessLayer;
+            _careUnitBusinessLayer = careUnitBusinessLayer;
         }
 
         public MedicalPlaceBusinessLayer MedicalPlaceBusinessLayer
@@ -35,6 +38,19 @@ namespace CarePoint.Controllers
                 _medicalPlaceBusinessLayer = value;
             }
         }
+
+        public CareUnitBusinessLayer CareUnitBusinessLayer
+        {
+            get
+            {
+                return _careUnitBusinessLayer ?? new CareUnitBusinessLayer();
+            }
+            private set
+            {
+                _careUnitBusinessLayer = value;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -45,8 +61,11 @@ namespace CarePoint.Controllers
             var medicalPlace = MedicalPlaceBusinessLayer.GetMedicalPlace(id);
             MedicalPlaceProfileViewModel model = new MedicalPlaceProfileViewModel()
             {
+                MedicalPlaceID=medicalPlace.ID,
                 Services = new List<ServiceViewModel>(),
+                CareUnits =  new List<CareUnitViewModel>(),
                 ServiceCategories = MedicalPlaceBusinessLayer.GetServiceCategories(),
+                CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
                 IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
 
             };
@@ -102,6 +121,23 @@ namespace CarePoint.Controllers
                 }
                 model.Services.Add(smodel);
             }
+
+            foreach(var careunit in medicalPlace.CareUnits)
+            {
+                CareUnitViewModel cmodel = new CareUnitViewModel()
+                {
+                    ID = careunit.ID,
+                    Name = careunit.Name,
+                    CareUnitTypeID = careunit.CareUnitTypeID,
+                    AvailableRoomCount = careunit.AvailableRoomCount ?? 0,
+                    Cost = careunit.Cost,
+                    ProviderID = careunit.ProviderID,
+                    Description = careunit.Description,
+                    LastUpdate = careunit.LastUpdate
+                };
+                model.CareUnits.Add(cmodel);
+            }
+
             return View("ProfilePage",model);
         }
         public void AddWorkslot(WorkSlotViewModel model)
@@ -142,6 +178,55 @@ namespace CarePoint.Controllers
                 MedicalPlaceBusinessLayer.UpdateService(service);
             }
             return ProfilePage(model.Services.First().ProviderID);
+        }
+
+        [HttpPost]
+        public void UpdateCareUnitsCount(List<CareUnit> careUnits)
+        {
+            CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                CareUnit careunit = new CareUnit()
+                {
+                    ID= model.CareUnits.ElementAt(0).ID,
+                    Name = model.CareUnits.ElementAt(0).Name,
+                    Description = model.CareUnits.ElementAt(0).Description,
+                    Cost = model.CareUnits.ElementAt(0).Cost,
+                    LastUpdate = model.CareUnits.ElementAt(0).LastUpdate,
+                    CareUnitTypeID = model.CareUnits.ElementAt(0).CareUnitTypeID,
+                    AvailableRoomCount = model.CareUnits.ElementAt(0).AvailableRoomCount,
+                    ProviderID = model.CareUnits.ElementAt(0).ProviderID
+                };
+                CareUnitBusinessLayer.UpdateCareUnit(careunit);
+            }
+            return ProfilePage(model.MedicalPlaceID);
+        }
+
+        [HttpPost]
+        public ActionResult AddCareUnit(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                CareUnit careunit = new CareUnit()
+                {
+                    Name = model.NewCareUnit.Name,
+                    Description = model.NewCareUnit.Description,
+                    Cost = model.NewCareUnit.Cost,
+                    LastUpdate = model.NewCareUnit.LastUpdate,
+                    CareUnitTypeID = model.NewCareUnit.CareUnitTypeID,
+                    AvailableRoomCount = model.NewCareUnit.AvailableRoomCount,
+                    ProviderID = model.NewCareUnit.ProviderID
+                };
+                CareUnitBusinessLayer.AddCareUnit(careunit);
+            }
+            return ProfilePage(model.MedicalPlaceID);
         }
     }
     

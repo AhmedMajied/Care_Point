@@ -551,6 +551,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CareUnits_MedicalPlace">
+    <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalPlace">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CareUnits">
+        <PropertyRef Name="ProviderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CareUnitSpecialists_CareUnit">
     <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1311,6 +1325,10 @@
     <AssociationSet Name="FK_CareUnitRatings_Citizens" Association="Self.FK_CareUnitRatings_Citizens">
       <End Role="Citizens" EntitySet="Citizens" />
       <End Role="CareUnitRatings" EntitySet="CareUnitRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CareUnits_MedicalPlace" Association="Self.FK_CareUnits_MedicalPlace">
+      <End Role="MedicalPlace" EntitySet="MedicalPlace" />
+      <End Role="CareUnits" EntitySet="CareUnits" />
     </AssociationSet>
     <AssociationSet Name="FK_CareUnitSpecialists_CareUnit" Association="Self.FK_CareUnitSpecialists_CareUnit">
       <End Role="CareUnits" EntitySet="CareUnits" />

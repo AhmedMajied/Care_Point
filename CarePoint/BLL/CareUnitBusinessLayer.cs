@@ -40,5 +40,23 @@ namespace BLL
             }
             DBEntities.SaveChanges();
         }
+
+        public ICollection<CareUnitType> GetCareUnitTypes()
+        {
+            return DBEntities.CareUnitTypes.ToList();
+        }
+
+        public void UpdateCareUnit(CareUnit careunit)
+        {
+            DBEntities.CareUnits.Attach(careunit);
+            DBEntities.Entry(careunit).State = EntityState.Modified;
+            DBEntities.SaveChanges();
+        }
+
+        public void AddCareUnit(CareUnit careunit)
+        {
+            DBEntities.CareUnits.Add(careunit);
+            DBEntities.SaveChanges();
+        }
     }
 }

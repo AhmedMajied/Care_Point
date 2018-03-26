@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using System.Data.Entity.Spatial;
 using System.IO;
 using Extensions;
+using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -184,6 +185,16 @@ namespace CarePoint.Controllers
             }
             MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
             return View("ProfilePage", newPlace.ID);
+        }
+        public JsonResult SearchPlace(SearchPlaceViewModel model)
+        {
+            Citizen user = User.Identity.GetCitizen();
+            List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();            
+            medicalPlaces = MedicalPlaceBusinessLayer.SearchPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
+                place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
+                isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();
+            return Json(result);
         }
     }
     

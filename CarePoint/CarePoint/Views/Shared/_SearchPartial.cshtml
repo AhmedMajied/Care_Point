@@ -1,0 +1,70 @@
+﻿@using Extensions
+<div class="container-fluid">
+    <div id="idiv-srch-options">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#itab-srch-location" role="tab" data-toggle="tab"><span class="fa fa-map-marker fa-2x"></span></a>
+            </li>
+            <li role="presentation">
+                <a href="#itab-srch-drug" role="tab" data-toggle="tab"><span class="fa fa-flask fa-2x"></span></a>
+            </li>
+            <li role="presentation">
+                <a href="#itab-srch-account" role="tab" data-toggle="tab"><span class="fa fa-user fa-2x"></span></a>
+            </li>
+        </ul>
+        <div class="tab-content">
+
+            <!--Search Place-->
+            <div id="itab-srch-location" role="tabpanel" class="tab-pane active">
+                <label>Service type:</label>
+                <input id="iinp-service-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
+                <span class="cspan-error" id="cspan-service-error"></span>
+                <br />
+                <label>Place:</label>
+                <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
+                <span class="cspan-error" id="cspan-place-error"></span>
+
+                <br />
+                <label>Priority:</label>
+                <br /><input id="ichk-distane" type="checkbox" checked /> Distance
+                <br /><input id="ichk-cost" type="checkbox" /> Cost
+                <br /><input id="ichk-rate" type="checkbox" /> Rate
+                <br /><input id="ichk-popularity" type="checkbox" /> Popularity
+                <br />
+                <span class="cspan-error" id="cspan-priority-error"></span>
+                <br />
+                <button class="btn btn-success cbtn-srch" type="submit" id="ibtn-search-place"><span class="fa fa-search"></span> Search</button>
+            </div>
+
+            <!--Search Drugs-->
+            <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
+                Search options for drugs
+                <br /><br />
+                <button class="btn btn-success cbtn-srch" type="submit"><span class="fa fa-search"></span> Search</button>
+            </div>
+
+            <!--Search Account-->
+            <div id="itab-srch-account" role="tabpanel" class="tab-pane">
+                @using (Html.BeginForm("", "", FormMethod.Post, new { @Id = "iform-search-account", @OnClick = "return false" }))
+                {
+                    <label>Search by:</label>
+                    <div class="selectContainer">
+                        <select class="form-control" name="srch-by" id="iselect-srch-by">
+                            <option selected>Name</option>
+                            <option>E-mail</option>
+                            <option>Phone</option>
+                        </select>
+                        <span class="cspan-error"></span>
+                    </div>
+                    <br />
+                    <label>Search for:</label>
+                    <br />
+                    <input class="form-control" id="idiv-searchfor" type="text" />
+                    <span class="cspan-error" id="cspan-searchfor-error"></span>
+                    <br />
+                    <button type="submit" class="btn btn-success cbtn-srch" id="ibtn-acc"><span class="fa fa-search"></span> Search</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

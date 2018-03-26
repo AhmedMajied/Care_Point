@@ -36,13 +36,15 @@
             data: { doctorId: docId },
             dataType: 'json',
             success: function (data) {
-                var femalecount = data.femaleCount;
-                for (var i = 0; i < femalecount; i++) {
-                    PatientsModalFill("#itab-females", data.female[i].Name, data.female[i].Photo, "/Citizen/CurrentPatient/"+data.female[i].Id);
-                }
-                var malecount = data.maleCount;
+                var male = data[0];
+                var malecount = male.length;
                 for (var i = 0; i < malecount; i++) {
-                    PatientsModalFill("#itab-males", data.male[i].Name, data.male[i].Photo, "/Citizen/CurrentPatient/" + data.male[i].Id);
+                    PatientsModalFill("#itab-males", male[i].Name, male[i].Photo, "/Citizen/CurrentPatient?citizenID=" + male[i].Id);
+                }
+                var female = data[1];
+                var femalecount = female.length;
+                for (var i = 0; i < femalecount; i++) {
+                    PatientsModalFill("#itab-females", female[i].Name, female[i].Photo, "/Citizen/CurrentPatient?citizenID="+female[i].Id);
                 }
                 $("#imodal-patient-list").modal('show');
             },

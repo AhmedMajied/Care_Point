@@ -90,7 +90,7 @@ $("#ibtn-search-place").click(function () {
         latitude = data.latitude;
         longitude = data.longitude;
     });
-    if (sType != "" && pType != "" && (cDistance || cCost || cRate || cPopularity)) {
+    if ((sType != "" || pType != "" )&& (cDistance || cCost || cRate || cPopularity)) {
         var model = {
             serviceType: sType, placeType: pType,
             checkDistance: cDistance, checkCost: cCost,
@@ -114,12 +114,8 @@ $("#ibtn-search-place").click(function () {
         });
     }
     else {
-        if (sType == "") {
-            $("#cspan-service-error").text("fill service type field");
-        }
-        if (pType == "") {
-            $("#cspan-place-error").text("fill place type field");
-
+        if (sType == "" && pType == "") {
+            $("#cspan-service-place-error").text("please fill at least one field");
         }
         if (!(cDistance || cCost || cRate || cPopularity)) {
             $("#cspan-priority-error").text("select at least one option");
@@ -129,10 +125,10 @@ $("#ibtn-search-place").click(function () {
     }
 });
 $("#iinp-service-type").keydown(function () {
-    $("#cspan-service-error").text("");
+    $("#cspan-service-place-error").text("");
 });
 $("#iinp-place-type").keydown(function () {
-    $("#cspan-place-error").text("");
+    $("#cspan-service-place-error").text("");
 });
 $('#ichk-distane').on('change', function () {
     $('#cspan-priority-error').text("");

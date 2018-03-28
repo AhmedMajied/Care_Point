@@ -100,4 +100,15 @@ namespace CarePoint.Models
         public string Description { get; set; }
         public long OwnerID { get; set; }
     }
+    public class SearchPlaceViewModel
+    {
+        public string serviceType { get; set; }
+        public string placeType { get; set; }
+        public bool checkDistance { get; set; }
+        public bool checkCost { get; set; }
+        public bool checkRate { get; set; }
+        public bool checkPopularity { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+    }
 }

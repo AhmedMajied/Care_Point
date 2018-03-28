@@ -217,7 +217,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
-    <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -293,6 +292,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\searchResult.js" />
+    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
     <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
@@ -336,6 +336,8 @@
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
+    <Content Include="Views\Shared\_SearchResultPartial.cshtml" />
+    <Content Include="Views\Shared\_SearchPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,8 +22,8 @@
     });
     function PatientsModalFill(parent, usrName,img, showHistoryHref) {
         if (img == null)
-            img = "../Images/notfound.png";
-        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src=" + img + "/></div>")
+            img = '../Images/notfound.png';
+        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src='" + img + "'/></div>")
             .append($("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + usrName + "</label></div>")).append("<div class='col-md-4 cdiv-vcenter'><a href =" + showHistoryHref + "><button class='btn btn-default'>Open history</button></a></div>");
         $(parent).append(html);
         $(parent).append("<hr>");
@@ -36,13 +36,15 @@
             data: { doctorId: docId },
             dataType: 'json',
             success: function (data) {
-                var femalecount = data.femaleCount;
-                for (var i = 0; i < femalecount; i++) {
-                    PatientsModalFill("#itab-females", data.female[i].Name, data.female[i].Photo, "/Citizen/CurrentPatient/"+data.female[i].Id);
-                }
-                var malecount = data.maleCount;
+                var male = data[0];
+                var malecount = male.length;
                 for (var i = 0; i < malecount; i++) {
-                    PatientsModalFill("#itab-males", data.male[i].Name, data.male[i].Photo, "/Citizen/CurrentPatient/" + data.male[i].Id);
+                    PatientsModalFill("#itab-males", male[i].Name, male[i].Photo, "/Citizen/CurrentPatient?citizenID=" + male[i].Id);
+                }
+                var female = data[1];
+                var femalecount = female.length;
+                for (var i = 0; i < femalecount; i++) {
+                    PatientsModalFill("#itab-females", female[i].Name, female[i].Photo, "/Citizen/CurrentPatient?citizenID="+female[i].Id);
                 }
                 $("#imodal-patient-list").modal('show');
             },

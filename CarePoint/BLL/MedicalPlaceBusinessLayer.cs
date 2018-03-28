@@ -1,6 +1,7 @@
 using DAL;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,11 @@ namespace BLL
         public ICollection<MedicalPlaceType> getAllTypes()
         {
             return DBEntities.MedicalPlaceTypes.ToList();
+        }
+        public ICollection<MedicalPlace>SearchPlace(double latitude,double longitude,string serviceType,string placeType,bool distance,bool cost,bool rate,bool popularity)
+        {
+            List<MedicalPlace> result = new List<MedicalPlace>();
+            return result;
         }
     }
 }

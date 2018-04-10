@@ -1,38 +1,29 @@
 h4{
     font-weight: bold;
 }
-
 #iimg-logo{
     display: block;
     margin: auto;
     margin-top: 3em;
     margin-bottom: 3em;
 }
-
+.form-control:read-only{
+    background-color: #ffffff;
+}
 .input-group{
     margin-bottom: 1em;
 }
-
 .cfrm-sign-up-inp{
     margin-bottom: 1em;
 }
-
-.input-group-addon{
-    background-color: #dafffa;
+.input-group-addon, .cbtn-file-upload, .cbtn-file-upload:hover{
+    
+    background-color: #c1f0ec;
+    font-weight: bold;
 }
-
-.cspn-radio-btn{
+.cspn-radio-chck{
     margin-left: 1em;
 }
-
-.cdiv-err{
-    margin-bottom: 1em;
-}
-
 #ifile-license, #ilbl-license{
     display: none;
-}
-
-input[type=radio]{
-    cursor: pointer;
 }

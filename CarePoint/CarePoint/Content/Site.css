@@ -1,21 +1,123 @@
-﻿
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+﻿:root {
+    --primary-color: #197bb4;
+    --secondary-color: #5ca15c;
+    --danger-color: #d64343;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.cspn-validation-msg{
+    display: block;
+    margin-bottom: 1em;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/* Checkbox and radiobutton styling */
+/* Base for label styling */
+[class^='cchck-'], [class^='cradio-'] {
+    position: absolute;
+    left: -9999px;
+}
+.cspn-radio-chck > label{
+    position: relative;
+    padding-left: 1.7em;
+    cursor: pointer;
+    user-select: none;
+}
+.cspn-radio-chck > label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.25em;
+    height: 1.25em;
+}
+.cspn-radio-chck > [class^='cchck-']:not(:checked) ~ label:before, .cspn-radio-chck > [class^='cradio-']:not(:checked) ~ label:before{
+    border: 2px solid #cccccc;
+}
+.cspn-radio-chck > .cchck-primary:checked ~ label:before, .cspn-radio-chck > .cradio-primary:checked ~ label:before{
+    border: 2px solid var(--primary-color);
+}
+.cspn-radio-chck > .cchck-secondary:checked ~ label:before, .cspn-radio-chck > .cradio-secondary:checked ~ label:before{
+    border: 2px solid var(--secondary-color);
+}
+.cspn-radio-chck > .cchck-danger:checked ~ label:before, .cspn-radio-chck > .cradio-danger:checked ~ label:before{
+    border: 2px solid var(--danger-color);
+}
+/* disabled checkbox and radio button */
+.cspn-radio-chck > [class^='cchck-']:disabled ~ label:before, .cspn-radio-chck > [class^='cradio-']:disabled:not(:checked) ~ label:before {
+    box-shadow: none;
+    border-color: #bbbbbb;
+    background-color: #dddddd;
+}
+.cspn-radio-chck > [class^='cchck-']:disabled ~ label, .cspn-radio-chck > [class^='cradio-']:disabled ~ label {
+    color: #aaaaaa;
+}
+/* hover style just for information */
+.cspn-radio-chck > .cradio-primary:enabled ~ label:hover:before, .cspn-radio-chck > .cchck-primary:enabled ~ label:hover:before {
+    border: 2px solid var(--primary-color) !important;
+}
+.cspn-radio-chck > .cradio-secondary:enabled ~ label:hover:before, .cspn-radio-chck > .cchck-secondary:enabled ~ label:hover:before {
+    border: 2px solid var(--secondary-color) !important;
+}
+.cspn-radio-chck > .cradio-danger:enabled ~ label:hover:before, .cspn-radio-chck > .cchck-danger:enabled ~ label:hover:before {
+    border: 2px solid var(--danger-color) !important;
+}
+
+/* checkbox aspect */
+.cspn-radio-chck > [class^='cchck-'] ~ label:before {
+    border-radius: 4px;
+}
+/* checked mark aspect */
+.cspn-radio-chck > [class^='cchck-'] ~ label:after {
+    content: '✔';
+    position: absolute;
+    bottom: .2em;
+    left: .1em;
+    font-size: 1.8em;
+    line-height: 0.8;
+    transition: all .2s;
+    font-family: Helvetica, Arial, sans-serif;
+}
+.cspn-radio-chck > .cchck-primary ~ label:after{
+    color: var(--primary-color);
+}
+.cspn-radio-chck > .cchck-secondary ~ label:after{
+    color: var(--secondary-color);
+}
+.cspn-radio-chck > .cchck-danger ~ label:after{
+    color: var(--danger-color);
+}
+/* checked mark aspect changes */
+.cspn-radio-chck > [class^='cchck-']:not(:checked) ~ label:after {
+    opacity: 0;
+    transform: scale(0);
+}
+.cspn-radio-chck > [class^='cchck-']:checked ~ label:after {
+    opacity: 1;
+    transform: scale(1);
+}
+.cspn-radio-chck > [class^='cchck-']:disabled:checked ~ label:after {
+    color: #999;
+}
+
+/* radiobutton aspect */
+.cspn-radio-chck > [class^='cradio-'] ~ label:before {
+    border-radius: 50%;
+}
+.cspn-radio-chck > [class^='cradio-']:checked ~ label:before {
+    transform: scale(1);
+    box-shadow: inset 0 0 0 3px #ffffff;
+}
+.cspn-radio-chck > .cradio-primary:checked ~ label:before {
+    background-color: var(--primary-color);
+}
+.cspn-radio-chck > .cradio-secondary:checked ~ label:before {
+    background-color: var(--secondary-color);
+}
+.cspn-radio-chck > .cradio-danger:checked ~ label:before {
+    background-color: var(--danger-color);
+}
+/* disabled radiobutton */
+.cspn-radio-chck > [class^='cradio-']:disabled:checked ~ label:before {
+    transform: scale(1);
+    background-color: #ccc;
+    box-shadow: inset 0 0 0 3px #ffffff;
 }

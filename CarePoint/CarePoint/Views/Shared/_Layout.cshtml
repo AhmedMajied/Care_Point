@@ -36,80 +36,7 @@
                             <span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS
                         </button>
                     </div>
-                    <div class="container-fluid">
-                        <div id="idiv-srch-options">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active">
-                                    <a href="#itab-srch-location" role="tab" data-toggle="tab"><span class="fa fa-map-marker fa-2x"></span></a>
-                                </li>
-                                <li role="presentation">
-                                    <a href="#itab-srch-drug" role="tab" data-toggle="tab"><span class="fa fa-flask fa-2x"></span></a>
-                                </li>
-                                <li role="presentation">
-                                    <a href="#itab-srch-account" role="tab" data-toggle="tab"><span class="fa fa-user fa-2x"></span></a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="itab-srch-location" role="tabpanel" class="tab-pane active">
-                                    <label>Service type:</label>
-                                    <input id="iinp-service-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
-                                    <br />
-                                    <label>Place:</label>
-                                    <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
-                                    <br />
-                                    <label>Priority:</label>
-                                    <br />
-                                    <span class="cspn-radio-chck">
-                                        <input id="ichk-distance" class="cchck-secondary" type="checkbox" checked />
-                                        <label for="ichk-distance">Distance</label>
-                                    </span>
-                                    <br />
-                                    <span class="cspn-radio-chck">
-                                        <input id="ichk-cost" class="cchck-secondary" type="checkbox" />
-                                        <label for="ichk-cost">Cost</label>
-                                    </span>
-                                    <br />
-                                    <span class="cspn-radio-chck">
-                                        <input id="ichk-rate" class="cchck-secondary" type="checkbox" />
-                                        <label for="ichk-rate">Rate</label>
-                                    </span>
-                                    <br />
-                                    <span class="cspn-radio-chck">
-                                        <input id="ichk-popularity" class="cchck-secondary" type="checkbox" />
-                                        <label for="ichk-popularity">Popularity</label>
-                                    </span>
-                                    <br /><br />
-                                    <button class="btn btn-success cbtn-srch" type="button" data-toggle="modal" data-target="#imodal-place-srch-result"><span class="fa fa-search"></span> Search</button>
-                                </div>
-                                <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
-                                    Search options for drugs
-                                    <br /><br />
-                                    <button class="btn btn-success cbtn-srch"><span class="fa fa-search"></span> Search</button>
-                                </div>
-                                <div id="itab-srch-account" role="tabpanel" class="tab-pane">
-                                    @using (Html.BeginForm("", "", FormMethod.Post, new { @Id = "iform-search-account", @OnClick = "return false" }))
-                                    {
-                                        <label>Search by:</label>
-                                        <div class="selectContainer">
-                                            <select class="form-control" name="srch-by" id = "iselect-srch-by">
-                                                <option selected>Name</option>
-                                                <option>E-mail</option>
-                                                <option>Phone</option>
-                                            </select>
-                                            <span class = "cspan-error"></span>
-                                        </div>
-                                        <br />
-                                        <label>Search for:</label>
-                                        <br />
-                                        <input class="form-control" id = "idiv-searchfor" type="text"/>
-                                        <span class="cspan-error" id ="cspan-searchfor-error"></span>
-                                        <br />
-                                        <button type="submit" class="btn btn-success cbtn-srch" id="ibtn-acc"><span class="fa fa-search"></span> Search</button>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @Html.Partial("_SearchPartial")
                 </div>
             </div>
             <div class="col-md-8">
@@ -118,85 +45,16 @@
             <div class="col-md-2" style="background-color:#b6ff00">This is for Adds</div>
         </div>
     </div>
-    <div id="imodal-people-srch-result" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header cmodal-special-hdr">
-                    <button id="ibtn-close" type="button" class="close" data-dismiss="modal">&times;</button>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#itab-non-specialists" role="tab" data-toggle="tab">Non-specialists</a></li>
-                        <li role="presentation"><a href="#itab-doctors" role="tab" data-toggle="tab">Doctors</a></li>
-                        <li role="presentation"><a href="#itab-pharmacists" role="tab" data-toggle="tab">Pharmacists</a></li>
-                    </ul>
-                </div>
-                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                    <div class="tab-content">
-                        <div id="itab-non-specialists" role="tabpanel" class="tab-pane active">
-                        </div>
-                        <div id="itab-doctors" role="tabpanel" class="tab-pane">
-                        </div>
-                        <div id="itab-pharmacists" role="tabpanel" class="tab-pane">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="imodal-place-srch-result" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Places that may be suitable for you</h4>
-                </div>
-                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                    <div class="row">
-                        <div class="col-md-2">@@Place profile picture</div>
-                        <div class="col-md-7">
-                            <a href="a@placeURL">@@Place name</a> (@@Place type)
-                            <h5><b>Address: </b>@@Place address</h5>
-                            <h5><b>Phone: </b>@@Place phone</h5>
-                        </div>
-                        <div class="col-md-3">
-                            @@if specialist
-                            <button class="btn btn-default" type="button">Join staff</button>
-                            @@if specialist and already joined
-                            <span class="fa fa-check-circle-o"></span> joined
-                        </div>
-                    </div><hr />
-                    <div class="row">
-                        <div class="col-md-2">@@Place profile picture</div>
-                        <div class="col-md-7">
-                            <a href="a@placeURL">@@Place name</a> (@@Place type)
-                            <h5><b>Address: </b>@@Place address</h5>
-                            <h5><b>Phone: </b>@@Place phone</h5>
-                        </div>
-                        <div class="col-md-3">
-                            @@if specialist
-                            <button class="btn btn-default" type="button">Join staff</button>
-                            @@if specialist and already joined
-                            <span class="fa fa-check-circle-o"></span> joined
-                        </div>
-                    </div><hr />
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("_SearchResultPartial")
+
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
-    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/datevalidator.js"></script>
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

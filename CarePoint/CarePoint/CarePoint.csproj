@@ -235,8 +235,10 @@
     <Content Include="Content\place-about service.css" />
     <Content Include="Content\place-add edit service.css" />
     <Content Include="Content\place-edit schedule.css" />
+    <Content Include="Content\place-new.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
+    <Content Include="Content\_LoginPartial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

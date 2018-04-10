@@ -31,70 +31,71 @@
                 <div class="modal-content">
                     @using (Html.BeginForm("UploadPrescription", "MedicalHistory", FormMethod.Post, new { @role = "form" }))
                     {
-                        <div id="imodal-hdr" class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button><br />
-                            <div class="f1-steps">
-                                <div class="f1-progress">
-                                    <div class="f1-progress-line" data-now-value="12.5" data-number-of-steps="4" style="width: 12.5%;"></div>
-                                </div>
-                                <div class="f1-step active">
-                                    <a href="#idiv-step-1" class="f1-step-icon"><i class="fa fa-thermometer-three-quarters"></i></a>
-                                    <p><b>Step 1:</b><br>Symptoms</p>
-                                </div>
-                                <div class="f1-step">
-                                    <a href="#idiv-step-2" class="f1-step-icon"><i class="fa fa-bed"></i></a>
-                                    <p><b>Step 2:</b><br>Diseases</p>
-                                </div>
-                                <div class="f1-step">
-                                    <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
-                                    <p><b>Sftep 3:</b><br>Drugs</p>
-                                </div>
-                                <div class="f1-step">
-                                    <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
-                                    <p><b>Step 4:</b><br>Remarks</p>
-                                </div>
+                    <div class="modal-header cmodal-special-hdr">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button><br />
+                        <div class="f1-steps">
+                            <div class="f1-progress">
+                                <div class="f1-progress-line" data-now-value="12.5" data-number-of-steps="4" style="width: 12.5%;"></div>
+                            </div>
+                            <div class="f1-step active">
+                                <a href="#idiv-step-1" class="f1-step-icon"><i class="fa fa-thermometer-three-quarters"></i></a>
+                                <p><b>Step 1:</b><br>Symptoms</p>
+                            </div>
+                            <div class="f1-step">
+                                <a href="#idiv-step-2" class="f1-step-icon"><i class="fa fa-bed"></i></a>
+                                <p><b>Step 2:</b><br>Diseases</p>
+                            </div>
+                            <div class="f1-step">
+                                <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
+                                <p><b>Sftep 3:</b><br>Drugs</p>
+                            </div>
+                            <div class="f1-step">
+                                <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
+                                <p><b>Step 4:</b><br>Remarks</p>
                             </div>
                         </div>
                     </div>
 
                     <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal f1">
-
-                            <div id="idiv-step-1" class="cdiv-step cdiv-list container-fluid form-group">
-                                @Html.HiddenFor(citizen => citizen.Id)
-                                <div class="row cdiv-list-item">
-                                    <div class="col-md-10">
-                                        <input name="symptomName" class="form-control" type="text" placeholder="symptom name">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
-                                        <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
-                                    </div>
+                        <div id="idiv-step-1" class="cdiv-step cdiv-list container-fluid form-group">
+                            @Html.HiddenFor(citizen => citizen.Id)
+                            <div class="row cdiv-list-item">
+                                <div class="col-md-10">
+                                    <input name="symptomName" class="form-control" type="text" placeholder="symptom name">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                    <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                 </div>
                             </div>
-                            <div id="idiv-step-2" class="cdiv-step cdiv-list container-fluid form-group">
-                                <div class="row cdiv-list-item">
-                                    <div class="col-md-10">
-                                        <input name="diseaseName" class="form-control" type="text" placeholder="disease name">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
-                                        <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
-                                    </div>
+                        </div>
+                        <div id="idiv-step-2" class="cdiv-step cdiv-list container-fluid form-group">
+                            <div class="row cdiv-list-item">
+                                <div class="col-md-10">
+                                    <input name="diseaseName" class="form-control" type="text" placeholder="disease name">
                                 </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                    <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
+                                </div>
+                                <span class="cspn-radio-chck">
+                                    <input id="a@nything" class="cchck-danger" type="checkbox" />
+                                    <label for="a@nything">Genetic</label>
+                                </span>
                             </div>
-                            <div id="idiv-step-3" class="cdiv-step cdiv-list container-fluid form-group">
-                                <datalist id="drugs"></datalist>
-                                <div class="row cdiv-list-item">
-                                    <div class="col-md-5">
-                                        <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
-                                        <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
-                                    </div>
+                        </div>
+                        <div id="idiv-step-3" class="cdiv-step cdiv-list container-fluid form-group">
+                            <datalist id="drugs"></datalist>
+                            <div class="row cdiv-list-item">
+                                <div class="col-md-5">
+                                    <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
+                                </div>
+                                <div class="col-md-5">
+                                    <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                    <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -216,16 +217,16 @@
     </ul>
     <div class="tab-content">
         <div id="idiv-medical-history-tab" class="tab-pane fade in active">
-            <!---->same content as the &lt;BODY&gt; of "MedicalHistory.cshtml"
+            @@same content as the &lt;BODY&gt; of "MedicalHistory.cshtml"
         </div>
         <div id="idiv-analysis-tab" class="tab-pane fade">
-            <!---->same content as "Analysis" tab in "Attachments.chtml"
+            @@same content as "Analysis" tab in "Attachments.chtml"
         </div>
         <div id="idiv-radiology-tab" class="tab-pane fade">
-            <!---->same content as "Radiology" tab in "Attachments.chtml"
+            @@same content as "Radiology" tab in "Attachments.chtml"
         </div>
         <div id="idiv-other-tab" class="tab-pane fade">
-            <!---->same content as "Other" tab in "Attachments.chtml"
+            @@same content as "Other" tab in "Attachments.chtml"
         </div>
     </div>
 </div>

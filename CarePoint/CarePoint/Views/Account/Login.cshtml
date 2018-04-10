@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     <link rel="icon" href="~/Images/logo-navbar.ico" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/guest-home.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
@@ -42,21 +43,24 @@
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @Id = "ifrm-login" }))
                     {
                         @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            @Html.TextBoxFor(model => model.EmailOrPhone, new { @Id = "itext-mail-phone", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Email or Phone" })
-                            <div class="cdiv-err">
-                                @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
-                            </div>
-                            @Html.PasswordFor(model => model.Password, new { @Id = "ipasswd", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Password" })
-                            <div class="cdiv-err">
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
-                            </div>
-                            
-                            @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember" })
-                            @Html.LabelFor(model => model.RememberMe)
-                            <br />
-                            <input id="ibtn-login" type="submit" value=" Sign in" class="cinp-login-frm btn btn-primary">
+                    <div class="form-group">
+                        @Html.TextBoxFor(model => model.EmailOrPhone, new { @Id = "itext-mail-phone", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Email or Phone" })
+                        <div class="cdiv-err">
+                            @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @Class = "text-danger" })
                         </div>
+                        @Html.PasswordFor(model => model.Password, new { @Id = "ipasswd", @Class = "cinp-login-frm form-control input-lg", @Placeholder = "Password" })
+                        <div class="cdiv-err">
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
+                        </div>
+
+                        <span class="cspn-radio-chck">
+                            @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember", @Class = "cchck-primary" })
+                            <label for="icheck-remember">Remember me?</label>
+                        </span>
+                        <br />
+
+                        <input id="ibtn-login" type="submit" value=" Sign in" class="cinp-login-frm btn btn-primary">
+                    </div>
                     }
                 </div>
             </div>
@@ -123,13 +127,13 @@
         </div>
         <div style="display: table; margin: 0% auto;">
             <a id="ilink-facebook" class="clink-contact" target="blank" href="https://www.facebook.com/Carepoint-1771561712864359/">
-                <li class="fa fa-facebook fa-2x"></li>
+                <span class="fa fa-facebook fa-2x"></span>
             </a>
             <a id="ilink-twitter" class="clink-contact" target="blank" href="https://twitter.com/CarePoint_Eg">
-                <li class="fa fa-twitter fa-2x"></li>
+                <span class="fa fa-twitter fa-2x"></span>
             </a>
             <a id="ilink-gplus" class="clink-contact" target="blank" href="https://plus.google.com/110436616662774730763">
-                <li class="fa fa-google-plus fa-2x"></li>
+                <span class="fa fa-google-plus fa-2x"></span>
             </a>
         </div>
     </div>

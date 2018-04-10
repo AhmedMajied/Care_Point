@@ -3,41 +3,34 @@
     border-radius: 15px 0%;
     margin-bottom: 1em;
 }
-
 .cdiv-service{
     display: inline;
     border-radius: 1em;
     padding: 1%;
     line-height: 2em;
 }
-
 .cdiv-service:hover {
     background-color: #d7f0fc;
 }
-
 .cimg-service{
     float: left;
     margin-right: 2em;
 }
-
 .cfrm-contact-inp{
     border-radius: 0em;
     margin-bottom: 2%;
 }
-
-.clink-contact{
+.clink-contact:any-link{
     color: #ffffff;
     margin-right: 0.5em;
+    text-decoration: none;
 }
-
 .clink-contact:hover {
     color: #000000;
 }
-
 #ilink-logo{
     padding: 0px;
 }
-
 #idiv-top{
     background-color: #21c2eb;
     margin-bottom: 0px;
@@ -46,7 +39,6 @@
     border:1px groove #eee;
     border-radius:5px;*/
 }
-
 #idiv-login-frm {
     background-color: #a6e9ff;
     border: 2px solid #ffffff;
@@ -56,7 +48,6 @@
     padding: 10%;
     padding-bottom: 5%;
 }
-
 #ibtn-login{
     border-width: 2px;
     font-weight: bold;
@@ -67,7 +58,6 @@
     margin-bottom: 0px;
     margin-left:30%
 }
-
 #ilbl-slog {
     display: block;
     font-weight: bolder;
@@ -77,34 +67,29 @@
     margin-top: 10%;
     margin-bottom: 10%;
 }
-
 #ibtn-sign-up {
     margin-left: 15%;
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 4%;
 }
-
 #idiv-middle{
     background-color: #ffffff;
     padding-top: 4%;
     padding-bottom: 2%;
 }
-
 #idiv-bottom{
     background-color: #404040;
     color: #ffffff;
     padding-top: 2%;
     padding-bottom: 2%;
 }
-
 #idiv-contact{
     display: table;
     margin: 2% auto;
     background-color: #ababab;
     padding: 2%;
 }
-
 .cdiv-service h3{
     color: #008000;
     font-weight: bold;

@@ -227,12 +227,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
-<<<<<<< HEAD
-    <Content Include="Content\dataTables.bootstrap.min.css" />
-    <Content Include="Content\font-awesome.min.css" />
-=======
     <Content Include="Content\current-patient.css" />
->>>>>>> master
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\modal.css" />
@@ -241,8 +236,10 @@
     <Content Include="Content\place-about service.css" />
     <Content Include="Content\place-add edit service.css" />
     <Content Include="Content\place-edit schedule.css" />
+    <Content Include="Content\place-new.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
+    <Content Include="Content\_LoginPartial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -273,11 +270,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
-<<<<<<< HEAD
-    <Content Include="Scripts\dataTables.bootstrap.min.js" />
-=======
     <Content Include="Scripts\current-patient.js" />
->>>>>>> master
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
     <Content Include="Scripts\guest-sign up.js" />
@@ -345,6 +338,7 @@
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
+    <Content Include="Views\MedicalPlace\ProfilePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

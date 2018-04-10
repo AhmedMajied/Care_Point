@@ -4,6 +4,11 @@
     max-height: 72vh;
 }
 
+.cmodal-special-hdr{
+    border-bottom: none;
+    padding-bottom: 0%;
+}
+
 .cscrollbar-modal::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;

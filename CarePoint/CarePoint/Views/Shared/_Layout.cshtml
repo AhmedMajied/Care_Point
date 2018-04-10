@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
+
     @RenderSection("styles", false)
 </head>
 <body>
@@ -17,6 +24,7 @@
             <div class="navbar-header">
                 <img id="iimg-logo" src="~/Images/logo-navbar.ico" class="img-rounded img-responsive">
             </div>
+            @Html.Partial("_LoginPartial")
         </div>
     </nav>
     <div class="container-fluid">
@@ -24,7 +32,7 @@
             <div class="col-md-2">
                 <div class="row">
                     <div class="container-fluid">
-                        <button id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
+                        <button type="button" id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
                             <span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS
                         </button>
                     </div>
@@ -50,10 +58,26 @@
                                     <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
                                     <br />
                                     <label>Priority:</label>
-                                    <br /><input id="ichk-distane" type="checkbox" checked /> Distance
-                                    <br /><input id="ichk-cost" type="checkbox" /> Cost
-                                    <br /><input id="ichk-rate" type="checkbox" /> Rate
-                                    <br /><input id="ichk-popularity" type="checkbox" /> Popularity
+                                    <br />
+                                    <span class="cspn-radio-chck">
+                                        <input id="ichk-distance" class="cchck-secondary" type="checkbox" checked />
+                                        <label for="ichk-distance">Distance</label>
+                                    </span>
+                                    <br />
+                                    <span class="cspn-radio-chck">
+                                        <input id="ichk-cost" class="cchck-secondary" type="checkbox" />
+                                        <label for="ichk-cost">Cost</label>
+                                    </span>
+                                    <br />
+                                    <span class="cspn-radio-chck">
+                                        <input id="ichk-rate" class="cchck-secondary" type="checkbox" />
+                                        <label for="ichk-rate">Rate</label>
+                                    </span>
+                                    <br />
+                                    <span class="cspn-radio-chck">
+                                        <input id="ichk-popularity" class="cchck-secondary" type="checkbox" />
+                                        <label for="ichk-popularity">Popularity</label>
+                                    </span>
                                     <br /><br />
                                     <button class="btn btn-success cbtn-srch" type="button" data-toggle="modal" data-target="#imodal-place-srch-result"><span class="fa fa-search"></span> Search</button>
                                 </div>
@@ -97,7 +121,7 @@
     <div id="imodal-people-srch-result" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div id="imodal-hdr" class="modal-header">
+                <div class="modal-header cmodal-special-hdr">
                     <button id="ibtn-close" type="button" class="close" data-dismiss="modal">&times;</button>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#itab-non-specialists" role="tab" data-toggle="tab">Non-specialists</a></li>
@@ -105,7 +129,7 @@
                         <li role="presentation"><a href="#itab-pharmacists" role="tab" data-toggle="tab">Pharmacists</a></li>
                     </ul>
                 </div>
-                <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                <div class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="tab-content">
                         <div id="itab-non-specialists" role="tabpanel" class="tab-pane active">
                         </div>
@@ -121,11 +145,11 @@
     <div id="imodal-place-srch-result" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div id="imodal-hdr" class="modal-header">
+                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Places that may be suitable for you</h4>
                 </div>
-                <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal">
+                <div class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="row">
                         <div class="col-md-2">@@Place profile picture</div>
                         <div class="col-md-7">

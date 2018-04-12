@@ -14,21 +14,24 @@
     });
 });
 
-  $("#patient-list-modal-button").click(function () {
-        $("#itab-females .row").remove();
-        $("#itab-females hr").remove();
-        $("#itab-males .row").remove();
-        $("#itab-males hr").remove();
-    });
-    function PatientsModalFill(parent, usrName,img, showHistoryHref) {
-        if (img == null)
-            img = '../Images/notfound.png';
-        html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src='" + img + "'/></div>")
-            .append($("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + usrName + "</label></div>")).append("<div class='col-md-4 cdiv-vcenter'><a href =" + showHistoryHref + "><button class='btn btn-default'>Open history</button></a></div>");
-        $(parent).append(html);
-        $(parent).append("<hr>");
+$("#patient-list-modal-button").click(function () {
+    $("#itab-females .row").remove();
+    $("#itab-females hr").remove();
+    $("#itab-males .row").remove();
+    $("#itab-males hr").remove();
+});
+
+function PatientsModalFill(parent, usrName, img, showHistoryHref) {
+    if (img == null) {
+        img = '../Images/notfound.png';
     }
-    function openModal() {
+    html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img class='cimg-user' src='" + img + "'/></div>")
+        .append($("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + usrName + "</label></div>")).append("<div class='col-md-4 cdiv-vcenter'><a href =" + showHistoryHref + "><button class='btn btn-default'>Open history</button></a></div>");
+    $(parent).append(html);
+    $(parent).append("<hr>");
+}
+$(function () {
+    $("#ilink-patient-list").click(function () {
         var docId = $("#iinput-usr").val();
         $.ajax({
             type: 'POST',
@@ -36,15 +39,15 @@
             data: { doctorId: docId },
             dataType: 'json',
             success: function (data) {
-                var male = data[0];
-                var malecount = male.length;
-                for (var i = 0; i < malecount; i++) {
-                    PatientsModalFill("#itab-males", male[i].Name, male[i].Photo, "/Citizen/CurrentPatient?citizenID=" + male[i].Id);
+                var males = data[0];
+                var malescount = males.length;
+                for (var i = 0; i < malescount; i++) {
+                    PatientsModalFill("#itab-males", males[i].Name, males[i].Photo, "/Citizen/CurrentPatient?citizenID=" + males[i].Id);
                 }
-                var female = data[1];
-                var femalecount = female.length;
-                for (var i = 0; i < femalecount; i++) {
-                    PatientsModalFill("#itab-females", female[i].Name, female[i].Photo, "/Citizen/CurrentPatient?citizenID="+female[i].Id);
+                var females = data[1];
+                var femalescount = females.length;
+                for (var i = 0; i < femalescount; i++) {
+                    PatientsModalFill("#itab-females", females[i].Name, females[i].Photo, "/Citizen/CurrentPatient?citizenID=" + females[i].Id);
                 }
                 $("#imodal-patient-list").modal('show');
             },
@@ -52,5 +55,5 @@
                 console.log(JSON.stringify(msg));
             }
         });
-    }
-
+    });
+});

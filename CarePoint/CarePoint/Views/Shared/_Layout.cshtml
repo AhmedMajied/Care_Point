@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     <link rel="stylesheet" href="~/Content/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
+
     @RenderSection("styles", false)
 </head>
 <body>
@@ -17,7 +24,7 @@
             <div class="navbar-header">
                 <img id="iimg-logo" src="~/Images/logo-navbar.ico" class="img-rounded img-responsive">
             </div>
-            @Html.Partial("_LoginPartial");
+            @Html.Partial("_LoginPartial")
         </div>
     </nav>
     <div class="container-fluid">
@@ -25,7 +32,7 @@
             <div class="col-md-2">
                 <div class="row">
                     <div class="container-fluid">
-                        <button id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
+                        <button type="button" id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
                             <span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS
                         </button>
                     </div>
@@ -39,6 +46,7 @@
         </div>
     </div>
     @Html.Partial("_SearchResultPartial")
+    @Html.Partial("_PatientsList")
 
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -48,6 +56,7 @@
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
     <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
+    <script src="~/Scripts/patient-list.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -340,6 +340,7 @@
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
     <Content Include="Views\Shared\_SearchResultPartial.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
+    <Content Include="Views\Shared\_PatientsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

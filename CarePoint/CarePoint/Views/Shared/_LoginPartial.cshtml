@@ -17,6 +17,8 @@
                 <ul class="dropdown-menu">
                     <li><a href="#" id="ilink-new-patient">New patient</a></li>
                     <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
+                    @{ string id = (User.Identity.GetCitizen()).Id.ToString();}
+                    @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
                     <li><a href="#" id="ilink-patient-list">My patients</a></li>
                     <li class="divider"></li>
                     <li><a href="/MedicalPlace/MedicalPlace" id="ilink-new-place">New workplace</a></li>

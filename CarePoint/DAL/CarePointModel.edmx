@@ -121,7 +121,7 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="GeneticVotes" Type="bigint" />
+          <Property Name="IsGenetic" Type="bit" />
         </EntityType>
         <EntityType Name="Doses">
           <Key>
@@ -1698,8 +1698,8 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="GeneticVotes" Type="Int64" />
           <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
+          <Property Name="IsGenetic" Type="Boolean" />
         </EntityType>
         <EntityType Name="Dose">
           <Key>
@@ -3172,9 +3172,9 @@
           <EntitySetMapping Name="Diseases">
             <EntityTypeMapping TypeName="CarePointModel.Disease">
               <MappingFragment StoreEntitySet="Diseases">
+                <ScalarProperty Name="IsGenetic" ColumnName="IsGenetic" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GeneticVotes" ColumnName="GeneticVotes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

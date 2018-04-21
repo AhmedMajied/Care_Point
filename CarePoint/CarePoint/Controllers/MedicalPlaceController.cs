@@ -15,16 +15,18 @@ namespace CarePoint.Controllers
         // GET: MedicalPlace
         private MedicalPlaceBusinessLayer _medicalPlaceBusinessLayer;
         private CareUnitBusinessLayer _careUnitBusinessLayer;
+        private ServiceBusinessLayer _serviceBusinessLayer;
 
         public MedicalPlaceController()
         {
                 
         }
 
-        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer, CareUnitBusinessLayer careUnitBusinessLayer)
+        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer, CareUnitBusinessLayer careUnitBusinessLayer,ServiceBusinessLayer serviceBusinessLayer)
         {
             _medicalPlaceBusinessLayer = medicalPlaceBusinessLayer;
             _careUnitBusinessLayer = careUnitBusinessLayer;
+            _serviceBusinessLayer = serviceBusinessLayer;
         }
 
         public MedicalPlaceBusinessLayer MedicalPlaceBusinessLayer
@@ -51,6 +53,18 @@ namespace CarePoint.Controllers
             }
         }
 
+        public ServiceBusinessLayer ServiceBusinessLayer
+        {
+            get
+            {
+                return _serviceBusinessLayer ?? new ServiceBusinessLayer();
+            }
+            private set
+            {
+                _serviceBusinessLayer = value;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -64,7 +78,7 @@ namespace CarePoint.Controllers
                 MedicalPlaceID=medicalPlace.ID,
                 Services = new List<ServiceViewModel>(),
                 CareUnits =  new List<CareUnitViewModel>(),
-                ServiceCategories = MedicalPlaceBusinessLayer.GetServiceCategories(),
+                ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
                 IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
 
@@ -152,15 +166,34 @@ namespace CarePoint.Controllers
                         ServiceID = model.ServiceID,
                         DayName = attribute.Name.Substring(2)
                     };
-                    MedicalPlaceBusinessLayer.AddWorkSlot(slot);
+                    ServiceBusinessLayer.AddWorkSlot(slot);
                 }
             }
         }
         public void RemoveWorkslot(long ServiceID,TimeSpan StartTime,TimeSpan EndTime)
         {
-            MedicalPlaceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
+            ServiceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
         }
 
+        [HttpPost]
+        public ActionResult AddService(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Service service = new Service()
+                {
+                    Name = model.NewService.Name,
+                    CategoryID = model.NewService.CategoryID,
+                    Cost = model.NewService.Cost,
+                    Description = model.NewService.Description,
+                    ProviderID = model.NewService.ProviderID
+                };
+                ServiceBusinessLayer.AddService(service);
+            }
+            return ProfilePage(model.Services.First().ProviderID);
+        }
+
+        [HttpPost]
         public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
         {
             if(ModelState.IsValid)
@@ -175,7 +208,7 @@ namespace CarePoint.Controllers
                     Description = serviceModel.Description,
                     ProviderID = serviceModel.ProviderID
                 };
-                MedicalPlaceBusinessLayer.UpdateService(service);
+                ServiceBusinessLayer.UpdateService(service);
             }
             return ProfilePage(model.Services.First().ProviderID);
         }

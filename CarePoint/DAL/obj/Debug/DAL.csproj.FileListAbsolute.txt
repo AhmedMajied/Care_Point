@@ -17,6 +17,6 @@ F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Debug\EntityFramework
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.dll
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Debug\EntityFramework.xml
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Debug\EntityFramework.SqlServer.xml
-F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.dll
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache

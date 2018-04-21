@@ -150,8 +150,8 @@
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="GeneticVotes" Type="Int64" />
     <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
+    <Property Name="IsGenetic" Type="Boolean" />
   </EntityType>
   <EntityType Name="Dose">
     <Key>

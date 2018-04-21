@@ -129,9 +129,9 @@
     <EntitySetMapping Name="Diseases">
       <EntityTypeMapping TypeName="CarePointModel.Disease">
         <MappingFragment StoreEntitySet="Diseases">
+          <ScalarProperty Name="IsGenetic" ColumnName="IsGenetic" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="GeneticVotes" ColumnName="GeneticVotes" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

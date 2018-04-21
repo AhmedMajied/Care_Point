@@ -116,7 +116,7 @@
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GeneticVotes" Type="bigint" />
+    <Property Name="IsGenetic" Type="bit" />
   </EntityType>
   <EntityType Name="Doses">
     <Key>

@@ -15,7 +15,47 @@
 }
 
 <div class="container-fluid">
-    <!-- Begin Services -->
+    <!-- Begin Add Service -->
+    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+    @using (Html.BeginForm("AddService", "MedicalPlace", FormMethod.Post))
+    {
+        <div id="imodal-service-new" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Service</h4>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(model => model.NewService.ProviderID, new { @Value = Model.MedicalPlaceID })
+                                @Html.HiddenFor(model => model.MedicalPlaceID)
+                                @Html.TextBoxFor(model => model.NewService.Name, new { @Id = "iinp-service-name-new", @Class = "form-control", @Placeholder = "Service Name" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(model => model.NewService.CategoryID, new SelectList(Model.ServiceCategories, "ID", "Name"), new { @Id = "iinp-service-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NewService.Cost, new { @Id = "iinp-service-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                                @Html.ValidationMessageFor(model => model.NewService.Cost, "", new { @Class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.TextAreaFor(model => model.NewService.Description, new { @Id = "itextarea-service-desc-new", @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" value="Done" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- End Add Service -->
+
+
+    <!-- Begin Update Services -->
     @for (int i = 0; i < Model.Services.Count; ++i)
     {
         var service = Model.Services.ElementAt(i);
@@ -42,6 +82,7 @@
                             <div id="itab-services-@service.ID" role="tabpanel" class="tab-pane active">
                                 <div class="row form-group">
                                     <div class="col-md-4">
+                                        @Html.HiddenFor(model => model.MedicalPlaceID)
                                         @Html.HiddenFor(model => model.Services.ElementAt(i).ID, new { @Name = "Services[0].ID", @Value = service.ID })
                                         @Html.HiddenFor(model => model.Services.ElementAt(i).ProviderID, new { @Name = "Services[0].ProviderID", @Value = service.ProviderID })
                                         @Html.TextBoxFor(model => model.Services.ElementAt(i).Name, new { @Id = "iinp-service-name-" + service.ID, @Class = "form-control", @Placeholder = "Service name", @Name = "Services[0].Name", @Value = service.Name })
@@ -206,21 +247,22 @@
             }
         }
     }
-    <!-- End Services -->
+    <!-- End Update Services -->
 
     <!-- Begin Add CareUnit -->
     <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
-    @using (Html.BeginForm("AddCareUnit","CareUnit",FormMethod.Post)) {
+    @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post)) {
     <div id="imodal-careunit-new" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">About Care Unit</h4>
+                    <h4 class="modal-title">New Care Unit</h4>
                 </div>
                 <div class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="row form-group">
                         <div class="col-md-6">
+                            @Html.HiddenFor(model => model.MedicalPlaceID)
                             @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
                             @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
                         </div>
@@ -242,7 +284,7 @@
                     @Html.TextAreaFor(model => model.NewCareUnit.Description, new { @Id = "itextarea-careunit-desc-new" , @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" data-dismiss="modal">Done</button>
+                    <input type="submit" class="btn btn-success" value="Done" />
                 </div>
             </div>
         </div>
@@ -255,7 +297,7 @@
     {
         var careunit = Model.CareUnits.ElementAt(i);
         <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-@careunit.ID">Edit CareUnit</button>
-        using (Html.BeginForm("UpdateCareUnit","CareUnit",FormMethod.Post)) {
+        using (Html.BeginForm("UpdateCareUnit", "MedicalPlace", FormMethod.Post)) {
             <div id="imodal-careunit-@careunit.ID" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -266,6 +308,7 @@
                         <div class="modal-body cscrollbar-container cscrollbar-modal">
                             <div class="row form-group">
                                 <div class="col-md-6">
+                                    @Html.HiddenFor(model => model.MedicalPlaceID)
                                     @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ID, new { @Name = "CareUnits[0].ID", @Value = careunit.ID })
                                     @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ProviderID, new { @Name = "CareUnits[0].ProviderID", @Value = careunit.ProviderID })
                                     @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Name, new { @Name = "CareUnits[0].Name",@Id = "iinp-careunit-name-"+@careunit.ID, @Class="form-control", @Placeholder="CareUnit Name" , @Value = careunit.Name})
@@ -288,7 +331,7 @@
                             @Html.TextAreaFor(model => model.CareUnits.ElementAt(i).Description, new { @Name = "CareUnits[0].Description", @Id = "itextarea-careunit-desc-" + @careunit.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Value = careunit.Description,@Rows = "18" })
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" data-dismiss="modal">Done</button>
+                            <input type="submit" class="btn btn-success" value="Done" />
                         </div>
                     </div>
                 </div>
@@ -415,6 +458,6 @@
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);
             });
         }
-        $(".cdropdown-search").select2();
+        //$(document).ready(function () { $(".cdropdown-search").select2(); });
     </script>
 }

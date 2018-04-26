@@ -31,3 +31,7 @@ jQuery.validator.unobtrusive.adapters.add
         options.rules["datevalidator"] = options.params.param;
         options.messages["datevalidator"] = options.message;
     });
+
+$("#iselect-day,#iselect-month,#iselect-year").change(function () {
+    $("#iselect-day").valid();
+});

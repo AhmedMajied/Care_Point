@@ -337,8 +337,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\MedicalHistory\Attachments.cshtml" />
-    <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
+    <Content Include="Views\Citizen\Attachments.cshtml" />
+    <Content Include="Views\Citizen\MedicalHistory.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
@@ -360,6 +360,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
   </ItemGroup>
   <ItemGroup>

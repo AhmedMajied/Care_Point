@@ -114,7 +114,7 @@
                     </div>
                     <h4>Gender:</h4>
                     <span class="cspn-radio-btn">
-                        @Html.RadioButtonFor(model => model.IsMale, false, new { @Id = "iradio-gender-male" })
+                        @Html.RadioButtonFor(model => model.IsMale, true, new { @Id = "iradio-gender-male" })
                         <label>Male</label>
                     </span>
                     <span class="cspn-radio-btn">
@@ -126,11 +126,13 @@
                 <div class="col-md-4">
                     <b>@Html.LabelFor(model => model.License, new { @Id = "ilbl-license"})</b>
                     @Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license", @Class = "file cfrm-sign-up-inp" })
-                    @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger"})
+                    @Html.ValidationMessage("LicenseRequired", new { @Class = "text-danger" })
                     <div class="file-loading cfrm-sign-up-inp">
                         <b>@Html.LabelFor(model => model.NationalIDPhoto)</b>
                         @Html.TextBoxFor(model => model.NationalIDPhoto, new { @Type = "file", @Id = "ifile-national-id" })
                         @Html.ValidationMessageFor(model => model.NationalIDPhoto, "", new { @Class = "text-danger" })
+                        @Html.ValidationMessage("IDPhotoRequired", new { @Class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-1"></div>

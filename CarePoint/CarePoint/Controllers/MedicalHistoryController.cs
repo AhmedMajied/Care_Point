@@ -19,54 +19,28 @@ namespace CarePoint.Controllers
     {
         private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
 
-        private CitizenBusinessLayer _citizenBusinessLayer;
         public MedicalHistoryController()
         {
             _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
         }
-        public MedicalHistoryController(CitizenBusinessLayer citizenBusinessLayer)
+        public MedicalHistoryController(MedicalHistoryBusinessLayer medicalHistoryBusinessLayer)
         {
-            _citizenBusinessLayer = citizenBusinessLayer;
+            _medicalHistorBusinessLayer = medicalHistoryBusinessLayer;
         }
-        public CitizenBusinessLayer citizenBusinessLayer
+        public MedicalHistoryBusinessLayer medicalBusinessLayer
         {
             get
             {
-                return _citizenBusinessLayer ?? new CitizenBusinessLayer();
+                return _medicalHistorBusinessLayer ?? new MedicalHistoryBusinessLayer();
             }
             private set
             {
-                _citizenBusinessLayer = value;
+                _medicalHistorBusinessLayer = value;
             }
         }
 
         //GET: MedicalHistory
-        public ActionResult MedicalHistory(long id)
-        {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(citizenBusinessLayer.GetCitizen(id).HistoryRecords);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
-        }
-
-        // GET: Attachments
-        public ActionResult Attachments(long id)
-        {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(citizenBusinessLayer.GetCitizen(id).Attachments);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
-        }
+        
         
         public FileResult ShowAttachmentFile(string path, string fileName)
         {

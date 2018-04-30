@@ -23,6 +23,7 @@ namespace DAL
             this.Services = new HashSet<Service>();
             this.SOSses = new HashSet<SOSs>();
             this.Specialists = new HashSet<Specialist>();
+            this.CareUnits = new HashSet<CareUnit>();
         }
     
         public long ID { get; set; }
@@ -51,5 +52,7 @@ namespace DAL
         public virtual ICollection<SOSs> SOSses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Specialist> Specialists { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CareUnit> CareUnits { get; set; }
     }
 }

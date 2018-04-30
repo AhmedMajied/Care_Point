@@ -3,23 +3,22 @@ $.validator.setDefaults({
     ignore: ":hidden:not('.cfile-enforce-validation')"
 });
 $(document).ready(function () {
-    $(function () {
-        $(document).on('change', ':file', function () {
-            var input = $(this);
-            var fileName = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselected', fileName);
-        });
-
-        $(':file').on('fileselected', function (event, fileName) {
-            $(this).parents('.input-group').find(':text').val(fileName);
-        });
-    });
-
+    var speciality = $("#iselect-speciality").value;
+    if (speciality > 0) {
+        $("#ifile-license").show();
+        $("#ilbl-license").show();
+        $("#ifile-license").prop("required", true);
+    }
     $("#iselect-speciality").on('change', function () {
         if (this.value > 0) {
-            $("#idiv-license").removeClass("hidden");
-        } else{
-            $("#idiv-license").addClass("hidden");
+            $("#ifile-license").show();
+            $("#ilbl-license").show();
+            $("#ifile-license").prop("required", true);
+        }
+        else {
+            $("#ifile-license").hide();
+            $("#ilbl-license").hide();
+            $("#ifile-license").prop("required",false);
         }
     });
 });

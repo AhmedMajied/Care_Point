@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/guest-sign up.css" />
+    <title>Sign up</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="background-color: #21c2eb; padding-bottom: 1em; margin-bottom: 3em;">
+            <img id="iimg-logo" class="img-responsive" src="../resources/logo-sign up.png">
+            <center><h1 style="color: #ffffff; font-weight: bold;">Create your carepoint account</h1></center>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="itext-full-name" type="text" class="form-control" placeholder="Full name" required="required">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="itext-usrname" type="text" class="form-control" placeholder="Username" required="required">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input id="itext-mail" type="email" class="form-control" placeholder="Email" required="required">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                        <input id="itext-phone" type="text" class="form-control" placeholder="Phone number" required="required">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="itext-passwd" type="password" class="form-control" placeholder="Password" required="required">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="itext-passwd-confirm" type="password" class="form-control" placeholder="Confirm password" required="required">
+                    </div>
+                    <h4>Birthdate:</h4>
+                    <div class='form-group'>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="day">
+                                <option value="" disabled selected>Day</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="month">
+                                <option value="" disabled selected>Month</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 selectContainer">
+                            <select class="form-control" name="year">
+                                <option value="" disabled selected>Year</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <h4>Gender:</h4>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-male" type="radio" name="radio-gender">
+                        <label>Male</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-female" type="radio" name="radio-gender">
+                        <label>Female</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-gender-other" type="radio" name="radio-gender">
+                        <label>Other</label>
+                    </span class="cspn-radio-btn">
+                    <div class="file-loading">
+                        <b><label>National ID</label></b>
+                        <input id="ifile-national-id" type="file">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <h4>Specialty:</h4>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-none" type="radio" name="radio-specialty" checked="checked">
+                        <label>None</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-doc" type="radio" name="radio-specialty">
+                        <label>Doctor</label>
+                    </span>
+                    <span class="cspn-radio-btn">
+                        <input id="iradio-specialty-pharmacist" type="radio" name="radio-specialty">
+                        <label>Pharmacist</label>
+                    </span>
+                    <div class="file-loading">
+                        <b><label>Profession license</label></b>
+                        <input id="ifile-license" type="file">
+                    </div>
+                </div> 
+                <div class="col-md-1"></div>
+            </div>
+            <input id="ibtn-sign-up" type="submit" value="Create account" class="btn btn-primary" style="font-weight: bold;">
+        </form>
+    </div>
+</body>
+
+</html>

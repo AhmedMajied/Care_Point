@@ -1,8 +1,3 @@
-.modal-header{
-    padding-bottom: 0%;
-    border-bottom: none;
-}
-
 .nav-tabs
 {
     border-bottom: 1px solid #dddddd;
@@ -47,7 +42,9 @@
     color: #ffffff;
 }
 
-.tab-content
+
+.tab-content,
+#idiv-tab-content
 {
     padding: 0em;
 }

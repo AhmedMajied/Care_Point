@@ -47,8 +47,7 @@ namespace CarePoint.Controllers
             String mimeType = MimeMapping.GetMimeMapping(path);
 
             return new FilePathResult(path, mimeType);
-        }
-        
+        } 
         [HttpPost]
         public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {

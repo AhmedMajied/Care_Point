@@ -74,8 +74,7 @@
                 @foreach (var attachment in prescriptions)
                 {
                     <li class="list-group-item">
-                        <div class="row">
-                            
+                        <div class="row">                    
                             <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@attachment.FileName</div>
                             <div class="col-md-3">@attachment.Specialist.Name</div>
                             <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>

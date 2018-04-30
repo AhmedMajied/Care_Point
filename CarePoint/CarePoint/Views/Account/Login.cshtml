@@ -6,7 +6,6 @@
 }
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="~/Content/navbar.css" />
     <title>@ViewBag.Title</title>
 </head>
-
 <body class="cscrollbar-container cscrollbar" data-spy="scroll" target="#inav">
     <nav class="navbar navbar-default" style="background-color: #FFFFFF;">
         <div class="container-fluid">
@@ -51,11 +49,11 @@
                             <div class="cdiv-err">
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
                             </div>
-                            
+
                             @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember" })
                             @Html.LabelFor(model => model.RememberMe)
                             <br />
-                            @Html.ValidationMessage("InvalidCredentials",new { @Class = "text-danger" , @Style = "display:block;width:100%;text-align:center"})
+                            @Html.ValidationMessage("InvalidCredentials", new { @Class = "text-danger", @Style = "display:block;width:100%;text-align:center" })
                             <input id="ibtn-login" type="submit" value=" Sign in" class="cinp-login-frm btn btn-primary">
                         </div>
                     }
@@ -138,7 +136,5 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/guest-home.js" type="application/javascript"></script>
     @Scripts.Render("~/bundles/jqueryval")
-
 </body>
-
 </html>

@@ -22,7 +22,6 @@ namespace BLL
             return DBEntities.CareUnits.Where(careUnit => careUnit.ProviderID == 
                                                 medicalPlaceID).ToList();
         }
-
         public void UpdateAvailableRoomCount(List<CareUnit> careUnits)
         {
             DateTime time = DateTime.Now;

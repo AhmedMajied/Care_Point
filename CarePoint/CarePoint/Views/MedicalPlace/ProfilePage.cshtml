@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/place-edit schedule.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/place-add edit service.css" />
 }
+<<<<<<< HEAD
 
 <div class="container-fluid">
     <!-- Begin Add Service -->
@@ -339,7 +340,6 @@
         }
     }
     <!-- End CareUnits -->
-
 </div>
 
 
@@ -387,6 +387,7 @@
                 newSlot.data("count", count + 1);
                 newSlot.attr("id", "idiv-workslot-" + serviceId + "-" + (count + 1));
 
+<<<<<<< HEAD
                 newSlot.find(".chkbox-remove-workslot").attr("Id", "iinp-slot-removed-" + serviceId+"-"+(count+1));
                 newSlot.find(".chkbox-remove-workslot").prop("checked", false);
 
@@ -394,6 +395,15 @@
                 newSlot.find(".cbtn-remove-workslot").attr("id", "ibtn-remove-workslot-" + serviceId+"-"+(count+1));
 
                 newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count+1) + "].StartTime");
+=======
+                newSlot.find(".chkbox-remove-workslot").attr("Id", "iinp-slot-removed-" + serviceId + "-" + (count + 1));
+                newSlot.find(".chkbox-remove-workslot").prop("checked", false);
+
+                newSlot.find(".cbtn-remove-workslot").attr("onclick", "removeWorkSlot(" + (count + 1) + "," + serviceId + ",'" + startTime + "','" + endTime + "')");
+                newSlot.find(".cbtn-remove-workslot").attr("id", "ibtn-remove-workslot-" + serviceId + "-" + (count + 1));
+
+                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].StartTime");
+>>>>>>> master
                 newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("value", startTime);
 
                 newSlot.find("#iinp-slot-end-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].EndTime");
@@ -452,12 +462,20 @@
                 $("#idiv-new-workslot-" + serviceId).hide();
             });
         }
+<<<<<<< HEAD
         function removeWorkSlot(count,serviceId, startTime, endTime) {
+=======
+        function removeWorkSlot(count, serviceId, startTime, endTime) {
+>>>>>>> master
             $.post("/MedicalPlace/RemoveWorkslot", { ServiceID: serviceId, StartTime: startTime, EndTime: endTime }, function () {
                 $("#idiv-workslot-" + serviceId + "-" + count).hide();
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);
             });
         }
+<<<<<<< HEAD
         //$(document).ready(function () { $(".cdropdown-search").select2(); });
+=======
+        $(".cdropdown-search").select2();
+>>>>>>> master
     </script>
 }

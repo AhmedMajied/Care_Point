@@ -1,0 +1,54 @@
+textarea{
+    resize: vertical;
+    column-span: 50;
+    margin: 1em 0;
+}
+#idiv-map{
+    width:100%;
+    height:500px;
+    border: 1px solid #cccccc;
+    text-align: center;
+}
+.form-control:read-only{
+    background-color: #ffffff;
+    z-index: 0;
+}
+.cbtn-file-upload, .cbtn-file-upload:hover{   
+    background-color: #c1f0ec;
+    font-weight: bold;
+}
+[type="submit"]{
+    margin-bottom: 1em;
+}
+.cspn-proxy{
+    display: inline-block;
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+    width: 50px;
+    height: 50px;
+    font-weight: bold;
+}
+.cspn-loader {
+    display: inline-block;
+    border: 5px solid #00000000;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    border-left: 5px solid #3498db;
+    border-right: 5px solid #3498db;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+  }
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

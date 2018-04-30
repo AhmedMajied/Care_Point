@@ -1,3 +1,7 @@
+$.validator.setDefaults({
+    /*This enforces validation even if the element is hidden*/
+    ignore: ":hidden:not('.cfile-enforce-validation')"
+});
 $(document).ready(function () {
     var speciality = $("#iselect-speciality").value;
     if (speciality > 0) {

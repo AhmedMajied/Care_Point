@@ -15,7 +15,6 @@
     <title>@ViewBag.Title</title>
 </head>
 <body class="cscrollbar-container cscrollbar">
-
     <div class="container-fluid">
         <div class="row" style="background-color: #21c2eb; padding-bottom: 1em; margin-bottom: 3em;">
             <img id="iimg-logo" class="img-responsive" src="~/Images/logo-sign up.png">
@@ -124,9 +123,9 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <b>@Html.LabelFor(model => model.License, new { @Id = "ilbl-license"})</b>
+                    <b>@Html.LabelFor(model => model.License, new { @Id = "ilbl-license" })</b>
                     @Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license", @Class = "file cfrm-sign-up-inp" })
-                    @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger"})
+                    @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger" })
                     @Html.ValidationMessage("LicenseRequired", new { @Class = "text-danger" })
                     <div class="file-loading cfrm-sign-up-inp">
                         <b>@Html.LabelFor(model => model.NationalIDPhoto)</b>
@@ -140,7 +139,6 @@
             <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn btn-lg btn-primary" style="font-weight: bold; margin:20px"></center>
         }
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
@@ -153,6 +151,5 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/datevalidator.js"></script>
     <script src="~/Scripts/guest-sign up.js"></script>
-
 </body>
 </html>

@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BLL;
 using CarePoint.Models;
 using DAL;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity.Spatial;
+using System.IO;
+using Extensions;
+using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -80,6 +83,7 @@ namespace CarePoint.Controllers
                 CareUnits =  new List<CareUnitViewModel>(),
                 ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
+
                 IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
 
             };
@@ -167,6 +171,7 @@ namespace CarePoint.Controllers
                         DayName = attribute.Name.Substring(2)
                     };
                     ServiceBusinessLayer.AddWorkSlot(slot);
+
                 }
             }
         }
@@ -194,6 +199,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+
         public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
         {
             if(ModelState.IsValid)
@@ -260,6 +266,62 @@ namespace CarePoint.Controllers
                 CareUnitBusinessLayer.AddCareUnit(careunit);
             }
             return ProfilePage(model.MedicalPlaceID);
+        }
+        
+        public ActionResult MedicalPlace()
+        {
+            MedicalPlaceViewModels model = new MedicalPlaceViewModels();
+            ICollection<MedicalPlaceType> medicalPlaceTypes = MedicalPlaceBusinessLayer.getAllTypes();
+            List<SelectListItem> dropDownList = new List<SelectListItem>();
+            foreach (MedicalPlaceType medicalType in medicalPlaceTypes)
+            {
+                dropDownList.Add(new SelectListItem { Text = medicalType.Name, Value = medicalType.ID.ToString() });
+            }
+            model.medicalPlaceTypes = dropDownList;
+            return View("AddMedicalPlace", model);
+        }
+        public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
+        {
+            DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
+            newPlace.Address = model.medicalPlace.Address;
+            newPlace.Description = model.medicalPlace.Description;
+            newPlace.Name = model.medicalPlace.Name;
+            newPlace.IsConfirmed = false;
+            newPlace.OwnerID = User.Identity.GetCitizen().Id;
+            newPlace.Phone = model.medicalPlace.Phone;
+            newPlace.TypeID = model.medicalPlace.TypeID;
+            double latitude = model.latitude;
+            double longitude = model.longitude;
+            var pointString = string.Format("POINT({0} {1})", longitude.ToString(), latitude.ToString());
+            var point = DbGeography.FromText(pointString);
+            newPlace.Location = point;
+            using (var binaryReader = new BinaryReader(model.medicalPlace.Photo.InputStream))
+            {
+                newPlace.Photo = binaryReader.ReadBytes(model.medicalPlace.Photo.ContentLength);
+            }
+            using (var binaryReader = new BinaryReader(model.medicalPlace.Permission.InputStream))
+            {
+                newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
+            }
+            MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
+            return ProfilePage(newPlace.ID);
+        }
+        public JsonResult SearchPlace(SearchPlaceViewModel model)
+        {
+            Citizen user = User.Identity.GetCitizen();
+            List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+            if (model.serviceType.ToUpper().Equals("ICU") || model.placeType.ToUpper().Equals("ICU"))
+            {
+                medicalPlaces = MedicalPlaceBusinessLayer.searchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            }
+            else
+            {
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            }
+            var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
+                place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
+                isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();
+            return Json(result);
         }
     }
     

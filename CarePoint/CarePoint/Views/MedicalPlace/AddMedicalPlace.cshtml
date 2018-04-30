@@ -1,0 +1,88 @@
+﻿@model CarePoint.Models.MedicalPlaceViewModels
+@{
+    ViewBag.Title = "Add MedicalPlace";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link rel="stylesheet" type="text/css" href="~/Content/place-new.css" />
+}
+@using DAL;
+<div class="row">
+    @using (Html.BeginForm("AddMedicalPlace", "MedicalPlace", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="container-fluid">
+            <div class="row form-group">
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.medicalPlace.Name, new { @Id = "iinp-workplace-name", @Class = "form-control", @Placeholder = "Workplace name" })
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.medicalPlace.Name, "", new { @Class = "cspan-error text-danger" })
+                    </span>
+                    @Html.TextBoxFor(model => model.medicalPlace.Phone, new { @Id = "iinp-workplace-phone", @Class = "form-control", @Placeholder = "Phone" })
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.medicalPlace.Phone, "", new { @Class = "cspan-error text-danger" })
+                    </span>
+                    @Html.TextBoxFor(model => model.medicalPlace.Address, new { @Id = "iinp-workplace-address", @Class = "form-control", @Placeholder = "Address" })
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.medicalPlace.Address, "", new { @Class = "cspan-error text-danger" })
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <div class="selectContainer">
+                        @Html.DropDownListFor(model => model.medicalPlace.TypeID, Model.medicalPlaceTypes, "Organization type", new { @Class = "form-control" })
+                        <span class="cspn-validation-msg">
+                            @Html.ValidationMessageFor(model => model.medicalPlace.TypeID, "", new { @Class = "cspan-error text-danger" })
+                        </span>
+                    </div>
+                    <div class="file-loading">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-default cbtn-file-upload">
+                                    Organizaton license&hellip;@Html.TextBoxFor(model => model.medicalPlace.Permission, new { @Type = "file", @Class = "cfile-permission cfile-enforce-validation hidden" })
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                        <span class="cspn-validation-msg">
+                            @Html.ValidationMessageFor(model => model.medicalPlace.Permission, "", new { @Class = "cspan-error text-danger" })
+                        </span>
+                    </div>
+                    <div class="file-loading">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-default cbtn-file-upload">
+                                    Logo&hellip;@Html.TextBoxFor(model => model.medicalPlace.Photo, new { @Type = "file", @Class = "cfile-photo cfile-enforce-validation hidden" })
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                        <span class="cspn-validation-msg">
+                            @Html.ValidationMessageFor(model => model.medicalPlace.Photo, "", new { @Class = "cspan-error text-danger" })
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <h4>Workplace location:</h4>
+            <div id="idiv-map"><span class="cspn-proxy"><span class="cspn-loader"></span><br/>Loading map...</span></div>
+            @Html.TextAreaFor(model => model.medicalPlace.Description, new { @Id = "itextarea-service-desc", @Class = "form-control", @Placeholder = "Tell people a little about your organization ..." })
+            @Html.HiddenFor(model => model.latitude, new { @Class = "cinput-latitude", @Id = "iinput-latitude" })
+            @Html.HiddenFor(model => model.longitude, new { @Class = "cinput-longitude", @Id = "iinput-longitude" })
+            <center><input class="btn btn-success" type="submit" value="Add workplace" /></center>
+        </div>
+    }
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/datevalidator.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknmD-bIczC5pP5WPolW9zsx8xA8Ty6Cw"></script>
+    <script src="~/Scripts/mapAddPlace.js"></script>
+    <script src="~/Scripts/place-new.js"></script>
+}

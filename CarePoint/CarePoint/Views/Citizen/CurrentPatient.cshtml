@@ -79,8 +79,8 @@
                                         <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                     </div>
                                     <span class="cspn-radio-chck">
-                                        <input id="a@nything" class="cchck-danger" type="checkbox" />
-                                        <label for="a@nything">Genetic</label>
+                                        <input id="icheckbox-genetic" class="cchck-danger" type="checkbox" name="genetic" />
+                                        <label for="icheckbox-genetic">Genetic</label>
                                     </span>
                                 </div>
                             </div>
@@ -102,53 +102,8 @@
                             <div id="idiv-step-4" class="cdiv-step container-fluid">
                                 <h4 id="ih4-alternatives">Which of the following drugs do you accept as alternatives ?</h4>
                                 <div id="idiv-alternatives"></div>
-
-<<<<<<< HEAD
-                            <h4 id="ih4-remarks">Do you have any other reamrks or recommendations ?</h4>
-                            <textarea id="itxtarea-remarks" name="remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
-                        </div>
-                    <div class="modal-footer">
-                        <button id="ibtn-prev" type="button" class="btn btn-default" disabled>Previous</button>
-                        <button id="ibtn-nxt" type="button" class="btn btn-success">Next</button>
-                        <input type="submit" id="ibtn-submit" class="btn btn-success" value="Submit">
-                    </div>
-            }
-                </div>
-            </div>
-        </div>
-        <div id="imodal-upload-attachment" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    @using (Html.BeginForm("UploadAttachments", "MedicalHistory", FormMethod.Post,
-                                                           new { enctype = "multipart/form-data" }))
-                {
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button><br />
-                    <h4 class="modal-title">Upload attachments</h4>
-                </div>
-                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                    <div class="container-fluid cdiv-list">
-                        <div class="row cdiv-list-item">
-                            <div class="col-md-4 selectContainer">
-                                <select class="form-control" name="a@sYouLike">
-                                    <option class="form-control" value="" selected disabled>Select type</option>
-                                    <option class="form-control" value="">@@Type1</option>
-                                    <option class="form-control" value="">@@Type2</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-success">
-                                            Browse&hellip; <input type="file" name="a@sYouLike" style="display: none;">
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-=======
                                 <h4 id="ih4-remarks">Do you have any other reamrks or recommendations ?</h4>
                                 <textarea id="itxtarea-remarks" name="remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
->>>>>>> master
                             </div>
                             <div class="modal-footer">
                                 <button id="ibtn-prev" type="button" class="btn btn-default" disabled>Previous</button>
@@ -159,50 +114,7 @@
                     }
                   </div>
                </div>
-                <div id="imodal-upload-attachment" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            @using (Html.BeginForm("UploadAttachments", "MedicalHistory", FormMethod.Post,
-                                                                   new { enctype = "multipart/form-data" }))
-                            {
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button><br />
-                                    <h4 class="modal-title">Upload attachments</h4>
-                                </div>
-                                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                                    <div class="container-fluid cdiv-list">
-                                        <div class="row cdiv-list-item">
-                                            <div class="col-md-4 selectContainer">
-                                                <select class="form-control" name="a@sYouLike">
-                                                    <option class="form-control" value="" selected disabled>Select type</option>
-                                                    <option class="form-control" value="">@@Type1</option>
-                                                    <option class="form-control" value="">@@Type2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <label class="input-group-btn">
-                                                        <span class="btn btn-success">
-                                                            Browse&hellip; <input type="file" name="a@sYouLike" style="display: none;">
-                                                        </span>
-                                                    </label>
-                                                    <input type="text" class="form-control" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
-                                                <button class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" id="ibtn-upload" class="btn btn-success" value="Upload">
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
+                
                 <div id="imodal-upload-attachment" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">

@@ -149,15 +149,12 @@ E:\GP\CarePoint\CarePoint\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\Microsoft.VisualBasic.Core.targets
 E:\GP\CarePoint\CarePoint\bin\roslyn\Microsoft.Win32.Primitives.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.AppContext.dll
-E:\GP\CarePoint\CarePoint\bin\roslyn\System.Collections.Immutable.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Console.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Diagnostics.Process.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Diagnostics.StackTrace.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.Compression.dll
-E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.FileSystem.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
-E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.FileSystem.Primitives.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.Pipes.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Reflection.Metadata.dll
 E:\GP\CarePoint\CarePoint\bin\roslyn\System.Security.AccessControl.dll
@@ -258,3 +255,6 @@ E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.csproj.CoreCompileInputs.cache
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.csproj.CopyComplete
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.dll
 E:\GP\CarePoint\CarePoint\obj\Debug\CarePoint.pdb
+E:\GP\CarePoint\CarePoint\bin\roslyn\System.Collections.Immutable.dll
+E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.FileSystem.dll
+E:\GP\CarePoint\CarePoint\bin\roslyn\System.IO.FileSystem.Primitives.dll

@@ -54,8 +54,9 @@ namespace BLL
             }
 
             // save history record to database
-            //historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
-            //DBEntities.SaveChanges();
+            historyRecord.IsRead = false;
+            historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
+            DBEntities.SaveChanges();
 
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -76,11 +77,12 @@ namespace BLL
                     SpecialistID = historyRecord.SpecialistID,
                     CitizenID = historyRecord.CitizenID,
                     FilePath = savingPath,
-                    FileName = Path.GetFileName(savingPath)
+                    FileName = Path.GetFileName(savingPath),
+                    IsRead = false
                 };
 
                 // save attachment to database
-                //SaveAttachment(attachment);
+                SaveAttachment(attachment);
 
                 // Draw prescription as image
                 bitmap = canvas.convertTextToImage(historyRecord, patientMedicines,

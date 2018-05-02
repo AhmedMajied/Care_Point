@@ -462,20 +462,13 @@
                 $("#idiv-new-workslot-" + serviceId).hide();
             });
         }
-<<<<<<< HEAD
+
         function removeWorkSlot(count,serviceId, startTime, endTime) {
-=======
-        function removeWorkSlot(count, serviceId, startTime, endTime) {
->>>>>>> master
             $.post("/MedicalPlace/RemoveWorkslot", { ServiceID: serviceId, StartTime: startTime, EndTime: endTime }, function () {
                 $("#idiv-workslot-" + serviceId + "-" + count).hide();
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);
             });
         }
-<<<<<<< HEAD
-        //$(document).ready(function () { $(".cdropdown-search").select2(); });
-=======
         $(".cdropdown-search").select2();
->>>>>>> master
     </script>
 }

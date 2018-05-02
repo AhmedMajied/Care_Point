@@ -38,9 +38,6 @@ namespace CarePoint.Controllers
                 _medicalHistorBusinessLayer = value;
             }
         }
-
-        //GET: MedicalHistory
-        
         
         public FileResult ShowAttachmentFile(string path, string fileName)
         {
@@ -91,6 +88,7 @@ namespace CarePoint.Controllers
 
             string[] symptoms = form.GetValues("symptomName");
             string[] diseases = form.GetValues("diseaseName");
+            string[] genticDiseases = form.GetValues("genetic");
             string[] medicines = form.GetValues("drugName");
             string[] dosesDescription = form.GetValues("dose");
             string remarks = form["remarks"];
@@ -99,9 +97,9 @@ namespace CarePoint.Controllers
             {
                 Date = DateTime.Now,
                 Remarks = remarks,
-                MedicalPlaceID = 4, //TODO get from session
+                MedicalPlaceID = 6, //TODO get from session
                 CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = 15//User.Identity.GetUserId<long>()
+                SpecialistID = User.Identity.GetUserId<long>()
             };
 
             // assign symptoms to history record
@@ -118,7 +116,7 @@ namespace CarePoint.Controllers
             {
                 if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
                 {
-                    historyRecord.Diseases.Add(new Disease { Name = diseases[i] });
+                    historyRecord.Diseases.Add(new Disease { Name = diseases[i], IsGenetic = false });
                 }
             }
 
@@ -138,14 +136,15 @@ namespace CarePoint.Controllers
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            //           if (medicines[0].Equals(""))
-            return Redirect(Request.UrlReferrer.ToString());
+            if (medicines[0].Equals(""))
+                return Redirect(Request.UrlReferrer.ToString());
 
-            /*         return new FilePathResult(prescriptionFilePath, "image/jpg")
-                     {
-                         FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-                     };*/
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
+            {
+                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
+            };
 
+            //return genticDiseases[0] + genticDiseases[1] + "";
         }
 
         public ActionResult GetAttachmentTypes()

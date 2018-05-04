@@ -62,23 +62,52 @@
                 @{int cnt = 1;}
                 @foreach (var record in Model)
                 {
-                    string symptoms = record.Symptoms.FirstOrDefault().Name;
-                    foreach(var symptom in record.Symptoms.Skip(1))
+                    string symptoms = "";
+                    if (record.Symptoms.Count > 0)
                     {
-                        symptoms += ',' + symptom.Name;
+                        if (record.Symptoms.Count > 1)
+                        {
+                            symptoms = record.Symptoms.FirstOrDefault().Name;
+                            foreach (var symptom in record.Symptoms.Skip(1))
+                            {
+                                symptoms += ',' + symptom.Name;
+                            }
+                        }
                     }
-                    string diseases = record.Diseases.FirstOrDefault().Name;
-                    foreach (var disease in record.Diseases.Skip(1))
+
+                    string diseases = "";
+                    if (record.Diseases.Count > 0)
                     {
-                        diseases += ',' + disease.Name;
+                        if (record.Diseases.Count > 1)
+                        {
+                            diseases = record.Diseases.FirstOrDefault().Name;
+                            foreach (var disease in record.Diseases.Skip(1))
+                            {
+                                diseases += ',' + disease.Name;
+                            }
+                        }
                     }
-                    string medicines = record.Doses.FirstOrDefault().Medicine.Name+"(" + record.Doses.FirstOrDefault().Description + ")";
-                    foreach (var dose in record.Doses.Skip(1))
+                    string medicines = "";
+                    if (record.Doses.Count > 0)
                     {
-                        medicines += ',' + dose.Medicine.Name + "(" + dose.Description + ")";
+                        if (record.Doses.Count > 1)
+                        {
+                            medicines = record.Doses.FirstOrDefault().Medicine.Name + "(" + record.Doses.FirstOrDefault().Description + ")";
+                            if (record.Doses.Count > 1)
+                            {
+                                foreach (var dose in record.Doses.Skip(1))
+                                {
+                                    medicines += ',' + dose.Medicine.Name + "(" + dose.Description + ")";
+                                }
+                            }
+                        }
                     }
-                        
-                    <tr id="itbl-row-@cnt++" onclick="populatePanel('@Convert.ToBase64String(record.MedicalPlace.Photo)','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString("dd/MM/yyyy")','@symptoms','@diseases','@medicines','@record.Remarks');">
+                    string photo = "";
+                    if (record.MedicalPlace.Photo != null)
+                    {
+                        photo = Convert.ToBase64String(record.MedicalPlace.Photo);
+                    }
+                    <tr id="itbl-row-@cnt++" onclick="populatePanel('@photo','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString("dd/MM/yyyy")','@symptoms','@diseases','@medicines','@record.Remarks');">
                         <td>@record.Date.Date.ToString()</td>
                         <td>@record.MedicalPlace.Name</td>
                         <td>@record.Specialist.Name</td>

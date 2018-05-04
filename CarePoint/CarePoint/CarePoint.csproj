@@ -199,7 +199,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CareUnitController.cs" />
     <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
@@ -254,6 +253,20 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="less\animated.less" />
+    <Content Include="less\bordered-pulled.less" />
+    <Content Include="less\core.less" />
+    <Content Include="less\fixed-width.less" />
+    <Content Include="less\font-awesome.less" />
+    <Content Include="less\icons.less" />
+    <Content Include="less\larger.less" />
+    <Content Include="less\list.less" />
+    <Content Include="less\mixins.less" />
+    <Content Include="less\path.less" />
+    <Content Include="less\rotated-flipped.less" />
+    <Content Include="less\screen-reader.less" />
+    <Content Include="less\stacked.less" />
+    <Content Include="less\variables.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
     <Content Include="Images\care.jpg" />
@@ -332,17 +345,34 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\MedicalHistory\Attachments.cshtml" />
-    <Content Include="Views\MedicalHistory\MedicalHistory.cshtml" />
+    <Content Include="Views\Citizen\Attachments.cshtml" />
+    <Content Include="Views\Citizen\MedicalHistory.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
+    <Content Include="scss\font-awesome.scss" />
+    <Content Include="scss\_animated.scss" />
+    <Content Include="scss\_bordered-pulled.scss" />
+    <Content Include="scss\_core.scss" />
+    <Content Include="scss\_fixed-width.scss" />
+    <Content Include="scss\_icons.scss" />
+    <Content Include="scss\_larger.scss" />
+    <Content Include="scss\_list.scss" />
+    <Content Include="scss\_mixins.scss" />
+    <Content Include="scss\_path.scss" />
+    <Content Include="scss\_rotated-flipped.scss" />
+    <Content Include="scss\_screen-reader.scss" />
+    <Content Include="scss\_stacked.scss" />
+    <Content Include="scss\_variables.scss" />
+    <Content Include="Views\MedicalPlace\ProfilePage.cshtml" />
     <Content Include="Views\Shared\_SearchResultPartial.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
+    <Content Include="Views\Shared\_PatientsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
   </ItemGroup>
   <ItemGroup>

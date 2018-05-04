@@ -55,6 +55,7 @@ namespace CarePoint.Controllers
                 _userManager = value;
             }
         }
+
         public CitizenBusinessLayer CitizenBusinessLayer
         {
             get
@@ -103,7 +104,7 @@ namespace CarePoint.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("InvalidCredentials", "Invalid login attempt.");
                     return View(model);
             }
         }
@@ -161,19 +162,21 @@ namespace CarePoint.Controllers
             var months = new List<SelectListItem>();
             for (int i = 1; i <= 12; ++i)
             {
-                months.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
+                months.Add(new SelectListItem() { Value = i.ToString(), Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i) });
             }
             var years = new List<SelectListItem>();
             for (int i = 1900; i <= DateTime.Now.Year - 5; ++i)
             {
                 years.Add(new SelectListItem() { Value = i.ToString(), Text = i.ToString() });
             }
+
             var bloodTypes = CitizenBusinessLayer.GetBloodTypes();
             var bloodTypesOptions = new List<SelectListItem>();
             foreach (var type in bloodTypes)
             {
                 bloodTypesOptions.Add(new SelectListItem() { Text = type.Name, Value = type.ID.ToString() });
             }
+
             var specialities = CitizenBusinessLayer.GetSpecialities();
             var specialitiesOptions = new List<SelectListItem>();
             specialitiesOptions.Add(new SelectListItem() { Text = "None", Value = "-1" });
@@ -257,6 +260,12 @@ namespace CarePoint.Controllers
                     DateOfBirth = model.DateOfBirth,
                     PhoneNumber = model.Phone,
                 };
+                if (model.NationalIDPhoto == null)
+                {
+                    ModelState.AddModelError("IDPhotoRequired", "Please Upload your National ID");
+                    ResetRegisterViewModel(model);
+                    return View(model);
+                }
                 using (var binaryReader = new BinaryReader(model.NationalIDPhoto.InputStream))
                 {
                     specialist.NationalIDPhoto = binaryReader.ReadBytes(model.NationalIDPhoto.ContentLength);
@@ -264,6 +273,12 @@ namespace CarePoint.Controllers
                 citizen.NationalIDPhoto = specialist.NationalIDPhoto;
                 if (model.SpecialityID != -1)
                 {
+                    if(model.License == null)
+                    {
+                        ModelState.AddModelError("LicenseRequired", "Please Upload your License");
+                        ResetRegisterViewModel(model);
+                        return View(model);
+                    }
                     using (var binaryReader = new BinaryReader(model.License.InputStream))
                     {
                         specialist.ProfessionLicense = binaryReader.ReadBytes(model.License.ContentLength);

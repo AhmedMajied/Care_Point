@@ -41,7 +41,7 @@ namespace BLL
 
             // decide page structure to know the sutable legth of it 
             string pageStructure = "\n\n\nName \n Patient name \n Medicines " + "\n\n"
-                    + " Doctor \n Doctor name \n\n Address \n medicalPlaceAddress";
+                    + " Doctor \n Doctor name \n\n\n\n Address \n medicalPlaceAddress";
 
             for (int i = 0; i < medicinesAlternatives.Count; i++)
             {
@@ -95,7 +95,7 @@ namespace BLL
         private void DrawPrescriptionBody(string patientName, string doctorName, DateTime date, 
                             string[] medicines, List<List<string>> medicinesAlternatives)
         {
-            graphics.DrawString(newLine + new String('_', pageWidth / 14), bold, new SolidBrush(Color.Red),
+            graphics.DrawString(newLine + new String('_', pageWidth / 17), bold, new SolidBrush(Color.Red),
                 pageWidth / 2, 0, alignmentCenter);
             newLine += "\n";
 
@@ -123,12 +123,13 @@ namespace BLL
                                     new SolidBrush(Color.Black), padding, 0);
                 }
                 
-                newLine += "\n\n\n";
+                newLine += "\n\n";
             }
 
             for (int medicineIndex = 0; medicineIndex < medicines.Length && 
                 medicines[medicineIndex] != ""; medicineIndex++)
             {
+                newLine += "\n";
                 graphics.DrawString(newLine + "- " + medicines[medicineIndex], regular,
                     new SolidBrush(Color.Black), padding * 5, 0);
 
@@ -150,10 +151,10 @@ namespace BLL
                 MeasureRightPadding("Signature", date.ToString()), 0, alignmentRight);
             newLine += "\n";
 
-            graphics.DrawString("\n\n" + newLine + doctorName, regular, new SolidBrush(Color.Black), padding * 2, 0);
-            graphics.DrawString(newLine + new String('_', pageWidth/14), bold, new SolidBrush(Color.Red),
+            graphics.DrawString("\n\n\n" + newLine + doctorName, regular, new SolidBrush(Color.Black), padding * 2, 0);
+            graphics.DrawString("\n"+newLine + new String('_', pageWidth/17), bold, new SolidBrush(Color.Red),
                 pageWidth / 2, 0, alignmentCenter);
-            newLine += "\n\n\n\n\n\n";
+            newLine += "\n\n\n\n\n\n\n\n";
         }
 
         private void DrawPrescriptionFooter(string address, string phone)
@@ -165,7 +166,7 @@ namespace BLL
                 MeasureLeftPadding("Address", address), 0, alignmentCenter);
             graphics.DrawString(newLine + "Phone", bold, new SolidBrush(Color.Black),
                 MeasureRightPadding("Phone", phone), 0, alignmentRight);
-            newLine += "\n\n\n\n\n\n";
+            newLine += "\n\n\n\n\n\n\n";
 
             graphics.DrawString(newLine + address, regular, new SolidBrush(Color.Black), padding * 2, 0);
             graphics.DrawString(newLine + phone, regular, new SolidBrush(Color.Black),

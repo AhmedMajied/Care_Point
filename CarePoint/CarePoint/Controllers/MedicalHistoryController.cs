@@ -19,52 +19,23 @@ namespace CarePoint.Controllers
     {
         private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
 
-        private CitizenBusinessLayer _citizenBusinessLayer;
         public MedicalHistoryController()
         {
             _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
         }
-        public MedicalHistoryController(CitizenBusinessLayer citizenBusinessLayer)
+        public MedicalHistoryController(MedicalHistoryBusinessLayer medicalHistoryBusinessLayer)
         {
-            _citizenBusinessLayer = citizenBusinessLayer;
+            _medicalHistorBusinessLayer = medicalHistoryBusinessLayer;
         }
-        public CitizenBusinessLayer citizenBusinessLayer
+        public MedicalHistoryBusinessLayer medicalBusinessLayer
         {
             get
             {
-                return _citizenBusinessLayer ?? new CitizenBusinessLayer();
+                return _medicalHistorBusinessLayer ?? new MedicalHistoryBusinessLayer();
             }
             private set
             {
-                _citizenBusinessLayer = value;
-            }
-        }
-
-        //GET: MedicalHistory
-        public ActionResult MedicalHistory(long id)
-        {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(citizenBusinessLayer.GetCitizen(id).HistoryRecords);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
-        }
-
-        // GET: Attachments
-        public ActionResult Attachments(long id)
-        {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(citizenBusinessLayer.GetCitizen(id).Attachments);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
+                _medicalHistorBusinessLayer = value;
             }
         }
         
@@ -117,6 +88,7 @@ namespace CarePoint.Controllers
 
             string[] symptoms = form.GetValues("symptomName");
             string[] diseases = form.GetValues("diseaseName");
+            string[] genticDiseases = form.GetValues("genetic");
             string[] medicines = form.GetValues("drugName");
             string[] dosesDescription = form.GetValues("dose");
             string remarks = form["remarks"];
@@ -125,9 +97,9 @@ namespace CarePoint.Controllers
             {
                 Date = DateTime.Now,
                 Remarks = remarks,
-                MedicalPlaceID = 4, //TODO get from session
+                MedicalPlaceID = 6, //TODO get from session
                 CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = 15//User.Identity.GetUserId<long>()
+                SpecialistID = User.Identity.GetUserId<long>()
             };
 
             // assign symptoms to history record
@@ -144,7 +116,7 @@ namespace CarePoint.Controllers
             {
                 if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
                 {
-                    historyRecord.Diseases.Add(new Disease { Name = diseases[i] });
+                    historyRecord.Diseases.Add(new Disease { Name = diseases[i], IsGenetic = false });
                 }
             }
 
@@ -164,14 +136,15 @@ namespace CarePoint.Controllers
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            //           if (medicines[0].Equals(""))
-            return Redirect(Request.UrlReferrer.ToString());
+            if (medicines[0].Equals(""))
+                return Redirect(Request.UrlReferrer.ToString());
 
-            /*         return new FilePathResult(prescriptionFilePath, "image/jpg")
-                     {
-                         FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-                     };*/
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
+            {
+                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
+            };
 
+            //return genticDiseases[0] + genticDiseases[1] + "";
         }
 
         public ActionResult GetAttachmentTypes()

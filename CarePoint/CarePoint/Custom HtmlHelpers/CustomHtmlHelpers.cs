@@ -20,7 +20,7 @@ namespace CarePoint.Custom_HtmlHelpers
             }
             else
             {
-                return BuildImageTag("../../img/notfound.png", null);
+                return BuildImageTag("../../Images/notfound.png", null);
             }
         } 
         public static MvcHtmlString Image(this HtmlHelper htmlHelper,byte[] imgBytes,object htmlAttributes)
@@ -33,7 +33,7 @@ namespace CarePoint.Custom_HtmlHelpers
             }
             else
             {
-                return BuildImageTag("../../img/notfound.png", htmlAttributes);
+                return BuildImageTag("../../Images/notfound.png", htmlAttributes);
             }
         }
  

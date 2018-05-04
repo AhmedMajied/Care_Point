@@ -11,8 +11,49 @@
     <link rel="stylesheet" type="text/css" href="~/Content/place-edit schedule.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/place-add edit service.css" />
 }
-kjvskvk
+
 <div class="container-fluid">
+    <!-- Begin Add Service -->
+    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+    @using (Html.BeginForm("AddService", "MedicalPlace", FormMethod.Post))
+    {
+        <div id="imodal-service-new" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Service</h4>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(model => model.NewService.ProviderID, new { @Value = Model.MedicalPlaceID })
+                                @Html.HiddenFor(model => model.MedicalPlaceID)
+                                @Html.TextBoxFor(model => model.NewService.Name, new { @Id = "iinp-service-name-new", @Class = "form-control", @Placeholder = "Service Name" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(model => model.NewService.CategoryID, new SelectList(Model.ServiceCategories, "ID", "Name"), new { @Id = "iinp-service-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NewService.Cost, new { @Id = "iinp-service-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                                @Html.ValidationMessageFor(model => model.NewService.Cost, "", new { @Class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.TextAreaFor(model => model.NewService.Description, new { @Id = "itextarea-service-desc-new", @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" value="Done" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- End Add Service -->
+
+
+    <!-- Begin Update Services -->
     @for (int i = 0; i < Model.Services.Count; ++i)
     {
         var service = Model.Services.ElementAt(i);
@@ -56,8 +97,6 @@ kjvskvk
                                         @Html.TextAreaFor(model => model.Services.ElementAt(i).Description, new { @Id = "iinp-service-desc-" + service.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Name = "Services[0].Description", @Value = service.CategoryID, @Rows = "18" })
                                     </div>
                                     <div id="itab-schedules-@service.ID" role="tabpanel" class="tab-pane">
-
-
 
                                         @for (int j = 0; j < service.WorkSlots.Count; ++j)
                                         {
@@ -204,6 +243,98 @@ kjvskvk
             }
         }
     }
+    <!-- End Update Services -->
+
+    <!-- Begin Add CareUnit -->
+    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
+    @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post)) {
+    <div id="imodal-careunit-new" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">New Care Unit</h4>
+                </div>
+                <div class="modal-body cscrollbar-container cscrollbar-modal">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            @Html.HiddenFor(model => model.MedicalPlaceID)
+                            @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
+                            @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type"})
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NewCareUnit.Cost, new { @Id = "iinp-careunit-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                            @Html.ValidationMessageFor(model => model.NewCareUnit.Cost, "", new { @Class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NewCareUnit.AvailableRoomCount, new { @Id = "iinp-careunit-count-new", @Class = "form-control", @Placeholder = "Rooms Available Now", @Type = "number", @Min = "0", @Step = "1" })
+                            @Html.ValidationMessageFor(model => model.NewCareUnit.AvailableRoomCount, "", new {  @Class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.TextAreaFor(model => model.NewCareUnit.Description, new { @Id = "itextarea-careunit-desc-new" , @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Done" />
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    <!-- End Add CareUnit -->
+
+    <!-- Begin CareUnits -->
+    @for (int i = 0; i < Model.CareUnits.Count; ++i)
+    {
+        var careunit = Model.CareUnits.ElementAt(i);
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-@careunit.ID">Edit CareUnit</button>
+        using (Html.BeginForm("UpdateCareUnit", "MedicalPlace", FormMethod.Post)) {
+            <div id="imodal-careunit-@careunit.ID" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">About Care Unit</h4>
+                        </div>
+                        <div class="modal-body cscrollbar-container cscrollbar-modal">
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(model => model.MedicalPlaceID)
+                                    @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ID, new { @Name = "CareUnits[0].ID", @Value = careunit.ID })
+                                    @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ProviderID, new { @Name = "CareUnits[0].ProviderID", @Value = careunit.ProviderID })
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Name, new { @Name = "CareUnits[0].Name",@Id = "iinp-careunit-name-"+@careunit.ID, @Class="form-control", @Placeholder="CareUnit Name" , @Value = careunit.Name})
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.CareUnits.ElementAt(i).CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name", careunit.CareUnitTypeID), new { @Id = "iinp-careunit-type-" + careunit.ID, @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type", @Name = "CareUnits[0].CareUnitTypeID", @Value = careunit.CareUnitTypeID })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Cost, new { @Id = "iinp-careunit-cost-" + careunit.ID, @Class = "form-control", @Placeholder = "Cost", @Name = "CareUnits[0].Cost", @Value = careunit.Cost, @Type = "number", @Min = "0", @Step = "0.01" })
+                                    @Html.ValidationMessageFor(model => model.CareUnits.ElementAt(i).Cost, "", new { @Data_valmsg_for = "CareUnits[0].Cost", @Class = "text-danger" })
+
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).AvailableRoomCount, new { @Id = "iinp-careunit-count-" + careunit.ID, @Class = "form-control", @Placeholder = "Rooms Available Now", @Name = "CareUnits[0].AvailableRoomCount", @Value = careunit.AvailableRoomCount, @Type = "number", @Min = "0", @Step = "1" })
+                                    @Html.ValidationMessageFor(model => model.CareUnits.ElementAt(i).AvailableRoomCount, "", new { @Data_valmsg_for = "CareUnits[0].AvailableRoomCount", @Class = "text-danger" })
+                                </div>
+                            </div>
+                            @Html.TextAreaFor(model => model.CareUnits.ElementAt(i).Description, new { @Name = "CareUnits[0].Description", @Id = "itextarea-careunit-desc-" + @careunit.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Value = careunit.Description,@Rows = "18" })
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" value="Done" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <!-- End CareUnits -->
 </div>
 
 
@@ -257,7 +388,8 @@ kjvskvk
                 newSlot.find(".cbtn-remove-workslot").attr("onclick", "removeWorkSlot(" + (count + 1) + "," + serviceId + ",'" + startTime + "','" + endTime + "')");
                 newSlot.find(".cbtn-remove-workslot").attr("id", "ibtn-remove-workslot-" + serviceId + "-" + (count + 1));
 
-                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].StartTime");
+                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count+1) + "].StartTime");
+
                 newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("value", startTime);
 
                 newSlot.find("#iinp-slot-end-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].EndTime");
@@ -316,7 +448,8 @@ kjvskvk
                 $("#idiv-new-workslot-" + serviceId).hide();
             });
         }
-        function removeWorkSlot(count, serviceId, startTime, endTime) {
+
+        function removeWorkSlot(count,serviceId, startTime, endTime) {
             $.post("/MedicalPlace/RemoveWorkslot", { ServiceID: serviceId, StartTime: startTime, EndTime: endTime }, function () {
                 $("#idiv-workslot-" + serviceId + "-" + count).hide();
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +17,19 @@ namespace CarePoint.Controllers
     {
         // GET: MedicalPlace
         private MedicalPlaceBusinessLayer _medicalPlaceBusinessLayer;
+        private CareUnitBusinessLayer _careUnitBusinessLayer;
+        private ServiceBusinessLayer _serviceBusinessLayer;
+
         public MedicalPlaceController()
         {
                 
         }
 
-        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer)
+        public MedicalPlaceController(MedicalPlaceBusinessLayer medicalPlaceBusinessLayer, CareUnitBusinessLayer careUnitBusinessLayer,ServiceBusinessLayer serviceBusinessLayer)
         {
             _medicalPlaceBusinessLayer = medicalPlaceBusinessLayer;
+            _careUnitBusinessLayer = careUnitBusinessLayer;
+            _serviceBusinessLayer = serviceBusinessLayer;
         }
 
         public MedicalPlaceBusinessLayer MedicalPlaceBusinessLayer
@@ -39,6 +43,31 @@ namespace CarePoint.Controllers
                 _medicalPlaceBusinessLayer = value;
             }
         }
+
+        public CareUnitBusinessLayer CareUnitBusinessLayer
+        {
+            get
+            {
+                return _careUnitBusinessLayer ?? new CareUnitBusinessLayer();
+            }
+            private set
+            {
+                _careUnitBusinessLayer = value;
+            }
+        }
+
+        public ServiceBusinessLayer ServiceBusinessLayer
+        {
+            get
+            {
+                return _serviceBusinessLayer ?? new ServiceBusinessLayer();
+            }
+            private set
+            {
+                _serviceBusinessLayer = value;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -49,8 +78,12 @@ namespace CarePoint.Controllers
             var medicalPlace = MedicalPlaceBusinessLayer.GetMedicalPlace(id);
             MedicalPlaceProfileViewModel model = new MedicalPlaceProfileViewModel()
             {
+                MedicalPlaceID=medicalPlace.ID,
                 Services = new List<ServiceViewModel>(),
-                ServiceCategories = MedicalPlaceBusinessLayer.GetServiceCategories(),
+                CareUnits =  new List<CareUnitViewModel>(),
+                ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
+                CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
+
                 IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
 
             };
@@ -106,6 +139,23 @@ namespace CarePoint.Controllers
                 }
                 model.Services.Add(smodel);
             }
+
+            foreach(var careunit in medicalPlace.CareUnits)
+            {
+                CareUnitViewModel cmodel = new CareUnitViewModel()
+                {
+                    ID = careunit.ID,
+                    Name = careunit.Name,
+                    CareUnitTypeID = careunit.CareUnitTypeID,
+                    AvailableRoomCount = careunit.AvailableRoomCount ?? 0,
+                    Cost = careunit.Cost,
+                    ProviderID = careunit.ProviderID,
+                    Description = careunit.Description,
+                    LastUpdate = careunit.LastUpdate
+                };
+                model.CareUnits.Add(cmodel);
+            }
+
             return View("ProfilePage",model);
         }
         public void AddWorkslot(WorkSlotViewModel model)
@@ -120,14 +170,35 @@ namespace CarePoint.Controllers
                         ServiceID = model.ServiceID,
                         DayName = attribute.Name.Substring(2)
                     };
-                    MedicalPlaceBusinessLayer.AddWorkSlot(slot);
+                    ServiceBusinessLayer.AddWorkSlot(slot);
+
                 }
             }
         }
         public void RemoveWorkslot(long ServiceID,TimeSpan StartTime,TimeSpan EndTime)
         {
-            MedicalPlaceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
+            ServiceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
         }
+
+        [HttpPost]
+        public ActionResult AddService(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Service service = new Service()
+                {
+                    Name = model.NewService.Name,
+                    CategoryID = model.NewService.CategoryID,
+                    Cost = model.NewService.Cost,
+                    Description = model.NewService.Description,
+                    ProviderID = model.NewService.ProviderID
+                };
+                ServiceBusinessLayer.AddService(service);
+            }
+            return ProfilePage(model.Services.First().ProviderID);
+        }
+
+        [HttpPost]
 
         public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
         {
@@ -143,9 +214,58 @@ namespace CarePoint.Controllers
                     Description = serviceModel.Description,
                     ProviderID = serviceModel.ProviderID
                 };
-                MedicalPlaceBusinessLayer.UpdateService(service);
+                ServiceBusinessLayer.UpdateService(service);
             }
             return ProfilePage(model.Services.First().ProviderID);
+        }
+
+        [HttpPost]
+        public void UpdateCareUnitsCount(List<CareUnit> careUnits)
+        {
+            CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                CareUnit careunit = new CareUnit()
+                {
+                    ID= model.CareUnits.ElementAt(0).ID,
+                    Name = model.CareUnits.ElementAt(0).Name,
+                    Description = model.CareUnits.ElementAt(0).Description,
+                    Cost = model.CareUnits.ElementAt(0).Cost,
+                    LastUpdate = model.CareUnits.ElementAt(0).LastUpdate,
+                    CareUnitTypeID = model.CareUnits.ElementAt(0).CareUnitTypeID,
+                    AvailableRoomCount = model.CareUnits.ElementAt(0).AvailableRoomCount,
+                    ProviderID = model.CareUnits.ElementAt(0).ProviderID
+                };
+                CareUnitBusinessLayer.UpdateCareUnit(careunit);
+            }
+            return ProfilePage(model.MedicalPlaceID);
+        }
+
+        [HttpPost]
+        public ActionResult AddCareUnit(MedicalPlaceProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                CareUnit careunit = new CareUnit()
+                {
+                    Name = model.NewCareUnit.Name,
+                    Description = model.NewCareUnit.Description,
+                    Cost = model.NewCareUnit.Cost,
+                    LastUpdate = model.NewCareUnit.LastUpdate,
+                    CareUnitTypeID = model.NewCareUnit.CareUnitTypeID,
+                    AvailableRoomCount = model.NewCareUnit.AvailableRoomCount,
+                    ProviderID = model.NewCareUnit.ProviderID
+                };
+                CareUnitBusinessLayer.AddCareUnit(careunit);
+            }
+            return ProfilePage(model.MedicalPlaceID);
         }
         
         public ActionResult MedicalPlace()
@@ -189,8 +309,15 @@ namespace CarePoint.Controllers
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {
             Citizen user = User.Identity.GetCitizen();
-            List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();            
-            medicalPlaces = MedicalPlaceBusinessLayer.SearchPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+            if (model.serviceType.ToUpper().Equals("ICU") || model.placeType.ToUpper().Equals("ICU"))
+            {
+                medicalPlaces = MedicalPlaceBusinessLayer.searchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            }
+            else
+            {
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+            }
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
                 place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
                 isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();

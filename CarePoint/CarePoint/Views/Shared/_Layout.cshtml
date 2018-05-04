@@ -15,8 +15,8 @@
     <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
-
     @RenderSection("styles", false)
+
 </head>
 <body>
     <nav class="navbar navbar-default" style="background-color: #21c2eb;">
@@ -45,7 +45,10 @@
             <div class="col-md-2" style="background-color:#b6ff00">This is for Adds</div>
         </div>
     </div>
+
     @Html.Partial("_SearchResultPartial")
+    @Html.Partial("_PatientsList")
+
 
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -55,6 +58,7 @@
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
     <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
+    <script src="~/Scripts/patient-list.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

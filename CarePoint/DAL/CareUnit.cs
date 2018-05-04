@@ -38,5 +38,6 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CareUnitRating> CareUnitRatings { get; set; }
         public virtual CareUnitType CareUnitType { get; set; }
+        public virtual MedicalPlace MedicalPlace { get; set; }
     }
 }

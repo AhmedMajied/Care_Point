@@ -22,7 +22,7 @@ namespace DAL
     
         public long ID { get; set; }
         public string Name { get; set; }
-        public Nullable<long> GeneticVotes { get; set; }
+        public Nullable<bool> IsGenetic { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryRecord> HistoryRecords { get; set; }

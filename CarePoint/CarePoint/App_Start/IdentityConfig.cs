@@ -54,10 +54,10 @@ namespace CarePoint
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false, // False for Testing Only 
+                RequireDigit = false, // False for Testing Only 
+                RequireLowercase = false, // False for Testing Only 
+                RequireUppercase = false, // False for Testing Only 
             };
 
             // Configure user lockout defaults

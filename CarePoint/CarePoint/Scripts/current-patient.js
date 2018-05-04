@@ -29,6 +29,7 @@ $(document).ready(function () {
         if (empty_input == false) {
             var copy = $(this).closest('.row').clone(true);
             copy.find("input").val("");
+            copy.find("[type=checkbox]").prop('checked', false);
             $(this).addClass('hidden');
             $(this).prev().removeClass('hidden');
             $(this).closest('.container-fluid').append(copy);

@@ -116,7 +116,11 @@
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+<<<<<<< HEAD
+    <Property Name="GeneticVotes" Type="bigint" />
+=======
     <Property Name="IsGenetic" Type="bit" />
+>>>>>>> master
   </EntityType>
   <EntityType Name="Doses">
     <Key>
@@ -551,6 +555,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+<<<<<<< HEAD
+=======
   <Association Name="FK_CareUnits_MedicalPlace">
     <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -565,6 +571,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+>>>>>>> master
   <Association Name="FK_CareUnitSpecialists_CareUnit">
     <End Role="CareUnits" Type="Self.CareUnits" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1326,10 +1333,13 @@
       <End Role="Citizens" EntitySet="Citizens" />
       <End Role="CareUnitRatings" EntitySet="CareUnitRatings" />
     </AssociationSet>
+<<<<<<< HEAD
+=======
     <AssociationSet Name="FK_CareUnits_MedicalPlace" Association="Self.FK_CareUnits_MedicalPlace">
       <End Role="MedicalPlace" EntitySet="MedicalPlace" />
       <End Role="CareUnits" EntitySet="CareUnits" />
     </AssociationSet>
+>>>>>>> master
     <AssociationSet Name="FK_CareUnitSpecialists_CareUnit" Association="Self.FK_CareUnitSpecialists_CareUnit">
       <End Role="CareUnits" EntitySet="CareUnits" />
       <End Role="CareUnitMembershipRequests" EntitySet="CareUnitMembershipRequests" />

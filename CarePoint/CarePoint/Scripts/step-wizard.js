@@ -50,21 +50,21 @@ function createAlternativesDiv() {
             $("#ih4-alternatives").show();
 
             // heading
-            panelHeading.innerHTML = patientDrugName;
+            panelHeading.innerHTML = patientDrugName + " alternatives";
             panel.appendChild(panelHeading);
 
             // body
             for (var alternativeIndex = 0; alternativeIndex < alternatives.length; alternativeIndex++) {
-                var medicineAlternative = document.createElement("Input");
-                medicineAlternative.name = "medicineAlternativeFor" + i;
-                medicineAlternative.type = "checkbox";
-                medicineAlternative.value = alternatives[alternativeIndex].Name;
-
                 var medicineAlternativeSpan = document.createElement("span");
-                var medicineAlternativeLabel = document.createTextNode(" " + alternatives[alternativeIndex].Name);
-                medicineAlternativeSpan.className = "cspn-alternative";
-                medicineAlternativeSpan.appendChild(medicineAlternative);
-                medicineAlternativeSpan.appendChild(medicineAlternativeLabel);
+                medicineAlternativeSpan.className = "cspn-alternative cspn-radio-chck";
+                medicineAlternativeSpan.innerHTML = `
+                    <input id="iinp-` + i + "-" + alternativeIndex + `" class="cchck-secondary" name="medicineAlternativeFor` + i +
+                    `" value=` + alternatives[alternativeIndex].Name + ` type="checkbox" />
+                    <label for="iinp-` + i + "-" + alternativeIndex + `">` + alternatives[alternativeIndex].Name + `</label>`;
+
+                
+                var medicineAlternativeLabel = document.createTextNode(alternatives[alternativeIndex].Name);
+                medicineAlternativeLabel.htmlFor = "medicineAlternativeFor" + alternativeIndex;
 
                 panelBody.appendChild(medicineAlternativeSpan);
             }
@@ -114,7 +114,6 @@ function validateDrugsNames() {
         }
 
         if (!found) {
-            alert("wrong medicine");
             return false;
         }
     }
@@ -140,16 +139,19 @@ jQuery(document).ready(function () {
 
         if (next_step) {
 
-            // search for drugs alternatives
-            if (current_step === 3) {
-                if (validateDrugsNames()) {
-                    createAlternativesDiv();
-                }
-            }
-
             parent_fieldset.fadeOut(400, function () {
                 //update current step
                 current_step++;
+
+                // search for drugs alternatives
+                if (current_step === 4) {
+                    if (validateDrugsNames()) {
+                        $("#idiv-warning").addClass("hidden");
+                        createAlternativesDiv();
+                    } else {
+                        $("#idiv-warning").removeClass("hidden");
+                    }
+                }
                 update_step_nav_buttons();
                 // change icons
                 current_active_step.removeClass('active').addClass('activated').next().removeClass('activated').addClass('active');
@@ -209,7 +211,18 @@ jQuery(document).ready(function () {
                         temp--;
                     }
                 }
-                // show next step
+
+                // search for drugs alternatives
+                if (current_step === 4) {
+                    if (validateDrugsNames()) {
+                        $("#idiv-warning").addClass("hidden");
+                        createAlternativesDiv();
+                    } else {
+                        $("#idiv-warning").removeClass("hidden");
+                    }
+                }
+
+                // show chosen step
                 $('.f1 .cdiv-step:nth-child(' + current_step + ')').fadeIn();
             });
         }

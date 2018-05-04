@@ -96,7 +96,10 @@
     <NavigationProperty Name="CareUnitMembershipRequests" Relationship="Self.FK_CareUnitSpecialists_CareUnit" FromRole="CareUnits" ToRole="CareUnitMembershipRequests" />
     <NavigationProperty Name="CareUnitRatings" Relationship="Self.FK_CareUnitRatings_CareUnits" FromRole="CareUnits" ToRole="CareUnitRatings" />
     <NavigationProperty Name="CareUnitType" Relationship="Self.FK_CareUnit_CareUnitTypes" FromRole="CareUnits" ToRole="CareUnitTypes" />
+<<<<<<< HEAD
+=======
     <NavigationProperty Name="MedicalPlace" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="CareUnit" ToRole="MedicalPlace" />
+>>>>>>> master
   </EntityType>
   <EntityType Name="CareUnitType">
     <Key>
@@ -150,8 +153,13 @@
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+<<<<<<< HEAD
+    <Property Name="GeneticVotes" Type="Int64" />
+    <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
+=======
     <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
     <Property Name="IsGenetic" Type="Boolean" />
+>>>>>>> master
   </EntityType>
   <EntityType Name="Dose">
     <Key>
@@ -205,7 +213,10 @@
     <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
     <Property Name="Address" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
     <Property Name="Phone" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+<<<<<<< HEAD
+=======
     <NavigationProperty Name="CareUnits" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="MedicalPlace" ToRole="CareUnit" />
+>>>>>>> master
   </EntityType>
   <EntityType Name="MedicalPlaceType">
     <Key>
@@ -1471,6 +1482,9 @@
       <End Role="Citizens" EntitySet="Citizens" />
       <End Role="Roles" EntitySet="Roles" />
     </AssociationSet>
+<<<<<<< HEAD
+  </EntityContainer>
+=======
     <AssociationSet Name="FK_CareUnits_MedicalPlace" Association="CarePointModel.FK_CareUnits_MedicalPlace">
       <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
       <End Role="CareUnit" EntitySet="CareUnits" />
@@ -1490,4 +1504,5 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+>>>>>>> master
 </Schema>

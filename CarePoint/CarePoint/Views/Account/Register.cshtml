@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/guest-sign up.css" />
     <title>@ViewBag.Title</title>
@@ -28,33 +29,33 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <span class="input-group-addon" style="display: "><i class="glyphicon glyphicon-user"></i></span>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.FirstName, new { @Id = "itext-first-name", @Class = "form-control", @Placeholder = "First Name" })
                     </div>
-                    <div class="cdiv-err">
+                    <span class="cspn-validation-msg">
                         @Html.ValidationMessageFor(model => model.FirstName, "", new { @Class = "text-danger" })
-                    </div>
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.MiddleName, new { @Id = "itext-middle-name", @Class = "form-control", @Placeholder = "Middle Name" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @Class = "text-danger" })
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         @Html.TextBoxFor(model => model.LastName, new { @Id = "itext-last-name", @Class = "form-control", @Placeholder = "Last Name" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @Class = "text-danger" })
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-id-card fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.NationalIDNumber, new { @Id = "itext-national-id", @Class = "form-control", @Placeholder = "National Id Number" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.NationalIDNumber, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.NationalIDNumber, "", new { @Class = "text-danger" })
+                    </span>
                     @Html.DropDownListFor(model => model.BloodTypeID, Model.BloodTypes, "Blood Type", new { @Id = "iselect-blood-type", @Class = "form-control cfrm-sign-up-inp" })
                     @Html.ValidationMessageFor(model => model.BloodTypeID, "", new { @Class = "text-danger" })
                 </div>
@@ -64,34 +65,39 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                         @Html.TextBoxFor(model => model.Phone, new { @Id = "itext-phone", @Class = "form-control", @Placeholder = "Phone Number" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.Phone, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @Class = "text-danger" })
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
                         @Html.TextBoxFor(model => model.Email, new { @Id = "itext-mail", @Class = "form-control", @Placeholder = "Email" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @Class = "text-danger" })
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         @Html.PasswordFor(model => model.Password, new { @Id = "itext-passwd", @Class = "form-control", @Placeholder = "Password" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger cdiv-err" })
-                    </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @Class = "text-danger" })
+                    </span>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         @Html.PasswordFor(model => model.ConfirmPassword, new { @Id = "itext-passwd-confirm", @Class = "form-control", @Placeholder = "Confirm Password" })
                     </div>
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @Class = "text-danger cdiv-err" })
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @Class = "text-danger" })
+                    </span>
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-default cbtn-file-upload">
+                                National ID photo&hellip;@Html.TextBoxFor(model => model.NationalIDPhoto, new { @Type = "file", @Id = "ifile-national-id", @Class = "cfile-enforce-validation hidden" })
+                            </span>
+                        </label>
+                        <input type="text" class="form-control" readonly>
                     </div>
-                    @Html.DropDownListFor(model => model.SpecialityID, Model.Specialities, "Speciality", new { @Id = "iselect-speciality", @Class = "form-control cfrm-sign-up-inp" })
-                    <div class="cdiv-err">
-                        @Html.ValidationMessageFor(model => model.SpecialityID, "", new { @Class = "text-danger" })
-                    </div>
+                    @Html.ValidationMessageFor(model => model.NationalIDPhoto, "", new { @Class = "text-danger" })
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -109,34 +115,41 @@
                         <div class="col-xs-4 selectContainer">
                             @Html.DropDownListFor(model => model.Year, Model.Years, "Year", new { @Id = "iselect-year", @Class = "form-control" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.Day, "", new { @Class = "text-danger" })
                     </div>
-                    <h4>Gender:</h4>
-                    <span class="cspn-radio-btn">
-                        @Html.RadioButtonFor(model => model.IsMale, true, new { @Id = "iradio-gender-male" })
-                        <label>Male</label>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.Day, "", new { @Class = "text-danger" })
                     </span>
-                    <span class="cspn-radio-btn">
-                        @Html.RadioButtonFor(model => model.IsMale, false, new { @Id = "iradio-gender-female" })
-                        <label>Female</label>
+                    <h4>Gender:</h4>
+                    <span class="cspn-radio-chck">
+                        @Html.RadioButtonFor(model => model.IsMale, false, new { @Id = "iradio-gender-male", @Class = "cradio-primary", @Checked = "true" })
+                        <label for="iradio-gender-male">Male</label>
+                    </span>
+                    <span class="cspn-radio-chck">
+                        @Html.RadioButtonFor(model => model.IsMale, false, new { @Id = "iradio-gender-female", @Class = "cradio-primary" })
+                        <label for="iradio-gender-female">Female</label>
                     </span>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
-                    <b>@Html.LabelFor(model => model.License, new { @Id = "ilbl-license" })</b>
-                    @Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license", @Class = "file cfrm-sign-up-inp" })
-                    @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger" })
-                    @Html.ValidationMessage("LicenseRequired", new { @Class = "text-danger" })
-                    <div class="file-loading cfrm-sign-up-inp">
-                        <b>@Html.LabelFor(model => model.NationalIDPhoto)</b>
-                        @Html.TextBoxFor(model => model.NationalIDPhoto, new { @Type = "file", @Id = "ifile-national-id" })
-                        @Html.ValidationMessageFor(model => model.NationalIDPhoto, "", new { @Class = "text-danger" })
-                        @Html.ValidationMessage("IDPhotoRequired", new { @Class = "text-danger" })
+                    @Html.DropDownListFor(model => model.SpecialityID, Model.Specialities, "Speciality", new { @Id = "iselect-speciality", @Class = "form-control cfrm-sign-up-inp" })
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.SpecialityID, "", new { @Class = "text-danger" })
+                    </span>
+                    <div id="idiv-license" class="input-group hidden">
+                        <label class="input-group-btn">
+                            <span class="btn btn-default cbtn-file-upload">
+                                Profession License&hellip;@Html.TextBoxFor(model => model.License, new { @Type = "file", @Id = "ifile-license", @Class = "cfile-enforce-validation file cfrm-sign-up-inp hidden" })
+                            </span>
+                        </label>
+                        <input type="text" class="form-control" readonly>
                     </div>
+                    <span class="cspn-validation-msg">
+                        @Html.ValidationMessageFor(model => model.License, "", new { @Class = "text-danger" })
+                    </span>
                 </div>
                 <div class="col-md-1"></div>
             </div>
-            <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn btn-lg btn-primary" style="font-weight: bold; margin:20px"></center>
+            <center><input id="ibtn-sign-up" type="submit" value="Create Account" class="btn btn-lg btn-success" style="font-weight: bold; margin:20px"></center>
         }
     </div>
     @Scripts.Render("~/bundles/jquery")

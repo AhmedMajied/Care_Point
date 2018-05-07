@@ -58,13 +58,13 @@
 
                         <div id="imodal-bdy" class="modal-body cscrollbar-container cscrollbar-modal f1">
                             <div id="idiv-step-1" class="cdiv-step cdiv-list container-fluid form-group">
-                                @Html.HiddenFor(citizen => citizen.Id)
+                                @Html.HiddenFor(citizen => citizen.Id, new { @class = "cinp-unresettable"})
                                 <div class="row cdiv-list-item">
                                     <div class="col-md-10">
                                         <input name="symptomName" class="form-control" type="text" placeholder="symptom name">
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>
                                         <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                     </div>
                                 </div>
@@ -75,12 +75,12 @@
                                         <input name="diseaseName" class="form-control" type="text" placeholder="disease name">
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>
                                         <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                     </div>
                                     <span class="cspn-radio-chck">
-                                        <input id="icheckbox-genetic" class="cchck-danger" type="checkbox" name="genetic" />
-                                        <label for="icheckbox-genetic">Genetic</label>
+                                        <input id="icheckbox-genetic-1" class="cchck-danger" type="checkbox" name="genetic" />
+                                        <label for="icheckbox-genetic-1">Genetic</label>
                                     </span>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                         <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                        <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>
                                         <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                     </div>
                                 </div>
@@ -103,10 +103,9 @@
                                 <div id="idiv-warning" class="alert alert-warning hidden">
                                     <b> Warning:</b> please make sure that all drugs you typed in step 3 are correctly spelled.
                                 </div>
-                                <h4 id="ih4-alternatives">Which of the following drugs do you accept as alternatives ?</h4>
                                 <div id="idiv-alternatives"></div>
 
-                                <h4 id="ih4-remarks">Do you have any other reamrks or recommendations ?</h4>
+                                <h4 id="ih4-remarks">Do you have any reamrks or recommendations ?</h4>
                                 <textarea id="itxtarea-remarks" name="remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
                             </div>
                         </div>
@@ -152,7 +151,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <button type="button" class="btn btn-danger cbtn-modal hidden"><span class="fa fa-trash"></span></button>
+                                            <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>
                                             <button type="button" class="btn btn-default cbtn-modal cbtn-add"><span class="fa fa-plus"></span></button>
                                         </div>
                                     </div>

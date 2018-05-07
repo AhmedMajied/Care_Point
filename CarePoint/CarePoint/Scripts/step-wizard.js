@@ -208,7 +208,6 @@ jQuery(document).ready(function () {
         $('.f1 .cdiv-step:nth-child(' + current_step + ')').fadeOut(400, function () {
             //update current step
             current_step--;
-            update_step_nav_buttons();
             // change icons
             current_active_step.removeClass('active').addClass('activated').prev().removeClass('activated').addClass('active');
             // progress bar

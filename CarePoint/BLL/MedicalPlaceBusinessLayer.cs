@@ -19,22 +19,16 @@ namespace BLL
         {
             return DBEntities.MedicalPlaces.SingleOrDefault(place => place.ID == id);
         }
-        public void addMedicalPlace(MedicalPlace medicalPlace)
+        public void AddMedicalPlace(MedicalPlace medicalPlace)
         {
             DBEntities.MedicalPlaces.Add(medicalPlace);
             DBEntities.SaveChanges();
         }
-        public MedicalPlace getMedicalPlace(long medicalPlaceId)
-        {
-            MedicalPlace medicalPlace = new MedicalPlace();
-            DBEntities.MedicalPlaces.Any(medical => medical.ID == medicalPlaceId);
-            return medicalPlace;
-        }
-        public ICollection<MedicalPlaceType> getAllTypes()
+        public ICollection<MedicalPlaceType> GetAllTypes()
         {
             return DBEntities.MedicalPlaceTypes.ToList();
         }
-        public ICollection<MedicalPlace> searchCareUnitsPlace(double latitude, double longitude, string serviceType, string placeType, bool distance, bool cost, bool rate, bool popularity)
+        public ICollection<MedicalPlace> SearchCareUnitsPlace(double latitude, double longitude, string serviceType, string placeType, bool distance, bool cost, bool rate, bool popularity)
         {
             List<CareUnit> careUnits = new List<CareUnit>();
             List<CareUnit> sortedDistance = new List<CareUnit>();// ascending
@@ -100,6 +94,13 @@ namespace BLL
                 result.Add(service.MedicalPlace, (int)((1 / Distance * 1.0) + 2 * Cost + 2 * Rate + Popularity));
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
+        }
+        public ICollection<MedicalPlace>GetNearestNMedicalPlace(string location,int numberOfPlaces)
+        {
+            ICollection<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+            medicalPlaces = medicalPlaces.OrderBy(medicalPlace => medicalPlace.Location.Distance(DbGeography.FromText(location, 4326))).ToList();
+            int min = Math.Min(medicalPlaces.ToArray().Length, numberOfPlaces);
+            return (List<MedicalPlace>)(medicalPlaces.Take(min));
         }
 
     }

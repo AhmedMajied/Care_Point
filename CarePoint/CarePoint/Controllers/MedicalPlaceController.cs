@@ -271,7 +271,7 @@ namespace CarePoint.Controllers
         public ActionResult MedicalPlace()
         {
             MedicalPlaceViewModels model = new MedicalPlaceViewModels();
-            ICollection<MedicalPlaceType> medicalPlaceTypes = MedicalPlaceBusinessLayer.getAllTypes();
+            ICollection<MedicalPlaceType> medicalPlaceTypes = MedicalPlaceBusinessLayer.GetAllTypes();
             List<SelectListItem> dropDownList = new List<SelectListItem>();
             foreach (MedicalPlaceType medicalType in medicalPlaceTypes)
             {
@@ -303,7 +303,7 @@ namespace CarePoint.Controllers
             {
                 newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
             }
-            MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
+            MedicalPlaceBusinessLayer.AddMedicalPlace(newPlace);
             return ProfilePage(newPlace.ID);
         }
         public JsonResult SearchPlace(SearchPlaceViewModel model)
@@ -312,7 +312,7 @@ namespace CarePoint.Controllers
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
             if (model.serviceType.ToUpper().Equals("ICU") || model.placeType.ToUpper().Equals("ICU"))
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.searchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
             else
             {

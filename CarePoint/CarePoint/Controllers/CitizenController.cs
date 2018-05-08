@@ -66,7 +66,7 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchAccount(string key, string value)
         {
-            List<List<Citizen>> allCitizens = _citizenBusinessLayer.searchAccounts(key, value);
+            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(key, value);
             var citizens = allCitizens[0].Select(x => new { x.Name, x.Id, x.Photo });
             var doctors = allCitizens[1].Select(x => new { x.Name, x.Id, x.Photo });
             var pharmacists = allCitizens[2].Select(x => new { x.Name, x.Id, x.Photo });
@@ -76,7 +76,7 @@ namespace CarePoint.Controllers
 
         public JsonResult PatientsList(long doctorId)
         {
-            List<Citizen> list = _citizenBusinessLayer.getPatientList(doctorId);
+            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)

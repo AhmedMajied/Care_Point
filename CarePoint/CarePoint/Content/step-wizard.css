@@ -81,6 +81,6 @@
 	text-align: left;
 }
 
-#ibtn-submit{
+#ibtn-prev, #ibtn-submit{
 	display: none;
 }

@@ -225,6 +225,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\citizen-relatives.css" />
     <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
@@ -369,6 +370,7 @@
     <Content Include="Views\Shared\_SearchResultPartial.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsList.cshtml" />
+    <Content Include="Views\Citizen\Relatives.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -55,6 +55,17 @@ $(document).ready(function () {
                 }
             });
 
+            copy.find("input[type='checkbox']").each(function () {
+                var oldVal = $(this).attr('value'), newVal;
+                if (oldVal) {
+                    oldVal = parseInt(oldVal);
+                    if (!isNaN(oldVal)) {
+                        newVal = oldVal + 1;
+                        $(this).attr('value', newVal);
+                    }
+                }
+            });
+
             copy.find("label").each(function () {
                 var oldFor = $(this).attr('for'), newFor;
 

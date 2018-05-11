@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CarePoint.Models;
 using System.Diagnostics;
+using Microsoft.AspNet.Identity;
+using System.Collections;
 
 namespace CarePoint.Controllers
 {
@@ -20,7 +22,7 @@ namespace CarePoint.Controllers
             _citizenBusinessLayer = new CitizenBusinessLayer();
         }
 
-        public CitizenBusinessLayer citizenBusinessLayer
+        public CitizenBusinessLayer CitizenBusinessLayer
         {
             get
             {
@@ -34,7 +36,7 @@ namespace CarePoint.Controllers
 
         public ActionResult CurrentPatient(long citizenID)
         {
-            Citizen citizen = _citizenBusinessLayer.GetCitizen(citizenID);
+            Citizen citizen = CitizenBusinessLayer.GetCitizen(citizenID);
 
             return View(citizen);
         }
@@ -43,7 +45,7 @@ namespace CarePoint.Controllers
             var user = User.Identity.GetCitizen();
             if (user is Models.Specialist || id == user.Id)
             {
-                return View(citizenBusinessLayer.GetCitizen(id).HistoryRecords);
+                return View(CitizenBusinessLayer.GetCitizen(id).HistoryRecords);
             }
             else
             {
@@ -57,20 +59,53 @@ namespace CarePoint.Controllers
             var user = User.Identity.GetCitizen();
             if (user is Models.Specialist || id == user.Id)
             {
-                return View(citizenBusinessLayer.GetCitizen(id).Attachments);
+                return View(CitizenBusinessLayer.GetCitizen(id).Attachments);
             }
             else
             {
                 return new HttpUnauthorizedResult();
             }
         }
+        private List<dynamic> GetSearchResult(IEnumerable<Citizen> queryResult)
+        {
+            List<dynamic> result = new List<dynamic>();
+            foreach(var res in queryResult)
+            {
+                dynamic obj;
+                var relative = res.Relatives.SingleOrDefault(r => r.CitizenID == User.Identity.GetUserId<long>());
+                if(relative != null)
+                {
+                    obj = new { res.Name, res.Id, res.Photo,Relation=relative.RelationType.Name };
+                }
+                else
+                {
+                    obj = new { res.Name, res.Id, res.Photo, Relation = "None" };
+                }
+                relative = res.AddedRelatives.SingleOrDefault(r => r.RelativeID == User.Identity.GetUserId<long>());
+                if (relative != null)
+                {
+                    if (relative.RelationType.Name == "Parent")
+                        obj = new { res.Name, res.Id, res.Photo, Relation = "Scion" };
+                    else
+                        obj = new { res.Name, res.Id, res.Photo, Relation = relative.RelationType.Name };
+                }
+                else
+                {
+                    obj = new { res.Name, res.Id, res.Photo, Relation = "None" };
+                }
+
+                result.Add(obj);
+
+            }
+            return result;
+        }
         public JsonResult SearchAccount(string key, string value)
         {
             List<List<Citizen>> allCitizens = _citizenBusinessLayer.searchAccounts(key, value);
-            var citizens = allCitizens[0].Select(x => new { x.Name, x.Id, x.Photo });
-            var doctors = allCitizens[1].Select(x => new { x.Name, x.Id, x.Photo });
-            var pharmacists = allCitizens[2].Select(x => new { x.Name, x.Id, x.Photo });
-            var res = new[] {citizens, doctors, pharmacists };
+            var citizens = GetSearchResult(allCitizens[0]);
+            var doctors = GetSearchResult(allCitizens[1]);
+            var pharmacists = GetSearchResult(allCitizens[2]);
+            var res = new{citizens, doctors, pharmacists};
             return Json(res);
         }
 
@@ -90,6 +125,40 @@ namespace CarePoint.Controllers
             var females = femaleList.Select(x => new { x.Name, x.Id, x.Photo });
             var result = new[] { males, females };
             return Json(result);
+        }
+
+        public JsonResult AddRelative(long relativeId, string relationType)
+        {
+            Relative relative = new Relative();
+            int relationId = (relationType == "Parent") ? 1 : (relationType == "Friend") ? 3 : 4;
+            if(relationId != 4)
+            {
+                relative.CitizenID = User.Identity.GetUserId<long>();
+                relative.RelativeID = relativeId;
+                relative.RelationTypeID = relationId;
+                relative.CitizenConfirmed = true;
+            }
+            else
+            {
+                relative.RelativeID = User.Identity.GetUserId<long>();
+                relative.CitizenID = relativeId;
+                relative.RelationTypeID = 1;
+                relative.RelativeConfirmed = true;
+            }
+            try
+            {
+                CitizenBusinessLayer.AddRelative(relative);
+                return Json("Added Successfully");
+            }
+            catch(Exception e)
+            {
+                return Json(e.InnerException.InnerException.Message);
+            }
+        }
+
+        public void RemoveRelation(long relativeId)
+        {
+            CitizenBusinessLayer.RemoveRelation(User.Identity.GetUserId<long>(), relativeId);
         }
     }
 }

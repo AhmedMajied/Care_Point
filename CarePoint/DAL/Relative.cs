@@ -16,8 +16,9 @@ namespace DAL
     {
         public long CitizenID { get; set; }
         public long RelativeID { get; set; }
-        public Nullable<bool> IsRead { get; set; }
         public long RelationTypeID { get; set; }
+        public Nullable<bool> CitizenConfirmed { get; set; }
+        public Nullable<bool> RelativeConfirmed { get; set; }
     
         public virtual Citizen Citizen { get; set; }
         public virtual Citizen RelativeCitizen { get; set; }

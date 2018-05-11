@@ -304,7 +304,8 @@
           </Key>
           <Property Name="CitizenID" Type="bigint" Nullable="false" />
           <Property Name="RelativeID" Type="bigint" Nullable="false" />
-          <Property Name="IsRead" Type="bit" />
+          <Property Name="CitizenConfirmed" Type="bit" />
+          <Property Name="RelativeConfirmed" Type="bit" />
           <Property Name="RelationTypeID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestStatuses">
@@ -1683,8 +1684,8 @@
           <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_Citizens" FromRole="Citizens" ToRole="Notifications" />
           <NavigationProperty Name="PharmacyRatings" Relationship="Self.FK_PharmacyRatings_Citizens" FromRole="Citizens" ToRole="PharmacyRatings" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Citizens" FromRole="Citizens" ToRole="Receipts" />
-          <NavigationProperty Name="Relatives" Relationship="Self.FK_Relatives_Citizens" FromRole="Citizens" ToRole="Relatives" />
-          <NavigationProperty Name="Relatives1" Relationship="Self.FK_Relatives_Citizens1" FromRole="Citizens" ToRole="Relatives" />
+          <NavigationProperty Name="AddedRelatives" Relationship="Self.FK_Relatives_Citizens" FromRole="Citizens" ToRole="Relatives" />
+          <NavigationProperty Name="Relatives" Relationship="Self.FK_Relatives_Citizens1" FromRole="Citizens" ToRole="Relatives" />
           <NavigationProperty Name="ServiceRatings" Relationship="Self.FK_ServiceRatings_Citizens" FromRole="Citizens" ToRole="ServiceRatings" />
           <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_Citizens" FromRole="Citizens" ToRole="SOSs" />
           <NavigationProperty Name="Roles" Relationship="Self.UserRoles" FromRole="Citizens" ToRole="Roles" />
@@ -1904,11 +1905,12 @@
           </Key>
           <Property Name="CitizenID" Type="Int64" Nullable="false" />
           <Property Name="RelativeID" Type="Int64" Nullable="false" />
-          <Property Name="IsRead" Type="Boolean" />
           <Property Name="RelationTypeID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Citizen" Relationship="Self.FK_Relatives_Citizens" FromRole="Relatives" ToRole="Citizens" />
           <NavigationProperty Name="RelativeCitizen" Relationship="Self.FK_Relatives_Citizens1" FromRole="Relatives" ToRole="Citizens" />
           <NavigationProperty Name="RelationType" Relationship="Self.FK_Relatives_RelationTypes" FromRole="Relatives" ToRole="RelationTypes" />
+          <Property Name="CitizenConfirmed" Type="Boolean" />
+          <Property Name="RelativeConfirmed" Type="Boolean" />
         </EntityType>
         <EntityType Name="RequestStatus">
           <Key>
@@ -3339,9 +3341,10 @@
           <EntitySetMapping Name="Relatives">
             <EntityTypeMapping TypeName="CarePointModel.Relative">
               <MappingFragment StoreEntitySet="Relatives">
+                <ScalarProperty Name="RelativeConfirmed" ColumnName="RelativeConfirmed" />
+                <ScalarProperty Name="CitizenConfirmed" ColumnName="CitizenConfirmed" />
                 <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
                 <ScalarProperty Name="RelativeID" ColumnName="RelativeID" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
                 <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
               </MappingFragment>
             </EntityTypeMapping>

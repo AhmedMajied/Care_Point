@@ -299,7 +299,8 @@
     </Key>
     <Property Name="CitizenID" Type="bigint" Nullable="false" />
     <Property Name="RelativeID" Type="bigint" Nullable="false" />
-    <Property Name="IsRead" Type="bit" />
+    <Property Name="CitizenConfirmed" Type="bit" />
+    <Property Name="RelativeConfirmed" Type="bit" />
     <Property Name="RelationTypeID" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="RequestStatuses">

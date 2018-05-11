@@ -117,5 +117,17 @@ namespace BLL
             patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
             return patientList;
         }
+
+        public void AddRelative(Relative relative)
+        {
+            DBEntities.Relatives.Add(relative);
+            DBEntities.SaveChanges();
+        }
+
+        public void RemoveRelation(long citizenId,long relativeId)
+        {
+            DBEntities.Relatives.RemoveRange(DBEntities.Relatives.Where(r => (r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)));
+            DBEntities.SaveChanges();
+        }
     }
 }

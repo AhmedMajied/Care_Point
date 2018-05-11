@@ -25,8 +25,8 @@ namespace DAL
             this.Notifications = new HashSet<Notification>();
             this.PharmacyRatings = new HashSet<PharmacyRating>();
             this.Receipts = new HashSet<Receipt>();
+            this.AddedRelatives = new HashSet<Relative>();
             this.Relatives = new HashSet<Relative>();
-            this.Relatives1 = new HashSet<Relative>();
             this.ServiceRatings = new HashSet<ServiceRating>();
             this.SOSses = new HashSet<SOSs>();
             this.Roles = new HashSet<Role>();
@@ -70,9 +70,9 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receipt> Receipts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Relative> Relatives { get; set; }
+        public virtual ICollection<Relative> AddedRelatives { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Relative> Relatives1 { get; set; }
+        public virtual ICollection<Relative> Relatives { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRating> ServiceRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

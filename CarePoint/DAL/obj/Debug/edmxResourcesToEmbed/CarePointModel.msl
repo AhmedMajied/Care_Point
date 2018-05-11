@@ -296,9 +296,10 @@
     <EntitySetMapping Name="Relatives">
       <EntityTypeMapping TypeName="CarePointModel.Relative">
         <MappingFragment StoreEntitySet="Relatives">
+          <ScalarProperty Name="RelativeConfirmed" ColumnName="RelativeConfirmed" />
+          <ScalarProperty Name="CitizenConfirmed" ColumnName="CitizenConfirmed" />
           <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
           <ScalarProperty Name="RelativeID" ColumnName="RelativeID" />
-          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
           <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
         </MappingFragment>
       </EntityTypeMapping>

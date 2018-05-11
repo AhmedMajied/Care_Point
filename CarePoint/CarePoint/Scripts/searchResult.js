@@ -1,9 +1,41 @@
-﻿function generateHTML(parent, userName, img, href) {
-    if (img == null) {
+﻿function getMarkAsDropDown(id) {
+    markAsDropDown = `<div class='col-md-4 dropdown'>
+                            <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+                                Mark As
+                                <span class='caret'></span>
+                            </button>
+                            <ul class='dropdown-menu'>
+                                <li><a onclick='addCitizen.call(this,` + id + `,"Friend");'>Friend</a></li>
+                                <li><a onclick='addCitizen.call(this,` + id + `,"Parent");'>Parent</a></li>
+                                <li><a onclick='addCitizen.call(this,` + id + `,"Scion");'>Scion</a></li>
+                            </ul>
+                        </div>`
+    return markAsDropDown;
+}
+function getRemoveRelationDropDown(id,relation) {
+    var removeRelationDropDown = `<div class='col-md-4 dropdown'>
+                                    <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+                                        `+ relation + `
+                                        <span class='caret'></span>
+                                    </button>
+                                    <ul class='dropdown-menu'>
+                                        <li><a onlick='removeRelation.call(this,` + id + `);'>Remove</a></li>
+                                    </ul>
+                                </div>`
+    return removeRelationDropDown;
+}
+function generateHTML(parent, userName, img, id, relation) {
+    if (img === null) {
         img = '../Images/notfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='"+img+"'/></div>")
-        .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>")).append("<div class='col-md-4 dropdown'><button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Mark As<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='" + href + "'>Friend</a></li><li><a href='" + href + "'>Parent</a></li><li><a href='" + href + "'>Sibling</a></li><li><a href='" + href + "'>Non-relative</a></li></ul></div>");
+   
+    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='" + img + "'/></div>")
+        .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>"));
+    if (relation === "None")
+        html.append(getMarkAsDropDown(id));
+    else
+        html.append(getRemoveRelationDropDown(id,relation));
+
     $(parent).append(html);
     $(parent).append("<hr>");
 }
@@ -26,25 +58,22 @@ $(function () {
                 data: { key: searchBy, value: searchFor },
                 dataType: 'json',
                 success: function (data) {
-                    var citizens = data[0];
-                    var ccount = data[0].length;
+                    var citizens = data.citizens;
+                    var ccount = citizens.length;
                     for (var i = 0; i < ccount; i++) {//citizens[i].Id
-                        generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, "#");
+                        generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, citizens[i].Id, citizens[i].Relation);
                     }
-                    var doctors = data[1];
-                    var dcount = data[1].length;
-                    for (var i = 0; i < dcount; i++) {//doctors[i].Id
-                        generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, "#");
+                    var doctors = data.doctors;
+                    var dcount = doctors.length;
+                    for (i = 0; i < dcount; i++) {//doctors[i].Id
+                        generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, doctors[i].Id, doctors[i].Relation);
                     }
-                    var pharmacists = data[2];
-                    var pcount = data[2].length;
-                    for (var i = 0; i < pcount; i++) { //pharmacists[i].Id
-                        generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, "#");
+                    var pharmacists = data.pharmacists;
+                    var pcount = pharmacists.length;
+                    for (i = 0; i < pcount; i++) { //pharmacists[i].Id
+                        generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, pharmacists[i].Id, pharmacists[i].Relation);
                     }
                     $("#imodal-people-srch-result").modal('show');
-                },
-                error: function (msg) {
-                    console.log(JSON.stringify(msg));
                 }
             });
         }
@@ -62,7 +91,7 @@ $("#place-close-button").click(function () {
     $("#idiv-search-place-result hr").remove();
 });
 function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
-    if (profilePicture == null) {
+    if (profilePicture === null) {
         profilePicture = '../Images/placenotfound.png';
     }
     html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
@@ -90,7 +119,7 @@ $("#ibtn-search-place").click(function () {
         latitude = data.latitude;
         longitude = data.longitude;
     });
-    if ((sType != "" || pType != "" )&& (cDistance || cCost || cRate || cPopularity)) {
+    if ((sType !== "" || pType !== "" )&& (cDistance || cCost || cRate || cPopularity)) {
         var model = {
             serviceType: sType, placeType: pType,
             checkDistance: cDistance, checkCost: cCost,
@@ -107,14 +136,11 @@ $("#ibtn-search-place").click(function () {
                     MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone, place.isSpecialist, place.isJoined,"#")
                 });
                 $("#imodal-place-srch-result").modal('show');
-            },
-            error: function (msg) {
-                console.log(JSON.stringify(msg));
             }
         });
     }
     else {
-        if (sType == "" && pType == "") {
+        if (sType === "" && pType === "") {
             $("#cspan-service-place-error").text("please fill at least one field");
         }
         if (!(cDistance || cCost || cRate || cPopularity)) {
@@ -142,3 +168,26 @@ $('#ichk-rate').on('change', function () {
 $('#ichk-popularity').on('change', function () {
     $('#cspan-priority-error').text("");
 });
+
+
+function addCitizen(id, relation) {
+    var self = this;
+    $.post("/Citizen/AddRelative", { relativeId: id, relationType: relation }).done(
+        function(msg) {
+            alert(msg);
+            var parentElement = $(self).parent().parent().parent().parent();
+            parentElement.children(".dropdown").remove();
+            parentElement.append(getRemoveRelationDropDown(id, relation));
+
+        });
+}
+
+function removeRelation(id) {
+    var self = this;
+    $.post("/Citizen/ARemoveRelation", { relativeId: id, relationType: relation }).done(
+        function () {
+            var parentElement = $(self).parent().parent().parent().parent();
+            parentElement.children(".dropdown").remove();
+            parentElement.append(getMarkAsDropDown(id));
+        });
+}

@@ -198,7 +198,6 @@
           </Key>
           <Property Name="MedicineID" Type="bigint" Nullable="false" />
           <Property Name="ActiveIngredientID" Type="bigint" Nullable="false" />
-          <Property Name="Concentration" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="MedicineForms">
           <Key>
@@ -214,9 +213,8 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
-          <Property Name="Usage" Type="nvarchar(max)" />
-          <Property Name="SideEffects" Type="nvarchar(max)" />
           <Property Name="FormID" Type="bigint" Nullable="false" />
+          <Property Name="ShelfLife" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Notifications">
           <Key>
@@ -245,11 +243,9 @@
           <Key>
             <PropertyRef Name="PharmacyID" />
             <PropertyRef Name="MedicineID" />
-            <PropertyRef Name="ExpirationDate" />
           </Key>
           <Property Name="PharmacyID" Type="bigint" Nullable="false" />
           <Property Name="MedicineID" Type="bigint" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" Nullable="false" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
         <EntityType Name="PharmacyMembershipRequests">
@@ -304,7 +300,8 @@
           </Key>
           <Property Name="CitizenID" Type="bigint" Nullable="false" />
           <Property Name="RelativeID" Type="bigint" Nullable="false" />
-          <Property Name="IsRead" Type="bit" />
+          <Property Name="CitizenConfirmed" Type="bit" />
+          <Property Name="RelativeConfirmed" Type="bit" />
           <Property Name="RelationTypeID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestStatuses">
@@ -1770,7 +1767,6 @@
           </Key>
           <Property Name="MedicineID" Type="Int64" Nullable="false" />
           <Property Name="ActiveIngredientID" Type="Int64" Nullable="false" />
-          <Property Name="Concentration" Type="Double" Nullable="false" />
           <NavigationProperty Name="ActiveIngredient" Relationship="Self.FK_MedicineActiveIngredients_ActiveIngredients" FromRole="MedicineActiveIngredients" ToRole="ActiveIngredients" />
           <NavigationProperty Name="Medicine" Relationship="Self.FK_MedicineActiveIngredients_Medicines" FromRole="MedicineActiveIngredients" ToRole="Medicines" />
         </EntityType>
@@ -1789,14 +1785,13 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Usage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SideEffects" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FormID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Doses" Relationship="Self.FK_Doses_Medicines" FromRole="Medicines" ToRole="Doses" />
           <NavigationProperty Name="MedicineActiveIngredients" Relationship="Self.FK_MedicineActiveIngredients_Medicines" FromRole="Medicines" ToRole="MedicineActiveIngredients" />
           <NavigationProperty Name="MedicineForm" Relationship="Self.FK_Medicines_MedicineForms" FromRole="Medicines" ToRole="MedicineForms" />
           <NavigationProperty Name="PharmacyMedicines" Relationship="Self.FK_PharmacyMedicines_Medicines" FromRole="Medicines" ToRole="PharmacyMedicines" />
           <NavigationProperty Name="ReceiptMedicines" Relationship="Self.FK_ReceiptMedicines_Medicines" FromRole="Medicines" ToRole="ReceiptMedicines" />
+          <Property Name="ShelfLife" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -1832,11 +1827,9 @@
           <Key>
             <PropertyRef Name="PharmacyID" />
             <PropertyRef Name="MedicineID" />
-            <PropertyRef Name="ExpirationDate" />
           </Key>
           <Property Name="PharmacyID" Type="Int64" Nullable="false" />
           <Property Name="MedicineID" Type="Int64" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="Medicine" Relationship="Self.FK_PharmacyMedicines_Medicines" FromRole="PharmacyMedicines" ToRole="Medicines" />
           <NavigationProperty Name="Pharmacy" Relationship="Self.FK_PharmacyMedicines_Pharmacies" FromRole="PharmacyMedicines" ToRole="Pharmacies" />
@@ -1904,11 +1897,12 @@
           </Key>
           <Property Name="CitizenID" Type="Int64" Nullable="false" />
           <Property Name="RelativeID" Type="Int64" Nullable="false" />
-          <Property Name="IsRead" Type="Boolean" />
           <Property Name="RelationTypeID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Citizen" Relationship="Self.FK_Relatives_Citizens" FromRole="Relatives" ToRole="Citizens" />
           <NavigationProperty Name="RelativeCitizen" Relationship="Self.FK_Relatives_Citizens1" FromRole="Relatives" ToRole="Citizens" />
           <NavigationProperty Name="RelationType" Relationship="Self.FK_Relatives_RelationTypes" FromRole="Relatives" ToRole="RelationTypes" />
+          <Property Name="CitizenConfirmed" Type="Boolean" />
+          <Property Name="RelativeConfirmed" Type="Boolean" />
         </EntityType>
         <EntityType Name="RequestStatus">
           <Key>
@@ -3230,7 +3224,6 @@
               <MappingFragment StoreEntitySet="MedicineActiveIngredients">
                 <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
                 <ScalarProperty Name="ActiveIngredientID" ColumnName="ActiveIngredientID" />
-                <ScalarProperty Name="Concentration" ColumnName="Concentration" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3245,11 +3238,10 @@
           <EntitySetMapping Name="Medicines">
             <EntityTypeMapping TypeName="CarePointModel.Medicine">
               <MappingFragment StoreEntitySet="Medicines">
+                <ScalarProperty Name="ShelfLife" ColumnName="ShelfLife" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Usage" ColumnName="Usage" />
-                <ScalarProperty Name="SideEffects" ColumnName="SideEffects" />
                 <ScalarProperty Name="FormID" ColumnName="FormID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3284,7 +3276,6 @@
               <MappingFragment StoreEntitySet="PharmacyMedicines">
                 <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
                 <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3339,9 +3330,10 @@
           <EntitySetMapping Name="Relatives">
             <EntityTypeMapping TypeName="CarePointModel.Relative">
               <MappingFragment StoreEntitySet="Relatives">
+                <ScalarProperty Name="RelativeConfirmed" ColumnName="RelativeConfirmed" />
+                <ScalarProperty Name="CitizenConfirmed" ColumnName="CitizenConfirmed" />
                 <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
                 <ScalarProperty Name="RelativeID" ColumnName="RelativeID" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
                 <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
               </MappingFragment>
             </EntityTypeMapping>

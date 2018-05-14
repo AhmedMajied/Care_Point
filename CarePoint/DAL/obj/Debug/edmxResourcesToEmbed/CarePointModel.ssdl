@@ -193,7 +193,6 @@
     </Key>
     <Property Name="MedicineID" Type="bigint" Nullable="false" />
     <Property Name="ActiveIngredientID" Type="bigint" Nullable="false" />
-    <Property Name="Concentration" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="MedicineForms">
     <Key>
@@ -209,9 +208,8 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Price" Type="money" Nullable="false" />
-    <Property Name="Usage" Type="nvarchar(max)" />
-    <Property Name="SideEffects" Type="nvarchar(max)" />
     <Property Name="FormID" Type="bigint" Nullable="false" />
+    <Property Name="ShelfLife" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Notifications">
     <Key>
@@ -240,11 +238,9 @@
     <Key>
       <PropertyRef Name="PharmacyID" />
       <PropertyRef Name="MedicineID" />
-      <PropertyRef Name="ExpirationDate" />
     </Key>
     <Property Name="PharmacyID" Type="bigint" Nullable="false" />
     <Property Name="MedicineID" Type="bigint" Nullable="false" />
-    <Property Name="ExpirationDate" Type="date" Nullable="false" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
   <EntityType Name="PharmacyMembershipRequests">
@@ -299,7 +295,8 @@
     </Key>
     <Property Name="CitizenID" Type="bigint" Nullable="false" />
     <Property Name="RelativeID" Type="bigint" Nullable="false" />
-    <Property Name="IsRead" Type="bit" />
+    <Property Name="CitizenConfirmed" Type="bit" />
+    <Property Name="RelativeConfirmed" Type="bit" />
     <Property Name="RelationTypeID" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="RequestStatuses">

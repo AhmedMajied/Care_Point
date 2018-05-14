@@ -187,7 +187,6 @@
         <MappingFragment StoreEntitySet="MedicineActiveIngredients">
           <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
           <ScalarProperty Name="ActiveIngredientID" ColumnName="ActiveIngredientID" />
-          <ScalarProperty Name="Concentration" ColumnName="Concentration" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -202,11 +201,10 @@
     <EntitySetMapping Name="Medicines">
       <EntityTypeMapping TypeName="CarePointModel.Medicine">
         <MappingFragment StoreEntitySet="Medicines">
+          <ScalarProperty Name="ShelfLife" ColumnName="ShelfLife" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Usage" ColumnName="Usage" />
-          <ScalarProperty Name="SideEffects" ColumnName="SideEffects" />
           <ScalarProperty Name="FormID" ColumnName="FormID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -241,7 +239,6 @@
         <MappingFragment StoreEntitySet="PharmacyMedicines">
           <ScalarProperty Name="PharmacyID" ColumnName="PharmacyID" />
           <ScalarProperty Name="MedicineID" ColumnName="MedicineID" />
-          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -296,9 +293,10 @@
     <EntitySetMapping Name="Relatives">
       <EntityTypeMapping TypeName="CarePointModel.Relative">
         <MappingFragment StoreEntitySet="Relatives">
+          <ScalarProperty Name="RelativeConfirmed" ColumnName="RelativeConfirmed" />
+          <ScalarProperty Name="CitizenConfirmed" ColumnName="CitizenConfirmed" />
           <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
           <ScalarProperty Name="RelativeID" ColumnName="RelativeID" />
-          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
           <ScalarProperty Name="RelationTypeID" ColumnName="RelationTypeID" />
         </MappingFragment>
       </EntityTypeMapping>

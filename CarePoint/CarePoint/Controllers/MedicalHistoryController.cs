@@ -62,13 +62,13 @@ namespace CarePoint.Controllers
                     {
                         TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = 15,// User.Identity.GetUserId<long>() 
+                        SpecialistID = User.Identity.GetUserId<long>(),
                         CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
                         FileName = files[i].FileName
                     };
 
-                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
+                    //_medicalHistorBusinessLayer.SaveAttachment(attachment);
                 }
                 catch (Exception ex)
                 {
@@ -120,6 +120,19 @@ namespace CarePoint.Controllers
                 }
             }
 
+            // assign genetic diseases
+            List<Disease> historyRecordDiseases = historyRecord.Diseases.ToList();
+            for (int i = 0; i < Math.Min(genticDiseases.Length,diseases.Length) ; i++)
+            {
+                if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "" 
+                    || diseases[Convert.ToInt32(genticDiseases[i]) - 1] == " ")
+                {
+                    continue;
+                }
+
+                historyRecordDiseases[Convert.ToInt32(genticDiseases[i])-1].IsGenetic = true;
+            }
+
             // get selected medicines alternatives from form
             for (int i = 0; i < medicines.Length; i++)
             {
@@ -143,8 +156,6 @@ namespace CarePoint.Controllers
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
             };
-
-            //return genticDiseases[0] + genticDiseases[1] + "";
         }
 
         public ActionResult GetAttachmentTypes()

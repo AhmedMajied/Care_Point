@@ -271,8 +271,6 @@
     <Content Include="less\variables.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
-    <Content Include="Images\care.jpg" />
-    <Content Include="Images\div-bg.jpg" />
     <Content Include="Images\doctor.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\logo-navbar.ico" />
@@ -371,6 +369,7 @@
     <Content Include="Views\Shared\_SearchResultPartial.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsList.cshtml" />
+    <Content Include="Views\Citizen\Relatives.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

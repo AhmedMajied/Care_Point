@@ -1,9 +1,9 @@
 $(document).ready(function () {
     popoverContent = `<div id='idiv-sos-pop'>
-                        <form action="#" onsubmit="return false;">
+                        <form action='#' onsubmit='return false;'>
                             <textarea class='form-control input-lg ctextarea-description' placeholder="What's wrong ?!" rows=10 cols=25 style='resize: none;'></textarea>
+                            <span class='cspan-description-error'></span>
                             <hr>
-<span id="ispan-description-error"></span>
                             <label class="text-danger">Send to:</label><br>
                             <span class="cspn-radio-chck">
                                 <input id='ichk-hospitals' class='cchck-danger' type='checkbox' checked>
@@ -17,8 +17,8 @@ $(document).ready(function () {
                                 <input id='ichk-friends' class='cchck-danger' type='checkbox'>
                                 <label for='ichk-friends'>Friends</label>
                             </span>
-<span class="cspan-error-send"></span>
-                            <input type='submit' value='Send' id='iinput-send-sos' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
+                            <span class='cspan-error-send'></span>
+                            <input type='submit' value='Send' onclick='sendSOS()' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
                         </form>
                     </div>`;
     $('#ibtn-sos-pop').popover({
@@ -27,8 +27,7 @@ $(document).ready(function () {
         content: popoverContent
     });
 });
-
-$("#iinput-send-sos").click(function () {
+function sendSOS() {
     var isMedicalPlace = $("#ichk-hospitals").is(':checked');
     var isFamily = $("#ichk-family").is(':checked');
     var isFriend = $("#ichk-friends").is(':checked');
@@ -39,7 +38,6 @@ $("#iinput-send-sos").click(function () {
         latitude = data.latitude;
         longitude = data.longitude;
     });
-    console.log(isMedicalPlace + "   " + isFamily + "   " + isFriend + "   " + description + "  " + latitude + "   " + longitude);
     if ((description != "") && (isMedicalPlace || isFriend || isFamily)) {
         var model = {
             isMedicalPlace: isMedicalPlace, isFamily: isFamily,
@@ -52,33 +50,25 @@ $("#iinput-send-sos").click(function () {
             data: { model },
             dataType: 'json',
             success: function (data) {
-                console.log("success");
+                alert("Your Request Is Sent");
             },
             error: function (msg) {
-                console.log(JSON.stringify(msg));
+                alert("Sorry an error happened please try again !");
             }
         });
     }
     else {
         if (description == "") {
-            $("#cspan-description-error").text("please fill What's Wrong field");
+            $(".cspan-description-error").text("please fill What's Wrong field").css("color","red");
+            $('.cspan-description-error').fadeIn('fast').delay(5000).fadeOut('slow');
+
         }
         if (!(isMedicalPlace || isFriend || isFamily)) {
-            $(".cspan-error-send").text("select at least one option").css("color:red");
+            $(".cspan-error-send").text("select at least one option").css("color", "red");
+            $('.cspan-error-send').fadeIn('fast').delay(5000).fadeOut('slow');
+
 
         }
 
     }
-});
-$("#iinp-place-type").keydown(function () {
-    $("#cspan-description-error").text("");
-});
-$('#ichk-hospitals').on('change', function () {
-    $('.cspan-error-send').text("");
-});
-$('#ichk-family').on('change', function () {
-    $('.cspan-error-send').text("");
-});
-$('#ichk-friends').on('change', function () {
-    $('.cspan-error-send').text("");
-});
+}

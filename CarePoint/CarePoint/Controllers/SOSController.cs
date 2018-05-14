@@ -14,6 +14,7 @@ namespace CarePoint.Controllers
     public class SOSController : Controller
     {
         private SOSBusinessLayer _sosBusinessLayer;
+        private CitizenBusinessLayer _citizenBusinessLayer;
         // GET: SOS
         public ActionResult Index()
         {
@@ -34,13 +35,23 @@ namespace CarePoint.Controllers
                 _sosBusinessLayer = value;
             }
         }
+        public CitizenBusinessLayer citizenBusinessLayer
+        {
+            get
+            {
+                return _citizenBusinessLayer ?? new CitizenBusinessLayer();
+            }
+            private set
+            {
+                _citizenBusinessLayer = value;
+            }
+        }
         public void SendSos(SOSViewModel sosViewModel)
         {
             List<RelationType> relationTypes = sosBusinessLayer.GetRelationTypes().ToList();
             long friend =relationTypes.Where(r => r.Name == "Friend").Select(r=>r.ID).ToList()[0];
             long parent= relationTypes.Where(r => r.Name == "Parent").Select(r => r.ID).ToList()[0];
             long sibling = relationTypes.Where(r=>r.Name == "Sibling").Select(r=>r.ID).ToList()[0];
-            Debug.WriteLine(friend+"   "+parent+"   "+sibling);
             int numberOfPlaces = 5;
             SOSs sos = new SOSs();
             var user = User.Identity.GetCitizen();
@@ -53,27 +64,26 @@ namespace CarePoint.Controllers
             sos.IsAccepted = false;
             sos.Location = location;
             // what is need of medicalPlaceID 
-          /*  sosBusinessLayer.AddSOS(sos);
             if (sosViewModel.isMedicalPlace)
             {
+                // for who will send the sos for hospitals ?? this notifications will saved to notifications table or not
                 MedicalPlaceBusinessLayer medicalPlaceBL = new MedicalPlaceBusinessLayer();
                 ICollection<MedicalPlace>medicalPlaces=medicalPlaceBL.GetNearestNMedicalPlace(pointString, numberOfPlaces);
             }
             if (sosViewModel.isFriend)
             {
-                CitizenBusinessLayer citizenBusinessLayer = new CitizenBusinessLayer();
                 ICollection<Citizen> friends = citizenBusinessLayer.GetCitizenRelatives(user.Id, friend);
             }
             if (sosViewModel.isFamily)
             {
-                CitizenBusinessLayer citizenBusinessLayer = new CitizenBusinessLayer();
                 ICollection<Citizen> family = citizenBusinessLayer.GetCitizenRelatives(user.Id, parent);
                 family.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling));
-            }*/
+            }
+            sosBusinessLayer.AddSOS(sos);
         }
         public void AcceptSOS(long sosId , long hospitalID)
         {
-
+            sosBusinessLayer.AcceptSOS(sosId, hospitalID);
         }
     }
 }

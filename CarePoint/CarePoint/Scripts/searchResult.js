@@ -49,7 +49,7 @@ $(function () {
             });
         }
         else {
-            $("#cspan-searchfor-error").text("Please Enter This Field");
+            $("#cspan-searchfor-error").text("Please Enter This Field").css("color","red");
         }
     });
 });
@@ -115,10 +115,10 @@ $("#ibtn-search-place").click(function () {
     }
     else {
         if (sType == "" && pType == "") {
-            $("#cspan-service-place-error").text("please fill at least one field");
+            $("#cspan-service-place-error").text("please fill at least one field").css("color", "red");
         }
         if (!(cDistance || cCost || cRate || cPopularity)) {
-            $("#cspan-priority-error").text("select at least one option");
+            $("#cspan-priority-error").text("select at least one option").css("color", "red");
 
         }
 

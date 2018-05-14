@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CarePoint.Models;
 using Extensions;
+using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -35,7 +36,11 @@ namespace CarePoint.Controllers
         }
         public void SendSos(SOSViewModel sosViewModel)
         {
-            int friend = 1, parent = 2, sibling = 3;
+            List<RelationType> relationTypes = sosBusinessLayer.GetRelationTypes().ToList();
+            long friend =relationTypes.Where(r => r.Name == "Friend").Select(r=>r.ID).ToList()[0];
+            long parent= relationTypes.Where(r => r.Name == "Parent").Select(r => r.ID).ToList()[0];
+            long sibling = relationTypes.Where(r=>r.Name == "Sibling").Select(r=>r.ID).ToList()[0];
+            Debug.WriteLine(friend+"   "+parent+"   "+sibling);
             int numberOfPlaces = 5;
             SOSs sos = new SOSs();
             var user = User.Identity.GetCitizen();
@@ -48,7 +53,7 @@ namespace CarePoint.Controllers
             sos.IsAccepted = false;
             sos.Location = location;
             // what is need of medicalPlaceID 
-            sosBusinessLayer.AddSOS(sos);
+          /*  sosBusinessLayer.AddSOS(sos);
             if (sosViewModel.isMedicalPlace)
             {
                 MedicalPlaceBusinessLayer medicalPlaceBL = new MedicalPlaceBusinessLayer();
@@ -64,7 +69,11 @@ namespace CarePoint.Controllers
                 CitizenBusinessLayer citizenBusinessLayer = new CitizenBusinessLayer();
                 ICollection<Citizen> family = citizenBusinessLayer.GetCitizenRelatives(user.Id, parent);
                 family.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling));
-            }
+            }*/
+        }
+        public void AcceptSOS(long sosId , long hospitalID)
+        {
+
         }
     }
 }

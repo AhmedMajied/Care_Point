@@ -117,7 +117,7 @@ namespace BLL
             patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
             return patientList;
         }
-        public ICollection<Citizen>GetCitizenRelatives(long citizenID,int relationID)
+        public ICollection<Citizen>GetCitizenRelatives(long citizenID,long relationID)
         {
             ICollection<Citizen> relatives = (DBEntities.Relatives.Where(relative => relative.CitizenID == citizenID && relative.RelationTypeID == relationID).ToList())
                                               .Select(relative => relative.RelativeCitizen).ToList();

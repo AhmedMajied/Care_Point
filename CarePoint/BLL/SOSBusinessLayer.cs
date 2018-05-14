@@ -41,7 +41,18 @@ namespace BLL
             DBEntities.SOSses.Attach(s);
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
-
+        }
+        public void AcceptSOS(long sosID,long hopsitalID)
+        {
+            SOSs s = DBEntities.SOSses.Single(sos => sos.ID == sosID);
+            s.MedicalPlaceID = hopsitalID;
+            DBEntities.SOSses.Attach(s);
+            DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
+            DBEntities.SaveChanges();
+        }
+        public ICollection<RelationType> GetRelationTypes()
+        {
+            return DBEntities.RelationTypes.ToList();
         }
 
     }

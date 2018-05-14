@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\CarePointModel.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\GP\CarePoint\DAL\CarePointModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

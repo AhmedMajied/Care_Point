@@ -10,6 +10,7 @@ using CarePoint.Models;
 using System.Diagnostics;
 using Microsoft.AspNet.Identity;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace CarePoint.Controllers
 {
@@ -79,20 +80,20 @@ namespace CarePoint.Controllers
                 }
                 else
                 {
-                    obj = new { res.Name, res.Id, res.Photo, Relation = "None" };
-                }
-                relative = res.AddedRelatives.SingleOrDefault(r => r.RelativeID == User.Identity.GetUserId<long>());
-                if (relative != null)
-                {
-                    if (relative.RelationType.Name == "Parent")
-                        obj = new { res.Name, res.Id, res.Photo, Relation = "Scion" };
+                    relative = res.AddedRelatives.SingleOrDefault(r => r.RelativeID == User.Identity.GetUserId<long>());
+                    if (relative != null)
+                    {
+                        if (relative.RelationType.Name == "Parent")
+                            obj = new { res.Name, res.Id, res.Photo, Relation = "Scion" };
+                        else
+                            obj = new { res.Name, res.Id, res.Photo, Relation = relative.RelationType.Name };
+                    }
                     else
-                        obj = new { res.Name, res.Id, res.Photo, Relation = relative.RelationType.Name };
+                    {
+                        obj = new { res.Name, res.Id, res.Photo, Relation = "None" };
+                    }
                 }
-                else
-                {
-                    obj = new { res.Name, res.Id, res.Photo, Relation = "None" };
-                }
+                
 
                 result.Add(obj);
 
@@ -148,11 +149,12 @@ namespace CarePoint.Controllers
             try
             {
                 CitizenBusinessLayer.AddRelative(relative);
-                return Json("Added Successfully");
+                return Json(new { Code=0,Message="Added Successfully"});
             }
             catch(Exception e)
             {
-                return Json(e.InnerException.InnerException.Message);
+                SqlException exception = e.InnerException.InnerException as SqlException;
+                return Json(new { Code = exception.Number, Message = exception.Message });
             }
         }
 

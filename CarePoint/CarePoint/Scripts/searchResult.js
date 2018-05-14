@@ -26,7 +26,7 @@ function getRemoveRelationDropDown(id,relation) {
 }
 function generateHTML(parent, userName, img, id, relation) {
     if (img === null) {
-        img = '../Images/notfound.png';
+        img = '../../Images/notfound.png';
     }
    
     html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='" + img + "'/></div>")
@@ -92,7 +92,7 @@ $("#place-close-button").click(function () {
 });
 function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
     if (profilePicture === null) {
-        profilePicture = '../Images/placenotfound.png';
+        profilePicture = '../../Images/placenotfound.png';
     }
     html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
         .append("<div class='col-md-3'>")

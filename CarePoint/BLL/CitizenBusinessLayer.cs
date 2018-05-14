@@ -21,12 +21,7 @@ namespace BLL
         {
             return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
         }
-
-        public Specialist GetSpecialist(long specialistID)
-        {
-            return DBEntities.Citizens.OfType<Specialist>().Single(specialist => specialist.Id == specialistID);
-            // not tested and need to be checked 
-        }
+        
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();

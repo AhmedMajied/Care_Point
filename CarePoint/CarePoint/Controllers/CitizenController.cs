@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Microsoft.AspNet.Identity;
 using System.Collections;
 using System.Data.SqlClient;
+using CarePoint.Hubs;
 
 namespace CarePoint.Controllers
 {
@@ -67,6 +68,46 @@ namespace CarePoint.Controllers
                 return new HttpUnauthorizedResult();
             }
         }
+
+        public ActionResult Relatives()
+        {
+            long citizenId = User.Identity.GetUserId<long>();
+            IEnumerable<Relative> relatives = CitizenBusinessLayer.GetRelatives(citizenId);
+
+            ICollection<Relative> newConnections = relatives.Where(r => (r.CitizenID == citizenId && !(r.CitizenConfirmed ?? false)) || (r.RelativeID == citizenId && !(r.RelativeConfirmed ?? false)))
+               .ToList();
+
+            ICollection<Relative> friends = relatives.Where(r => r.RelationTypeID == 3).Except(newConnections).ToList();
+
+            ICollection<Relative> family = relatives.Where(r=>r.RelationTypeID != 3).Except(newConnections).ToList();
+            RelativesPageViewModel model = new RelativesPageViewModel()
+            {
+                Friends = friends.Select(r => new RelativeViewModel()
+                {
+                    FullName = (r.CitizenID == citizenId) ? r.RelativeCitizen.Name : r.Citizen.Name,
+                    ID = (r.CitizenID == citizenId) ? r.RelativeID : r.CitizenID,
+                    Photo = (r.CitizenID == citizenId) ? r.RelativeCitizen.Photo : r.Citizen.Photo,
+                    RelationType = r.RelationType.Name
+                }).ToList(),
+                Family = family.Select(r => new RelativeViewModel()
+                {
+                    FullName = (r.CitizenID == citizenId) ? r.RelativeCitizen.Name : r.Citizen.Name,
+                    ID = (r.CitizenID == citizenId) ? r.RelativeID : r.CitizenID,
+                    Photo = (r.CitizenID == citizenId) ? r.RelativeCitizen.Photo : r.Citizen.Photo,
+                    RelationType = (r.RelationTypeID != 1 || r.CitizenID == citizenId) ? r.RelationType.Name : "Scion"
+                }).ToList(),
+                NewConnections = newConnections.Select(r => new RelativeViewModel()
+                {
+                    FullName = (r.CitizenID == citizenId) ? r.RelativeCitizen.Name : r.Citizen.Name,
+                    ID = (r.CitizenID == citizenId) ? r.RelativeID : r.CitizenID,
+                    Photo = (r.CitizenID == citizenId) ? r.RelativeCitizen.Photo : r.Citizen.Photo,
+                    RelationType = (r.RelationTypeID != 1 || r.CitizenID == citizenId) ? r.RelationType.Name : "Scion"
+                }).ToList()
+            };
+            CitizenBusinessLayer.ConfirmAllRelatives(citizenId);
+            return View(model);
+        }
+
         private List<dynamic> GetSearchResult(IEnumerable<Citizen> queryResult)
         {
             List<dynamic> result = new List<dynamic>();
@@ -138,6 +179,7 @@ namespace CarePoint.Controllers
                 relative.RelativeID = relativeId;
                 relative.RelationTypeID = relationId;
                 relative.CitizenConfirmed = true;
+                relative.RelativeConfirmed = false;
             }
             else
             {
@@ -145,10 +187,12 @@ namespace CarePoint.Controllers
                 relative.CitizenID = relativeId;
                 relative.RelationTypeID = 1;
                 relative.RelativeConfirmed = true;
+                relative.CitizenConfirmed = false ;
             }
             try
             {
                 CitizenBusinessLayer.AddRelative(relative);
+                RelativesHub.StaticNotify(relative.RelativeID,1);
                 return Json(new { Code=0,Message="Added Successfully"});
             }
             catch(Exception e)
@@ -160,6 +204,10 @@ namespace CarePoint.Controllers
 
         public void RemoveRelation(long relativeId)
         {
+            if (!CitizenBusinessLayer.IsRelationConfirmed(User.Identity.GetUserId<long>(), relativeId))
+            {
+                RelativesHub.StaticNotify(relativeId, -1);
+            }
             CitizenBusinessLayer.RemoveRelation(User.Identity.GetUserId<long>(), relativeId);
         }
     }

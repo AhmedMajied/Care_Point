@@ -23,7 +23,7 @@ public partial class CarePointEntities : DbContext
     public CarePointEntities()
         : base("name=CarePointEntities")
     {
-
+            Database.CommandTimeout = 300;
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)

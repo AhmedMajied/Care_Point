@@ -258,3 +258,7 @@ F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\bin\Microsoft.AspNe
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\obj\Debug\CarePoint.csprojResolveAssemblyReference.cache
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\obj\Debug\CarePoint.dll
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\obj\Debug\CarePoint.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\bin\Microsoft.AspNet.SignalR.Core.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\bin\Microsoft.AspNet.SignalR.Core.xml
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\CarePoint\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

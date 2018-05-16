@@ -1,8 +1,9 @@
-﻿function generateHTML(parent, userName, img, href) {
+﻿// start search Account
+function generateHTML(parent, userName, img, href) {
     if (img == null) {
-        img = '../Images/notfound.png';
+        img = '../../Images/notfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='"+img+"'/></div>")
+    html = $("<div class='row'>").append("<div class='col-md-2'><img style='width: 40px;'class='cimg-user' src='"+img+"'/></div>")
         .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>")).append("<div class='col-md-4 dropdown'><button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Mark As<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='" + href + "'>Friend</a></li><li><a href='" + href + "'>Parent</a></li><li><a href='" + href + "'>Sibling</a></li><li><a href='" + href + "'>Non-relative</a></li></ul></div>");
     $(parent).append(html);
     $(parent).append("<hr>");
@@ -20,6 +21,8 @@ $(function () {
         var searchBy = $("#iselect-srch-by").val();
         var searchFor = $("#idiv-searchfor").val();
         if (!(searchFor === "")) {
+            $("#ibtn-acc").prop("disabled", true);
+            $("#iiloading-account-result").css("display", "block");
             $.ajax({
                 type: 'POST',
                 url: '/Citizen/SearchAccount',
@@ -42,6 +45,8 @@ $(function () {
                         generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, "#");
                     }
                     $("#imodal-people-srch-result").modal('show');
+                    $("#iiloading-account-result").css("display", "none");
+                    $("#ibtn-acc").prop("disabled", false);
                 },
                 error: function (msg) {
                     console.log(JSON.stringify(msg));
@@ -56,7 +61,7 @@ $(function () {
 $("#idiv-searchfor").keydown(function () {
     $("#cspan-searchfor-error").text("");
 });
-
+// start functionality for search medicalPlace
 $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
     $("#idiv-search-place-result hr").remove();
@@ -65,7 +70,7 @@ function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, 
     if (profilePicture == null) {
         profilePicture = '../Images/placenotfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
+    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'style='width: 40px;' src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
         .append("<div class='col-md-3'>")
     if (isSpecialist && (!isJoined)) {
         html.append("<a href="+joinStaffLink+"><button class='btn btn-default' type='button'>Join staff</button></div></a>")
@@ -90,7 +95,9 @@ $("#ibtn-search-place").click(function () {
         latitude = data.latitude;
         longitude = data.longitude;
     });
-    if ((sType != "" || pType != "" )&& (cDistance || cCost || cRate || cPopularity)) {
+    if ((sType != "" || pType != "") && (cDistance || cCost || cRate || cPopularity)) {
+        $("#ibtn-search-place").prop("disabled", true);
+        $("#iiloading-place-result").css("display", "block");
         var model = {
             serviceType: sType, placeType: pType,
             checkDistance: cDistance, checkCost: cCost,
@@ -106,6 +113,8 @@ $("#ibtn-search-place").click(function () {
                 data.forEach(function (place) {
                     MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone, place.isSpecialist, place.isJoined,"#")
                 });
+                $("#iiloading-place-result").css("display", "none");
+                $("#ibtn-search-place").prop("disabled", false);
                 $("#imodal-place-srch-result").modal('show');
             },
             error: function (msg) {

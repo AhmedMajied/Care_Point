@@ -23,14 +23,31 @@ namespace BLL
 
         public ICollection<Medicine> getMedicineAlternatives(string medicineName)
         {
-            Medicine medicine = DBEntities.Medicines.Single(m => m.Name == medicineName);
+            List<Medicine> medicineAlternatives = null;
+            Medicine medicine = DBEntities.Medicines.FirstOrDefault(m => m.Name == medicineName);
+            List<MedicineActiveIngredient> medicineActiveIngredients = 
+                                                medicine.MedicineActiveIngredients.ToList();
+            long activeIngredientID = medicineActiveIngredients[0].ActiveIngredientID;
 
-            long activeIngredientID = (medicine.MedicineActiveIngredients.ToList())[0].ActiveIngredientID;
+            // get all medicines that have the first active ingredient
+            medicineAlternatives = DBEntities.Medicines.Where
+                 (
+                    m => m.MedicineActiveIngredients.Any
+                    (e => e.ActiveIngredientID == activeIngredientID)
+                     && m.Name != medicineName
+                 ).ToList();
 
-            List<Medicine> medicineAlternatives = DBEntities.Medicines.Where
-                (m => m.MedicineActiveIngredients.Any(e => e.ActiveIngredientID == activeIngredientID)
-                    && m.Name != medicineName).ToList();
-
+            // intersect with medicices that have the second active ingredient
+            if(medicineActiveIngredients.Count == 2)
+            {
+                activeIngredientID = medicineActiveIngredients[1].ActiveIngredientID;
+                medicineAlternatives.Intersect(
+                    DBEntities.Medicines.Where(m => m.MedicineActiveIngredients.Any
+                      (e => e.ActiveIngredientID == activeIngredientID)
+                       && m.Name != medicineName).ToList()
+                    );
+            }
+            
             return medicineAlternatives;
         }
     }

@@ -1,0 +1,19 @@
+.cli-notif {
+    background-color: #d4f6f7;
+}
+.cdiv-disease-prognosis {
+    display: flex;
+    align-items: center;
+}
+.cdiv-meta-info {
+    color: #747272;
+}
+.cspn-new-disease {
+    color: #5ca15c;
+}
+.cspn-noticeable-disease {
+    color: #ffd900;
+}
+.cspn-common-disease {
+    color: #d64343;
+}

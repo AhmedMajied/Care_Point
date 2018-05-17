@@ -54,6 +54,17 @@ namespace BLL
         {
             return DBEntities.RelationTypes.ToList();
         }
-
+        public void SaveNotifications(List<Citizen> citizens ,DateTime time,string Text)
+        {
+            foreach(Citizen citizen in citizens)
+            {
+                Notification notification = new Notification();
+                notification.CitizenID = citizen.Id;
+                notification.Text = Text;
+                notification.Time = time;
+                DBEntities.Notifications.Add(notification);
+                DBEntities.SaveChanges();
+            }
+        }
     }
 }

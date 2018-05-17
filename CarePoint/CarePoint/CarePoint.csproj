@@ -219,6 +219,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\NotificationsHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -304,6 +305,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.4.2.debug.js" />
+    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\mapAddPlace.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\patient-list.js" />
@@ -317,6 +320,7 @@
     <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
+    <Content Include="Scripts\sosPushNotification.js" />
     <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

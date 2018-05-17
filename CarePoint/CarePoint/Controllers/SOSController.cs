@@ -46,7 +46,7 @@ namespace CarePoint.Controllers
                 _citizenBusinessLayer = value;
             }
         }
-        public void SendSos(SOSViewModel sosViewModel)
+        public bool SendSos(SOSViewModel sosViewModel)
         {
             List<RelationType> relationTypes = sosBusinessLayer.GetRelationTypes().ToList();
             long friend =relationTypes.Where(r => r.Name == "Friend").Select(r=>r.ID).ToList()[0];
@@ -64,22 +64,25 @@ namespace CarePoint.Controllers
             sos.IsAccepted = false;
             sos.Location = location;
             // what is need of medicalPlaceID 
+            List<Citizen> citizens = new List<Citizen>();
             if (sosViewModel.isMedicalPlace)
             {
                 // for who will send the sos for hospitals ?? this notifications will saved to notifications table or not
                 MedicalPlaceBusinessLayer medicalPlaceBL = new MedicalPlaceBusinessLayer();
-                ICollection<MedicalPlace>medicalPlaces=medicalPlaceBL.GetNearestNMedicalPlace(pointString, numberOfPlaces);
+                citizens=(List<Citizen>)(medicalPlaceBL.GetNearestNMedicalPlace(pointString, numberOfPlaces)).Select(o=>o.OwnerID);
             }
             if (sosViewModel.isFriend)
             {
-                ICollection<Citizen> friends = citizenBusinessLayer.GetCitizenRelatives(user.Id, friend);
+                citizens = citizenBusinessLayer.GetCitizenRelatives(user.Id, friend).ToList();
             }
             if (sosViewModel.isFamily)
             {
-                ICollection<Citizen> family = citizenBusinessLayer.GetCitizenRelatives(user.Id, parent);
-                family.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling));
+                citizens = citizenBusinessLayer.GetCitizenRelatives(user.Id, parent).ToList();
+                citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling).ToList());
             }
-            sosBusinessLayer.AddSOS(sos);
+            // sosBusinessLayer.AddSOS(sos);
+            // sosBusinessLayer.SaveNotifications(citizens,time,user.Name+" Requests SOS and Says : "+ sosViewModel.description);
+            return true;
         }
         public void AcceptSOS(long sosId , long hospitalID)
         {

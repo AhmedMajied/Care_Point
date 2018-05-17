@@ -18,7 +18,7 @@ $(document).ready(function () {
                                 <label for='ichk-friends'>Friends</label>
                             </span>
                             <span class='cspan-error-send'></span>
-                            <input type='submit' value='Send' onclick='sendSOS()' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
+                            <input type='submit' id='iisend-sos' value='Send' onclick='sendSos' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
                         </form>
                     </div>`;
     $('#ibtn-sos-pop').popover({
@@ -27,7 +27,14 @@ $(document).ready(function () {
         content: popoverContent
     });
 });
-function sendSOS() {
+
+$("#iisend-sos").click(function () {
+    alert(" button clicked ! ");
+    console.log("button clicked ! ");
+});
+
+
+/*function sendSOS() {
     var isMedicalPlace = $("#ichk-hospitals").is(':checked');
     var isFamily = $("#ichk-family").is(':checked');
     var isFriend = $("#ichk-friends").is(':checked');
@@ -44,6 +51,7 @@ function sendSOS() {
             isFriend: isFriend, description: description,
             latitude: latitude, longitude: longitude
         }
+        $("#iisend-sos").prop("disabled", true);
         $.ajax({
             type: 'POST',
             url: '/SOS/SendSos',
@@ -51,9 +59,11 @@ function sendSOS() {
             dataType: 'json',
             success: function (data) {
                 alert("Your Request Is Sent");
+                $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {
-                alert("Sorry an error happened please try again !");
+                alert("Sorry an error happened please try again !" + JSON.stringify(msg));
+                $("#iisend-sos").prop("disabled", false);
             }
         });
     }
@@ -71,4 +81,22 @@ function sendSOS() {
         }
 
     }
-}
+}*/
+
+
+
+/*
+$(function () {
+    var notificationsHub = $.connection.notificationsHub;
+    notificationsHub.client.addMessage = function (message) {
+        $("#messages").append("<li>" + message + "</li>");
+    };
+    $.connection.hub.start()
+        .done(function () {
+        $("#iisend-sos").click(function () {
+            // Call the method on the server
+            notificationsHub.server.sendNotification($(".ctextarea-description").val());
+        });
+    });
+
+});*/

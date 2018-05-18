@@ -1,3 +1,14 @@
+#ih4-sort-by {
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+.ch1-section {
+    color: #386f94;
+}
+.cspn-radio-chck {
+    display: inline-block;
+    margin-left: 1rem;
+}
 .cli-notif {
     background-color: #d4f6f7;
 }
@@ -7,6 +18,9 @@
 }
 .cdiv-meta-info {
     color: #747272;
+}
+.cdiv-num-victims{
+    text-align: right;
 }
 .cspn-new-disease {
     color: #5ca15c;

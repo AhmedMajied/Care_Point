@@ -52,9 +52,13 @@ function createAlternativesDiv() {
 
     for (var i = 0; i < patientDrugs.length; i++) {
         patientDrugName = patientDrugs.eq(i).val();
+
+        if (patientDrugName === "" || patientDrugName === " ")
+            continue;
+
         alternatives = getMedicineAlternatives(patientDrugName);
 
-        if (alternatives != null) {
+        if (alternatives.length > 0) {
             foundAlternatives++;
 
             var panel = document.createElement("div");
@@ -62,7 +66,7 @@ function createAlternativesDiv() {
             var panelHeading = document.createElement("div");
 
             // heading
-            panelHeading.innerHTML = "<b>" + patientDrugName + " alternatives</b>";
+            panelHeading.innerHTML = "<b>Alternatives for :  </b>" + patientDrugName;
             panel.appendChild(panelHeading);
 
             // body
@@ -71,10 +75,9 @@ function createAlternativesDiv() {
                 medicineAlternativeSpan.className = "cspn-alternative cspn-radio-chck";
                 medicineAlternativeSpan.innerHTML = `
                     <input id="iinp-` + i + "-" + alternativeIndex + `" class="cchck-secondary" name="medicineAlternativeFor` + i +
-                    `" value=` + alternatives[alternativeIndex].Name + ` type="checkbox" />
+                    `" value="` + alternatives[alternativeIndex].Name + `" type="checkbox" />
                     <label for="iinp-` + i + "-" + alternativeIndex + `">` + alternatives[alternativeIndex].Name + `</label>`;
 
-                
                 var medicineAlternativeLabel = document.createTextNode(alternatives[alternativeIndex].Name);
                 medicineAlternativeLabel.htmlFor = "medicineAlternativeFor" + alternativeIndex;
 

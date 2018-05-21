@@ -44,7 +44,7 @@ namespace BLL
                 medicineName = patientMedicines[i];
                 if (!medicineName.Equals("") && !medicineName.Equals(" "))
                 {
-                    Medicine medicine = DBEntities.Medicines.Single(m => m.Name == medicineName);
+                    Medicine medicine = DBEntities.Medicines.FirstOrDefault(m => m.Name == medicineName);
                     historyRecord.Doses.Add(new Dose
                     {
                         MedicineID = medicine.ID,
@@ -57,7 +57,7 @@ namespace BLL
             historyRecord.IsRead = false;
             historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
             DBEntities.SaveChanges();
-
+            
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
                                         medicalPlace.ID == historyRecord.MedicalPlaceID);
@@ -85,7 +85,7 @@ namespace BLL
                 SaveAttachment(attachment);
 
                 // Draw prescription as image
-                bitmap = canvas.convertTextToImage(historyRecord, patientMedicines,
+                bitmap = canvas.drawText(historyRecord, patientMedicines,
                 medicinesAlternatives);
             }
             

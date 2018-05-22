@@ -15,7 +15,7 @@ namespace BLL
         private int pageWidth, pageHeight, padding;
         private int logoWidth, logoHeight;
         private Font regular, bold;
-        private SolidBrush BlackBruch, BlueBrush;
+        private SolidBrush BlackBruch, BlueBrush, GreenBrush;
         private Bitmap bitmap;
         private Graphics graphics;
         private StringFormat alignmentCenter, alignmentRight;
@@ -34,6 +34,7 @@ namespace BLL
             // initialize Bruches Colors
             BlackBruch = new SolidBrush(Color.Black);
             BlueBrush = new SolidBrush(ColorTranslator.FromHtml("#0D47A1"));
+            GreenBrush = new SolidBrush(ColorTranslator.FromHtml("#006C31"));
 
             bitmap = new Bitmap(1, 1);
             graphics = Graphics.FromImage(bitmap);
@@ -46,12 +47,11 @@ namespace BLL
         }
 
         public Bitmap drawText(HistoryRecord historyRecord, string[] medicines,
-            List<List<string>> medicinesAlternatives)
+            List<List<string>> medicinesAlternatives,string [] doses)
         {
             // decide page structure to know the sutable legth of it 
             string pageStructure = "\n\n\n\nName \n Patient name \n\n Medicines " + "\n\n"
-                    + " Doctor \n Doctor name \n\n\n Address \n medicalPlaceAddress";
-
+                    + " Doctor \n Doctor name \n\n\n Address \n medicalPlaceAddress\n\n";
             for (int i = 0; i < medicinesAlternatives.Count; i++)
             {
                 for(int c=0;c < medicinesAlternatives[i].Count;c++)
@@ -73,7 +73,7 @@ namespace BLL
             // Drawing
             DrawPrescriptionHeader(historyRecord.MedicalPlace.Name, historyRecord.MedicalPlace.Photo);
             DrawPrescriptionBody(historyRecord.Citizen.Name, historyRecord.Specialist.Name,
-                historyRecord.Date, medicines,medicinesAlternatives);
+                historyRecord.Date, medicines,medicinesAlternatives,doses);
             DrawPrescriptionFooter(historyRecord.MedicalPlace.Address, historyRecord.MedicalPlace.Phone);
             
             graphics.Flush();
@@ -111,9 +111,9 @@ namespace BLL
         }
 
         private void DrawPrescriptionBody(string patientName, string doctorName, DateTime date, 
-                            string[] medicines, List<List<string>> medicinesAlternatives)
+                            string[] medicines, List<List<string>> medicinesAlternatives, string[] doses)
         {
-            string combinedAlternatives = "", alternativesNewLines = "", currentAlternativesLine = "";
+            string combinedAlternatives = "", alternativesNewLines = "", currentAlternativesLine;
             int wordWidthInPixels;
                 
             graphics.DrawString(newLine + "Name" , bold, BlackBruch,
@@ -136,6 +136,7 @@ namespace BLL
                 extraNewLine += "\n";
             }
             
+            // write medicines with their alternatives and their doses
             for (int medicineIndex = 0; medicineIndex < medicines.Length && 
                 medicines[medicineIndex] != ""; medicineIndex++)
             {
@@ -151,7 +152,7 @@ namespace BLL
 
                     for (int alternativeIndex = 1; alternativeIndex < medicinesAlternatives[medicineIndex].Count; alternativeIndex++)
                     {
-                        wordWidthInPixels = (int)graphics.MeasureString(currentAlternativesLine + 
+                        wordWidthInPixels = (int)graphics.MeasureString(currentAlternativesLine += 
                             medicinesAlternatives[medicineIndex][alternativeIndex],regular).Width;
 
                         if (wordWidthInPixels >= pageWidth-padding*5)
@@ -168,6 +169,10 @@ namespace BLL
                     newLine += "\n"+alternativesNewLines;
                     alternativesNewLines = "";
                 }
+                // write doses
+                graphics.DrawString(newLine + extraNewLine +"Dose : "+doses[medicineIndex], regular,
+                    GreenBrush, padding * 5, 0);
+                newLine += "\n";
             }
 
             newLine += "\n";
@@ -188,7 +193,7 @@ namespace BLL
 
             graphics.DrawString(newLine + new String('_', 60), bold, BlueBrush,
                 pageWidth / 2, 0, alignmentCenter);
-            newLine += "\n";
+            newLine += "\n\n";
 
             graphics.DrawString(newLine+extraNewLine + "Address", smallBold, BlackBruch,
                 MeasureLeftPadding("Address", address), 0, alignmentCenter);

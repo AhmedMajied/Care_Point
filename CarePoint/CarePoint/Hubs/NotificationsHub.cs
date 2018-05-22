@@ -12,9 +12,5 @@ namespace CarePoint.Hubs
         {
             Clients.All.PushNotification(Context.User.Identity.Name + " says " + message);
         }
-        public DateTime GetDateTime()
-        {
-            return DateTime.Now;
-        }
     }
 }

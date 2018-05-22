@@ -62,13 +62,14 @@ namespace CarePoint.Controllers
                     {
                         TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = User.Identity.GetUserId<long>(),
+                        SpecialistID = 26,//User.Identity.GetUserId<long>(),
                         CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
-                        FileName = files[i].FileName
+                        FileName = files[i].FileName,
+                        IsRead = false
                     };
 
-                    //_medicalHistorBusinessLayer.SaveAttachment(attachment);
+                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +100,7 @@ namespace CarePoint.Controllers
                 Remarks = remarks,
                 MedicalPlaceID = 6, //TODO get from session
                 CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = User.Identity.GetUserId<long>()
+                SpecialistID = 26 //User.Identity.GetUserId<long>()
             };
 
             // assign symptoms to history record
@@ -119,10 +120,10 @@ namespace CarePoint.Controllers
                     historyRecord.Diseases.Add(new Disease { Name = diseases[i], IsGenetic = false });
                 }
             }
-
+            
             // assign genetic diseases
             List<Disease> historyRecordDiseases = historyRecord.Diseases.ToList();
-            for (int i = 0; i < Math.Min(genticDiseases.Length,diseases.Length) ; i++)
+            for (int i = 0; genticDiseases != null && i < Math.Min(genticDiseases.Length,diseases.Length) ; i++)
             {
                 if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "" 
                     || diseases[Convert.ToInt32(genticDiseases[i]) - 1] == " ")
@@ -136,10 +137,13 @@ namespace CarePoint.Controllers
             // get selected medicines alternatives from form
             for (int i = 0; i < medicines.Length; i++)
             {
-                if (form.GetValues("medicineAlternativeFor" + i) != null)
+                if (form.GetValues("medicineAlternativeFor" + i) == null)
                 {
-                    medicinesAlternatives.Add(form.GetValues("medicineAlternativeFor" + i).ToList());
+                    medicinesAlternatives.Add(new List<string>());
+                    continue;
                 }
+
+                medicinesAlternatives.Add(form.GetValues("medicineAlternativeFor" + i).ToList());
             }
 
             // save history record to database

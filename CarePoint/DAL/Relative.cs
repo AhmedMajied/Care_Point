@@ -14,26 +14,16 @@ namespace DAL
 
 using System;
     using System.Collections.Generic;
-    
-public partial class Relative
-{
-
-    public long CitizenID { get; set; }
-
-    public long RelativeID { get; set; }
-
-    public long RelationTypeID { get; set; }
-
-    public Nullable<bool> CitizenConfirmed { get; set; }
-
-    public Nullable<bool> RelativeConfirmed { get; set; }
-
-    public virtual Citizen Citizen { get; set; }
-
-    public virtual Citizen RelativeCitizen { get; set; }
-
-    public virtual RelationType RelationType { get; set; }
-
-}
+    public partial class Relative
+    {
+        public long CitizenID { get; set; }
+        public long RelativeID { get; set; }
+        public long RelationTypeID { get; set; }
+        public Nullable<bool> CitizenConfirmed { get; set; }
+        public Nullable<bool> RelativeConfirmed { get; set; }
+        public virtual Citizen Citizen { get; set; }
+        public virtual Citizen RelativeCitizen { get; set; }
+        public virtual RelationType RelationType { get; set; }
+    }
 
 }

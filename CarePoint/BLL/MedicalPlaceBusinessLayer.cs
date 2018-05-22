@@ -102,6 +102,12 @@ namespace BLL
             int min = Math.Min(medicalPlaces.ToArray().Length, numberOfPlaces);
             return (List<MedicalPlace>)(medicalPlaces.Take(min));
         }
+        public ICollection<Specialist> GetAdminsOfMedicalPlaces(string location, int numberOfPlaces)
+        {
+            List<MedicalPlace> medicalPlaces = GetNearestNMedicalPlace(location, numberOfPlaces).ToList();
+            ICollection<Specialist> admins=new List<Specialist>();
+            return admins;
+        }
 
     }
 }

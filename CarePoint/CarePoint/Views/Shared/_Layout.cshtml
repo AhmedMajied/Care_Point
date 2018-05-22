@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="container-fluid">
                         <button type="button" id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right">
-                            <span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS
+                            <span class="fa fa-exclamation-triangle fa-lg" style="color: #d64343"></span>&nbsp;Send an SOS
                         </button>
                     </div>
                     @Html.Partial("_SearchPartial")
@@ -57,11 +57,34 @@
     <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
     <script src="~/Scripts/patient-list.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
-    <script src="~/SignalR/hubs"></script>
-    <script src="~/Scripts/knockout-3.4.2.js"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
-   <!-- <script src="~/Scripts/sosPushNotification.js"></script>-->
+    <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="~/SignalR/hubs"></script>
+    <script>
+        var relativesHub = $.connection.relativesHub;
+        $.connection.hub.start();
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start().done(function () {
+                    console.log("Connection Started !")
+                });
+            }, 5000);
+        });
+
+        relativesHub.client.notify = function (increment) {
+            var notificationMark = $("#ilink-relatives .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += increment;
+            notificationMark.text(notificationCount);
+            if (notificationCount > 0) {
+                notificationMark.removeAttr("style");
+            }
+            else {
+                notificationMark.css("display", "none");
+            }
+        }
+    </script>
+    <script src="~/Scripts/relatives.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

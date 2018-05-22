@@ -1,10 +1,40 @@
-﻿// start search Account
-function generateHTML(parent, userName, img, href) {
-    if (img == null) {
+function getMarkAsDropDown(id) {
+    markAsDropDown = `<div class='col-md-4 dropdown'>
+                            <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+                                Mark As
+                                <span class='caret'></span>
+                            </button>
+                            <ul class='dropdown-menu'>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Friend");'>Friend</a></li>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Parent");'>Parent</a></li>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Scion");'>Scion</a></li>
+                            </ul>
+                        </div>`
+    return markAsDropDown;
+}
+function getRemoveRelationDropDown(id,relation) {
+    var removeRelationDropDown = `<div class='col-md-4 dropdown'>
+                                    <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
+                                        `+ relation + `
+                                        <span class='caret'></span>
+                                    </button>
+                                    <ul class='dropdown-menu'>
+                                        <li><a onclick='removeRelation.call(this,` + id + `);'>Remove</a></li>
+                                    </ul>
+                                </div>`
+    return removeRelationDropDown;
+}
+function generateHTML(parent, userName, img, id, relation) {
+    if (img === null) {
         img = '../../Images/notfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img style='width: 40px;'class='cimg-user' src='"+img+"'/></div>")
-        .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>")).append("<div class='col-md-4 dropdown'><button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Mark As<span class='caret'></span></button><ul class='dropdown-menu'><li><a href='" + href + "'>Friend</a></li><li><a href='" + href + "'>Parent</a></li><li><a href='" + href + "'>Sibling</a></li><li><a href='" + href + "'>Non-relative</a></li></ul></div>");
+   
+    html = $("<div class='row'>").append("<div class='col-md-2'><img class='cimg-user' src='" + img + "'/></div>")
+        .append($("<div class='col-md-6'><div class='cdiv-name'>" + userName + "</div>"));
+    if (relation === "None")
+        html.append(getMarkAsDropDown(id));
+    else
+        html.append(getRemoveRelationDropDown(id,relation));
     $(parent).append(html);
     $(parent).append("<hr>");
 }
@@ -29,20 +59,20 @@ $(function () {
                 data: { key: searchBy, value: searchFor },
                 dataType: 'json',
                 success: function (data) {
-                    var citizens = data[0];
-                    var ccount = data[0].length;
-                    for (var i = 0; i < ccount; i++) {//citizens[i].Id
-                        generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, "#");
+                    var citizens = data.citizens;
+                    var ccount = citizens.length;
+                    for (var i = 0; i < ccount; i++) {
+                        generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, citizens[i].Id, citizens[i].Relation);
                     }
-                    var doctors = data[1];
-                    var dcount = data[1].length;
-                    for (var i = 0; i < dcount; i++) {//doctors[i].Id
-                        generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, "#");
+                    var doctors = data.doctors;
+                    var dcount = doctors.length;
+                    for (i = 0; i < dcount; i++) {
+                        generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, doctors[i].Id, doctors[i].Relation);
                     }
-                    var pharmacists = data[2];
-                    var pcount = data[2].length;
-                    for (var i = 0; i < pcount; i++) { //pharmacists[i].Id
-                        generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, "#");
+                    var pharmacists = data.pharmacists;
+                    var pcount = pharmacists.length;
+                    for (i = 0; i < pcount; i++) {
+                        generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, pharmacists[i].Id, pharmacists[i].Relation);
                     }
                     $("#imodal-people-srch-result").modal('show');
                     $("#iiloading-account-result").css("display", "none");
@@ -67,8 +97,8 @@ $("#place-close-button").click(function () {
     $("#idiv-search-place-result hr").remove();
 });
 function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
-    if (profilePicture == null) {
-        profilePicture = '../Images/placenotfound.png';
+    if (profilePicture === null) {
+        profilePicture = '../../Images/placenotfound.png';
     }
     html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'style='width: 40px;' src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
         .append("<div class='col-md-3'>")
@@ -116,9 +146,6 @@ $("#ibtn-search-place").click(function () {
                 $("#iiloading-place-result").css("display", "none");
                 $("#ibtn-search-place").prop("disabled", false);
                 $("#imodal-place-srch-result").modal('show');
-            },
-            error: function (msg) {
-                console.log(JSON.stringify(msg));
             }
         });
     }
@@ -151,3 +178,4 @@ $('#ichk-rate').on('change', function () {
 $('#ichk-popularity').on('change', function () {
     $('#cspan-priority-error').text("");
 });
+

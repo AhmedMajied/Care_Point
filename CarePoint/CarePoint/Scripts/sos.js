@@ -18,7 +18,7 @@ $(document).ready(function () {
                                 <label for='ichk-friends'>Friends</label>
                             </span>
                             <span class='cspan-error-send'></span>
-                            <input type='submit' id='iisend-sos' value='Send' onclick='sendSos' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
+                            <input type='submit' value='Send' onclick='sendSOS' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
                         </form>
                     </div>`;
     $('#ibtn-sos-pop').popover({
@@ -27,14 +27,7 @@ $(document).ready(function () {
         content: popoverContent
     });
 });
-
-$("#iisend-sos").click(function () {
-    alert(" button clicked ! ");
-    console.log("button clicked ! ");
-});
-
-
-/*function sendSOS() {
+function sendSOS() {
     var isMedicalPlace = $("#ichk-hospitals").is(':checked');
     var isFamily = $("#ichk-family").is(':checked');
     var isFriend = $("#ichk-friends").is(':checked');
@@ -81,7 +74,7 @@ $("#iisend-sos").click(function () {
         }
 
     }
-}*/
+}
 
 
 

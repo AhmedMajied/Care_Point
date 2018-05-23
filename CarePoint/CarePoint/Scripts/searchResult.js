@@ -48,9 +48,12 @@ $("#ibtn-close").click(function () {
     $("#itab-pharmacists hr").remove();
 });
 $(function () {
-    $("#ibtn-acc").click(function () {
+    $("#ibtn-srch-account").click(function () {
         var searchBy = $("#iselect-srch-by").val();
         var searchFor = $("#idiv-searchfor").val();
+        $("#imodal-people-srch-result .cdiv-custom-alert").addClass('hidden');
+        $("#imodal-people-srch-result #itab-non-specialists, #imodal-people-srch-result #itab-doctors, #imodal-people-srch-result #itab-pharmacists").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+
         if (!(searchFor === "")) {
             $.ajax({
                 type: 'POST',
@@ -60,20 +63,31 @@ $(function () {
                 success: function (data) {
                     var citizens = data.citizens;
                     var ccount = citizens.length;
-                    for (var i = 0; i < ccount; i++) {//citizens[i].Id
+                    for (var i = 0; i < ccount; i++) {
                         generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, citizens[i].Id, citizens[i].Relation);
+                    }
+                    $("#imodal-people-srch-result #itab-non-specialists .cspn-proxy").remove();
+                    if (ccount == 0) {
+                        $("#imodal-people-srch-result #itab-non-specialists .cdiv-custom-alert").removeClass('hidden');
                     }
                     var doctors = data.doctors;
                     var dcount = doctors.length;
-                    for (i = 0; i < dcount; i++) {//doctors[i].Id
+                    for (i = 0; i < dcount; i++) {
                         generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, doctors[i].Id, doctors[i].Relation);
+                    }
+                    $("#imodal-people-srch-result #itab-doctors .cspn-proxy").remove();
+                    if (dcount == 0) {
+                        $("#imodal-people-srch-result #itab-doctors .cdiv-custom-alert").removeClass('hidden');
                     }
                     var pharmacists = data.pharmacists;
                     var pcount = pharmacists.length;
-                    for (i = 0; i < pcount; i++) { //pharmacists[i].Id
+                    for (i = 0; i < pcount; i++) {
                         generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, pharmacists[i].Id, pharmacists[i].Relation);
                     }
-                    $("#imodal-people-srch-result").modal('show');
+                    $("#imodal-people-srch-result #itab-pharmacists .cspn-proxy").remove();
+                    if (pcount == 0) {
+                        $("#imodal-people-srch-result #itab-pharmacists .cdiv-custom-alert").removeClass('hidden');
+                    }
                 }
             });
         }
@@ -106,7 +120,7 @@ function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, 
     $("#idiv-search-place-result").append(html);
     $("#idiv-search-place-result").append("<hr>");
 }
-$("#ibtn-search-place").click(function () {
+$("#ibtn-srch-place").click(function () {
     var sType = $("#iinp-service-type").val();
     var pType = $("#iinp-place-type").val();
     var cDistance = $("#ichk-distane").is(':checked');

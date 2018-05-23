@@ -2,8 +2,8 @@
     <div id="imodal-patient-list" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" id="patient-list-modal-button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-header cmodal-special-hdr">
+                    <button type="button" id="ibtn-close-patient-list" class="close" data-dismiss="modal">&times;</button>
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
                             <a href="#itab-males" role="tab" data-toggle="tab">Males</a>
@@ -20,8 +20,16 @@
                 <div class="modal-body cscrollbar-container cscrollbar-modal">
                     <div class="tab-content">
                         <div id="itab-males" role="tabpanel" class="tab-pane active">
+                            <div class="cdiv-custom-alert hidden">
+                                <span class="fa fa-user-times fa-4x"></span><br />
+                                <h4>You don't have any male patients yet</h4>
+                            </div>
                         </div>
                         <div id="itab-females" role="tabpanel" class="tab-pane">
+                            <div class="cdiv-custom-alert hidden">
+                                <span class="fa fa-user-times fa-4x"></span><br />
+                                <h4>You don't have any female patients yet</h4>
+                            </div>
                         </div>
                     </div>
                 </div>

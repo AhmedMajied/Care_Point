@@ -12,7 +12,7 @@
 }
 
 <div class="row">
-    <div class="col-md-2">@Html.Image(Model.Photo)</div>
+    <div class="col-md-2">@Html.Image(Model.Photo, new { @class="cimg-user"})</div>
     <div class="col-md-8">
         <h4><b>Name:</b> @Model.Name</h4>
         <h4><b>Gender:</b> @Model.Gender</h4>
@@ -91,7 +91,7 @@
                                         <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
                                     </div>
                                     <div class="col-md-5">
-                                        <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
+                                        <input name="dose" class="form-control cinp-dose" type="text" maxlength="34" placeholder="dose">
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>

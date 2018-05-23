@@ -1,7 +1,10 @@
-textarea{
-    resize: vertical;
-    column-span: 50;
+textarea {
     margin: 1em 0;
+    resize: vertical;
+    -webkit-column-count: 50;
+    -moz-column-count: 50;
+    -ms-column-count: 50;
+    column-count: 50;
 }
 #idiv-map{
     width:100%;
@@ -20,35 +23,3 @@ textarea{
 [type="submit"]{
     margin-bottom: 1em;
 }
-.cspn-proxy{
-    display: inline-block;
-    position:absolute;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    margin:auto;
-    width: 50px;
-    height: 50px;
-    font-weight: bold;
-}
-.cspn-loader {
-    display: inline-block;
-    border: 5px solid #00000000;
-    border-radius: 50%;
-    border-top: 5px solid #3498db;
-    border-left: 5px solid #3498db;
-    border-right: 5px solid #3498db;
-    width: 50px;
-    height: 50px;
-    -webkit-animation: spin 1s linear infinite; /* Safari */
-    animation: spin 1s linear infinite;
-  }
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }

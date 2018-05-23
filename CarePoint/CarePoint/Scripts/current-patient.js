@@ -31,7 +31,7 @@ $(document).ready(function () {
         var empty_input = false;
         // fields validation
         $(this).closest('.cdiv-list').find("input, select").each(function () {
-            if ($(this).is("select:has(> option:selected:disabled)") ||$(this).val().trim() == "" && ! $(this).hasClass('cinp-dose')) {
+            if ($(this).is("select:has(> option:selected:disabled)") ||$(this).val().trim() == "") {
                 $(this).addClass('input-error');
                 empty_input = true;
             }

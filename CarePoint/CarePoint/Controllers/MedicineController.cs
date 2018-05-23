@@ -19,7 +19,7 @@ namespace CarePoint.Controllers
         public ActionResult GetAllMedicines()
         {
             var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>
-                            new { medicine.Name }).Distinct().ToList();
+                            new { medicine.Name }).ToList();
 
             return Json(medicines);
         }

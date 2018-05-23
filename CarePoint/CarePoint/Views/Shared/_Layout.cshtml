@@ -60,6 +60,33 @@
     <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
     <script src="~/Scripts/patient-list.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="~/SignalR/hubs"></script>
+    <script>
+        var relativesHub = $.connection.relativesHub;
+        $.connection.hub.start();
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start().done(function () {
+                    console.log("Connection Started !")
+                });
+            }, 5000);
+        });
+
+        relativesHub.client.notify = function (increment) {
+            var notificationMark = $("#ilink-relatives .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += increment;
+            notificationMark.text(notificationCount);
+            if (notificationCount > 0) {
+                notificationMark.removeAttr("style");
+            }
+            else {
+                notificationMark.css("display", "none");
+            }
+        }
+    </script>
+    <script src="~/Scripts/relatives.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

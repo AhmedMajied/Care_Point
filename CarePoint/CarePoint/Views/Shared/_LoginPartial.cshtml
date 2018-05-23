@@ -39,9 +39,20 @@
             <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@user.Id">
                     <span class="fa fa-paperclip fa-2x cspn-nav"><mark class="cmark-notif">2</mark></span>
                 </a></li>
-            <li><a id="ilink-relatives" href="#">
-                    <span class="fa fa-users fa-2x cspn-nav"><mark class="cmark-notif">10</mark></span>
-                </a></li>
+            <li><a id="ilink-relatives" href="/Citizen/Relatives">
+                @{ int relativesNotificationsCount = user.Relatives.Count(r => r.RelativeConfirmed == false || r.RelativeConfirmed == null) + user.AddedRelatives.Count(r => r.CitizenConfirmed == false || r.CitizenConfirmed == null); }
+                    <span class="fa fa-users fa-2x cspn-nav">
+                        @if (relativesNotificationsCount == 0)
+                        {
+                            <mark class="cmark-notif" style="display:none">0</mark>
+                        }
+                        else
+                        {
+                            <mark class="cmark-notif">@relativesNotificationsCount</mark>
+                        }
+                    </span>
+                </a>
+            </li>
             <li>
                 <a id="ilink-prognosis" href="#">
                     <span class="fa fa-heart-o fa-2x cspn-nav"><mark class="cmark-notif">7</mark></span>

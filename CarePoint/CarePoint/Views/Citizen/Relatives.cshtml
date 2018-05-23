@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Relatives";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using CarePoint.Custom_HtmlHelpers
+@model CarePoint.Models.RelativesPageViewModel
+@section styles{
+    <link href="~/Content/citizen-relatives.css" rel="stylesheet" />
+}
+<center><h1 class="ch1-section">New Connections</h1></center><br />
+<div class="row cdiv-relative-row">
+    @foreach (var connection in Model.NewConnections)
+    {
+    <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
+        <div class="cdiv-relative-wrapper">
+            <figure class="cfgr-relative">
+                @Html.Image(connection.Photo, new { @Class = "img img-responsive cimg-relative" })
+                <figcaption>
+                    <center><h4><span class="label label-success">New !</span></h4></center>
+                    <center><h4>@connection.FullName</h4></center>
+                    <center><h5 class="ch5-relation">@connection.RelationType</h5></center>
+                </figcaption>
+                <footer class="cftr-relative">
+                    <button class="btn btn-link cbtn-danger" type="button" onclick="removeRelation.call(this,'@connection.ID')"><span class="fa fa-trash fa-fw"></span> Delete</button>
+                </footer>
+            </figure>
+        </div>
+    </div>
+    }
+
+</div>
+
+<center><h1 class="ch1-section">Your Family</h1></center><br />
+<div class="row cdiv-relative-row">
+    @foreach (var member in Model.Family)
+    {
+        <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
+            <div class="cdiv-relative-wrapper">
+                <figure class="cfgr-relative">
+                    @Html.Image(member.Photo, new { @Class = "img img-responsive cimg-relative" })
+                    <figcaption>
+                        <center><h4>@member.FullName</h4></center>
+                        <center><h5 class="ch5-relation">@member.RelationType</h5></center>
+                    </figcaption>
+                    <footer class="cftr-relative">
+                        <button class="btn btn-link cbtn-danger" type="button" onclick="removeRelation.call(this,'@member.ID')"><span class="fa fa-trash fa-fw"></span> Delete</button>
+                    </footer>
+                </figure>
+            </div>
+        </div>
+    }
+</div>
+
+<center><h1 class="ch1-section">Your Friends</h1></center><br />
+<div class="row cdiv-relative-row">
+    @foreach(var friend in Model.Friends) {
+        <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
+            <div class="cdiv-relative-wrapper">
+                <figure class="cfgr-relative">
+                    @Html.Image(friend.Photo, new { @Class = "img img-responsive cimg-relative" })
+                    <figcaption>
+                        <center><h4>@friend.FullName</h4></center>
+                        <center><h5 class="ch5-relation">@friend.RelationType</h5></center>
+                    </figcaption>
+                    <footer class="cftr-relative">
+                        <button class="btn btn-link cbtn-danger" type="button" onclick="removeRelation.call(this,'@friend.ID')"><span class="fa fa-trash fa-fw"></span> Delete</button>
+                    </footer>
+                </figure>
+            </div>
+        </div>
+    }
+</div>
+

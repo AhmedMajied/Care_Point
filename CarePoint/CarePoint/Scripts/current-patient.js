@@ -133,4 +133,13 @@ $(document).ready(function () {
         $(this).find("input").removeClass("input-error");
         $(this).find(".alert").addClass("hidden");
     });
+
+    $("#ibtn-submit").submit(function () {
+        var url = $(this).attr("action");
+
+        $.ajaxSetup({ async: false });
+        $.post(url, $(this).serialize(), function () {
+            // Note: if u don't need this callback function then remove it but don't touch post request 
+        });
+    });
 });

@@ -5,9 +5,9 @@
                                 <span class='caret'></span>
                             </button>
                             <ul class='dropdown-menu'>
-                                <li><a onclick='addCitizen.call(this,` + id + `,"Friend");'>Friend</a></li>
-                                <li><a onclick='addCitizen.call(this,` + id + `,"Parent");'>Parent</a></li>
-                                <li><a onclick='addCitizen.call(this,` + id + `,"Scion");'>Scion</a></li>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Friend");'>Friend</a></li>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Parent");'>Parent</a></li>
+                                <li><a onclick='addRelative.call(this,` + id + `,"Scion");'>Scion</a></li>
                             </ul>
                         </div>`
     return markAsDropDown;
@@ -183,30 +183,3 @@ $('#ichk-popularity').on('change', function () {
     $('#cspan-priority-error').text("");
 });
 
-
-function addCitizen(id, relation) {
-    var self = this;
-    $.post("/Citizen/AddRelative", { relativeId: id, relationType: relation }).done(
-        function(response) {
-            if (response.Code == 0) {
-                var parentElement = $(self).parent().parent().parent().parent();
-                parentElement.children(".dropdown").remove();
-                parentElement.append(getRemoveRelationDropDown(id, relation));
-            }
-            else if (response.Code >= 50001 && response.Code <= 50004) {
-                alert(response.Message);
-            }
-            else
-                alert("An Error Occurred, Please Try Again Later!");
-        }).fail(function () { alert("An Error Occurred, Please Try Again Later!"); });
-}
-
-function removeRelation(id) {
-    var self = this;
-    $.post("/Citizen/RemoveRelation", { relativeId: id }).done(
-        function () {
-            var parentElement = $(self).parent().parent().parent().parent();
-            parentElement.children(".dropdown").remove();
-            parentElement.append(getMarkAsDropDown(id));
-        }).fail(function () { alert("An Error Occurred, Please Try Again Later!"); });
-}

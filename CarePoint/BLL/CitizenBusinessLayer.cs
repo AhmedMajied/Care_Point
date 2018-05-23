@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using System.Data.Entity;
+using System.Collections;
 
 namespace BLL
 {
@@ -19,7 +20,7 @@ namespace BLL
 
         public Citizen GetCitizen(long citizenID)
         {
-            return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
+            return DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == citizenID);
         }
         
         public ICollection<Speciality> GetSpecialities()
@@ -106,11 +107,30 @@ namespace BLL
             allCitizens.Add(pharmacists);//2
             return allCitizens;
         }
+
+        public ICollection<Relative> GetRelatives(long citizenId)
+        {
+            return DBEntities.Relatives.Where(r => r.CitizenID == citizenId || r.RelativeID == citizenId).ToList();
+        }
+
         public List<Citizen> getPatientList(long doctorId)
         {
             List<Citizen> patientList = new List<Citizen>();
             patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
             return patientList;
+        }
+
+        public void ConfirmAllRelatives(long citizenId)
+        {
+            var relatives = GetRelatives(citizenId);
+            foreach(var relative in relatives)
+            {
+                DBEntities.Relatives.Attach(relative);
+                DBEntities.Entry(relative).State = EntityState.Modified;
+                relative.CitizenConfirmed = true;
+                relative.RelativeConfirmed = true;
+            }
+            DBEntities.SaveChanges();
         }
 
         public void AddRelative(Relative relative)
@@ -121,8 +141,13 @@ namespace BLL
 
         public void RemoveRelation(long citizenId,long relativeId)
         {
-            DBEntities.Relatives.RemoveRange(DBEntities.Relatives.Where(r => (r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)));
+            DBEntities.Relatives.Remove(DBEntities.Relatives.SingleOrDefault(r => (r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)));
             DBEntities.SaveChanges();
+        }
+
+        public bool IsRelationConfirmed(long citizenId, long relativeId)
+        {
+            return DBEntities.Relatives.Any(r => ((r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)) && (r.CitizenConfirmed ?? false) && (r.RelativeConfirmed ?? false));
         }
     }
 }

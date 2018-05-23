@@ -13,12 +13,13 @@
     <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/patient-list.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
     @RenderSection("styles", false)
 
 </head>
-<body>
+<body class="cscrollbar-container cscrollbar">
     <nav class="navbar navbar-default" style="background-color: #21c2eb;">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -42,7 +43,7 @@
             <div class="col-md-8">
                 @RenderBody()
             </div>
-            <div class="col-md-2" style="background-color:#b6ff00">This is for Adds</div>
+            <div id="idiv-adds" class="col-md-2" style="height: 200px;"><center><label>Advertising area</label></center></div>
         </div>
     </div>
 

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Extensions
+@using DAL
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -47,8 +49,22 @@
         </div>
     </div>
 
+    <div id="imodal-saving" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body cdiv-modal-sm-bdy">
+                    <span class="cspn-proxy cspn-saving"><span class="cspn-loader"></span><br />Saving...</span>
+                </div>
+            </div>
+        </div>
+    </div>
     @Html.Partial("_SearchResultPartial")
-    @Html.Partial("_PatientsList")
+
+    @if (User.Identity.GetCitizen() is Specialist)
+    {
+        @Html.Partial("_PatientsList")
+        @Html.Partial("_NewPatient")
+    }
 
 
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>

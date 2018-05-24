@@ -51,6 +51,7 @@ $(function () {
     $("#ibtn-srch-account").click(function () {
         var searchBy = $("#iselect-srch-by").val();
         var searchFor = $("#idiv-searchfor").val();
+        $("#imodal-people-srch-result button.close").prop('disabled', true);
         $("#imodal-people-srch-result .cdiv-custom-alert").addClass('hidden');
         $("#imodal-people-srch-result #itab-non-specialists, #imodal-people-srch-result #itab-doctors, #imodal-people-srch-result #itab-pharmacists").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
 
@@ -88,6 +89,8 @@ $(function () {
                     if (pcount == 0) {
                         $("#imodal-people-srch-result #itab-pharmacists .cdiv-custom-alert").removeClass('hidden');
                     }
+
+                    $("#imodal-people-srch-result button.close").prop('disabled', false);
                 }
             });
         }

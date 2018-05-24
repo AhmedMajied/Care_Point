@@ -143,31 +143,49 @@ function validateDrugsNames() {
     return true;
 }
 
-jQuery(document).ready(function () {
-    $("#ibtn-add-prescription").on("click", function reset_progress() {
-        $("#ibtn-nxt, #ibtn-prev, #ibtn-submit").prop("disabled", true);
-        var progress_line = $('.modal-header').find('.f1-progress-line');
-        var parent_fieldset = $('.f1 .cdiv-step:nth-child(' + current_step + ')');
-        current_step = 1;
-        $("#imodal-history-record .modal-header").find(".f1-step").removeClass("activated active");
-        $("#imodal-history-record .modal-header").find(".f1-step:first").addClass("active");
-        bar_progress(progress_line, null);
-        parent_fieldset.fadeOut(400, function () {
-            $('.f1 .cdiv-step:nth-child(1)').fadeIn(function () {
-                update_step_nav_buttons();
+//Before changing current step, check that input is valid
+function validState() {
+    var isValid = true;
+    if (current_step == 2) {
+        $("#idiv-step-2").find(".row:has(input[type='checkbox']:checked)").each(function () {
+            $(this).find("input[name='diseaseName']").each(function () {
+                if ($(this).val().trim() == "") {
+                    $(this).addClass('input-error');
+                    isValid = false;
+                }
             });
         });
-    });
+    }
+    else if (current_step == 3) {
+        $("#idiv-step-3").find(".row").each(function () {
+            var drugNameFiled = $(this).find("input[name='drugName']"),
+                doseField = $(this).find("input[name='dose']");
 
+            //either both fields are empty or both are filled. Otherwise, invalid state
+            if ((drugNameFiled.val().trim() == "") ^ (doseField.val().trim() == "")) {
+                if (drugNameFiled.val().trim() == "") {
+                    drugNameFiled.addClass('input-error');
+                }
+                else {
+                    doseField.addClass('input-error');
+                }
+                isValid = false;
+            }
+        });
+    }
+
+    return isValid;
+}
+
+jQuery(document).ready(function () {
     //Form
     $('.f1 .cdiv-step:first').fadeIn('slow');
 
-    $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function () {
-        $(this).removeClass('input-error');
-    });
-
     // next step
     $('#ibtn-nxt').on('click', function () {
+        if (!validState()) {
+            return;
+        }
         $("#ibtn-nxt, #ibtn-prev, #ibtn-submit").prop("disabled", true);
         var parent_fieldset = $('.f1 .cdiv-step:nth-child(' + current_step + ')');
         var next_step = true;
@@ -204,6 +222,9 @@ jQuery(document).ready(function () {
 
     // previous step
     $('#ibtn-prev').on('click', function () {
+        if (!validState()) {
+            return;
+        }
         $("#ibtn-nxt, #ibtn-prev, #ibtn-submit").prop("disabled", true);
         // navigation steps / progress steps
         var current_active_step = $('.modal-header').find('.f1-step.active');
@@ -223,8 +244,11 @@ jQuery(document).ready(function () {
     });
 
     $('.f1-step-icon').on('click', function (e) {
-
         e.preventDefault();
+        if (!validState()) {
+            return;
+        }
+
         $("#ibtn-nxt, #ibtn-prev, #ibtn-submit").prop("disabled", true);
 
         var selected_step = $(this).parent();

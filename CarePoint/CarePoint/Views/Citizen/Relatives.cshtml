@@ -9,6 +9,14 @@
 }
 <center><h1 class="ch1-section">New Connections</h1></center><br />
 <div class="row cdiv-relative-row">
+    @if(Model.NewConnections.Count == 0) {
+    <div class="container cdiv-relative-card col-xs-12">
+        <div class="cdiv-relatives-alert">
+            <span class="fa fa-user-times fa-4x"></span><br />
+            <h4>You don't have new connections yet</h4>
+        </div>
+    </div>
+    }
     @foreach (var connection in Model.NewConnections)
     {
     <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
@@ -32,6 +40,14 @@
 
 <center><h1 class="ch1-section">Your Family</h1></center><br />
 <div class="row cdiv-relative-row">
+    @if(Model.Family.Count == 0) {
+    <div class="container cdiv-relative-card col-xs-12" style="position: static;">
+        <div class="cdiv-relatives-alert">
+            <span class="fa fa-user-times fa-4x"></span><br />
+            <h4>You don't haven't added your family members yet</h4>
+        </div>
+    </div>
+    }
     @foreach (var member in Model.Family)
     {
         <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
@@ -53,6 +69,14 @@
 
 <center><h1 class="ch1-section">Your Friends</h1></center><br />
 <div class="row cdiv-relative-row">
+    @if(Model.Friends.Count == 0) {
+    <div class="container cdiv-relative-card col-xs-12" style="position: static;">
+        <div class="cdiv-relatives-alert">
+            <span class="fa fa-user-times fa-4x"></span><br />
+            <h4>You don't have any friends yet</h4>
+        </div>
+    </div>
+    }
     @foreach(var friend in Model.Friends) {
         <div class="container cdiv-relative-card col-lg-3 col-md-4 col-sm-4 col-xs-6">
             <div class="cdiv-relative-wrapper">

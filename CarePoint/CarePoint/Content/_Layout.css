@@ -8,7 +8,17 @@
 .tab-content {
     padding: 1em;
 }
-.cspn-proxy{
+.cspn-proxy {
+    width: 150px;
+    height: 70px;
+    font-weight: bold;
+    text-align: center;
+}
+.cspn-proxy.cspn-saving {
+    display:table;
+    margin:0 auto;
+}
+.cspn-proxy:not(.cspn-saving) {
     display: inline-block;
     position:absolute;
     left:0;
@@ -16,10 +26,6 @@
     top:0;
     bottom:0;
     margin:auto;
-    width: 150px;
-    height: 70px;
-    font-weight: bold;
-    text-align: center;
 }
 .cspn-loader {
     display: inline-block;
@@ -41,6 +47,12 @@
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+    color: #808080;
+}
+
+.cdiv-relatives-alert {
+    display: block;
+    margin: 0 auto;
     color: #808080;
 }
 

@@ -33,6 +33,7 @@ function PatientsModalFill(parent, usrName, img, showHistoryHref) {
 }
 $(function () {
     $("#ilink-patient-list").click(function () {
+        $("#imodal-patient-list button.close").prop('disabled', true);
         $("#imodal-patient-list .cdiv-custom-alert").addClass('hidden');
         $("#imodal-patient-list #itab-males, #imodal-patient-list #itab-females").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
         var docId = $("#iinput-usr").val();
@@ -61,6 +62,8 @@ $(function () {
                 if (femalescount == 0) {
                     $("#imodal-patient-list #itab-females .cdiv-custom-alert").removeClass('hidden');
                 }
+
+                $("#imodal-patient-list button.close").prop('disabled', false);
             },
             error: function (msg) {
                 console.log(JSON.stringify(msg));

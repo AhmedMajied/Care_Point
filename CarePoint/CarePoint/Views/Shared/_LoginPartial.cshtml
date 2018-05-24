@@ -33,11 +33,21 @@
                 </ul>
             </li>
             }
-            <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@user.Id">
-                    <span class="fa fa-history fa-2x cspn-nav"><mark class="cmark-notif">17</mark></span>
+            <li><a id="ilink-medical-history" href="/Citizen/MedicalHistory">
+                    <span class="fa fa-history fa-2x cspn-nav"></span>
                 </a></li>
-            <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@user.Id">
-                    <span class="fa fa-paperclip fa-2x cspn-nav"><mark class="cmark-notif">2</mark></span>
+            <li><a id="ilink-attachments" href="/Citizen/Attachments">
+                    @{ int attachmentsNotificationsCount = user.Attachments.Count(a => !a.IsRead??false); }
+                    <span class="fa fa-paperclip fa-2x cspn-nav">
+                        @if (attachmentsNotificationsCount > 0)
+                        {
+                            <mark class="cmark-notif">@attachmentsNotificationsCount</mark>
+                        }
+                        else
+                        {
+                            <mark class="cmark-notif" style="display:none">0</mark>
+                        }
+                    </span>
                 </a></li>
             <li><a id="ilink-relatives" href="/Citizen/Relatives">
                 @{ int relativesNotificationsCount = user.Relatives.Count(r => r.RelativeConfirmed == false || r.RelativeConfirmed == null) + user.AddedRelatives.Count(r => r.CitizenConfirmed == false || r.CitizenConfirmed == null); }
@@ -54,8 +64,18 @@
                 </a>
             </li>
             <li>
-                <a id="ilink-prognosis" href="#">
-                    <span class="fa fa-heart-o fa-2x cspn-nav"><mark class="cmark-notif">7</mark></span>
+                <a id="ilink-prognosis" href="/Citizen/Prognosis">
+                    @{ int prognosisNotificationsCount = user.PotentialDiseases.Count(p => !p.IsRead); }
+                    <span class="fa fa-heart-o fa-2x cspn-nav">
+                    @if (prognosisNotificationsCount == 0)
+                    {
+                        <mark class="cmark-notif" style="display:none">0</mark>
+                    }
+                    else
+                    {
+                        <mark class="cmark-notif">@prognosisNotificationsCount</mark>
+                    }
+                    </span>
                 </a>
             </li>
             <li>

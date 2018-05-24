@@ -208,7 +208,6 @@
     <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
@@ -218,21 +217,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\RelativesHub.cs" />
+    <Compile Include="Hubs\NotificationsHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\PotentialDiseaseViewModel.cs" />
     <Compile Include="Models\RelativeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\citizen-prognosis.css" />
     <Content Include="Content\citizen-relatives.css" />
     <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
@@ -288,9 +290,11 @@
     <Content Include="Images\notfound.png" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\plus.png" />
+    <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\notification-summary.js" />
     <Content Include="Scripts\current-patient.js" />
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
@@ -335,8 +339,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -359,7 +361,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Citizen\Attachments.cshtml" />
     <Content Include="Views\Citizen\MedicalHistory.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
@@ -382,6 +383,7 @@
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsList.cshtml" />
     <Content Include="Views\Citizen\Relatives.cshtml" />
+    <Content Include="Views\Citizen\Prognosis.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,31 +11,32 @@ using DAL;
 using Microsoft.AspNet.Identity;
 using System.Drawing;
 using System.Drawing.Imaging;
+using CarePoint.Hubs;
 
 namespace CarePoint.Controllers
 {
 
     public class MedicalHistoryController : Controller
     {
-        private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
+        private MedicalHistoryBusinessLayer _medicalHistoryBusinessLayer;
 
         public MedicalHistoryController()
         {
-            _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
+            _medicalHistoryBusinessLayer = new MedicalHistoryBusinessLayer();
         }
         public MedicalHistoryController(MedicalHistoryBusinessLayer medicalHistoryBusinessLayer)
         {
-            _medicalHistorBusinessLayer = medicalHistoryBusinessLayer;
+            _medicalHistoryBusinessLayer = medicalHistoryBusinessLayer;
         }
-        public MedicalHistoryBusinessLayer medicalBusinessLayer
+        public MedicalHistoryBusinessLayer MedicalHistoryBusinessLayer
         {
             get
             {
-                return _medicalHistorBusinessLayer ?? new MedicalHistoryBusinessLayer();
+                return _medicalHistoryBusinessLayer ?? new MedicalHistoryBusinessLayer();
             }
             private set
             {
-                _medicalHistorBusinessLayer = value;
+                _medicalHistoryBusinessLayer = value;
             }
         }
         
@@ -69,7 +70,7 @@ namespace CarePoint.Controllers
                         IsRead = false
                     };
 
-                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
+                    MedicalHistoryBusinessLayer.SaveAttachment(attachment);
                 }
                 catch (Exception ex)
                 {
@@ -147,8 +148,8 @@ namespace CarePoint.Controllers
             }
 
             // save history record to database
-            Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
-                medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath);
+            Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
+                medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
 
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
@@ -164,7 +165,7 @@ namespace CarePoint.Controllers
 
         public ActionResult GetAttachmentTypes()
         {
-            var attachmentTypes = _medicalHistorBusinessLayer.GetAttachmentTypes().
+            var attachmentTypes = MedicalHistoryBusinessLayer.GetAttachmentTypes().
                 Select(type => new { type.ID,type.Name }).ToList();
 
             return Json(attachmentTypes);

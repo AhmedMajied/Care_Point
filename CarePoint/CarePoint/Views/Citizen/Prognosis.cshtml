@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Prognosis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using CarePoint.Models
+@model ICollection<PotentialDiseaseViewModel>
+
+
+@section styles{
+    <link href="~/Content/citizen-prognosis.css" rel="stylesheet" />
+}
+<center><h1 class="ch1-section">Family History of Genetic Diseases</h1></center><br />
+<div class="container-fluid">
+    <h4 id="ih4-sort-by">Sort by: </h4>
+    <span class="cspn-radio-chck">
+        <input id="iradio-recent" class="cradio-primary" type="radio" name="sort-by" value="recent" checked />
+        <label for="iradio-recent">Most recent</label>
+    </span>
+
+    <span class="cspn-radio-chck">
+        <input id="iradio-frequent" class="cradio-primary" type="radio" name="sort-by" value="frequent" />
+        <label for="iradio-frequent">Most frequent</label>
+    </span>
+
+    <ul class="list-group">
+        @foreach (var disease in Model)
+        {
+        <li class="list-group-item cli-notif">
+            <div class="row cdiv-disease-prognosis">
+                <div class="col-md-1">
+                    @if (disease.NumberOfCasualties > 3)
+                    {
+                        <div class="col-md-1"><span class="fa fa-exclamation-triangle fa-2x cspn-common-disease"></span></div>
+                    }
+                    else if (disease.NumberOfCasualties > 1)
+                    {
+                        <div class="col-md-1"><span class="fa fa-line-chart fa-2x cspn-noticeable-disease"></span></div>
+                    }
+                    else
+                    {
+                        <div class="col-md-1"><span class="fa fa-flag-checkered fa-2x cspn-new-disease"></span></div>
+                    }
+                </div>
+                <div class="col-md-3"><label>@disease.DiseaseName</label></div>
+                <div class="col-md-3 cdiv-meta-info">@disease.Level</div>
+                <div class="col-md-3 cdiv-meta-info">@disease.TimeStamp.Date.ToString("dd/MM/yyyy")</div>
+                <div class="col-md-2 cdiv-meta-info cdiv-num-victims">@disease.NumberOfCasualties<span class="fa fa-user"></span></div>
+            </div>
+        </li>
+        }
+    </ul>
+</div>

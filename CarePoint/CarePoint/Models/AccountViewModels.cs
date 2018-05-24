@@ -114,7 +114,7 @@ namespace CarePoint.Models
         public DateTime DateOfBirth {
             get
             {
-                return DateTime.Now;
+                return new DateTime(Year,Month,Day);
             }
             private set { }
         }

@@ -1,0 +1,59 @@
+﻿.alert-notif-danger {
+    animation: blink 1s step-start 0s infinite;
+    -webkit-animation: blink 1s step-start 0s infinite;
+    animation-iteration-count: infinite !important;
+    -webkit-animation-iteration-count: infinite !important;
+}
+
+    .alert-notif-danger .cbtn-going {
+        float: right;
+    }
+
+    .alert-notif-danger h4, .alert-notif-danger .fa-exclamation-triangle {
+        color: #d64343;
+    }
+
+.alert-notif-primary h4 {
+    color: #197bb4;
+}
+
+[class*="alert-notif-"] .cspn-awsome {
+    color: #7c7c7c;
+}
+
+[class*="alert-notif-"] {
+    box-shadow: 5px 5px 5px #b8b8b8;
+    background-color: #ffffff;
+    border: 1px solid #b8b8b8;
+    border-radius: 1rem;
+}
+
+    [class*="alert-notif-"] .fa {
+        margin-right: 1rem;
+        border-radius: 50%;
+    }
+
+    [class*="alert-notif-"] .cspn-notif-summary {
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
+    [class*="alert-notif-"] h4 {
+        display: inline;
+    }
+
+@keyframes blink {
+    50% {
+        border: 1px solid #d64343;
+        box-shadow: 5px 5px 5px #d64343;
+        background-color: #ffd0d0;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border: 1px solid #d64343;
+        box-shadow: 5px 5px 5px #d64343;
+        background-color: #ffd0d0;
+    }
+}

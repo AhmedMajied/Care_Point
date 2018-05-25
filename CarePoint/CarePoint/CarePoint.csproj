@@ -219,7 +219,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\NotificationsHub.cs" />
+    <Compile Include="Hubs\SosHub.cs" />
     <Compile Include="Hubs\RelativesHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -231,6 +231,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -288,6 +289,7 @@
     <Content Include="Images\notfound.png" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\plus.png" />
+    <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
@@ -307,8 +309,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\knockout-3.4.2.debug.js" />
-    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\mapAddPlace.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\patient-list.js" />
@@ -323,6 +323,7 @@
     <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
+    <Content Include="Scripts\sosPushNotifications.js" />
     <Content Include="Scripts\step-wizard.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

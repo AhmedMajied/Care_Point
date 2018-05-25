@@ -18,7 +18,7 @@ $(document).ready(function () {
                                 <label for='ichk-friends'>Friends</label>
                             </span>
                             <span class='cspan-error-send'></span>
-                            <input type='submit' value='Send' onclick='sendSOS' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
+                            <input type='submit' value='Send' id='iisend-sos' onclick='sendSOS()' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
                         </form>
                     </div>`;
     $('#ibtn-sos-pop').popover({
@@ -27,6 +27,14 @@ $(document).ready(function () {
         content: popoverContent
     });
 });
+function getUserLocation() {
+    return $.getJSON("http://freegeoip.net/json/").then(function (data) {
+        return {
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+    });
+}
 function sendSOS() {
     var isMedicalPlace = $("#ichk-hospitals").is(':checked');
     var isFamily = $("#ichk-family").is(':checked');
@@ -34,10 +42,9 @@ function sendSOS() {
     var description = $(".ctextarea-description").val();
     var latitude, longitude;
     // to get current location of user
-    $.getJSON("http://freegeoip.net/json/", function (data) {
+    getUserLocation().then(function (data) {
         latitude = data.latitude;
         longitude = data.longitude;
-    });
     if ((description != "") && (isMedicalPlace || isFriend || isFamily)) {
         var model = {
             isMedicalPlace: isMedicalPlace, isFamily: isFamily,
@@ -51,11 +58,11 @@ function sendSOS() {
             data: { model },
             dataType: 'json',
             success: function (data) {
-                alert("Your Request Is Sent");
+                alert(data);
                 $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {
-                alert("Sorry an error happened please try again !" + JSON.stringify(msg));
+                alert("Sorry an Error happened please try again !");
                 $("#iisend-sos").prop("disabled", false);
             }
         });
@@ -69,27 +76,8 @@ function sendSOS() {
         if (!(isMedicalPlace || isFriend || isFamily)) {
             $(".cspan-error-send").text("select at least one option").css("color", "red");
             $('.cspan-error-send').fadeIn('fast').delay(5000).fadeOut('slow');
-
-
         }
 
     }
-}
-
-
-
-/*
-$(function () {
-    var notificationsHub = $.connection.notificationsHub;
-    notificationsHub.client.addMessage = function (message) {
-        $("#messages").append("<li>" + message + "</li>");
-    };
-    $.connection.hub.start()
-        .done(function () {
-        $("#iisend-sos").click(function () {
-            // Call the method on the server
-            notificationsHub.server.sendNotification($(".ctextarea-description").val());
-        });
     });
-
-});*/
+}

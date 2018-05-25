@@ -135,7 +135,7 @@ namespace CarePoint.Models
     public class SearchPlaceViewModel
     {
         public string serviceType { get; set; }
-        public string placeType { get; set; }
+        public string placeName { get; set; }
         public bool checkDistance { get; set; }
         public bool checkCost { get; set; }
         public bool checkRate { get; set; }

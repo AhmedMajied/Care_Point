@@ -120,11 +120,16 @@ namespace BLL
         }
         public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)
         {
-            ICollection<Citizen> relatives = (DBEntities.Relatives.Where(relative => relative.CitizenID == citizenID && relative.RelationTypeID == relationID).ToList())
+            ICollection<Citizen> relatives = (DBEntities.Relatives.Where(relative => relative.CitizenID == citizenID 
+                                               && relative.RelationTypeID == relationID && relative.CitizenConfirmed==true 
+                                               && relative.RelativeConfirmed==true).ToList())
                                               .Select(relative => relative.RelativeCitizen).ToList();
             return relatives;
         }
-
+        public ICollection<RelationType> GetRelationTypes()
+        {
+            return DBEntities.RelationTypes.ToList();
+        }
         public void ConfirmAllRelatives(long citizenId)
         {
             var relatives = GetRelatives(citizenId);

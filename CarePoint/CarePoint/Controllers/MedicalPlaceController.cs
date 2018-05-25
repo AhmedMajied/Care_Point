@@ -308,16 +308,21 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {
+            if (model.serviceType == null)
+                model.serviceType = "";
+            if (model.placeName == null)
+                model.placeName = "";
             Citizen user = User.Identity.GetCitizen();
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
-            if (model.serviceType.ToUpper().Equals("ICU") || model.placeType.ToUpper().Equals("ICU"))
+            if (model.serviceType.ToUpper().Equals("ICU") || model.placeName.ToUpper().Equals("ICU"))
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
             else
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
+
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
                 place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
                 isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();

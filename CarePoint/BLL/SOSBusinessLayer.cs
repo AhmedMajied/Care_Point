@@ -50,10 +50,6 @@ namespace BLL
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
-        public ICollection<RelationType> GetRelationTypes()
-        {
-            return DBEntities.RelationTypes.ToList();
-        }
         public void SaveNotifications(List<Citizen> citizens ,DateTime time,string Text)
         {
             foreach(Citizen citizen in citizens)

@@ -91,6 +91,8 @@ $(function () {
 $("#idiv-searchfor").keydown(function () {
     $("#cspan-searchfor-error").text("");
 });
+
+
 // start functionality for search medicalPlace
 $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
@@ -112,24 +114,31 @@ function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, 
     $("#idiv-search-place-result").append(html);
     $("#idiv-search-place-result").append("<hr>");
 }
+function getUserLocation() {
+    return $.getJSON("http://freegeoip.net/json/").then(function (data) {
+        return {
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+    });
+}
 $("#ibtn-search-place").click(function () {
     var sType = $("#iinp-service-type").val();
-    var pType = $("#iinp-place-type").val();
-    var cDistance = $("#ichk-distane").is(':checked');
+    var pName = $("#iinp-place-type").val();
+    var cDistance = $("#ichk-distance").is(':checked');
     var cCost = $("#ichk-cost").is(':checked');
     var cRate = $("#ichk-rate").is(':checked');
     var cPopularity = $("#ichk-popularity").is(':checked');
     var latitude, longitude;
     // to get current location of user
-    $.getJSON("http://freegeoip.net/json/", function (data) {
+    getUserLocation().then(function (data) {
         latitude = data.latitude;
         longitude = data.longitude;
-    });
-    if ((sType != "" || pType != "") && (cDistance || cCost || cRate || cPopularity)) {
+    if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
         $("#ibtn-search-place").prop("disabled", true);
         $("#iiloading-place-result").css("display", "block");
         var model = {
-            serviceType: sType, placeType: pType,
+            serviceType: sType, placeName: pName,
             checkDistance: cDistance, checkCost: cCost,
             checkRate: cRate, checkPopularity: cPopularity,
             latitude: latitude, longitude: longitude
@@ -150,7 +159,7 @@ $("#ibtn-search-place").click(function () {
         });
     }
     else {
-        if (sType == "" && pType == "") {
+        if (sType == "" && pName == "") {
             $("#cspan-service-place-error").text("please fill at least one field").css("color", "red");
         }
         if (!(cDistance || cCost || cRate || cPopularity)) {
@@ -159,6 +168,7 @@ $("#ibtn-search-place").click(function () {
         }
 
     }
+    });
 });
 $("#iinp-service-type").keydown(function () {
     $("#cspan-service-place-error").text("");
@@ -166,7 +176,7 @@ $("#iinp-service-type").keydown(function () {
 $("#iinp-place-type").keydown(function () {
     $("#cspan-service-place-error").text("");
 });
-$('#ichk-distane').on('change', function () {
+$('#ichk-distance').on('change', function () {
     $('#cspan-priority-error').text("");
 });
 $('#ichk-cost').on('change', function () {

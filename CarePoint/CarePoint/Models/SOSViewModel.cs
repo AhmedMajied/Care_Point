@@ -15,4 +15,11 @@ namespace CarePoint.Models
         public float latitude { get; set; }
         public float longitude { get; set; }
     }
+    public class SOSNotificationViewModel
+    {
+        public string userPhoneNumber { get; set; }
+        public string description { get; set; }
+        public float latitude { get; set; }
+        public float longitude { get; set; }
+    }
 }

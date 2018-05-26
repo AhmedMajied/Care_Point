@@ -42,12 +42,6 @@
     background-color: #d1ecee;
 }
 
-.cbtn-success, .cbtn-success:hover, .cbtn-success:focus {
-    color: #008000;
-    outline:none !important;
-    font-weight: bold;
-}
-
 .cbtn-danger, .cbtn-danger:hover, .cbtn-danger:focus {
     color: #e92727;
     outline:none !important;

@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using System.Drawing;
 using System.Drawing.Imaging;
 using CarePoint.Hubs;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
@@ -45,8 +46,20 @@ namespace CarePoint.Controllers
             String mimeType = MimeMapping.GetMimeMapping(path);
 
             return new FilePathResult(path, mimeType);
-        } 
+        }
+        
+        public FileResult DownloadAttachment(string path, string fileName)
+        {
+            String mimeType = MimeMapping.GetMimeMapping(path);
+
+            return new FilePathResult(path, mimeType)
+            {
+                FileDownloadName = fileName 
+            };
+        }
+
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {
             string[] typeIDs = form.GetValues("attachmentTypes");
@@ -83,6 +96,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadPrescription(FormCollection form)
         {
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
@@ -93,7 +107,7 @@ namespace CarePoint.Controllers
             string[] diseases = form.GetValues("diseaseName");
             string[] genticDiseases = form.GetValues("genetic");
             string[] medicines = form.GetValues("drugName");
-            string[] dosesDescription = form.GetValues("dose");
+            string[] doses = form.GetValues("dose");
             string remarks = form["remarks"];
             
             HistoryRecord historyRecord = new HistoryRecord
@@ -150,18 +164,19 @@ namespace CarePoint.Controllers
 
             // save history record to database
             Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
-                medicines, dosesDescription, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
+                medicines, doses, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
+
 
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            if (medicines[0].Equals(""))
+            //if (medicines[0].Equals(""))
                 return Redirect(Request.UrlReferrer.ToString());
 
-            return new FilePathResult(prescriptionFilePath, "image/jpg")
+            /*return new FilePathResult(prescriptionFilePath, "image/jpg")
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };
+            };*/
         }
 
         public ActionResult GetAttachmentTypes()

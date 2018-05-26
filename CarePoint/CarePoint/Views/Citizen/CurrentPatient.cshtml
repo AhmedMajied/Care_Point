@@ -14,7 +14,7 @@
 }
 
 <div class="row">
-    <div class="col-md-2">@Html.Image(Model.Photo)</div>
+    <div class="col-md-2">@Html.Image(Model.Photo, new { @class="cimg-user"})</div>
     <div class="col-md-8">
         <h4><b>Name:</b> @Model.Name</h4>
         <h4><b>Gender:</b> @Model.Gender</h4>
@@ -93,7 +93,7 @@
                                         <input list="drugs" name="drugName" placeholder="drug name" class="form-control">
                                     </div>
                                     <div class="col-md-5">
-                                        <input name="dose" class="form-control cinp-dose" type="text" placeholder="dose description">
+                                        <input name="dose" class="form-control cinp-dose" type="text" maxlength="34" placeholder="dose">
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-danger cbtn-modal cbtn-remove hidden"><span class="fa fa-trash"></span></button>
@@ -114,7 +114,7 @@
                         <div class="modal-footer">
                             <button id="ibtn-prev" type="button" class="btn btn-default" disabled>Previous</button>
                             <button id="ibtn-nxt" type="button" class="btn btn-success">Next</button>
-                            <input type="submit" id="ibtn-submit" class="btn btn-success" value="Submit">
+                            <input type="submit" id="ibtn-submit" class="btn btn-success" data-toggle="modal" data-target="#imodal-saving" value="Submit">
                         </div>
                     }
                 </div>
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" id="ibtn-upload" class="btn btn-success" value="Upload">
+                                <input type="submit" id="ibtn-upload" class="btn btn-success" data-toggle="modal" data-target="#imodal-saving" value="Upload">
                             </div>
                     }
                 </div>
@@ -175,7 +175,7 @@
         <li class="active"><a id="itab-medical-history" href="#idiv-medical-history-tab" data-toggle="tab">Medical History</a></li>
         @foreach (var element in Model.Attachments)
         {
-            <li><a id="itab-@element.Key.ToLower()" href="#idiv-@element.Key.ToLower()-tab" data-toggle="tab">@element.Key</a></li>
+            <li><a id="itab-@element.Key.Name.ToLower()" href="#idiv-@element.Key.Name.ToLower()-tab" data-toggle="tab">@element.Key.Name</a></li>
         }
     </ul>
     <div class="tab-content">
@@ -184,8 +184,8 @@
         </div>
         @foreach (var element in Model.Attachments)
         {
-            <div id="idiv-@element.Key.ToLower()-tab" class="tab-pane fade">
-                @Html.Partial("_AttachmentTabPartial", element.Value,, new ViewDataDictionary { { "includeIsRead", false } })
+            <div id="idiv-@element.Key.Name.ToLower()-tab" class="tab-pane fade">
+                @Html.Partial("_AttachmentTabPartial", element.Value, new ViewDataDictionary { { "includeIsRead", false } })
             </div>
         }
     </div>

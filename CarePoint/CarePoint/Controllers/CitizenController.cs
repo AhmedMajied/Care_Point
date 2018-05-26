@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using System.Collections;
 using System.Data.SqlClient;
 using CarePoint.Hubs;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
@@ -37,6 +38,7 @@ namespace CarePoint.Controllers
             }
         }
 
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult CurrentPatient(long citizenID)
         {
             Citizen citizen = CitizenBusinessLayer.GetCitizen(citizenID);
@@ -166,9 +168,10 @@ namespace CarePoint.Controllers
             return Json(res);
         }
 
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public JsonResult PatientsList(long doctorId)
         {
-            List<Citizen> list = _citizenBusinessLayer.getPatientList(doctorId);
+            List<Citizen> list = CitizenBusinessLayer.getPatientList(doctorId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)

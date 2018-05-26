@@ -10,6 +10,7 @@ using System.Data.Entity.Spatial;
 using System.IO;
 using Extensions;
 using System.Diagnostics;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
@@ -157,6 +158,8 @@ namespace CarePoint.Controllers
 
             return View("ProfilePage",model);
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void AddWorkslot(WorkSlotViewModel model)
         {
             foreach(var attribute in model.GetType().GetProperties()) {
@@ -174,12 +177,15 @@ namespace CarePoint.Controllers
                 }
             }
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void RemoveWorkslot(long ServiceID,TimeSpan StartTime,TimeSpan EndTime)
         {
             ServiceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddService(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -198,7 +204,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
-
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
         {
             if(ModelState.IsValid)
@@ -219,12 +225,14 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void UpdateCareUnitsCount(List<CareUnit> careUnits)
         {
             CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -247,6 +255,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddCareUnit(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -266,7 +275,8 @@ namespace CarePoint.Controllers
             }
             return ProfilePage(model.MedicalPlaceID);
         }
-        
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult MedicalPlace()
         {
             MedicalPlaceViewModels model = new MedicalPlaceViewModels();
@@ -279,6 +289,8 @@ namespace CarePoint.Controllers
             model.medicalPlaceTypes = dropDownList;
             return View("AddMedicalPlace", model);
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
         {
             DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
@@ -305,6 +317,7 @@ namespace CarePoint.Controllers
             MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
             return ProfilePage(newPlace.ID);
         }
+
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {
             Citizen user = User.Identity.GetCitizen();

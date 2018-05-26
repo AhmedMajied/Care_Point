@@ -205,11 +205,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Custom AuthorizationAttributes\AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
     <Compile Include="Extensions\CalendarDay.cs" />
@@ -388,9 +390,12 @@
     <Content Include="Views\Citizen\Relatives.cshtml" />
     <Content Include="Views\Citizen\Prognosis.cshtml" />
     <Content Include="Views\Citizen\_AttachmentTabPartial.cshtml" />
+    <Content Include="Views\Shared\_NewPatient.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Videos\" />
     <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
   </ItemGroup>

@@ -9,27 +9,37 @@ using Microsoft.AspNet.Identity;
 
 namespace CarePoint.Hubs
 {
-    public class RelativesHub : Hub
+    public class NotificationsHub : Hub
     {
         public static ConcurrentDictionary<long, string> Connections = new ConcurrentDictionary<long, string>();
-        private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<RelativesHub>();
-        public void Notify(long userId, int increment)
+        private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationsHub>();
+        
+        public static void NotifyRelative(long userId, int increment, string relativeName = "", string relation = "")
         {
             string connectionId;
             Connections.TryGetValue(userId, out connectionId);
             if (!String.IsNullOrWhiteSpace(connectionId))
             {
-                Clients.Client(connectionId).notify(increment);
+                hubContext.Clients.Client(connectionId).notifyRelative(increment, relativeName, relation);
+            }
+        }
+        public static void NotifyPrognosis(long userId, string diseaseName)
+        {
+            string connectionId;
+            Connections.TryGetValue(userId, out connectionId);
+            if (!String.IsNullOrWhiteSpace(connectionId))
+            {
+                hubContext.Clients.Client(connectionId).notifyPrognosis(diseaseName);
             }
         }
 
-        public static void StaticNotify(long userId, int increment)
+        public static void NotifyAttachment(long userId, string doctorName,string fileName)
         {
             string connectionId;
             Connections.TryGetValue(userId, out connectionId);
             if (!String.IsNullOrWhiteSpace(connectionId))
             {
-                hubContext.Clients.Client(connectionId).notify(increment);
+                hubContext.Clients.Client(connectionId).notifyAttachment(doctorName,fileName);
             }
         }
 

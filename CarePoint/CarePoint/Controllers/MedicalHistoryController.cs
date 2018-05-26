@@ -11,31 +11,33 @@ using DAL;
 using Microsoft.AspNet.Identity;
 using System.Drawing;
 using System.Drawing.Imaging;
+using CarePoint.Hubs;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
-
+    [Authorize]
     public class MedicalHistoryController : Controller
     {
-        private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
+        private MedicalHistoryBusinessLayer _medicalHistoryBusinessLayer;
 
         public MedicalHistoryController()
         {
-            _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
+            _medicalHistoryBusinessLayer = new MedicalHistoryBusinessLayer();
         }
         public MedicalHistoryController(MedicalHistoryBusinessLayer medicalHistoryBusinessLayer)
         {
-            _medicalHistorBusinessLayer = medicalHistoryBusinessLayer;
+            _medicalHistoryBusinessLayer = medicalHistoryBusinessLayer;
         }
-        public MedicalHistoryBusinessLayer medicalBusinessLayer
+        public MedicalHistoryBusinessLayer MedicalHistoryBusinessLayer
         {
             get
             {
-                return _medicalHistorBusinessLayer ?? new MedicalHistoryBusinessLayer();
+                return _medicalHistoryBusinessLayer ?? new MedicalHistoryBusinessLayer();
             }
             private set
             {
-                _medicalHistorBusinessLayer = value;
+                _medicalHistoryBusinessLayer = value;
             }
         }
         
@@ -57,6 +59,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {
             string[] typeIDs = form.GetValues("attachmentTypes");
@@ -73,14 +76,15 @@ namespace CarePoint.Controllers
                     {
                         TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = 26,//User.Identity.GetUserId<long>(),
+                        SpecialistID = User.Identity.GetUserId<long>(),
                         CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
                         FileName = files[i].FileName,
                         IsRead = false
                     };
 
-                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
+                    MedicalHistoryBusinessLayer.SaveAttachment(attachment);
+                    NotificationsHub.NotifyAttachment(attachment.CitizenID, User.Identity.GetCitizen().Name,attachment.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +96,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadPrescription(FormCollection form)
         {
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
@@ -158,8 +163,9 @@ namespace CarePoint.Controllers
             }
 
             // save history record to database
-            Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
-                medicines, doses, medicinesAlternatives, prescriptionFilePath);
+            Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
+                medicines, doses, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
+
 
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
@@ -175,7 +181,7 @@ namespace CarePoint.Controllers
 
         public ActionResult GetAttachmentTypes()
         {
-            var attachmentTypes = _medicalHistorBusinessLayer.GetAttachmentTypes().
+            var attachmentTypes = MedicalHistoryBusinessLayer.GetAttachmentTypes().
                 Select(type => new { type.ID,type.Name }).ToList();
 
             return Json(attachmentTypes);

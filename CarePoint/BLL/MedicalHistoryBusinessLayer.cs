@@ -31,7 +31,7 @@ namespace BLL
         }
 
         public Bitmap SavePrescription(HistoryRecord historyRecord, string[] patientMedicines,
-            string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath)
+            string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath,Action<long,string> notifyPrognosis = null)
         {
             Canvas canvas = new Canvas();
             Bitmap bitmap = null;
@@ -54,9 +54,8 @@ namespace BLL
             }
 
             // save history record to database
-            /*historyRecord.IsRead = false;
-            historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
-            DBEntities.SaveChanges();*/
+            historyRecord.IsRead = false;
+            DBEntities.HistoryRecords.Add(historyRecord);
             
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -88,8 +87,46 @@ namespace BLL
                 bitmap = canvas.drawText(historyRecord, patientMedicines,
                 medicinesAlternatives,dosesDescription);
             }
-            
+            NotifyForGeneticDiseases(historyRecord.Citizen,historyRecord,0,true,notifyPrognosis);
+            DBEntities.SaveChanges();
             return bitmap;
+        }
+
+        private void NotifyForGeneticDiseases(Citizen citizen,HistoryRecord record, int level,bool includeSiblings, Action<long, string> notifyPrognosis = null)
+        {
+            if (level > citizen.PrognosisMaxLevel)
+                return;
+            if (record.CitizenID != citizen.Id)
+            {
+                foreach (var disease in record.Diseases)
+                {
+                    if (disease.IsGenetic??false)
+                    {
+                        PotentialDisease potentialDisease = new PotentialDisease()
+                        {
+                            CitizenID = citizen.Id,
+                            DiseaseID = disease.ID,
+                            TimeStamp = DateTime.Now,
+                            Level = level
+                        };
+                        DBEntities.PotentialDiseases.Add(potentialDisease);
+                        notifyPrognosis(citizen.Id, disease.Name);
+                    }
+                }
+            }
+            if (includeSiblings)
+            {
+                var siblings = citizen.Relatives.Where(r => r.RelationTypeID == 2).Select(r => r.Citizen);
+                foreach(Citizen s in siblings)
+                {
+                    NotifyForGeneticDiseases(s, record, level, false, notifyPrognosis);
+                }
+            }
+            var children = citizen.Relatives.Where(r => r.RelationTypeID == 1).Select(r => r.Citizen);
+            foreach(Citizen c in children)
+            {
+                NotifyForGeneticDiseases(c, record, level + 1, false,notifyPrognosis);
+            }
         }
 
     }

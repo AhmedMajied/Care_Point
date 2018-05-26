@@ -133,6 +133,9 @@
     <Compile Include="PharmacyRating.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PotentialDisease.cs">
+      <DependentUpon>CarePointModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receipt.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>

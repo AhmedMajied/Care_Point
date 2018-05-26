@@ -14,6 +14,10 @@ function updateIDSerial(oldID) {
 }
 
 $(document).ready(function () {
+    $('input, textarea, select').on('focus', function () {
+        $(this).removeClass('input-error');
+    });
+
     $(function () {
         $(document).on('change', ':file', function () {
             var input = $(this);
@@ -31,7 +35,7 @@ $(document).ready(function () {
         var empty_input = false;
         // fields validation
         $(this).closest('.cdiv-list').find("input, select").each(function () {
-            if ($(this).is("select:has(> option:selected:disabled)") ||$(this).val().trim() == "" && ! $(this).hasClass('cinp-dose')) {
+            if ($(this).is("select:has(> option:selected:disabled)") ||$(this).val().trim() == "") {
                 $(this).addClass('input-error');
                 empty_input = true;
             }
@@ -90,7 +94,24 @@ $(document).ready(function () {
     });
 
     $("#ibtn-add-prescription").click(function () {
+        //Reset step wizard progress
+        $("#ibtn-submit").css('display', 'none');
+        $("#ibtn-prev").css('display', 'none');
+        $("#ibtn-nxt").css('display', 'inline-block');
+        $("#ibtn-nxt, #ibtn-prev, #ibtn-submit").prop("disabled", true);
+        var progress_line = $('.modal-header').find('.f1-progress-line');
+        var parent_fieldset = $('.f1 .cdiv-step:nth-child(' + current_step + ')');
+        current_step = 1;
+        $("#imodal-history-record .modal-header").find(".f1-step").removeClass("activated active");
+        $("#imodal-history-record .modal-header").find(".f1-step:first").addClass("active");
+        bar_progress(progress_line, null);
+        parent_fieldset.fadeOut(400, function () {
+            $('.f1 .cdiv-step:nth-child(1)').fadeIn(function () {
+                update_step_nav_buttons();
+            });
+        });
 
+        //Load drugs
         if (drugs == null) {
             $.ajaxSetup({ async: false });
             $.post("/Medicine/GetAllMedicines", {}, function (data) {
@@ -123,6 +144,7 @@ $(document).ready(function () {
         }
     });
 
+    //Reset modals when closed
     $("#imodal-history-record, #imodal-upload-attachment").on("hidden.bs.modal", function () {
         $(this).find(".c-dirty").remove();
         $(this).find("input:not([type='radio']):not([type='checkbox']):not([type='button']):not([type='submit']):not(.cinp-unresettable), textarea, select").val("");
@@ -136,10 +158,7 @@ $(document).ready(function () {
 
     $("#ibtn-submit").submit(function () {
         var url = $(this).attr("action");
-
         $.ajaxSetup({ async: false });
-        $.post(url, $(this).serialize(), function () {
-            // Note: if u don't need this callback function then remove it but don't touch post request 
-        });
+        $.post(url, $(this).serialize());
     });
 });

@@ -19,11 +19,11 @@
                     <span class="fa fa-chevron-down fa-fw cspn-nav"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#" id="ilink-new-patient">New patient</a></li>
+                    <li><a data-toggle="modal" href="#imodal-new-patient" id="ilink-new-patient">New patient</a></li>
                     <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
                     @{ string id = (User.Identity.GetCitizen()).Id.ToString();}
                     @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
-                    <li><a href="#" id="ilink-patient-list">My patients</a></li>
+                    <li><a data-toggle="modal" href="#imodal-patient-list" id="ilink-patient-list">My patients</a></li>
                     <li class="divider"></li>
                     <li><a href="/MedicalPlace/MedicalPlace" id="ilink-new-place">New workplace</a></li>
                     <li><a href="#" id="ilink-place-settings">My workplace</a></li>
@@ -65,7 +65,7 @@
             </li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" style="background-color: #21c2eb;">
-                    @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iuser-img" })
+                    @Html.Image(User.Identity.GetCitizen().Photo, new { @Id = "iimg-navbar-profile", @class = "cimg-user" })
                     <span class="fa fa-chevron-down fa-fw cspn-nav"></span>
                 </a>
                 <ul class="dropdown-menu">

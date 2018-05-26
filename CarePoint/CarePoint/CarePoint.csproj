@@ -385,9 +385,11 @@
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsList.cshtml" />
     <Content Include="Views\Citizen\Relatives.cshtml" />
+    <Content Include="Views\Shared\_NewPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Videos\" />
     <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
     <Folder Include="Views\SOS\" />

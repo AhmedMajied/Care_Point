@@ -20,7 +20,7 @@ namespace BLL
 
         public Citizen GetCitizen(long citizenID)
         {
-            return DBEntities.Citizens.Single(citizen => citizen.Id == citizenID);
+            return DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == citizenID);
         }
         
         public ICollection<Speciality> GetSpecialities()

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Extensions
+@using DAL
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title</title>
@@ -13,13 +15,14 @@
     <link rel="stylesheet" type="text/css" href="~/Content/tab.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/scrollbar.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/modal.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/patient-list.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-notify.css" />
     @RenderSection("styles", false)
 
 </head>
-<body>
+<body class="cscrollbar-container cscrollbar">
     <nav class="navbar navbar-default" style="background-color: #21c2eb;">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -43,11 +46,25 @@
             <div class="col-md-8">
                 @RenderBody()
             </div>
-            <div class="col-md-2" style="background-color:#b6ff00">This is for Adds</div>
+            <div id="idiv-adds" class="col-md-2" style="height: 200px;"><center><label>Advertising area</label></center></div>
+        </div>
+    </div>
+    <div id="imodal-saving" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body cdiv-modal-sm-bdy">
+                    <span class="cspn-proxy cspn-saving"><span class="cspn-loader"></span><br />Saving...</span>
+                </div>
+            </div>
         </div>
     </div>
     @Html.Partial("_SearchResultPartial")
-    @Html.Partial("_PatientsList")
+
+    @if (User.Identity.GetCitizen() is Specialist)
+    {
+        @Html.Partial("_PatientsList")
+        @Html.Partial("_NewPatient")
+    }
 
 
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>

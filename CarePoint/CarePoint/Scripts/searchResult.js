@@ -47,12 +47,14 @@ $("#ibtn-close").click(function () {
     $("#itab-pharmacists hr").remove();
 });
 $(function () {
-    $("#ibtn-acc").click(function () {
+    $("#ibtn-srch-account").click(function () {
         var searchBy = $("#iselect-srch-by").val();
         var searchFor = $("#idiv-searchfor").val();
+        $("#imodal-people-srch-result button.close").prop('disabled', true);
+        $("#imodal-people-srch-result .cdiv-custom-alert").addClass('hidden');
+        $("#imodal-people-srch-result #itab-non-specialists, #imodal-people-srch-result #itab-doctors, #imodal-people-srch-result #itab-pharmacists").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+
         if (!(searchFor === "")) {
-            $("#ibtn-acc").prop("disabled", true);
-            $("#iiloading-account-result").css("display", "block");
             $.ajax({
                 type: 'POST',
                 url: '/Citizen/SearchAccount',
@@ -64,19 +66,29 @@ $(function () {
                     for (var i = 0; i < ccount; i++) {
                         generateHTML("#itab-non-specialists", citizens[i].Name, citizens[i].Photo, citizens[i].Id, citizens[i].Relation);
                     }
+                    $("#imodal-people-srch-result #itab-non-specialists .cspn-proxy").remove();
+                    if (ccount == 0) {
+                        $("#imodal-people-srch-result #itab-non-specialists .cdiv-custom-alert").removeClass('hidden');
+                    }
                     var doctors = data.doctors;
                     var dcount = doctors.length;
                     for (i = 0; i < dcount; i++) {
                         generateHTML("#itab-doctors", doctors[i].Name, doctors[i].Photo, doctors[i].Id, doctors[i].Relation);
+                    }
+                    $("#imodal-people-srch-result #itab-doctors .cspn-proxy").remove();
+                    if (dcount == 0) {
+                        $("#imodal-people-srch-result #itab-doctors .cdiv-custom-alert").removeClass('hidden');
                     }
                     var pharmacists = data.pharmacists;
                     var pcount = pharmacists.length;
                     for (i = 0; i < pcount; i++) {
                         generateHTML("#itab-pharmacists", pharmacists[i].Name, pharmacists[i].Photo, pharmacists[i].Id, pharmacists[i].Relation);
                     }
-                    $("#imodal-people-srch-result").modal('show');
-                    $("#iiloading-account-result").css("display", "none");
-                    $("#ibtn-acc").prop("disabled", false);
+                    $("#imodal-people-srch-result #itab-pharmacists .cspn-proxy").remove();
+                    if (pcount == 0) {
+                        $("#imodal-people-srch-result #itab-pharmacists .cdiv-custom-alert").removeClass('hidden');
+                    }
+                    $("#imodal-people-srch-result button.close").prop('disabled', false);
                 },
                 error: function (msg) {
                     console.log(JSON.stringify(msg));
@@ -122,7 +134,7 @@ function getUserLocation() {
         }
     });
 }
-$("#ibtn-search-place").click(function () {
+$("#ibtn-srch-place").click(function () {
     var sType = $("#iinp-service-type").val();
     var pName = $("#iinp-place-type").val();
     var cDistance = $("#ichk-distance").is(':checked');
@@ -135,7 +147,7 @@ $("#ibtn-search-place").click(function () {
         latitude = data.latitude;
         longitude = data.longitude;
     if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
-        $("#ibtn-search-place").prop("disabled", true);
+        $("#ibtn-srch-place").prop("disabled", true);
         $("#iiloading-place-result").css("display", "block");
         var model = {
             serviceType: sType, placeName: pName,
@@ -153,7 +165,7 @@ $("#ibtn-search-place").click(function () {
                     MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone, place.isSpecialist, place.isJoined,"#")
                 });
                 $("#iiloading-place-result").css("display", "none");
-                $("#ibtn-search-place").prop("disabled", false);
+                $("#ibtn-srch-place").prop("disabled", false);
                 $("#imodal-place-srch-result").modal('show');
             }
         });

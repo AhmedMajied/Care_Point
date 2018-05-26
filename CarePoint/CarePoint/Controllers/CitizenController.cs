@@ -15,6 +15,7 @@ using CarePoint.Hubs;
 
 namespace CarePoint.Controllers
 {
+    [Authorize]
     public class CitizenController : Controller
     {
         private CitizenBusinessLayer _citizenBusinessLayer;
@@ -39,20 +40,48 @@ namespace CarePoint.Controllers
         public ActionResult CurrentPatient(long citizenID)
         {
             Citizen citizen = CitizenBusinessLayer.GetCitizen(citizenID);
-
-            return View(citizen);
+            CurrentPatientViewModel model = new CurrentPatientViewModel()
+            {
+                Id = citizen.Id,
+                Name = citizen.Name,
+                Age = DateTime.Now.Year - citizen.DateOfBirth.Value.Year,
+                BloodType = citizen.BloodType.Name,
+                Gender = citizen.Gender,
+                Photo = citizen.Photo,
+                HistoryRecords = citizen.HistoryRecords,
+                Attachments = citizen.Attachments.OrderBy(a => a.AttachmentType.ID)
+                .GroupBy(a => a.AttachmentType)
+                .ToDictionary(g => g.Key, g => g.Select(attachment => new AttachmentViewModel()
+                {
+                    IsRead = attachment.IsRead ?? false,
+                    Date = attachment.Date,
+                    FileName = attachment.FileName,
+                    FilePath = attachment.FilePath,
+                    SpecialistName = attachment.Specialist.Name
+                }).ToList())
+            };
+            return View(model);
         }
 
-        [Authorize]
         public ActionResult MedicalHistory()
         {
             return View(CitizenBusinessLayer.GetCitizen(User.Identity.GetUserId<long>()).HistoryRecords); 
         }
 
         // GET: Attachments
-        public ActionResult Attachments(long id)
+        public ActionResult Attachments()
         {
-            return View(CitizenBusinessLayer.GetCitizen(User.Identity.GetUserId<long>()).Attachments);
+            IDictionary<AttachmentType, List<AttachmentViewModel>> model = CitizenBusinessLayer.GetCitizen(User.Identity.GetUserId<long>()).Attachments.OrderBy(a => a.AttachmentType.ID)
+                .GroupBy(a => a.AttachmentType)
+                .ToDictionary(g => g.Key,g => g.Select( attachment => new AttachmentViewModel() {
+                    IsRead=attachment.IsRead??false,
+                    Date=attachment.Date,
+                    FileName=attachment.FileName,
+                    FilePath=attachment.FilePath,
+                    SpecialistName=attachment.Specialist.Name
+                }).ToList());
+            
+            return View(model);
         }
 
         public ActionResult Relatives()
@@ -186,15 +215,24 @@ namespace CarePoint.Controllers
 
         public ActionResult Prognosis()
         {
-            var potintialDiseases = CitizenBusinessLayer.GetPotintialDiseases(User.Identity.GetUserId<long>());
+            long id = User.Identity.GetUserId<long>();
+            var potintialDiseases = CitizenBusinessLayer.GetPotintialDiseases(id);
             ICollection<PotentialDiseaseViewModel> model = potintialDiseases.GroupBy(p => p.DiseaseID)
                 .Select(g => new PotentialDiseaseViewModel {
                     DiseaseName=g.First().Disease.Name,
                     Level = g.Min(p => p.Level),
                     NumberOfCasualties=g.Count(),
-                    TimeStamp=g.Max(p => p.TimeStamp)
+                    TimeStamp=g.Max(p => p.TimeStamp),
+                    IsRead=!g.Any(p => !p.IsRead)
                 }).ToList();
+            CitizenBusinessLayer.ReadAllPotentialDiseases(id);
             return View(model);
+        }
+
+        [HttpPost]
+        public void ReadAttachmentsOfType(int typeId)
+        {
+            CitizenBusinessLayer.ReadAttachmentsOfType(User.Identity.GetUserId<long>(), typeId);
         }
     }
 }

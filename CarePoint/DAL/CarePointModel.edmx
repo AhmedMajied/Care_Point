@@ -1795,7 +1795,7 @@
           <NavigationProperty Name="Pharmacies" Relationship="Self.FK_Pharmacies_MedicalPlace" FromRole="MedicalPlace" ToRole="Pharmacies" />
           <NavigationProperty Name="Services" Relationship="Self.FK_Services_MedicalGroup" FromRole="MedicalPlace" ToRole="Services" />
           <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_MedicalPlace" FromRole="MedicalPlace" ToRole="SOSs" />
-          <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
+          <NavigationProperty Name="Admins" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CareUnits" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="MedicalPlace" ToRole="CareUnit" />
@@ -2045,7 +2045,7 @@
           <NavigationProperty Name="ReceiptsAdded" Relationship="Self.FK_Receipts_Specialists" FromRole="Specialists" ToRole="Receipts" />
           <NavigationProperty Name="ServiceMembershipRequests" Relationship="Self.FK_MedicalPlaceMembers_Specialists" FromRole="Specialists" ToRole="ServiceMembershipRequests" />
           <NavigationProperty Name="Speciality" Relationship="Self.FK_Specialists_Specialities" FromRole="Specialists" ToRole="Specialities" />
-          <NavigationProperty Name="WorkingMedicalPlaces" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
+          <NavigationProperty Name="AdministratedMedicalPlaces" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
         </EntityType>
         <EntityType Name="Speciality">
           <Key>

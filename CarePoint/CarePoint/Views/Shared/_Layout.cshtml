@@ -92,14 +92,21 @@
         }
 
         notificationsHub.client.notifyPrognosis = function (diseaseName) {
-            alert("hello");
-            alert(diseaseName);
             var notificationMark = $("#ilink-prognosis .cmark-notif");
             var notificationCount = parseInt(notificationMark.text());
             notificationCount += 1;
             notificationMark.text(notificationCount);
             notificationMark.removeAttr("style");
             showPrognosisNotifSummary(diseaseName, "/Citizen/Prognosis");
+        }
+
+        notificationsHub.client.notifyAttachment = function (doctorName, fileName) {
+            var notificationMark = $("#ilink-attachments .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += 1;
+            notificationMark.text(notificationCount);
+            notificationMark.removeAttr("style");
+            showAttachmentNotifSummary(doctorName, fileName, "#");
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>

@@ -22,7 +22,7 @@ namespace DAL
             this.Pharmacies = new HashSet<Pharmacy>();
             this.Services = new HashSet<Service>();
             this.SOSses = new HashSet<SOSs>();
-            this.Specialists = new HashSet<Specialist>();
+            this.Admins = new HashSet<Specialist>();
             this.CareUnits = new HashSet<CareUnit>();
         }
     
@@ -51,7 +51,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOSs> SOSses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Specialist> Specialists { get; set; }
+        public virtual ICollection<Specialist> Admins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CareUnit> CareUnits { get; set; }
     }

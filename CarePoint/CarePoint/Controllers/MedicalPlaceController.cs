@@ -13,6 +13,7 @@ using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
+    [Authorize]
     public class MedicalPlaceController : Controller
     {
         // GET: MedicalPlace
@@ -83,9 +84,7 @@ namespace CarePoint.Controllers
                 CareUnits =  new List<CareUnitViewModel>(),
                 ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
-
-                IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
-
+                IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
             };
             
             
@@ -319,8 +318,8 @@ namespace CarePoint.Controllers
                 medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
-                place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
-                isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();
+                place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist)/*,
+                isJoined = place.Specialists.Any(usr => usr.Id == user.Id)*/}).ToList();
             return Json(result);
         }
     }

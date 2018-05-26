@@ -1,0 +1,10 @@
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\DAL.dll.config
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\DAL.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\DAL.pdb
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\EntityFramework.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\EntityFramework.SqlServer.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\EntityFramework.xml
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\bin\Release\EntityFramework.SqlServer.xml
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Release\DAL.dll
+F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\DAL\obj\Release\DAL.pdb

@@ -125,10 +125,20 @@ namespace BLL
             var relatives = GetRelatives(citizenId);
             foreach(var relative in relatives)
             {
-                DBEntities.Relatives.Attach(relative);
                 DBEntities.Entry(relative).State = EntityState.Modified;
                 relative.CitizenConfirmed = true;
                 relative.RelativeConfirmed = true;
+            }
+            DBEntities.SaveChanges();
+        }
+
+        public void ReadAllPotentialDiseases(long citizenId)
+        {
+            var potentialDiseases = DBEntities.PotentialDiseases.Where(p => p.CitizenID == citizenId);
+            foreach(var disease in potentialDiseases)
+            {
+                DBEntities.Entry(disease).State = EntityState.Modified;
+                disease.IsRead = true;
             }
             DBEntities.SaveChanges();
         }
@@ -173,6 +183,18 @@ namespace BLL
         public ICollection<PotentialDisease> GetPotintialDiseases(long citizenId)
         {
             return DBEntities.Citizens.SingleOrDefault(c => c.Id == citizenId).PotentialDiseases.ToList();
+        }
+
+        public void ReadAttachmentsOfType(long citizenId, int typeId)
+        {
+            var attachments = DBEntities.Attachments.Where( a => a.TypeID == typeId && a.CitizenID == citizenId);
+            foreach(var attachment in attachments)
+            {
+                DBEntities.Entry(attachment).State = EntityState.Modified;
+                attachment.IsRead = true;
+
+            }
+            DBEntities.SaveChanges();
         }
     }
 }

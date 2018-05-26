@@ -32,6 +32,17 @@ namespace CarePoint.Hubs
                 hubContext.Clients.Client(connectionId).notifyPrognosis(diseaseName);
             }
         }
+
+        public static void NotifyAttachment(long userId, string doctorName,string fileName)
+        {
+            string connectionId;
+            Connections.TryGetValue(userId, out connectionId);
+            if (!String.IsNullOrWhiteSpace(connectionId))
+            {
+                hubContext.Clients.Client(connectionId).notifyAttachment(doctorName,fileName);
+            }
+        }
+
         public override Task OnConnected()
         {
             if (!Connections.ContainsKey(Context.User.Identity.GetUserId<long>()))

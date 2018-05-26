@@ -11,5 +11,6 @@ namespace CarePoint.Models
         public int Level { get; set; }
         public DateTime TimeStamp { get; set; }
         public int NumberOfCasualties { get; set; }
+        public bool IsRead { get; set; }
     }
 }

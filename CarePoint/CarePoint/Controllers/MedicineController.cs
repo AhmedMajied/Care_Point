@@ -8,6 +8,7 @@ using DAL;
 
 namespace CarePoint.Controllers
 {
+    [Authorize]
     public class MedicineController : Controller
     {
         private MedicineBusinessLayer _medicineBusinessLayer;

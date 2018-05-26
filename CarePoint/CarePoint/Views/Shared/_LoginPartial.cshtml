@@ -15,13 +15,27 @@
             {
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" style="background-color: #21c2eb;">
-                    <span class="fa fa-briefcase fa-2x cspn-nav"><mark class="cmark-notif">3</mark></span>
+                    @{ 
+                        int membershipRequestsCount = (user as Specialist).AdministratedMedicalPlaces
+                               .Sum(p => p.CareUnits.Sum(c => c.CareUnitMembershipRequests.Count(r => !(r.IsConfirmed??false))))
+                               + (user as Specialist).AdministratedMedicalPlaces.Sum(p => p.Services.Sum(s => s.ServiceMembershipRequests.Count(r => !r.IsConfirmed)));
+                     }
+                    <span class="fa fa-briefcase fa-2x cspn-nav">
+                        @if (membershipRequestsCount > 0)
+                        {
+                            <mark class="cmark-notif">@membershipRequestsCount</mark>
+                        }
+                        else
+                        {
+                            <mark class="cmark-notif" style="display:none">0</mark>
+                        }
+                    </span>
                     <span class="fa fa-chevron-down fa-fw cspn-nav"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#" id="ilink-new-patient">New patient</a></li>
                     <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
-                    @{ string id = (User.Identity.GetCitizen()).Id.ToString();}
+                    @{ string id = User.Identity.GetUserId<long>().ToString();}
                     @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
                     <li><a href="#" id="ilink-patient-list">My patients</a></li>
                     <li class="divider"></li>
@@ -29,7 +43,17 @@
                     <li><a href="#" id="ilink-place-settings">My workplace</a></li>
                     <li><a href="#" id="ilink-change-place">Switch workplace</a></li>
                     <li class="divider"></li>
-                    <li><a href="#" id="ilink-curr-patient">Membership requests <span class="badge">3</span></a></li>
+                    <li><a href="#" id="ilink-curr-patient">Membership requests 
+                        @if (membershipRequestsCount > 0)
+                        {
+                            <span class="badge">@membershipRequestsCount</span>
+                        }
+                        else
+                        {
+                            <span class="badge" style="display:none">0</span>
+                        }
+                    </a>
+                    </li>
                 </ul>
             </li>
             }

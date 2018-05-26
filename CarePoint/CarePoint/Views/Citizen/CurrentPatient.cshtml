@@ -1,5 +1,5 @@
 ﻿@using CarePoint.Custom_HtmlHelpers
-@model DAL.Citizen
+@model CarePoint.Models.CurrentPatientViewModel
 
 @{
     ViewBag.Title = "Current Patient";
@@ -9,6 +9,8 @@
 @section styles{
     <link rel="stylesheet" type="text/css" href="~/Content/step-wizard.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/current-patient.css" />
+    <link rel="stylesheet" href="~/Content/citizen-medical-history.css" />
+
 }
 
 <div class="row">
@@ -16,8 +18,8 @@
     <div class="col-md-8">
         <h4><b>Name:</b> @Model.Name</h4>
         <h4><b>Gender:</b> @Model.Gender</h4>
-        <h4><b>Age:</b> @(@DateTime.Now.Year - @Model.DateOfBirth.Value.Year)</h4>
-        <h4><b>Blood type:</b> @Model.BloodType.Name</h4>
+        <h4><b>Age:</b> @Model.Age</h4>
+        <h4><b>Blood type:</b> @Model.BloodType</h4>
     </div>
     <div class="col-md-2">
         <span data-toggle="modal" data-target="#imodal-history-record">
@@ -171,27 +173,26 @@
 <div class="container-fluid">
     <ul class="nav nav-tabs">
         <li class="active"><a id="itab-medical-history" href="#idiv-medical-history-tab" data-toggle="tab">Medical History</a></li>
-        <li><a id="itab-analysis" href="#idiv-analysis-tab" data-toggle="tab">Analysis</a></li>
-        <li><a id="itab-radiology" href="#idiv-radiology-tab" data-toggle="tab">Radiology</a></li>
-        <li><a id="itab-other" href="#idiv-other-tab" data-toggle="tab">Others</a></li>
+        @foreach (var element in Model.Attachments)
+        {
+            <li><a id="itab-@element.Key.ToLower()" href="#idiv-@element.Key.ToLower()-tab" data-toggle="tab">@element.Key</a></li>
+        }
     </ul>
     <div class="tab-content">
         <div id="idiv-medical-history-tab" class="tab-pane fade in active">
-            @@same content as the &lt;BODY&gt; of "MedicalHistory.cshtml"
+            @Html.Partial("MedicalHistory",Model.HistoryRecords)
         </div>
-        <div id="idiv-analysis-tab" class="tab-pane fade">
-            @@same content as "Analysis" tab in "Attachments.chtml"
-        </div>
-        <div id="idiv-radiology-tab" class="tab-pane fade">
-            @@same content as "Radiology" tab in "Attachments.chtml"
-        </div>
-        <div id="idiv-other-tab" class="tab-pane fade">
-            @@same content as "Other" tab in "Attachments.chtml"
-        </div>
+        @foreach (var element in Model.Attachments)
+        {
+            <div id="idiv-@element.Key.ToLower()-tab" class="tab-pane fade">
+                @Html.Partial("_AttachmentTabPartial", element.Value,, new ViewDataDictionary { { "includeIsRead", false } })
+            </div>
+        }
     </div>
 </div>
 
 @section scripts{
     <script src="~/Scripts/step-wizard.js" type="application/javascript"></script>
     <script src="~/Scripts/current-patient.js" type="application/javascript"></script>
+    <script src="~/Scripts/citizen-medical history.js"></script>
 }

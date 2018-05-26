@@ -15,7 +15,7 @@ using CarePoint.Hubs;
 
 namespace CarePoint.Controllers
 {
-
+    [Authorize]
     public class MedicalHistoryController : Controller
     {
         private MedicalHistoryBusinessLayer _medicalHistoryBusinessLayer;
@@ -63,7 +63,7 @@ namespace CarePoint.Controllers
                     {
                         TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = 26,//User.Identity.GetUserId<long>(),
+                        SpecialistID = User.Identity.GetUserId<long>(),
                         CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
                         FileName = files[i].FileName,
@@ -71,6 +71,7 @@ namespace CarePoint.Controllers
                     };
 
                     MedicalHistoryBusinessLayer.SaveAttachment(attachment);
+                    NotificationsHub.NotifyAttachment(attachment.CitizenID, User.Identity.GetCitizen().Name,attachment.FileName);
                 }
                 catch (Exception ex)
                 {

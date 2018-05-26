@@ -26,7 +26,7 @@
     <ul class="list-group">
         @foreach (var disease in Model)
         {
-        <li class="list-group-item cli-notif">
+        <li class="list-group-item @(disease.IsRead ? String.Empty: "clifnotif")">
             <div class="row cdiv-disease-prognosis">
                 <div class="col-md-1">
                     @if (disease.NumberOfCasualties > 3)

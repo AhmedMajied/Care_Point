@@ -26,7 +26,7 @@ namespace DAL
             this.PharmacyMembershipRequests = new HashSet<PharmacyMembershipRequest>();
             this.ReceiptsAdded = new HashSet<Receipt>();
             this.ServiceMembershipRequests = new HashSet<ServiceMembershipRequest>();
-            this.WorkingMedicalPlaces = new HashSet<MedicalPlace>();
+            this.AdministratedMedicalPlaces = new HashSet<MedicalPlace>();
         }
     
         public byte[] ProfessionLicense { get; set; }
@@ -52,6 +52,6 @@ namespace DAL
         public virtual ICollection<ServiceMembershipRequest> ServiceMembershipRequests { get; set; }
         public virtual Speciality Speciality { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalPlace> WorkingMedicalPlaces { get; set; }
+        public virtual ICollection<MedicalPlace> AdministratedMedicalPlaces { get; set; }
     }
 }

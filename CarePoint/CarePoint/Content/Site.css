@@ -3,7 +3,9 @@
     --secondary-color: #5ca15c;
     --danger-color: #d64343;
 }
-
+.cli-notif {
+    background-color: #d4f6f7;
+}
 .cspn-validation-msg{
     display: block;
     margin-bottom: 1em;

@@ -64,7 +64,6 @@ namespace CarePoint.Controllers
             sos.Time =time;
             sos.IsAccepted = false;
             sos.Location = location;
-            // what is need of medicalPlaceID 
             List<Citizen> citizens = new List<Citizen>();
             if (sosViewModel.isMedicalPlace)
             {
@@ -82,14 +81,10 @@ namespace CarePoint.Controllers
             }
             try
             {
-                // sosBusinessLayer.AddSOS(sos);
-                // sosBusinessLayer.SaveNotifications(citizens,time,user.Name+" Requests SOS and Says : "+ sosViewModel.description);
-                SOSNotificationViewModel s = new SOSNotificationViewModel();
-                s.description = sosViewModel.description;
-                s.latitude = sosViewModel.latitude;
-                s.longitude = sosViewModel.longitude;
-                s.userPhoneNumber = user.PhoneNumber;
-                SosHub.StaticNotify(citizens.Select(c=>c.Id).ToList(),s);
+                sosBusinessLayer.AddSOS(sos);
+                sosBusinessLayer.SaveNotifications(citizens,time,user.Name+" Requests SOS and Says : "+ sosViewModel.description);
+                NotificationsHub.NotifySOS(citizens.Select(c=>c.Id).ToList(), sosViewModel.description, sosViewModel.latitude
+                                    ,sosViewModel.longitude, user.PhoneNumber);
                 return Json("Your Request is Successfully Sent");
             }
             catch (Exception e)

@@ -135,7 +135,6 @@ namespace BLL
             var relatives = GetRelatives(citizenId);
             foreach(var relative in relatives)
             {
-                DBEntities.Relatives.Attach(relative);
                 DBEntities.Entry(relative).State = EntityState.Modified;
                 relative.CitizenConfirmed = true;
                 relative.RelativeConfirmed = true;
@@ -143,21 +142,69 @@ namespace BLL
             DBEntities.SaveChanges();
         }
 
-        public void AddRelative(Relative relative)
+        public void ReadAllPotentialDiseases(long citizenId)
         {
-            DBEntities.Relatives.Add(relative);
+            var potentialDiseases = DBEntities.PotentialDiseases.Where(p => p.CitizenID == citizenId);
+            foreach(var disease in potentialDiseases)
+            {
+                DBEntities.Entry(disease).State = EntityState.Modified;
+                disease.IsRead = true;
+            }
             DBEntities.SaveChanges();
         }
 
-        public void RemoveRelation(long citizenId,long relativeId)
+        public void AddRelative(long citizenId,long relativeId,int relationId,Action notifyRelative = null)
+        {
+            Relative relative = new Relative();
+            if (relationId != 4)
+            {
+                relative.CitizenID = citizenId;
+                relative.RelativeID = relativeId;
+                relative.RelationTypeID = relationId;
+                relative.CitizenConfirmed = true;
+                relative.RelativeConfirmed = false;
+            }
+            else
+            {
+                relative.RelativeID = citizenId;
+                relative.CitizenID = relativeId;
+                relative.RelationTypeID = 1;
+                relative.RelativeConfirmed = true;
+                relative.CitizenConfirmed = false;
+            }
+
+            DBEntities.Relatives.Add(relative);
+            DBEntities.SaveChanges();
+            notifyRelative?.Invoke();
+        }
+
+        public void RemoveRelation(long citizenId,long relativeId,Action notifyRelative = null)
         {
             DBEntities.Relatives.Remove(DBEntities.Relatives.SingleOrDefault(r => (r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)));
             DBEntities.SaveChanges();
+            notifyRelative?.Invoke();
         }
 
         public bool IsRelationConfirmed(long citizenId, long relativeId)
         {
             return DBEntities.Relatives.Any(r => ((r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)) && (r.CitizenConfirmed ?? false) && (r.RelativeConfirmed ?? false));
+        }
+
+        public ICollection<PotentialDisease> GetPotintialDiseases(long citizenId)
+        {
+            return DBEntities.Citizens.SingleOrDefault(c => c.Id == citizenId).PotentialDiseases.ToList();
+        }
+
+        public void ReadAttachmentsOfType(long citizenId, int typeId)
+        {
+            var attachments = DBEntities.Attachments.Where( a => a.TypeID == typeId && a.CitizenID == citizenId);
+            foreach(var attachment in attachments)
+            {
+                DBEntities.Entry(attachment).State = EntityState.Modified;
+                attachment.IsRead = true;
+
+            }
+            DBEntities.SaveChanges();
         }
     }
 }

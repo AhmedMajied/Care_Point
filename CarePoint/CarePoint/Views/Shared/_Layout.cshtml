@@ -76,12 +76,12 @@
     <script src="~/Scripts/searchResult.js"></script>
     <script src="~/Scripts/patient-list.js"></script>
     <script src="~/Scripts/sos.js" type="application/javascript"></script>
-    <script src="~/Scripts/bootstrap-notify.min.js" ></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
     <script src="~/SignalR/hubs"></script>
-    <script src="~/Scripts/sosPushNotifications.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script src="~/Scripts/notification-summary.js"></script>
     <script>
-        var relativesHub = $.connection.relativesHub;
+        var notificationsHub = $.connection.notificationsHub;
         $.connection.hub.start();
         $.connection.hub.disconnected(function () {
             setTimeout(function () {
@@ -91,7 +91,7 @@
             }, 5000);
         });
 
-        relativesHub.client.notify = function (increment) {
+        notificationsHub.client.notifyRelative = function (increment, relativeName, relation) {
             var notificationMark = $("#ilink-relatives .cmark-notif");
             var notificationCount = parseInt(notificationMark.text());
             notificationCount += increment;
@@ -102,6 +102,30 @@
             else {
                 notificationMark.css("display", "none");
             }
+            if (increment > 0) {
+                showRelativeNotifSummary(relativeName, relation, "/Citizen/Relatives");
+            }
+        }
+
+        notificationsHub.client.notifyPrognosis = function (diseaseName) {
+            var notificationMark = $("#ilink-prognosis .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += 1;
+            notificationMark.text(notificationCount);
+            notificationMark.removeAttr("style");
+            showPrognosisNotifSummary(diseaseName, "/Citizen/Prognosis");
+        }
+
+        notificationsHub.client.notifyAttachment = function (doctorName, fileName) {
+            var notificationMark = $("#ilink-attachments .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += 1;
+            notificationMark.text(notificationCount);
+            notificationMark.removeAttr("style");
+            showAttachmentNotifSummary(doctorName, fileName, "#");
+        }
+        notificationsHub.client.notifySOS = function (description, lat, lng, phoneNumber) {
+            showSOSNotifSummary(lat+" "+lng, description, phoneNumber);//get address from lat and lng
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>

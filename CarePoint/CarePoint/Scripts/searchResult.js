@@ -110,18 +110,11 @@ $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
     $("#idiv-search-place-result hr").remove();
 });
-function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
+function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone) {
     if (profilePicture === null) {
         profilePicture = '../../Images/placenotfound.png';
     }
     html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'style='width: 40px;' src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
-        .append("<div class='col-md-3'>")
-    if (isSpecialist && (!isJoined)) {
-        html.append("<a href="+joinStaffLink+"><button class='btn btn-default' type='button'>Join staff</button></div></a>")
-    }
-    else if (isSpecialist && isJoined) {
-        html.append("<span class='fa fa-check-circle-o'></span> joined</div>")
-    }
     $("<div class='row'>").append("</div>");
     $("#idiv-search-place-result").append(html);
     $("#idiv-search-place-result").append("<hr>");
@@ -162,7 +155,7 @@ $("#ibtn-srch-place").click(function () {
             dataType: 'json',
             success: function (data) {
                 data.forEach(function (place) {
-                    MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone, place.isSpecialist, place.isJoined,"#")
+                    MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone)
                 });
                 $("#iiloading-place-result").css("display", "none");
                 $("#ibtn-srch-place").prop("disabled", false);

@@ -53,7 +53,7 @@ namespace BLL
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
         }
 
-        public List<List<Citizen>> searchAccounts(string searchBy, string searchValue)
+        public List<List<Citizen>> SearchAccounts(string searchBy, string searchValue)
         {
             List<Citizen> result = new List<Citizen>();
             List<Citizen> doctors = new List<Citizen>();
@@ -107,19 +107,29 @@ namespace BLL
             allCitizens.Add(pharmacists);//2
             return allCitizens;
         }
-
         public ICollection<Relative> GetRelatives(long citizenId)
         {
             return DBEntities.Relatives.Where(r => r.CitizenID == citizenId || r.RelativeID == citizenId).ToList();
         }
 
-        public List<Citizen> getPatientList(long doctorId)
+        public List<Citizen> GetPatientList(long doctorId)
         {
             List<Citizen> patientList = new List<Citizen>();
             patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
             return patientList;
         }
-
+        public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)
+        {
+            ICollection<Citizen> relatives = (DBEntities.Relatives.Where(relative => relative.CitizenID == citizenID 
+                                               && relative.RelationTypeID == relationID && relative.CitizenConfirmed==true 
+                                               && relative.RelativeConfirmed==true).ToList())
+                                              .Select(relative => relative.RelativeCitizen).ToList();
+            return relatives;
+        }
+        public ICollection<RelationType> GetRelationTypes()
+        {
+            return DBEntities.RelationTypes.ToList();
+        }
         public void ConfirmAllRelatives(long citizenId)
         {
             var relatives = GetRelatives(citizenId);

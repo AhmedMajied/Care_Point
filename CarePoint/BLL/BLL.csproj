@@ -56,6 +56,7 @@
     <Compile Include="MedicineBusinessLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusinessLayer.cs" />
+    <Compile Include="SOSBusinessLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

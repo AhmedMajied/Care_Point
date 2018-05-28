@@ -4,12 +4,9 @@ using Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using CarePoint.Models;
-using System.Diagnostics;
 using Microsoft.AspNet.Identity;
-using System.Collections;
 using System.Data.SqlClient;
 using CarePoint.Hubs;
 using CarePoint.AuthorizeAttributes;
@@ -160,7 +157,7 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchAccount(string key, string value)
         {
-            List<List<Citizen>> allCitizens = _citizenBusinessLayer.searchAccounts(key, value);
+            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(key, value);
             var citizens = GetSearchResult(allCitizens[0]);
             var doctors = GetSearchResult(allCitizens[1]);
             var pharmacists = GetSearchResult(allCitizens[2]);
@@ -171,7 +168,7 @@ namespace CarePoint.Controllers
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public JsonResult PatientsList(long doctorId)
         {
-            List<Citizen> list = CitizenBusinessLayer.getPatientList(doctorId);
+            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)

@@ -17,7 +17,7 @@
     <AssemblyName>CarePoint</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -211,6 +211,7 @@
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\SOSController.cs" />
     <Compile Include="Custom AuthorizationAttributes\AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\SOSViewModel.cs" />
     <Compile Include="Models\PotentialDiseaseViewModel.cs" />
     <Compile Include="Models\RelativeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,8 +286,6 @@
     <Content Include="less\variables.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
-    <Content Include="Images\care.jpg" />
-    <Content Include="Images\div-bg.jpg" />
     <Content Include="Images\doctor.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\logo-navbar.ico" />
@@ -398,6 +398,7 @@
     <Folder Include="Videos\" />
     <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
+    <Folder Include="Views\SOS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -439,7 +440,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51902</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://carepoint.com:3000</IISUrl>
+          <IISUrl>http://localhost:51902/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

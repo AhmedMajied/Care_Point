@@ -42,7 +42,18 @@ namespace CarePoint.Hubs
                 hubContext.Clients.Client(connectionId).notifyAttachment(doctorName,fileName);
             }
         }
-
+        public static void NotifySOS(List<long>citizens,string description,float lat,float lng,string phoneNumber)
+        {
+            foreach(long citizenID in citizens)
+            {
+                string connectionId;
+                Connections.TryGetValue(citizenID, out connectionId);
+                if (!String.IsNullOrWhiteSpace(connectionId))
+                {
+                    hubContext.Clients.Client(connectionId).notifySOS(description,lat,lng,phoneNumber);
+                }
+            }
+        }
         public override Task OnConnected()
         {
             if (!Connections.ContainsKey(Context.User.Identity.GetUserId<long>()))

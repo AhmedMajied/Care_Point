@@ -1,4 +1,5 @@
-.vs/
+/.vs
+
 /BLL/obj
 /BLL/bin
 

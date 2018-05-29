@@ -55,7 +55,7 @@ namespace BLL
 
             // save history record to database
             historyRecord.IsRead = false;
-            DBEntities.HistoryRecords.Add(historyRecord);
+            historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
             
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -81,7 +81,7 @@ namespace BLL
                 };
 
                 // save attachment to database
-                //SaveAttachment(attachment);
+                SaveAttachment(attachment);
 
                 // Draw prescription as image
                 bitmap = canvas.drawText(historyRecord, patientMedicines,

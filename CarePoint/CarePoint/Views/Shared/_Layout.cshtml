@@ -80,6 +80,8 @@
     <script src="~/SignalR/hubs"></script>
     <script src="~/Scripts/bootstrap-notify.min.js"></script>
     <script src="~/Scripts/notification-summary.js"></script>
+    <script src="~/Scripts/instascan.min.js"></script>
+    <script src="~/Scripts/QRScanner.js"></script>
     <script>
         var notificationsHub = $.connection.notificationsHub;
         $.connection.hub.start();
@@ -125,7 +127,7 @@
             showAttachmentNotifSummary(doctorName, fileName, "#");
         }
         notificationsHub.client.notifySOS = function (description, lat, lng, phoneNumber) {
-            showSOSNotifSummary(lat+" "+lng, description, phoneNumber);//get address from lat and lng
+            showSOSNotifSummary(lat + " " + lng, description, phoneNumber);//get address from lat and lng
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>

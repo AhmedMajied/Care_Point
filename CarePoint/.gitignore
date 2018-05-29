@@ -1,0 +1,9 @@
+/.vs
+/BLL/obj
+/BLL/bin
+
+/DAL/obj
+/DAL/bin
+
+/Carepoint/obj
+/Carepoint/bin

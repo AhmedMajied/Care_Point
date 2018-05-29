@@ -3,6 +3,7 @@ using DAL;
 using Extensions;
 using System;
 using System.Collections.Generic;
+using MessagingToolkit.QRCode.Codec;
 using System.Linq;
 using System.Web.Mvc;
 using CarePoint.Models;
@@ -10,6 +11,9 @@ using Microsoft.AspNet.Identity;
 using System.Data.SqlClient;
 using CarePoint.Hubs;
 using CarePoint.AuthorizeAttributes;
+using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CarePoint.Controllers
 {
@@ -34,6 +38,35 @@ namespace CarePoint.Controllers
                 _citizenBusinessLayer = value;
             }
         }
+
+        public FileResult DownloadMyCard()
+        {
+            string nationalID = User.Identity.GetCitizen().NationalIDNumber;
+
+            // encode national ID
+            var textBytes = Encoding.UTF8.GetBytes(nationalID);
+            string ecodedText = Convert.ToBase64String(textBytes);
+
+            // convert text to QR code 
+            QRCodeEncoder QRencoder = new QRCodeEncoder();
+            Bitmap bm = QRencoder.Encode(ecodedText);
+            bm.Save(Server.MapPath("~/PatientCard.jpg"), ImageFormat.Jpeg);
+
+            return new FilePathResult(Server.MapPath("~/PatientCard.jpg"), "image/jpeg")
+            {
+                FileDownloadName = "My Card.jpg"
+            };
+        }
+
+        public JavaScriptResult GetCitizenByQR(string citizenQRCode)
+        {
+            Citizen citizen = CitizenBusinessLayer.GetCitizenByQR(citizenQRCode);
+
+            if (citizen == null || citizen.Id == User.Identity.GetUserId<long>())
+                return null;
+
+            return JavaScript("window.location = '/Citizen/CurrentPatient?citizenID="+citizen.Id+"'");
+        } 
 
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult CurrentPatient(long citizenID)

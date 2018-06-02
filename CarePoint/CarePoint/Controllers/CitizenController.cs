@@ -41,6 +41,7 @@ namespace CarePoint.Controllers
 
         public FileResult DownloadMyCard()
         {
+            PatientCardCanvas canvas = new PatientCardCanvas();
             string nationalID = User.Identity.GetCitizen().NationalIDNumber;
 
             // encode national ID
@@ -49,12 +50,17 @@ namespace CarePoint.Controllers
 
             // convert text to QR code 
             QRCodeEncoder QRencoder = new QRCodeEncoder();
-            Bitmap bm = QRencoder.Encode(ecodedText);
-            bm.Save(Server.MapPath("~/PatientCard.jpg"), ImageFormat.Jpeg);
+            Bitmap QRCode = QRencoder.Encode(ecodedText);
 
-            return new FilePathResult(Server.MapPath("~/PatientCard.jpg"), "image/jpeg")
+            // Draw patient card
+            Bitmap logo = new Bitmap(Server.MapPath("~/Images/logo.png"));
+            Bitmap photo = new Bitmap(Server.MapPath("~/Images/notfound.png"));
+            Bitmap patientCard = canvas.Draw(User.Identity.GetCitizen(), QRCode,logo,photo);
+            patientCard.Save(Server.MapPath("~/Images/PatientCard.jpg"), ImageFormat.Jpeg);
+
+            return new FilePathResult(Server.MapPath("~/Images/PatientCard.jpg"), "image/jpeg")
             {
-                FileDownloadName = "My Card.jpg"
+                FileDownloadName = "Patient Card.jpg"
             };
         }
 

@@ -170,13 +170,13 @@ namespace CarePoint.Controllers
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            //if (medicines[0].Equals(""))
+            if (medicines[0].Equals(""))
                 return Redirect(Request.UrlReferrer.ToString());
 
-            /*return new FilePathResult(prescriptionFilePath, "image/jpg")
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };*/
+            };
         }
 
         public ActionResult GetAttachmentTypes()

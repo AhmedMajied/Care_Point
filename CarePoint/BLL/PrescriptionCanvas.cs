@@ -9,7 +9,7 @@ using DAL;
 
 namespace BLL
 {
-    public class Canvas
+    public class PrescriptionCanvas
     {
         private string newLine, extraNewLine;
         private int pageWidth, pageHeight, padding;
@@ -20,7 +20,7 @@ namespace BLL
         private Graphics graphics;
         private StringFormat alignmentCenter, alignmentRight;
 
-        public Canvas()
+        public PrescriptionCanvas()
         {
             newLine = extraNewLine = "";
             padding = 10;
@@ -46,7 +46,7 @@ namespace BLL
             alignmentRight.Alignment = StringAlignment.Far;
         }
 
-        public Bitmap drawText(HistoryRecord historyRecord, string[] medicines,
+        public Bitmap Draw(HistoryRecord historyRecord, string[] medicines,
             List<List<string>> medicinesAlternatives,string [] doses)
         {
             // decide page structure to know the sutable legth of it 
@@ -66,10 +66,7 @@ namespace BLL
             graphics = Graphics.FromImage(bitmap);
             graphics.Clear(Color.White); // white background
 
-            // Drawing in high quality
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            graphics.SmoothingMode = SmoothingMode.HighQuality;
-
+            
             // Drawing
             DrawPrescriptionHeader(historyRecord.MedicalPlace.Name, historyRecord.MedicalPlace.Photo);
             DrawPrescriptionBody(historyRecord.Citizen.Name, historyRecord.Specialist.Name,
@@ -224,6 +221,5 @@ namespace BLL
 
             return headWordWidth / 2 + padding;
         }
-
     }
 }

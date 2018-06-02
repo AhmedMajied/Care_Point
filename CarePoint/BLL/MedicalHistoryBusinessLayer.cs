@@ -33,7 +33,7 @@ namespace BLL
         public Bitmap SavePrescription(HistoryRecord historyRecord, string[] patientMedicines,
             string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath,Action<long,string> notifyPrognosis = null)
         {
-            Canvas canvas = new Canvas();
+            PrescriptionCanvas canvas = new PrescriptionCanvas();
             Bitmap bitmap = null;
             string medicineName;
             int prescriptionTypeID = 3;
@@ -84,7 +84,7 @@ namespace BLL
                 SaveAttachment(attachment);
 
                 // Draw prescription as image
-                bitmap = canvas.drawText(historyRecord, patientMedicines,
+                bitmap = canvas.Draw(historyRecord, patientMedicines,
                 medicinesAlternatives,dosesDescription);
             }
             NotifyForGeneticDiseases(historyRecord.Citizen,historyRecord,0,true,notifyPrognosis);

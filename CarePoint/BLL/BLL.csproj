@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Canvas.cs" />
+    <Compile Include="PatientCardCanvas.cs" />
+    <Compile Include="PrescriptionCanvas.cs" />
     <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />
     <Compile Include="MedicalHistoryBusinessLayer.cs" />

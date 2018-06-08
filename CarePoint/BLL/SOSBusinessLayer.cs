@@ -1,6 +1,7 @@
 ﻿using DAL;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 
 namespace BLL
@@ -22,13 +23,13 @@ namespace BLL
         {
             return DBEntities.SOSses.SingleOrDefault(sos => sos.ID == id);
         }
-        public ICollection<SOSs>GetAllHospitals(long hospitalID)
+        public ICollection<SOSs>GetAllSosRequests(long hospitalID)
         {
             ICollection<SOSs> all = new List<SOSs>();
             all = DBEntities.SOSses.Where(sos => sos.MedicalPlaceID == hospitalID).ToList();
             return all;
         }
-        public ICollection<SOSs> GetAllCitizens(long citizenID)
+        public ICollection<SOSs> GetAll(long citizenID)
         {
             ICollection<SOSs> all = new List<SOSs>();
             all = DBEntities.SOSses.Where(sos => sos.SenderID == citizenID).ToList();
@@ -50,17 +51,30 @@ namespace BLL
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
-        public void SaveNotifications(List<Citizen> citizens ,DateTime time,string Text)
+        public void SaveNotifications(long citizenId ,DateTime time,string Text)
         {
-            foreach(Citizen citizen in citizens)
+            Notification notification = new Notification();
+            notification.CitizenID = citizenId;
+            notification.Text = Text;
+            notification.Time = time;
+            DBEntities.Notifications.Add(notification);
+            DBEntities.SaveChanges();
+        }
+        public ICollection<Specialist> GetContributersOfSOSsServices(string location, int numberOfPlaces)
+        {
+            ICollection<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+            medicalPlaces = medicalPlaces.OrderBy(medicalPlace => medicalPlace.Location.Distance(DbGeography.FromText(location, 4326))).ToList();
+            ICollection<Service> services = new List<Service>();
+            List<Specialist> providers = new List<Specialist>();
+            services = medicalPlaces.Select(s => s.Services.SingleOrDefault(service => service.ServiceCategory.Name.Equals("Ambulance"))).ToList();
+            int min = Math.Min(services.ToArray().Length, numberOfPlaces);
+            services = services.Take(min).ToList();
+            foreach (Service service in services)
             {
-                Notification notification = new Notification();
-                notification.CitizenID = citizen.Id;
-                notification.Text = Text;
-                notification.Time = time;
-                DBEntities.Notifications.Add(notification);
-                DBEntities.SaveChanges();
+                providers.Union(service.ServiceMembershipRequests.
+                        Where(request => request.IsConfirmed == true).Select(s => s.Specialist));
             }
+            return providers;
         }
     }
 }

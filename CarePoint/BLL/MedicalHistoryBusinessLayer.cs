@@ -42,9 +42,14 @@ namespace BLL
             for (int i = 0; i < patientMedicines.Length; i++)
             {
                 medicineName = patientMedicines[i];
-                if (!medicineName.Equals("") && !medicineName.Equals(" "))
+                if (!medicineName.Equals(""))
                 {
                     Medicine medicine = DBEntities.Medicines.FirstOrDefault(m => m.Name == medicineName);
+                    if (medicine == null)
+                    {
+                        return null;
+                    }
+                        
                     historyRecord.Doses.Add(new Dose
                     {
                         MedicineID = medicine.ID,

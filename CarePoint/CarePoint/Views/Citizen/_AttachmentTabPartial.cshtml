@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-3">@attachment.SpecialistName</div>
                 <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                <div class="col-md-1">@Html.ActionLink(" ", "ShowAttachmentFile", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
+                <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
             </div>
         </li>
     }

@@ -18,6 +18,15 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
+        public Citizen GetCitizenByQR(string citizenQRCode)
+        {
+            // decode QR to original national ID
+            var base64EncodedBytes = Convert.FromBase64String(citizenQRCode);
+            string nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
+
+            return DBEntities.Citizens.SingleOrDefault(citizen => citizen.NationalIDNumber == nationalID);
+        }   
+
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == citizenID);

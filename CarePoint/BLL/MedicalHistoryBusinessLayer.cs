@@ -33,7 +33,7 @@ namespace BLL
         public Bitmap SavePrescription(HistoryRecord historyRecord, string[] patientMedicines,
             string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath,Action<long,string> notifyPrognosis = null)
         {
-            Canvas canvas = new Canvas();
+            PrescriptionCanvas canvas = new PrescriptionCanvas();
             Bitmap bitmap = null;
             string medicineName;
             int prescriptionTypeID = 3;
@@ -42,9 +42,14 @@ namespace BLL
             for (int i = 0; i < patientMedicines.Length; i++)
             {
                 medicineName = patientMedicines[i];
-                if (!medicineName.Equals("") && !medicineName.Equals(" "))
+                if (!medicineName.Equals(""))
                 {
                     Medicine medicine = DBEntities.Medicines.FirstOrDefault(m => m.Name == medicineName);
+                    if (medicine == null)
+                    {
+                        return null;
+                    }
+                        
                     historyRecord.Doses.Add(new Dose
                     {
                         MedicineID = medicine.ID,
@@ -55,7 +60,7 @@ namespace BLL
 
             // save history record to database
             historyRecord.IsRead = false;
-            DBEntities.HistoryRecords.Add(historyRecord);
+            historyRecord = DBEntities.HistoryRecords.Add(historyRecord);
             
             // get whole object of this history record
             historyRecord.MedicalPlace = DBEntities.MedicalPlaces.Single(medicalPlace =>
@@ -81,10 +86,10 @@ namespace BLL
                 };
 
                 // save attachment to database
-                //SaveAttachment(attachment);
+                SaveAttachment(attachment);
 
                 // Draw prescription as image
-                bitmap = canvas.drawText(historyRecord, patientMedicines,
+                bitmap = canvas.Draw(historyRecord, patientMedicines,
                 medicinesAlternatives,dosesDescription);
             }
             NotifyForGeneticDiseases(historyRecord.Citizen,historyRecord,0,true,notifyPrognosis);

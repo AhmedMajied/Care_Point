@@ -41,13 +41,6 @@ namespace CarePoint.Controllers
             }
         }
         
-        public FileResult ShowAttachmentFile(string path, string fileName)
-        {
-            String mimeType = MimeMapping.GetMimeMapping(path);
-
-            return new FilePathResult(path, mimeType);
-        }
-        
         public FileResult DownloadAttachment(string path, string fileName)
         {
             String mimeType = MimeMapping.GetMimeMapping(path);
@@ -63,13 +56,19 @@ namespace CarePoint.Controllers
         public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {
             string[] typeIDs = form.GetValues("attachmentTypes");
+            string fileExtension;
 
             for(int i=0;i<files.Length;i++)
             {
                 try
                 {
+                    fileExtension = Path.GetExtension(files[i].FileName);
+
+                    if (fileExtension != ".jpg" && fileExtension !=".pdf" && fileExtension != ".png")
+                        throw new Exception("invalid extension");
+
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
-                    files[i].FileName);
+                        Path.GetRandomFileName().Replace(".", "")+Path.GetExtension(files[i].FileName));
                     files[i].SaveAs(path);
 
                     Attachment attachment = new Attachment
@@ -116,13 +115,14 @@ namespace CarePoint.Controllers
                 Remarks = remarks,
                 MedicalPlaceID = 6, //TODO get from session
                 CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = 26 //User.Identity.GetUserId<long>()
+                SpecialistID = User.Identity.GetUserId<long>()
             };
 
             // assign symptoms to history record
             for (int i = 0; i < symptoms.Length; i++)
             {
-                if (!symptoms[i].Equals("") && !symptoms[i].Equals(" "))
+                symptoms[i] = symptoms[i].Trim();
+                if (!symptoms[i].Equals(""))
                 {
                     historyRecord.Symptoms.Add(new Symptom { Name = symptoms[i] });
                 }
@@ -131,7 +131,8 @@ namespace CarePoint.Controllers
             // assign diseases to history record
             for (int i = 0; i < diseases.Length; i++)
             {
-                if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
+                diseases[i] = diseases[i].Trim();
+                if (!diseases[i].Equals(""))
                 {
                     historyRecord.Diseases.Add(new Disease { Name = diseases[i], IsGenetic = false });
                 }
@@ -141,8 +142,7 @@ namespace CarePoint.Controllers
             List<Disease> historyRecordDiseases = historyRecord.Diseases.ToList();
             for (int i = 0; genticDiseases != null && i < Math.Min(genticDiseases.Length,diseases.Length) ; i++)
             {
-                if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "" 
-                    || diseases[Convert.ToInt32(genticDiseases[i]) - 1] == " ")
+                if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "")
                 {
                     continue;
                 }
@@ -166,17 +166,17 @@ namespace CarePoint.Controllers
             Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
                 medicines, doses, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
 
-
+            // don't save prescription 
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            //if (medicines[0].Equals(""))
+            if (medicines[0].Equals(""))
                 return Redirect(Request.UrlReferrer.ToString());
 
-            /*return new FilePathResult(prescriptionFilePath, "image/jpg")
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };*/
+            };
         }
 
         public ActionResult GetAttachmentTypes()

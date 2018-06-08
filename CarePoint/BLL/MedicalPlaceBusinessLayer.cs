@@ -135,22 +135,5 @@ namespace BLL
             medicalPlaces = medicalPlaces.OrderBy(medicalPlace => medicalPlace.Location.Distance(DbGeography.FromText(location, 4326))).ToList();
             return medicalPlaces;
         }
-
-       /* public ICollection<Specialist> GetContributersOfAmbulanceService(string location, int numberOfPlaces)// not added to class diagram
-        {
-            List<MedicalPlace> medicalPlaces = SortMedicalPlacesByDistance(location).ToList();
-            ICollection<Service> services = new List<Service>();
-            List<Specialist> providers = new List<Specialist>();
-            services = medicalPlaces.Select(s => s.Services.SingleOrDefault(service=>service.ServiceCategory.Name.Equals("Ambulance"))).ToList();
-            int min = Math.Min(services.ToArray().Length, numberOfPlaces);
-            services = services.Take(min).ToList();
-            foreach (Service service in services)
-            {
-                providers.Union(service.ServiceMembershipRequests.
-                        Where(request => request.IsConfirmed == true).Select(s=>s.Specialist));
-            }
-            return providers;
-        }*/
-
     }
 }

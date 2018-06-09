@@ -196,7 +196,8 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchAccount(string key, string value)
         {
-            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(key, value);
+            long citizenId = User.Identity.GetCitizen().Id;
+            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(citizenId,key,value);
             var citizens = GetSearchResult(allCitizens[0]);
             var doctors = GetSearchResult(allCitizens[1]);
             var pharmacists = GetSearchResult(allCitizens[2]);

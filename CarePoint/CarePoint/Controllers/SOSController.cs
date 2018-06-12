@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 using System.Web.Mvc;
 using CarePoint.Models;
 using Extensions;
@@ -67,8 +68,7 @@ namespace CarePoint.Controllers
             List<Citizen> citizens = new List<Citizen>();
             if (sosViewModel.isMedicalPlace)
             {
-                MedicalPlaceBusinessLayer medicalPlaceBL = new MedicalPlaceBusinessLayer();
-                citizens=(List<Citizen>)(medicalPlaceBL.GetContributersOfAmbulanceService(pointString, numberOfPlaces));
+                citizens=(List<Citizen>)(sosBusinessLayer.GetContributersOfSOSsServices(pointString, numberOfPlaces));
             }
             if (sosViewModel.isFriend)
             {
@@ -82,7 +82,10 @@ namespace CarePoint.Controllers
             try
             {
                 sosBusinessLayer.AddSOS(sos);
-                sosBusinessLayer.SaveNotifications(citizens,time,user.Name+" Requests SOS and Says : "+ sosViewModel.description);
+                foreach(Citizen citizen in citizens)
+                {
+                    sosBusinessLayer.SaveNotifications(citizen.Id, time, user.Name + " Requests SOS and Says : " + sosViewModel.description);
+                }
                 NotificationsHub.NotifySOS(citizens.Select(c=>c.Id).ToList(), sosViewModel.description, sosViewModel.latitude
                                     ,sosViewModel.longitude, user.PhoneNumber);
                 return Json("Your Request is Successfully Sent");
@@ -92,10 +95,9 @@ namespace CarePoint.Controllers
                 return Json(e.Message);
             }
         }
-
-        public void AcceptSOS(long sosId , long hospitalID)
+        public void AcceptSOS(long sosId , long hospitalId)
         {
-            sosBusinessLayer.AcceptSOS(sosId, hospitalID);
+            sosBusinessLayer.AcceptSOS(sosId, hospitalId);
         }
     }
 }

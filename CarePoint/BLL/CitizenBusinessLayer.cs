@@ -62,7 +62,7 @@ namespace BLL
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
         }
 
-        public List<List<Citizen>> SearchAccounts(string searchBy, string searchValue)
+        public List<List<Citizen>> SearchAccounts(long citizenId,string searchBy, string searchValue)
         {
             List<Citizen> result = new List<Citizen>();
             List<Citizen> doctors = new List<Citizen>();
@@ -93,7 +93,7 @@ namespace BLL
             }
             foreach (Citizen specialist in result)
             {
-                if (specialist is Specialist)
+                if (specialist is Specialist && citizenId!=specialist.Id)
                 {
                     if (((Specialist)specialist).SpecialityID == 1)
                     {
@@ -104,7 +104,7 @@ namespace BLL
                         pharmacists.Add(specialist);
                     }
                 }
-                else
+                else if(!(specialist is Specialist) &&citizenId != specialist.Id)
                 {
                     non_specialists.Add(specialist);
 
@@ -123,8 +123,11 @@ namespace BLL
 
         public List<Citizen> GetPatientList(long doctorId)
         {
+            List<Citizen> initialList = new List<Citizen>();
             List<Citizen> patientList = new List<Citizen>();
-            patientList = DBEntities.Attachments.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
+            initialList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
+            patientList = (initialList.GroupBy(patient => patient.Id)).
+                           Select(p => p.OrderBy(patient => patient.Name).First()).ToList();
             return patientList;
         }
         public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)

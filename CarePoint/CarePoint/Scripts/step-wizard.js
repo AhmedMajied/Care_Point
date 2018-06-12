@@ -53,7 +53,8 @@ function createAlternativesDiv() {
     for (var i = 0; i < patientDrugs.length; i++) {
         patientDrugName = patientDrugs.eq(i).val();
 
-        if (patientDrugName === "" || patientDrugName === " ")
+        patientDrugName = patientDrugName.trim();
+        if (patientDrugName === "")
             continue;
 
         alternatives = getMedicineAlternatives(patientDrugName);

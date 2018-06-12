@@ -17,7 +17,7 @@
     <AssemblyName>CarePoint</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -54,6 +54,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -211,6 +214,7 @@
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\SOSController.cs" />
     <Compile Include="Custom AuthorizationAttributes\AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
@@ -226,6 +230,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\SOSViewModel.cs" />
     <Compile Include="Models\PotentialDiseaseViewModel.cs" />
     <Compile Include="Models\RelativeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,8 +289,6 @@
     <Content Include="less\variables.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
-    <Content Include="Images\care.jpg" />
-    <Content Include="Images\div-bg.jpg" />
     <Content Include="Images\doctor.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\logo-navbar.ico" />
@@ -327,6 +330,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\QRScanner.js" />
     <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
@@ -398,6 +402,7 @@
     <Folder Include="Videos\" />
     <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
+    <Folder Include="Views\SOS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -439,7 +444,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51902</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://carepoint.com:3000</IISUrl>
+          <IISUrl>http://localhost:51902/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

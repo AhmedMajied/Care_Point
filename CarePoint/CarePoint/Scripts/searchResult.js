@@ -1,4 +1,4 @@
-﻿function getMarkAsDropDown(id) {
+function getMarkAsDropDown(id) {
     markAsDropDown = `<div class='col-md-4 dropdown'>
                             <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
                                 Mark As
@@ -35,7 +35,6 @@ function generateHTML(parent, userName, img, id, relation) {
         html.append(getMarkAsDropDown(id));
     else
         html.append(getRemoveRelationDropDown(id,relation));
-
     $(parent).append(html);
     $(parent).append("<hr>");
 }
@@ -89,13 +88,15 @@ $(function () {
                     if (pcount == 0) {
                         $("#imodal-people-srch-result #itab-pharmacists .cdiv-custom-alert").removeClass('hidden');
                     }
-
                     $("#imodal-people-srch-result button.close").prop('disabled', false);
+                },
+                error: function (msg) {
+                    console.log(JSON.stringify(msg));
                 }
             });
         }
         else {
-            $("#cspan-searchfor-error").text("Please Enter This Field");
+            $("#cspan-searchfor-error").text("Please Enter This Field").css("color","red");
         }
     });
 });
@@ -103,42 +104,46 @@ $("#idiv-searchfor").keydown(function () {
     $("#cspan-searchfor-error").text("");
 });
 
+
+// start functionality for search medicalPlace
 $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
     $("#idiv-search-place-result hr").remove();
 });
-function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone, isSpecialist, isJoined, joinStaffLink) {
+function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone) {
     if (profilePicture === null) {
         profilePicture = '../../Images/placenotfound.png';
     }
-    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
-        .append("<div class='col-md-3'>")
-    if (isSpecialist && (!isJoined)) {
-        html.append("<a href="+joinStaffLink+"><button class='btn btn-default' type='button'>Join staff</button></div></a>")
-    }
-    else if (isSpecialist && isJoined) {
-        html.append("<span class='fa fa-check-circle-o'></span> joined</div>")
-    }
+    html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'style='width: 40px;' src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
     $("<div class='row'>").append("</div>");
     $("#idiv-search-place-result").append(html);
     $("#idiv-search-place-result").append("<hr>");
 }
+function getUserLocation() {
+    return $.getJSON("http://freegeoip.net/json/").then(function (data) {
+        return {
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+    });
+}
 $("#ibtn-srch-place").click(function () {
     var sType = $("#iinp-service-type").val();
-    var pType = $("#iinp-place-type").val();
-    var cDistance = $("#ichk-distane").is(':checked');
+    var pName = $("#iinp-place-type").val();
+    var cDistance = $("#ichk-distance").is(':checked');
     var cCost = $("#ichk-cost").is(':checked');
     var cRate = $("#ichk-rate").is(':checked');
     var cPopularity = $("#ichk-popularity").is(':checked');
     var latitude, longitude;
     // to get current location of user
-    $.getJSON("http://freegeoip.net/json/", function (data) {
+    getUserLocation().then(function (data) {
         latitude = data.latitude;
         longitude = data.longitude;
-    });
-    if ((sType !== "" || pType !== "" )&& (cDistance || cCost || cRate || cPopularity)) {
+    if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
+        $("#ibtn-srch-place").prop("disabled", true);
+        $("#iiloading-place-result").css("display", "block");
         var model = {
-            serviceType: sType, placeType: pType,
+            serviceType: sType, placeName: pName,
             checkDistance: cDistance, checkCost: cCost,
             checkRate: cRate, checkPopularity: cPopularity,
             latitude: latitude, longitude: longitude
@@ -150,22 +155,25 @@ $("#ibtn-srch-place").click(function () {
             dataType: 'json',
             success: function (data) {
                 data.forEach(function (place) {
-                    MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone, place.isSpecialist, place.isJoined,"#")
+                    MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone)
                 });
+                $("#iiloading-place-result").css("display", "none");
+                $("#ibtn-srch-place").prop("disabled", false);
                 $("#imodal-place-srch-result").modal('show');
             }
         });
     }
     else {
-        if (sType === "" && pType === "") {
-            $("#cspan-service-place-error").text("please fill at least one field");
+        if (sType == "" && pName == "") {
+            $("#cspan-service-place-error").text("please fill at least one field").css("color", "red");
         }
         if (!(cDistance || cCost || cRate || cPopularity)) {
-            $("#cspan-priority-error").text("select at least one option");
+            $("#cspan-priority-error").text("select at least one option").css("color", "red");
 
         }
 
     }
+    });
 });
 $("#iinp-service-type").keydown(function () {
     $("#cspan-service-place-error").text("");
@@ -173,7 +181,7 @@ $("#iinp-service-type").keydown(function () {
 $("#iinp-place-type").keydown(function () {
     $("#cspan-service-place-error").text("");
 });
-$('#ichk-distane').on('change', function () {
+$('#ichk-distance').on('change', function () {
     $('#cspan-priority-error').text("");
 });
 $('#ichk-cost').on('change', function () {

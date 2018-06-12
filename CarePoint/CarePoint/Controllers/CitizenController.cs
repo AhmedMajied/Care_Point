@@ -3,16 +3,17 @@ using DAL;
 using Extensions;
 using System;
 using System.Collections.Generic;
+using MessagingToolkit.QRCode.Codec;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using CarePoint.Models;
-using System.Diagnostics;
 using Microsoft.AspNet.Identity;
-using System.Collections;
 using System.Data.SqlClient;
 using CarePoint.Hubs;
 using CarePoint.AuthorizeAttributes;
+using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CarePoint.Controllers
 {
@@ -37,6 +38,41 @@ namespace CarePoint.Controllers
                 _citizenBusinessLayer = value;
             }
         }
+
+        public FileResult DownloadMyCard()
+        {
+            PatientCardCanvas canvas = new PatientCardCanvas();
+            string nationalID = User.Identity.GetCitizen().NationalIDNumber;
+
+            // encode national ID
+            var textBytes = Encoding.UTF8.GetBytes(nationalID);
+            string ecodedText = Convert.ToBase64String(textBytes);
+
+            // convert text to QR code 
+            QRCodeEncoder QRencoder = new QRCodeEncoder();
+            Bitmap QRCode = QRencoder.Encode(ecodedText);
+
+            // Draw patient card
+            Bitmap logo = new Bitmap(Server.MapPath("~/Images/logo.png"));
+            Bitmap photo = new Bitmap(Server.MapPath("~/Images/notfound.png"));
+            Bitmap patientCard = canvas.Draw(User.Identity.GetCitizen(), QRCode,logo,photo);
+            patientCard.Save(Server.MapPath("~/Images/PatientCard.jpg"), ImageFormat.Jpeg);
+
+            return new FilePathResult(Server.MapPath("~/Images/PatientCard.jpg"), "image/jpeg")
+            {
+                FileDownloadName = "Patient Card.jpg"
+            };
+        }
+
+        public JavaScriptResult GetCitizenByQR(string citizenQRCode)
+        {
+            Citizen citizen = CitizenBusinessLayer.GetCitizenByQR(citizenQRCode);
+
+            if (citizen == null || citizen.Id == User.Identity.GetUserId<long>())
+                return null;
+
+            return JavaScript("window.location = '/Citizen/CurrentPatient?citizenID="+citizen.Id+"'");
+        } 
 
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult CurrentPatient(long citizenID)
@@ -160,7 +196,8 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchAccount(string key, string value)
         {
-            List<List<Citizen>> allCitizens = _citizenBusinessLayer.searchAccounts(key, value);
+            long citizenId = User.Identity.GetCitizen().Id;
+            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(citizenId,key,value);
             var citizens = GetSearchResult(allCitizens[0]);
             var doctors = GetSearchResult(allCitizens[1]);
             var pharmacists = GetSearchResult(allCitizens[2]);
@@ -171,7 +208,7 @@ namespace CarePoint.Controllers
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public JsonResult PatientsList(long doctorId)
         {
-            List<Citizen> list = CitizenBusinessLayer.getPatientList(doctorId);
+            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)

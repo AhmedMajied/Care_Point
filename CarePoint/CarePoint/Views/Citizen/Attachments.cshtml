@@ -1,115 +1,34 @@
 ﻿@using Extensions
-@using DAL
-@model ICollection<Attachment>
+@using CarePoint.Models
+@model IDictionary<DAL.AttachmentType,List<AttachmentViewModel>>
 @{
     ViewBag.Title = "Attachements";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid">
+    @if (Model.Count > 0)
+    {
     <ul class="nav nav-tabs">
-        <li class="active"><a id="itab-analysis" href="#idiv-analysis-tab" data-toggle="tab">Lab investigations</a></li>
-        <li><a id="itab-radiology" href="#idiv-radiology-tab" data-toggle="tab">Radiology</a></li>
-        <li><a id="itab-prescriptions" href="#idiv-prescriptions-tab" data-toggle="tab">Prescriptions</a></li>
-        <li><a id="itab-other" href="#idiv-other-tab" data-toggle="tab">Others</a></li>
+        @{ var firstElement = Model.First(); }
+        <li class="active"><a onclick="readAttachmentsOfType.call(this,@firstElement.Key.ID)" id="itab-@firstElement.Key.Name.ToLower()" href="#idiv-@firstElement.Key.Name.ToLower()-tab" data-toggle="tab">@firstElement.Key.Name</a></li>
+        @foreach (var element in Model.Skip(1))
+        {
+        <li><a onclick="readAttachmentsOfType.call(this,@element.Key.ID)" id="itab-@element.Key.Name.ToLower()" href="#idiv-@element.Key.Name.ToLower()-tab" data-toggle="tab">@element.Key.Name</a></li>
+        }
     </ul>
     <div class="tab-content">
-        <div id="idiv-analysis-tab" class="tab-pane fade in active">
-            <ul class="list-group">
-                @{var analysisAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Analysis")); }
-                @{var radiolodyAttachments = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Radiology")); }
-                @{var prescriptions = Model.Where(attachment => attachment.AttachmentType.Name.Equals("Prescription")); }
-                @{var otherAttachments = Model.Except(analysisAttachments).Except(radiolodyAttachments).Except(prescriptions); }
-                @foreach (var attachment in analysisAttachments)
-            {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
-                else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
-                {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                
-                                @attachment.FileName
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
-                        </div>
-                    </li>
-    }
-            </ul>
+        <div id="idiv-@firstElement.Key.Name.ToLower()-tab" class="tab-pane fade in active">
+            @Html.Partial("_AttachmentTabPartial", firstElement.Value, new ViewDataDictionary{ { "includeIsRead", true } });
         </div>
-        <div id="idiv-radiology-tab" class="tab-pane fade">
-            <ul class="list-group">
-                @foreach (var attachment in radiolodyAttachments)
-            {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
-                else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
-                {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                
-                                @attachment.FileName
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
-                        </div>
-                    </li>
-    }
-            </ul>
-        </div>
-        <div id="idiv-prescriptions-tab" class="tab-pane fade">
-            <ul class="list-group">
-                @foreach (var attachment in prescriptions)
-                {
-                    <li class="list-group-item">
-                        <div class="row">                    
-                            <div class="col-md-5"><span class="fa fa-file-image-o fa-fw"></span>@attachment.FileName</div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
-                            
-                        </div>
-                    </li>
-    }
-            </ul>
-        </div>
-        <div id="idiv-other-tab" class="tab-pane fade">
-            <ul class="list-group">
-                @foreach (var attachment in otherAttachments)
-            {
-                    <li class="list-group-item">
-
-                        <div class="row">
-                            <div class="col-md-5">
-                                @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
-                                {<span class="fa fa-file-image-o fa-fw"></span>}
-                                else if (attachment.FilePath.EndsWith(".pdf"))
-                                {<span class="fa fa-file-pdf-o fa-fw"></span>}
-                else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm"))
-                {<span class="fa fa-file-word-o fa-fw"></span>}
-                                else
-                                {<span class="fa fa-file-alt-o fa-fw"></span>}
-                                @Html.ActionLink(attachment.FileName, "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, null)
-                            </div>
-                            <div class="col-md-3">@attachment.Specialist.Name</div>
-                            <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
-                            <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
-                        </div>
-                    </li>
-    }
-            </ul>
-        </div>
+        @foreach (var element in Model.Skip(1))
+        {
+            <div id="idiv-@element.Key.Name.ToLower()-tab" class="tab-pane fade">
+                @Html.Partial("_AttachmentTabPartial", element.Value, new ViewDataDictionary { { "includeIsRead", true } })
+            </div>
+        }
     </div>
+    }
 </div>
+@section scripts{
+    <script src="~/Scripts/attachments.js"></script>
+}

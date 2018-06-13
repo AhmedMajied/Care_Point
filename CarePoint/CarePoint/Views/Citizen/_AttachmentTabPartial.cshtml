@@ -1,0 +1,26 @@
+﻿@model List<CarePoint.Models.AttachmentViewModel>
+<ul class="list-group">
+   
+    @foreach (var attachment in Model)
+            {
+        <li class="list-group-item  @((attachment.IsRead || !(bool)ViewData["includeIsRead"] )? String.Empty: "cli-notif")">
+            <div class="row">
+                <div class="col-md-5">
+                    @if (attachment.FilePath.EndsWith(".jpg") || attachment.FilePath.EndsWith(".png") || attachment.FilePath.EndsWith(".bmp") || attachment.FilePath.EndsWith(".ico"))
+                    {<span class="fa fa-file-image-o fa-fw"></span>}
+                    else if (attachment.FilePath.EndsWith(".pdf"))
+                    {<span class="fa fa-file-pdf-o fa-fw"></span>}
+                    else if (attachment.FilePath.EndsWith(".docx") || attachment.FilePath.EndsWith(".docb") || attachment.FilePath.EndsWith(".docm") || attachment.FilePath.EndsWith(".dotx") || attachment.FilePath.EndsWith(".dotm") || attachment.FilePath.EndsWith(".txt"))
+                    {<span class="fa fa-file-word-o fa-fw"></span>}
+                    else
+                    {<span class="fa fa-file-alt-o fa-fw"></span>}
+
+                    @attachment.FileName
+                </div>
+                <div class="col-md-3">@attachment.SpecialistName</div>
+                <div class="col-md-3">@attachment.Date.Date.ToString("dd/MM/yyyy")</div>
+                <div class="col-md-1">@Html.ActionLink(" ", "DownloadAttachment", "MedicalHistory", new { path = attachment.FilePath, fileName = attachment.FileName }, new { @Class = "fa fa-download fa-fw" })</div>
+            </div>
+        </li>
+    }
+</ul>

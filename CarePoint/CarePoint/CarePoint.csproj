@@ -55,6 +55,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -205,12 +208,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\MedicalPlaceController.cs" />
     <Compile Include="Controllers\CitizenController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\SOSController.cs" />
+    <Compile Include="Custom AuthorizationAttributes\AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
     <Compile Include="Custom HtmlHelpers\DbGeographyModelBinder.cs" />
     <Compile Include="Extensions\CalendarDay.cs" />
@@ -218,21 +223,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\RelativesHub.cs" />
+    <Compile Include="Hubs\NotificationsHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AttachmentViewModel.cs" />
+    <Compile Include="Models\CurrentPatientViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\SOSViewModel.cs" />
+    <Compile Include="Models\PotentialDiseaseViewModel.cs" />
     <Compile Include="Models\RelativeViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\citizen-medical-history.css" />
+    <Content Include="Content\citizen-prognosis.css" />
     <Content Include="Content\citizen-relatives.css" />
     <Content Include="Content\current-patient.css" />
     <Content Include="Content\guest-home.css" />
@@ -278,8 +289,6 @@
     <Content Include="less\variables.less" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\ambulance.png" />
-    <Content Include="Images\care.jpg" />
-    <Content Include="Images\div-bg.jpg" />
     <Content Include="Images\doctor.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\logo-navbar.ico" />
@@ -288,9 +297,12 @@
     <Content Include="Images\notfound.png" />
     <Content Include="Images\pharmacy.png" />
     <Content Include="Images\plus.png" />
+    <Content Include="Scripts\attachments.js" />
+    <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\citizen-medical history.js" />
+    <Content Include="Scripts\notification-summary.js" />
     <Content Include="Scripts\current-patient.js" />
     <Content Include="Scripts\datevalidator.js" />
     <Content Include="Scripts\guest-home.js" />
@@ -318,6 +330,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\QRScanner.js" />
     <Content Include="Scripts\searchResult.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
@@ -335,8 +348,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -359,7 +370,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Citizen\Attachments.cshtml" />
     <Content Include="Views\Citizen\MedicalHistory.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CareUnit\Index.cshtml" />
     <Content Include="Views\MedicalPlace\AddMedicalPlace.cshtml" />
     <Content Include="Views\Citizen\CurrentPatient.cshtml" />
@@ -382,13 +392,17 @@
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsList.cshtml" />
     <Content Include="Views\Citizen\Relatives.cshtml" />
+    <Content Include="Views\Citizen\Prognosis.cshtml" />
+    <Content Include="Views\Citizen\_AttachmentTabPartial.cshtml" />
     <Content Include="Views\Shared\_NewPatient.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Videos\" />
     <Folder Include="Views\MedicalHistory\" />
     <Folder Include="Views\Medicine\" />
+    <Folder Include="Views\SOS\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

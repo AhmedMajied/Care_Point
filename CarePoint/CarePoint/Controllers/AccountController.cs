@@ -283,8 +283,11 @@ namespace CarePoint.Controllers
                     {
                         specialist.ProfessionLicense = binaryReader.ReadBytes(model.License.ContentLength);
                     }
+                    
                 }
                 var result = await UserManager.CreateAsync(model.SpecialityID != -1 ? specialist : citizen, model.Password);
+
+                
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(model.SpecialityID != -1 ? specialist : citizen, isPersistent: false, rememberBrowser: false);
@@ -294,8 +297,16 @@ namespace CarePoint.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    switch (model.SpecialityID)
+                    {
+                        case 1:
+                            await UserManager.AddToRoleAsync(specialist.Id, "Doctor");
+                            break;
+                        case 2:
+                            await UserManager.AddToRoleAsync(specialist.Id, "Pharmacist");
+                            break;
+                    }
+                    return RedirectToAction("MedicalHistory", "Citizen");
                 }
                 AddErrors(result);
             }
@@ -582,7 +593,7 @@ namespace CarePoint.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MedicalHistory", "Citizen");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

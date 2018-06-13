@@ -11,39 +11,34 @@ using DAL;
 using Microsoft.AspNet.Identity;
 using System.Drawing;
 using System.Drawing.Imaging;
+using CarePoint.Hubs;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
-
+    [Authorize]
     public class MedicalHistoryController : Controller
     {
-        private MedicalHistoryBusinessLayer _medicalHistorBusinessLayer;
+        private MedicalHistoryBusinessLayer _medicalHistoryBusinessLayer;
 
         public MedicalHistoryController()
         {
-            _medicalHistorBusinessLayer = new MedicalHistoryBusinessLayer();
+            _medicalHistoryBusinessLayer = new MedicalHistoryBusinessLayer();
         }
         public MedicalHistoryController(MedicalHistoryBusinessLayer medicalHistoryBusinessLayer)
         {
-            _medicalHistorBusinessLayer = medicalHistoryBusinessLayer;
+            _medicalHistoryBusinessLayer = medicalHistoryBusinessLayer;
         }
-        public MedicalHistoryBusinessLayer medicalBusinessLayer
+        public MedicalHistoryBusinessLayer MedicalHistoryBusinessLayer
         {
             get
             {
-                return _medicalHistorBusinessLayer ?? new MedicalHistoryBusinessLayer();
+                return _medicalHistoryBusinessLayer ?? new MedicalHistoryBusinessLayer();
             }
             private set
             {
-                _medicalHistorBusinessLayer = value;
+                _medicalHistoryBusinessLayer = value;
             }
-        }
-        
-        public FileResult ShowAttachmentFile(string path, string fileName)
-        {
-            String mimeType = MimeMapping.GetMimeMapping(path);
-
-            return new FilePathResult(path, mimeType);
         }
         
         public FileResult DownloadAttachment(string path, string fileName)
@@ -57,30 +52,38 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadAttachments(HttpPostedFileBase[] files, FormCollection form)
         {
             string[] typeIDs = form.GetValues("attachmentTypes");
+            string fileExtension;
 
             for(int i=0;i<files.Length;i++)
             {
                 try
                 {
+                    fileExtension = Path.GetExtension(files[i].FileName);
+
+                    if (fileExtension != ".jpg" && fileExtension !=".pdf" && fileExtension != ".png")
+                        throw new Exception("invalid extension");
+
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
-                    files[i].FileName);
+                        Path.GetRandomFileName().Replace(".", "")+Path.GetExtension(files[i].FileName));
                     files[i].SaveAs(path);
 
                     Attachment attachment = new Attachment
                     {
                         TypeID = Convert.ToInt64(typeIDs[i]),
                         Date = DateTime.Now,
-                        SpecialistID = 26,//User.Identity.GetUserId<long>(),
+                        SpecialistID = User.Identity.GetUserId<long>(),
                         CitizenID = Convert.ToInt64(form["Id"]),
                         FilePath = path,
                         FileName = files[i].FileName,
                         IsRead = false
                     };
 
-                    _medicalHistorBusinessLayer.SaveAttachment(attachment);
+                    MedicalHistoryBusinessLayer.SaveAttachment(attachment);
+                    NotificationsHub.NotifyAttachment(attachment.CitizenID, User.Identity.GetCitizen().Name,attachment.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +95,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UploadPrescription(FormCollection form)
         {
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
@@ -111,13 +115,14 @@ namespace CarePoint.Controllers
                 Remarks = remarks,
                 MedicalPlaceID = 6, //TODO get from session
                 CitizenID = Convert.ToInt64(form["Id"]),
-                SpecialistID = 26 //User.Identity.GetUserId<long>()
+                SpecialistID = User.Identity.GetUserId<long>()
             };
 
             // assign symptoms to history record
             for (int i = 0; i < symptoms.Length; i++)
             {
-                if (!symptoms[i].Equals("") && !symptoms[i].Equals(" "))
+                symptoms[i] = symptoms[i].Trim();
+                if (!symptoms[i].Equals(""))
                 {
                     historyRecord.Symptoms.Add(new Symptom { Name = symptoms[i] });
                 }
@@ -126,7 +131,8 @@ namespace CarePoint.Controllers
             // assign diseases to history record
             for (int i = 0; i < diseases.Length; i++)
             {
-                if (!diseases[i].Equals("") && !diseases[i].Equals(" "))
+                diseases[i] = diseases[i].Trim();
+                if (!diseases[i].Equals(""))
                 {
                     historyRecord.Diseases.Add(new Disease { Name = diseases[i], IsGenetic = false });
                 }
@@ -136,8 +142,7 @@ namespace CarePoint.Controllers
             List<Disease> historyRecordDiseases = historyRecord.Diseases.ToList();
             for (int i = 0; genticDiseases != null && i < Math.Min(genticDiseases.Length,diseases.Length) ; i++)
             {
-                if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "" 
-                    || diseases[Convert.ToInt32(genticDiseases[i]) - 1] == " ")
+                if(diseases[Convert.ToInt32(genticDiseases[i]) - 1] == "")
                 {
                     continue;
                 }
@@ -158,24 +163,25 @@ namespace CarePoint.Controllers
             }
 
             // save history record to database
-            Bitmap bitmap = _medicalHistorBusinessLayer.SavePrescription(historyRecord,
-                medicines, doses, medicinesAlternatives, prescriptionFilePath);
+            Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
+                medicines, doses, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
 
+            // don't save prescription 
             if(bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
 
-            //if (medicines[0].Equals(""))
+            if (medicines[0].Equals(""))
                 return Redirect(Request.UrlReferrer.ToString());
 
-            /*return new FilePathResult(prescriptionFilePath, "image/jpg")
+            return new FilePathResult(prescriptionFilePath, "image/jpg")
             {
                 FileDownloadName = historyRecord.Date.ToString() + ".jpg"
-            };*/
+            };
         }
 
         public ActionResult GetAttachmentTypes()
         {
-            var attachmentTypes = _medicalHistorBusinessLayer.GetAttachmentTypes().
+            var attachmentTypes = MedicalHistoryBusinessLayer.GetAttachmentTypes().
                 Select(type => new { type.ID,type.Name }).ToList();
 
             return Json(attachmentTypes);

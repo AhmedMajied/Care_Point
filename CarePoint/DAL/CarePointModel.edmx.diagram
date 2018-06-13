@@ -104,6 +104,9 @@
         <AssociationConnector Association="CarePointModel.UserRoles" ManuallyRouted="false" />
         <InheritanceConnector EntityType="CarePointModel.Specialist" />
         <AssociationConnector Association="CarePointModel.FK_CareUnits_MedicalPlace" />
+        <EntityTypeShape EntityType="CarePointModel.PotentialDisease" Width="1.5" PointX="15.5" PointY="37.875" />
+        <AssociationConnector Association="CarePointModel.FK_CitizenPotentialDiseases_Citizens1" />
+        <AssociationConnector Association="CarePointModel.FK_CitizenPotentialDiseases_Diseases1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

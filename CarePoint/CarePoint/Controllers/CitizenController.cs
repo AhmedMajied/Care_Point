@@ -3,18 +3,21 @@ using DAL;
 using Extensions;
 using System;
 using System.Collections.Generic;
+using MessagingToolkit.QRCode.Codec;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using CarePoint.Models;
-using System.Diagnostics;
 using Microsoft.AspNet.Identity;
-using System.Collections;
 using System.Data.SqlClient;
 using CarePoint.Hubs;
+using CarePoint.AuthorizeAttributes;
+using System.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CarePoint.Controllers
 {
+    [Authorize]
     public class CitizenController : Controller
     {
         private CitizenBusinessLayer _citizenBusinessLayer;
@@ -36,37 +39,87 @@ namespace CarePoint.Controllers
             }
         }
 
+        public FileResult DownloadMyCard()
+        {
+            PatientCardCanvas canvas = new PatientCardCanvas();
+            string nationalID = User.Identity.GetCitizen().NationalIDNumber;
+
+            // encode national ID
+            var textBytes = Encoding.UTF8.GetBytes(nationalID);
+            string ecodedText = Convert.ToBase64String(textBytes);
+
+            // convert text to QR code 
+            QRCodeEncoder QRencoder = new QRCodeEncoder();
+            Bitmap QRCode = QRencoder.Encode(ecodedText);
+
+            // Draw patient card
+            Bitmap logo = new Bitmap(Server.MapPath("~/Images/logo.png"));
+            Bitmap photo = new Bitmap(Server.MapPath("~/Images/notfound.png"));
+            Bitmap patientCard = canvas.Draw(User.Identity.GetCitizen(), QRCode,logo,photo);
+            patientCard.Save(Server.MapPath("~/Images/PatientCard.jpg"), ImageFormat.Jpeg);
+
+            return new FilePathResult(Server.MapPath("~/Images/PatientCard.jpg"), "image/jpeg")
+            {
+                FileDownloadName = "Patient Card.jpg"
+            };
+        }
+
+        public JavaScriptResult GetCitizenByQR(string citizenQRCode)
+        {
+            Citizen citizen = CitizenBusinessLayer.GetCitizenByQR(citizenQRCode);
+
+            if (citizen == null || citizen.Id == User.Identity.GetUserId<long>())
+                return null;
+
+            return JavaScript("window.location = '/Citizen/CurrentPatient?citizenID="+citizen.Id+"'");
+        } 
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult CurrentPatient(long citizenID)
         {
             Citizen citizen = CitizenBusinessLayer.GetCitizen(citizenID);
-
-            return View(citizen);
+            CurrentPatientViewModel model = new CurrentPatientViewModel()
+            {
+                Id = citizen.Id,
+                Name = citizen.Name,
+                Age = DateTime.Now.Year - citizen.DateOfBirth.Value.Year,
+                BloodType = citizen.BloodType.Name,
+                Gender = citizen.Gender,
+                Photo = citizen.Photo,
+                HistoryRecords = citizen.HistoryRecords,
+                Attachments = citizen.Attachments.OrderBy(a => a.AttachmentType.ID)
+                .GroupBy(a => a.AttachmentType)
+                .ToDictionary(g => g.Key, g => g.Select(attachment => new AttachmentViewModel()
+                {
+                    IsRead = attachment.IsRead ?? false,
+                    Date = attachment.Date,
+                    FileName = attachment.FileName,
+                    FilePath = attachment.FilePath,
+                    SpecialistName = attachment.Specialist.Name
+                }).ToList())
+            };
+            return View(model);
         }
-        public ActionResult MedicalHistory(long id)
+
+        public ActionResult MedicalHistory()
         {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(CitizenBusinessLayer.GetCitizen(id).HistoryRecords);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
+            return View(CitizenBusinessLayer.GetCitizen(User.Identity.GetUserId<long>()).HistoryRecords); 
         }
 
         // GET: Attachments
-        public ActionResult Attachments(long id)
+        public ActionResult Attachments()
         {
-            var user = User.Identity.GetCitizen();
-            if (user is Models.Specialist || id == user.Id)
-            {
-                return View(CitizenBusinessLayer.GetCitizen(id).Attachments);
-            }
-            else
-            {
-                return new HttpUnauthorizedResult();
-            }
+            IDictionary<AttachmentType, List<AttachmentViewModel>> model = CitizenBusinessLayer.GetCitizen(User.Identity.GetUserId<long>()).Attachments.OrderBy(a => a.AttachmentType.ID)
+                .GroupBy(a => a.AttachmentType)
+                .ToDictionary(g => g.Key,g => g.Select( attachment => new AttachmentViewModel() {
+                    IsRead=attachment.IsRead??false,
+                    Date=attachment.Date,
+                    FileName=attachment.FileName,
+                    FilePath=attachment.FilePath,
+                    SpecialistName=attachment.Specialist.Name
+                }).ToList());
+            
+            return View(model);
         }
 
         public ActionResult Relatives()
@@ -143,7 +196,8 @@ namespace CarePoint.Controllers
         }
         public JsonResult SearchAccount(string key, string value)
         {
-            List<List<Citizen>> allCitizens = _citizenBusinessLayer.searchAccounts(key, value);
+            long citizenId = User.Identity.GetCitizen().Id;
+            List<List<Citizen>> allCitizens = _citizenBusinessLayer.SearchAccounts(citizenId,key,value);
             var citizens = GetSearchResult(allCitizens[0]);
             var doctors = GetSearchResult(allCitizens[1]);
             var pharmacists = GetSearchResult(allCitizens[2]);
@@ -151,9 +205,10 @@ namespace CarePoint.Controllers
             return Json(res);
         }
 
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public JsonResult PatientsList(long doctorId)
         {
-            List<Citizen> list = _citizenBusinessLayer.getPatientList(doctorId);
+            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)
@@ -171,28 +226,12 @@ namespace CarePoint.Controllers
 
         public JsonResult AddRelative(long relativeId, string relationType)
         {
-            Relative relative = new Relative();
             int relationId = (relationType == "Parent") ? 1 : (relationType == "Friend") ? 3 : 4;
-            if(relationId != 4)
-            {
-                relative.CitizenID = User.Identity.GetUserId<long>();
-                relative.RelativeID = relativeId;
-                relative.RelationTypeID = relationId;
-                relative.CitizenConfirmed = true;
-                relative.RelativeConfirmed = false;
-            }
-            else
-            {
-                relative.RelativeID = User.Identity.GetUserId<long>();
-                relative.CitizenID = relativeId;
-                relative.RelationTypeID = 1;
-                relative.RelativeConfirmed = true;
-                relative.CitizenConfirmed = false ;
-            }
+            long citizenId = User.Identity.GetUserId<long>();
             try
             {
-                CitizenBusinessLayer.AddRelative(relative);
-                RelativesHub.StaticNotify(relative.RelativeID,1);
+                CitizenBusinessLayer.AddRelative(citizenId,relativeId,relationId,() => NotificationsHub.NotifyRelative(relativeId, 1, CitizenBusinessLayer.GetCitizen(relativeId).Name, relationType));
+                
                 return Json(new { Code=0,Message="Added Successfully"});
             }
             catch(Exception e)
@@ -204,11 +243,36 @@ namespace CarePoint.Controllers
 
         public void RemoveRelation(long relativeId)
         {
-            if (!CitizenBusinessLayer.IsRelationConfirmed(User.Identity.GetUserId<long>(), relativeId))
-            {
-                RelativesHub.StaticNotify(relativeId, -1);
-            }
-            CitizenBusinessLayer.RemoveRelation(User.Identity.GetUserId<long>(), relativeId);
+            
+            CitizenBusinessLayer.RemoveRelation(User.Identity.GetUserId<long>(), relativeId,() => {
+                if (!CitizenBusinessLayer.IsRelationConfirmed(User.Identity.GetUserId<long>(), relativeId))
+                {
+                    NotificationsHub.NotifyRelative(relativeId, -1);
+                }
+            });
+        }
+
+
+        public ActionResult Prognosis()
+        {
+            long id = User.Identity.GetUserId<long>();
+            var potintialDiseases = CitizenBusinessLayer.GetPotintialDiseases(id);
+            ICollection<PotentialDiseaseViewModel> model = potintialDiseases.GroupBy(p => p.DiseaseID)
+                .Select(g => new PotentialDiseaseViewModel {
+                    DiseaseName=g.First().Disease.Name,
+                    Level = g.Min(p => p.Level),
+                    NumberOfCasualties=g.Count(),
+                    TimeStamp=g.Max(p => p.TimeStamp),
+                    IsRead=!g.Any(p => !p.IsRead)
+                }).ToList();
+            CitizenBusinessLayer.ReadAllPotentialDiseases(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public void ReadAttachmentsOfType(int typeId)
+        {
+            CitizenBusinessLayer.ReadAttachmentsOfType(User.Identity.GetUserId<long>(), typeId);
         }
     }
 }

@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/patient-list.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_LoginPartial.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-notify.css" />
     @RenderSection("styles", false)
 
 </head>
@@ -48,7 +49,6 @@
             <div id="idiv-adds" class="col-md-2" style="height: 200px;"><center><label>Advertising area</label></center></div>
         </div>
     </div>
-
     <div id="imodal-saving" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -72,14 +72,18 @@
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
-    <script src="~/Scripts/sos.js" type="application/javascript"></script>
     <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/searchResult.js"></script>
     <script src="~/Scripts/patient-list.js"></script>
+    <script src="~/Scripts/sos.js" type="application/javascript"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
     <script src="~/SignalR/hubs"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <script src="~/Scripts/notification-summary.js"></script>
+    <script src="~/Scripts/instascan.min.js"></script>
+    <script src="~/Scripts/QRScanner.js"></script>
     <script>
-        var relativesHub = $.connection.relativesHub;
+        var notificationsHub = $.connection.notificationsHub;
         $.connection.hub.start();
         $.connection.hub.disconnected(function () {
             setTimeout(function () {
@@ -89,7 +93,7 @@
             }, 5000);
         });
 
-        relativesHub.client.notify = function (increment) {
+        notificationsHub.client.notifyRelative = function (increment, relativeName, relation) {
             var notificationMark = $("#ilink-relatives .cmark-notif");
             var notificationCount = parseInt(notificationMark.text());
             notificationCount += increment;
@@ -100,6 +104,30 @@
             else {
                 notificationMark.css("display", "none");
             }
+            if (increment > 0) {
+                showRelativeNotifSummary(relativeName, relation, "/Citizen/Relatives");
+            }
+        }
+
+        notificationsHub.client.notifyPrognosis = function (diseaseName) {
+            var notificationMark = $("#ilink-prognosis .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += 1;
+            notificationMark.text(notificationCount);
+            notificationMark.removeAttr("style");
+            showPrognosisNotifSummary(diseaseName, "/Citizen/Prognosis");
+        }
+
+        notificationsHub.client.notifyAttachment = function (doctorName, fileName) {
+            var notificationMark = $("#ilink-attachments .cmark-notif");
+            var notificationCount = parseInt(notificationMark.text());
+            notificationCount += 1;
+            notificationMark.text(notificationCount);
+            notificationMark.removeAttr("style");
+            showAttachmentNotifSummary(doctorName, fileName, "#");
+        }
+        notificationsHub.client.notifySOS = function (description, lat, lng, phoneNumber) {
+            showSOSNotifSummary(lat + " " + lng, description, phoneNumber);//get address from lat and lng
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>

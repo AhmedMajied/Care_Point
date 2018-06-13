@@ -114,6 +114,7 @@
           <Property Name="NationalIDNumber" Type="nchar" MaxLength="14" />
           <Property Name="NationalIDPhoto" Type="image" Nullable="false" />
           <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="PrognosisMaxLevel" Type="int" />
         </EntityType>
         <EntityType Name="Diseases">
           <Key>
@@ -266,6 +267,17 @@
           <Property Name="CitizenID" Type="bigint" Nullable="false" />
           <Property Name="PharmacyID" Type="bigint" Nullable="false" />
           <Property Name="Rating" Type="int" />
+        </EntityType>
+        <EntityType Name="PotentialDiseases">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CitizenID" Type="bigint" Nullable="false" />
+          <Property Name="DiseaseID" Type="bigint" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="IsRead" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ReceiptMedicines">
           <Key>
@@ -590,6 +602,30 @@
             </Principal>
             <Dependent Role="CareUnitMembershipRequests">
               <PropertyRef Name="SpecialistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CitizenPotentialDiseases_Citizens">
+          <End Role="Citizens" Type="Self.Citizens" Multiplicity="1" />
+          <End Role="PotentialDiseases" Type="Self.PotentialDiseases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citizens">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PotentialDiseases">
+              <PropertyRef Name="CitizenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CitizenPotentialDiseases_Diseases">
+          <End Role="Diseases" Type="Self.Diseases" Multiplicity="1" />
+          <End Role="PotentialDiseases" Type="Self.PotentialDiseases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diseases">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PotentialDiseases">
+              <PropertyRef Name="DiseaseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1270,6 +1306,7 @@
           <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PharmacyRatings" EntityType="Self.PharmacyRatings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PotentialDiseases" EntityType="Self.PotentialDiseases" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceiptMedicines" EntityType="Self.ReceiptMedicines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelationTypes" EntityType="Self.RelationTypes" Schema="dbo" store:Type="Tables" />
@@ -1339,6 +1376,14 @@
           <AssociationSet Name="FK_CareUnitSpecialists_Specialists" Association="Self.FK_CareUnitSpecialists_Specialists">
             <End Role="Specialists" EntitySet="Specialists" />
             <End Role="CareUnitMembershipRequests" EntitySet="CareUnitMembershipRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CitizenPotentialDiseases_Citizens" Association="Self.FK_CitizenPotentialDiseases_Citizens">
+            <End Role="Citizens" EntitySet="Citizens" />
+            <End Role="PotentialDiseases" EntitySet="PotentialDiseases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CitizenPotentialDiseases_Diseases" Association="Self.FK_CitizenPotentialDiseases_Diseases">
+            <End Role="Diseases" EntitySet="Diseases" />
+            <End Role="PotentialDiseases" EntitySet="PotentialDiseases" />
           </AssociationSet>
           <AssociationSet Name="FK_Citizens_BloodTypes" Association="Self.FK_Citizens_BloodTypes">
             <End Role="BloodTypes" EntitySet="BloodTypes" />
@@ -1688,6 +1733,8 @@
           <Property Name="NationalIDNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
           <Property Name="NationalIDPhoto" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrognosisMaxLevel" Type="Int32" />
+          <NavigationProperty Name="PotentialDiseases" Relationship="CarePointModel.FK_CitizenPotentialDiseases_Citizens1" FromRole="Citizen" ToRole="PotentialDiseas" />
         </EntityType>
         <EntityType Name="Disease">
           <Key>
@@ -1697,6 +1744,7 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="HistoryRecords" Relationship="Self.HistoryRecordDiseases" FromRole="Diseases" ToRole="HistoryRecords" />
           <Property Name="IsGenetic" Type="Boolean" />
+          <NavigationProperty Name="PotentialDiseases" Relationship="CarePointModel.FK_CitizenPotentialDiseases_Diseases1" FromRole="Disease" ToRole="PotentialDiseas" />
         </EntityType>
         <EntityType Name="Dose">
           <Key>
@@ -1747,7 +1795,7 @@
           <NavigationProperty Name="Pharmacies" Relationship="Self.FK_Pharmacies_MedicalPlace" FromRole="MedicalPlace" ToRole="Pharmacies" />
           <NavigationProperty Name="Services" Relationship="Self.FK_Services_MedicalGroup" FromRole="MedicalPlace" ToRole="Services" />
           <NavigationProperty Name="SOSses" Relationship="Self.FK_SOSs_MedicalPlace" FromRole="MedicalPlace" ToRole="SOSs" />
-          <NavigationProperty Name="Specialists" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
+          <NavigationProperty Name="Admins" Relationship="Self.MedicalPlaceAdmins" FromRole="MedicalPlace" ToRole="Specialists" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CareUnits" Relationship="CarePointModel.FK_CareUnits_MedicalPlace" FromRole="MedicalPlace" ToRole="CareUnit" />
@@ -1997,7 +2045,7 @@
           <NavigationProperty Name="ReceiptsAdded" Relationship="Self.FK_Receipts_Specialists" FromRole="Specialists" ToRole="Receipts" />
           <NavigationProperty Name="ServiceMembershipRequests" Relationship="Self.FK_MedicalPlaceMembers_Specialists" FromRole="Specialists" ToRole="ServiceMembershipRequests" />
           <NavigationProperty Name="Speciality" Relationship="Self.FK_Specialists_Specialities" FromRole="Specialists" ToRole="Specialities" />
-          <NavigationProperty Name="WorkingMedicalPlaces" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
+          <NavigationProperty Name="AdministratedMedicalPlaces" Relationship="Self.MedicalPlaceAdmins" FromRole="Specialists" ToRole="MedicalPlace" />
         </EntityType>
         <EntityType Name="Speciality">
           <Key>
@@ -3017,6 +3065,15 @@
             <End Role="MedicalPlace" EntitySet="MedicalPlaces" />
             <End Role="CareUnit" EntitySet="CareUnits" />
           </AssociationSet>
+          <EntitySet Name="PotentialDiseases" EntityType="CarePointModel.PotentialDisease" />
+          <AssociationSet Name="FK_CitizenPotentialDiseases_Citizens1" Association="CarePointModel.FK_CitizenPotentialDiseases_Citizens1">
+            <End Role="Citizen" EntitySet="Citizens" />
+            <End Role="PotentialDiseas" EntitySet="PotentialDiseases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CitizenPotentialDiseases_Diseases1" Association="CarePointModel.FK_CitizenPotentialDiseases_Diseases1">
+            <End Role="Disease" EntitySet="Diseases" />
+            <End Role="PotentialDiseas" EntitySet="PotentialDiseases" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_CareUnits_MedicalPlace">
           <End Type="CarePointModel.MedicalPlace" Role="MedicalPlace" Multiplicity="0..1">
@@ -3029,6 +3086,43 @@
             </Principal>
             <Dependent Role="CareUnit">
               <PropertyRef Name="ProviderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PotentialDisease">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CitizenID" Type="Int64" Nullable="false" />
+          <Property Name="DiseaseID" Type="Int64" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="TimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Citizen" Relationship="CarePointModel.FK_CitizenPotentialDiseases_Citizens1" FromRole="PotentialDiseas" ToRole="Citizen" />
+          <NavigationProperty Name="Disease" Relationship="CarePointModel.FK_CitizenPotentialDiseases_Diseases1" FromRole="PotentialDiseas" ToRole="Disease" />
+        </EntityType>
+        <Association Name="FK_CitizenPotentialDiseases_Citizens1">
+          <End Type="CarePointModel.Citizen" Role="Citizen" Multiplicity="1" />
+          <End Type="CarePointModel.PotentialDisease" Role="PotentialDiseas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citizen">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PotentialDiseas">
+              <PropertyRef Name="CitizenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CitizenPotentialDiseases_Diseases1">
+          <End Type="CarePointModel.Disease" Role="Disease" Multiplicity="1" />
+          <End Type="CarePointModel.PotentialDisease" Role="PotentialDiseas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PotentialDiseas">
+              <PropertyRef Name="DiseaseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3134,6 +3228,7 @@
           <EntitySetMapping Name="Citizens">
             <EntityTypeMapping TypeName="IsTypeOf(CarePointModel.Citizen)">
               <MappingFragment StoreEntitySet="Citizens">
+                <ScalarProperty Name="PrognosisMaxLevel" ColumnName="PrognosisMaxLevel" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="NationalIDPhoto" ColumnName="NationalIDPhoto" />
                 <ScalarProperty Name="NationalIDNumber" ColumnName="NationalIDNumber" />
@@ -3485,6 +3580,18 @@
               <ScalarProperty Name="ID" ColumnName="MedicalPlaceID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PotentialDiseases">
+            <EntityTypeMapping TypeName="CarePointModel.PotentialDisease">
+              <MappingFragment StoreEntitySet="PotentialDiseases">
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="DiseaseID" ColumnName="DiseaseID" />
+                <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

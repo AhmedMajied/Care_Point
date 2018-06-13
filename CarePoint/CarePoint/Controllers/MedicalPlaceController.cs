@@ -10,9 +10,11 @@ using System.Data.Entity.Spatial;
 using System.IO;
 using Extensions;
 using System.Diagnostics;
+using CarePoint.AuthorizeAttributes;
 
 namespace CarePoint.Controllers
 {
+    [Authorize]
     public class MedicalPlaceController : Controller
     {
         // GET: MedicalPlace
@@ -83,9 +85,7 @@ namespace CarePoint.Controllers
                 CareUnits =  new List<CareUnitViewModel>(),
                 ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
-
-                IsAdmin = medicalPlace.Specialists.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
-
+                IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
             };
             
             
@@ -158,6 +158,8 @@ namespace CarePoint.Controllers
 
             return View("ProfilePage",model);
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void AddWorkslot(WorkSlotViewModel model)
         {
             foreach(var attribute in model.GetType().GetProperties()) {
@@ -175,12 +177,15 @@ namespace CarePoint.Controllers
                 }
             }
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void RemoveWorkslot(long ServiceID,TimeSpan StartTime,TimeSpan EndTime)
         {
             ServiceBusinessLayer.RemoveWorkslot(ServiceID, StartTime, EndTime);
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddService(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -199,7 +204,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
-
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateSchedule(MedicalPlaceProfileViewModel model)
         {
             if(ModelState.IsValid)
@@ -220,12 +225,14 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public void UpdateCareUnitsCount(List<CareUnit> careUnits)
         {
             CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -248,6 +255,7 @@ namespace CarePoint.Controllers
         }
 
         [HttpPost]
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddCareUnit(MedicalPlaceProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -267,11 +275,12 @@ namespace CarePoint.Controllers
             }
             return ProfilePage(model.MedicalPlaceID);
         }
-        
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult MedicalPlace()
         {
             MedicalPlaceViewModels model = new MedicalPlaceViewModels();
-            ICollection<MedicalPlaceType> medicalPlaceTypes = MedicalPlaceBusinessLayer.getAllTypes();
+            ICollection<MedicalPlaceType> medicalPlaceTypes = MedicalPlaceBusinessLayer.GetAllTypes();
             List<SelectListItem> dropDownList = new List<SelectListItem>();
             foreach (MedicalPlaceType medicalType in medicalPlaceTypes)
             {
@@ -280,6 +289,8 @@ namespace CarePoint.Controllers
             model.medicalPlaceTypes = dropDownList;
             return View("AddMedicalPlace", model);
         }
+
+        [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
         {
             DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
@@ -303,24 +314,29 @@ namespace CarePoint.Controllers
             {
                 newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
             }
-            MedicalPlaceBusinessLayer.addMedicalPlace(newPlace);
+            MedicalPlaceBusinessLayer.AddMedicalPlace(newPlace);
             return ProfilePage(newPlace.ID);
         }
+
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {
+            if (model.serviceType == null)
+                model.serviceType = "";
+            if (model.placeName == null)
+                model.placeName = "";
             Citizen user = User.Identity.GetCitizen();
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
-            if (model.serviceType.ToUpper().Equals("ICU") || model.placeType.ToUpper().Equals("ICU"))
+            if (model.serviceType.ToUpper().Equals("ICU") || model.placeName.ToUpper().Equals("ICU"))
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.searchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
             else
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeType, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
             }
+
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
-                place.Phone , place.Photo , isSpecialist = (user is DAL.Specialist),
-                isJoined = place.Specialists.Any(usr => usr.Id == user.Id)}).ToList();
+                place.Phone , place.Photo}).ToList();
             return Json(result);
         }
     }

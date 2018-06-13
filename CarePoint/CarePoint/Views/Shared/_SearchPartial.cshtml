@@ -17,10 +17,10 @@
 
             <!--Search Place-->
             <div id="itab-srch-location" role="tabpanel" class="tab-pane active">
-                <label>Service type:</label>
+                <label for="iinp-service-type">Service type:</label>
                 <input id="iinp-service-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
                 <br />
-                <label>Place name:</label>
+                <label for="iinp-place-type">Place name:</label>
                 <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. Hospital XYZ" />
                 <span class="cspan-error" id="cspan-service-place-error"></span>
                 <br />
@@ -55,7 +55,8 @@
 
             <!--Search Drugs-->
             <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
-                Search options for drugs
+                <label for="iinp-drug-name">Drug name:</label>
+                <input id="iinp-drug-name" class="form-control" type="text" />
                 <br /><br />
                 <button class="btn btn-success cbtn-srch" type="submit"><span class="fa fa-search"></span> Search</button>
             </div>

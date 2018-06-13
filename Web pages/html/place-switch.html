@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/modal.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="../css/tab.css" />
+    <link rel="stylesheet" type="text/css" href="../css/place-switch.css" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-place-switch">Switch workplace</button>
+
+        <div id="imodal-place-switch" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header cmodal-special-hdr">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#\@itab-place-type-1" role="tab" data-toggle="tab">@PlaceType1</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#\@itab-place-type-2" role="tab" data-toggle="tab">@PlaceType2</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="tab-content">
+                            <div id="@itab-place-type-1" role="tabpanel" class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-md-2 cdiv-vcenter">@@Place logo</div>
+                                    <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Place name</label></div>
+                                    <div class="col-md-4 cdiv-vcenter">
+                                        <button class="btn btn-default">Open profile</button>
+                                    </div>
+                                </div><hr>
+                                <div class="row">
+                                    <div class="col-md-2 cdiv-vcenter">@@Place logo</div>
+                                    <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Place name</label></div>
+                                    <div class="col-md-4 cdiv-vcenter">
+                                        <button class="btn btn-default">Open profile</button>
+                                    </div>
+                                </div><hr>
+                            </div>
+                            <div id="@itab-place-type-2" role="tabpanel" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-md-2 cdiv-vcenter">@@Place logo</div>
+                                    <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Place nameeeeeeeeeeeeeee</label></div>
+                                    <div class="col-md-4 cdiv-vcenter">
+                                        <button class="btn btn-default">Open profile</button>
+                                    </div>
+                                </div><hr>
+                                <div class="row">
+                                    <div class="col-md-2 cdiv-vcenter">@@Place logo</div>
+                                    <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Place nameeeeeeeeeeeeee</label></div>
+                                    <div class="col-md-4 cdiv-vcenter">
+                                        <button class="btn btn-default">Open profile</button>
+                                    </div>
+                                </div><hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -28,7 +28,6 @@ function update_step_nav_buttons() {
         $("#ibtn-prev").css('display', 'inline-block');
         $("#ibtn-prev").prop('disabled', false);
         $("#ibtn-submit").css('display', 'inline-block');
-        $("#ibtn-submit").prop('disabled', false);
     }
     else {
         $("#ibtn-nxt").css('display', 'inline-block');
@@ -203,9 +202,11 @@ jQuery(document).ready(function () {
                 if (current_step === 4) {
                     if (validateDrugsNames()) {
                         $("#idiv-warning").addClass("hidden");
+                        $("#ibtn-submit").prop('disabled', false);
                         createAlternativesDiv();
                     } else {
                         $("#idiv-warning").removeClass("hidden");
+                        $("#ibtn-submit").prop('disabled', true);
                     }
                 }
                 // change icons
@@ -284,9 +285,11 @@ jQuery(document).ready(function () {
                 if (current_step === 4) {
                     if (validateDrugsNames()) {
                         $("#idiv-warning").addClass("hidden");
+                        $("#ibtn-submit").prop('disabled', false);
                         createAlternativesDiv();
                     } else {
                         $("#idiv-warning").removeClass("hidden");
+                        $("#ibtn-submit").prop('disabled', true);
                     }
                 }
 

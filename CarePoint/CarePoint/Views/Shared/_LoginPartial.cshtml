@@ -20,7 +20,6 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a data-toggle="modal" href="#imodal-new-patient" id="ilink-new-patient">New patient</a></li>
-                    <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
                     @{ string id = (User.Identity.GetCitizen()).Id.ToString();}
                     @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
                     <li><a data-toggle="modal" href="#imodal-patient-list" id="ilink-patient-list">My patients</a></li>
@@ -34,7 +33,7 @@
             </li>
             }
             <li><a id="ilink-medical-history" href="/MedicalHistory/MedicalHistory/@user.Id">
-                    <span class="fa fa-history fa-2x cspn-nav"><mark class="cmark-notif">17</mark></span>
+                    <span class="fa fa-history fa-2x cspn-nav"></span>
                 </a></li>
             <li><a id="ilink-attachments" href="/MedicalHistory/Attachments/@user.Id">
                     <span class="fa fa-paperclip fa-2x cspn-nav"><mark class="cmark-notif">2</mark></span>

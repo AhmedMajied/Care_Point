@@ -34,7 +34,6 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a data-toggle="modal" href="#imodal-new-patient" id="ilink-new-patient">New patient</a></li>
-                    <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
                     @{ string id = User.Identity.GetUserId<long>().ToString();}
                     @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
                     <li><a data-toggle="modal" href="#imodal-patient-list" id="ilink-patient-list">My patients</a></li>

@@ -102,8 +102,8 @@
                                 </div>
                             </div>
                             <div id="idiv-step-4" class="cdiv-step container-fluid">
-                                <div id="idiv-warning" class="alert alert-warning hidden">
-                                    <b> Warning:</b> please make sure that all drugs you typed in step 3 are correctly spelled.
+                                <div id="idiv-warning" class="alert alert-danger hidden">
+                                    <b> Error:</b> please make sure that all drugs you typed in step 3 are correctly spelled.
                                 </div>
                                 <div id="idiv-alternatives"></div>
 
@@ -138,7 +138,7 @@
 
                                     <div class="row cdiv-list-item">
                                         <div class="col-md-4 selectContainer">
-                                            <select class="form-control" name="attachmentTypes" id="iselect-attachment-types" required>
+                                            <select class="cselect-attachment-type form-control" name="attachmentTypes" id="iselect-attachment-types" required>
                                                 <option class="form-control" value="" selected disabled>Select type</option>
                                             </select>
                                         </div>
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" id="ibtn-upload" class="btn btn-success" data-toggle="modal" data-target="#imodal-saving" value="Upload">
+                                <input type="submit" id="ibtn-upload" class="btn btn-success" data-toggle="modal" data-target="#imodal-saving" value="Upload" disabled>
                             </div>
                     }
                 </div>

@@ -25,7 +25,7 @@ namespace BLL
         {
             return DBEntities.Pharmacies.SingleOrDefault(pharmacy => pharmacy.ID == id);
         }
-        public ICollection<Pharmacy> SearchMedicinePharmacies(string drugName, string location)
+        public ICollection<Pharmacy> SearchMedicineInPharmacies(string drugName, string location)
         {
             List<Pharmacy> pharmacies = new List<Pharmacy>();
             List<Pharmacy> sortedPhrmacies = new List<Pharmacy>();

@@ -75,7 +75,7 @@ namespace CarePoint.Controllers
         public JsonResult SearchPharmacyMedicine(SearchMedicineViewModel model)
         {
             string location = string.Format("POINT({0} {1})", model.longitude, model.latitude);
-            List<Pharmacy> result = PharmacyBusinessLayer.SearchMedicinePharmacies(model.drugName, location).ToList();
+            List<Pharmacy> result = PharmacyBusinessLayer.SearchMedicineInPharmacies(model.drugName, location).ToList();
             var pharmacies = result.Select(pharmacy => new { pharmacy.Name, Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(pharmacy.Photo)) , pharmacy.Address , pharmacy.Phone});
             string drugName = model.drugName;
             return Json(new { pharmacies, drugName });

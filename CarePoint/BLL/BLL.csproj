@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatientCardCanvas.cs" />
+    <Compile Include="PharmacyBusinessLayer.cs" />
     <Compile Include="PrescriptionCanvas.cs" />
     <Compile Include="CareUnitBusinessLayer.cs" />
     <Compile Include="CitizenBusinessLayer.cs" />

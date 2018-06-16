@@ -15,12 +15,12 @@
         </ul>
         <div class="tab-content">
 
-            <!--Search Place-->
+            <!--Search Search MedicalPlace-->
             <div id="itab-srch-location" role="tabpanel" class="tab-pane active">
-                <label>Service type:</label>
+                <label for="iinp-service-type">Service type:</label>
                 <input id="iinp-service-type" class="form-control" type="text" placeholder="e.g. ICU, incubator, ..." />
                 <br />
-                <label>Place name:</label>
+                <label for="iinp-place-type">Place name:</label>
                 <input id="iinp-place-type" class="form-control" type="text" placeholder="e.g. Hospital XYZ" />
                 <span class="cspan-error" id="cspan-service-place-error"></span>
                 <br />
@@ -52,15 +52,24 @@
                 <button class="btn btn-success cbtn-srch" type="submit" id="ibtn-srch-place"><span class="fa fa-search"></span> Search</button>
                 <center><i id="iiloading-place-result" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i></center>
             </div>
+            <!-- End Search MedicalPlace-->
 
-            <!--Search Drugs-->
+            <!--Start Search Drugs-->
             <div id="itab-srch-drug" role="tabpanel" class="tab-pane">
-                Search options for drugs
-                <br /><br />
-                <button class="btn btn-success cbtn-srch" type="submit"><span class="fa fa-search"></span> Search</button>
-            </div>
+                @using (Html.BeginForm("", "", FormMethod.Post, new { @Id = "iform-search-drug", @OnClick = "return false" }))
+                {
+                    <label for="iinp-drug-name">Drug name:</label>
+                    <input id="iinp-drug-name" class="form-control" type="text" />
+                    <span class="cspan-error" id="ispan-drug-name-error"></span>
 
-            <!--Search Account-->
+                    <br /><br />
+                    <button id="ibtn-search-drug" class="btn btn-success cbtn-srch" type="submit"><span class="fa fa-search"></span> Search</button>
+                    <center><i id="iiloading-drug-search" class="fa fa-spinner fa-pulse fa-2x fa-fw" style="display:none;"></i></center>
+                }
+            </div>
+            <!--End Search Drugs-->
+
+            <!--Start Search Account-->
             <div id="itab-srch-account" role="tabpanel" class="tab-pane">
                 @using (Html.BeginForm("", "", FormMethod.Post, new { @Id = "iform-search-account", @OnClick = "return false" }))
                 {
@@ -82,6 +91,7 @@
                     <button id="ibtn-srch-account" class="btn btn-success cbtn-srch" type="submit" data-toggle="modal" data-target="#imodal-people-srch-result"><span class="fa fa-search"></span> Search</button>
                 }
             </div>
+            <!--End Search Account-->
         </div>
     </div>
 </div>

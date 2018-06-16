@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/modal.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/scrollbar.css" />
+    <link rel="stylesheet" type="text/css" href="../css/modal.css" />
+    <link rel="stylesheet" type="text/css" href="../css/drug-search-result.css" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-drug-srch-result">Drug Search Result</button>
+        <div id="imodal-drug-srch-result" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Pharmacies where "@DrugName" is available</h4>
+                    </div>
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="row">
+                            <div class="col-md-2 cdiv-vcenter">@@Pharmacy logo</div>
+                            <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Pharmacy name</label></div>
+                            <div class="col-md-4 cdiv-vcenter">
+                                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PharmacyAddress
+                                <br /><br />
+                                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PharmacyPhone
+                            </div>
+                        </div><hr>
+
+                        <div class="row">
+                            <div class="col-md-2 cdiv-vcenter">@@Pharmacy logo</div>
+                            <div class="col-md-5 cdiv-vcenter"><label class="clbl-name">@@Pharmacy name</label></div>
+                            <div class="col-md-4 cdiv-vcenter">
+                                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PharmacyAddress
+                                <br /><br />
+                                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PharmacyPhone
+                            </div>
+                        </div><hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

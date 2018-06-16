@@ -336,7 +336,7 @@ namespace CarePoint.Controllers
             }
 
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
-                place.Phone , place.Photo}).ToList();
+                place.Phone,Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(place.Photo))}).ToList();
             return Json(result);
         }
     }

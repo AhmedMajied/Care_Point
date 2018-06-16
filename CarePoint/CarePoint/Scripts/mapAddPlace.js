@@ -41,3 +41,17 @@ if (navigator.geolocation) {
     $("#iinput-latitude").val(latitude);
     $("#iinput-longitude").val(longitude);
 }
+
+
+// form action with suitable controller 
+$(document).ready(function () {
+    $("#iselect-options-place-types").change(function () {
+        var selected = $(this).children(":selected").text();
+        if (selected == "Pharmacy") {
+            $("#iform-add-new-place").attr("action","/Pharmacy/AddPharmacy");
+        }
+        else {
+            $("#iform-add-new-place").attr("action","/MedicalPlace/AddMedicalPlace");
+        }
+    });
+});

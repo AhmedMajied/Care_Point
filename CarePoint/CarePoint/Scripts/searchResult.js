@@ -225,7 +225,6 @@ $("#ibtn-search-drug").click(function () {
                 latitude: latitude,
                 longitude: longitude
             }
-            var count = 0;
             $.ajax({
                 type: 'POST',
                 url: '/Pharmacy/SearchPharmacyMedicine',
@@ -234,7 +233,6 @@ $("#ibtn-search-drug").click(function () {
                 success: function (data) {
                     var pharmacies = data.pharmacies;
                     var pharmaciesCount = pharmacies.length;
-                    alert(pharmaciesCount);
                     for (var i = 0; i < pharmaciesCount; i++)
                     {
                         searchDrugResult(pharmacies[i].Photo, pharmacies[i].Name, pharmacies[i].Address, pharmacies[i].Phone);

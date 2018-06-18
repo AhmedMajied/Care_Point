@@ -56,7 +56,7 @@
             @{int cnt = 1;}
             @foreach (var record in Model)
             {
-                string symptoms = "";
+                string symptoms = "None";
                 if (record.Symptoms.Count > 0)
                 {
                     if (record.Symptoms.Count > 1)
@@ -69,7 +69,7 @@
                     }
                 }
 
-                string diseases = "";
+                string diseases = "None";
                 if (record.Diseases.Count > 0)
                 {
                     if (record.Diseases.Count > 1)
@@ -81,7 +81,7 @@
                         }
                     }
                 }
-                string medicines = "";
+                string medicines = "None";
                 if (record.Doses.Count > 0)
                 {
                     if (record.Doses.Count > 1)

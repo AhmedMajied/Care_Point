@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="f1-step">
                                     <a href="#idiv-step-3" class="f1-step-icon"><i class="fa fa-flask"></i></a>
-                                    <p><b>Sftep 3:</b><br>Drugs</p>
+                                    <p><b>Step 3:</b><br>Drugs</p>
                                 </div>
                                 <div class="f1-step">
                                     <a href="#idiv-step-4" class="f1-step-icon"><i class="fa fa-user-md"></i></a>
@@ -107,7 +107,7 @@
                                 </div>
                                 <div id="idiv-alternatives"></div>
 
-                                <h4 id="ih4-remarks">Do you have any reamrks or recommendations ?</h4>
+                                <h4 id="ih4-remarks">Do you have any remarks or recommendations ?</h4>
                                 <textarea id="itxtarea-remarks" name="remarks" class="form-control" rows="5" placeholder="Write your remarks and recommendations here ..." spellcheck="true"></textarea>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
         <li class="active"><a id="itab-medical-history" href="#idiv-medical-history-tab" data-toggle="tab">Medical History</a></li>
         @foreach (var element in Model.Attachments)
         {
-            <li><a id="itab-@element.Key.Name.ToLower()" href="#idiv-@element.Key.Name.ToLower()-tab" data-toggle="tab">@element.Key.Name</a></li>
+            <li><a id="itab-@element.Key.Name.ToLower().Replace(' ','-')" href="#idiv-@element.Key.Name.ToLower().Replace(' ','-')-tab" data-toggle="tab">@element.Key.Name</a></li>
         }
     </ul>
     <div class="tab-content">
@@ -184,7 +184,7 @@
         </div>
         @foreach (var element in Model.Attachments)
         {
-            <div id="idiv-@element.Key.Name.ToLower()-tab" class="tab-pane fade">
+            <div id="idiv-@element.Key.Name.ToLower().Replace(' ','-')-tab" class="tab-pane fade">
                 @Html.Partial("_AttachmentTabPartial", element.Value, new ViewDataDictionary { { "includeIsRead", false } })
             </div>
         }

@@ -183,9 +183,14 @@ $(document).ready(function () {
         $(this).find(".alert").addClass("hidden");
     });
 
-    $("#ibtn-submit").submit(function () {
+    $("#iForm-prescription").submit(function () {
+        event.preventDefault();
         var url = $(this).attr("action");
-        $.ajaxSetup({ async: false });
-        $.post(url, $(this).serialize());
+        
+        $.post(url, $(this).serialize()).done(function (fileName) {
+            window.location = "/MedicalHistory/DownloadPrescription?fileName=" + fileName;
+            alert("remove load bar here");
+        });
+
     });
 });

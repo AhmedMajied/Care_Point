@@ -53,12 +53,12 @@ namespace BLL
         }
         public void SaveNotifications(long citizenId ,DateTime time,string Text)
         {
-            Notification notification = new Notification();
+          /*  Notification notification = new Notification();
             notification.CitizenID = citizenId;
             notification.Text = Text;
             notification.Time = time;
             DBEntities.Notifications.Add(notification);
-            DBEntities.SaveChanges();
+            DBEntities.SaveChanges();*/
         }
         public ICollection<Specialist> GetContributersOfSOSsServices(string location, int numberOfPlaces)
         {

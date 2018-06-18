@@ -96,7 +96,7 @@ namespace CarePoint.Controllers
 
         [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
-        public ActionResult UploadPrescription(FormCollection form)
+        public string UploadPrescription(FormCollection form)
         {
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
                                      Path.GetRandomFileName().Replace(".", "") + ".jpg";
@@ -166,16 +166,20 @@ namespace CarePoint.Controllers
             Bitmap bitmap = MedicalHistoryBusinessLayer.SavePrescription(historyRecord,
                 medicines, doses, medicinesAlternatives, prescriptionFilePath,(userId,diseaseName) => NotificationsHub.NotifyPrognosis(userId,diseaseName) );
 
-            // don't save prescription 
-            if(bitmap != null)
+            // don't save prescription if null
+            if (bitmap != null)
                 bitmap.Save(Server.MapPath(prescriptionFilePath), ImageFormat.Jpeg);
+            else
+                return null;
+            
+            return Path.GetFileName(prescriptionFilePath);
+        }
 
-            if (medicines[0].Equals(""))
-                return Redirect(Request.UrlReferrer.ToString());
-
-            return new FilePathResult(prescriptionFilePath, "image/jpg")
+        public ActionResult DownloadPrescription(string fileName)
+        {
+            return new FilePathResult("~/Attachments/Prescriptions/"+fileName, "image/jpg")
             {
-                FileDownloadName = historyRecord.Date.ToString() + ".jpg"
+                FileDownloadName = fileName
             };
         }
 

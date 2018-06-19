@@ -1,0 +1,158 @@
+.ch1-section {
+    color: #386f94;
+}
+.cspn-awsome {
+    color: #7c7c7c;
+}
+.ch4-service-category {
+    display: inline-block;
+}
+.cbtn-panel-control {
+    float: right;
+    margin-left: 1rem;
+    box-sizing: border-box;
+}
+.cspn-last-updated {
+    color: #7c7c7c;
+}
+.clock {
+    display: table;
+    width: 25rem;
+    height: 25rem;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+    padding: 2rem;
+}
+.clock.am {
+    border: 20px solid #ffd885;
+}
+.clock.pm {
+    border: 20px solid #2e2e2c;
+}
+.clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.position {
+    width: 10%;
+    position: absolute;
+    top: 50%;
+    transform-origin: 100%;
+    transform-origin: 500%;
+}
+.position span {
+    font-weight: bold;
+}
+.position1 {
+    transform: rotate(95deg);
+}
+.position1 span {
+position: absolute;
+    transform: rotate(-95deg);
+}
+.position2 {
+    transform: rotate(125deg);
+}
+.position2 span {
+position: absolute;
+    transform: rotate(-125deg);
+}
+.position3 {
+    transform: rotate(155deg);
+}
+.position3 span {
+position: absolute;
+    transform: rotate(-155deg);
+}
+.position4 {
+    transform: rotate(185deg);
+}
+.position4 span {
+position: absolute;
+    transform: rotate(-185deg);
+}
+.position5 {
+    transform: rotate(215deg);
+}
+.position5 span {
+position: absolute;
+    transform: rotate(-215deg);
+}
+.position6 {
+    transform: rotate(245deg);
+}
+.position6 span {
+position: absolute;
+    transform: rotate(-245deg);
+}
+.position7 {
+    transform: rotate(275deg);
+}
+.position7 span {
+position: absolute;
+    transform: rotate(-275deg);
+}
+.position8 {
+    transform: rotate(305deg);
+}
+.position8 span {
+position: absolute;
+    transform: rotate(-305deg);
+}
+.position9 {
+    transform: rotate(335deg);
+}
+.position9 span {
+position: absolute;
+    transform: rotate(-335deg);
+}
+.position10 {
+    transform: rotate(365deg);
+}
+.position10 span {
+position: absolute;
+    transform: rotate(-365deg);
+}
+.position11 {
+    transform: rotate(395deg);
+}
+.position11 span {
+position: absolute;
+    transform: rotate(-395deg);
+}
+.position12 {
+    transform: rotate(425deg);
+}
+.position12 span {
+    position: absolute;
+    transform: rotate(-425deg);
+}
+/**########PIE CHART##########*/
+.piechart {
+    height: 200px;
+    width: 200px;
+    position: relative;
+}
+.slice {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    clip: rect(0px, 200px, 200px, 100px);
+}
+.slice span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    clip: rect(0px, 200px, 200px, 100px);
+}
+.btn-toggle {
+    display: table;
+    margin: 2rem auto;
+}

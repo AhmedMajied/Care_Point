@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../javascript/bootstrap-notify.min.js" type="application/javascript"></script>@PleaseRemoveThisLine(it is already in master page)
+    <script src="../javascript/place-reminder.js" type="application/javascript"></script>
+    <script src="../javascript/treeview.js" type="application/javascript"></script>
+    <script src="../javascript/place-profile.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-notify.css" />@PleaseRemoveThisLine(it is already in master page)
+    <link rel="stylesheet" type="text/css" href="../css/place-profile.css" />
+    <link rel="stylesheet" type="text/css" href="../css/treeview.css" />
+
+    <title>@It depends on which slave page is open</title>
+</head>
+
+<body>
+    
+    <div class="container-fluid">
+        <div class="row" style="margin-top: 7em;">
+            <div class="col-md-2">
+                <button id="ibtn-sos-pop" class="btn btn-default" data-toggle="popover" data-placement="right" style="color: #d9534f; font-weight: bold;"><span class="fa fa-exclamation-triangle fa-lg" style="color: #D9534F"></span>&nbsp;Send an SOS</button>
+                <br>This is for search
+            </div>
+            <div class="col-md-8">
+                <center>
+                    <img src="../img/placenotfound.png"><br />
+                    <h1 class="ch1-section">@WrokplaceName</h1><br />
+                    <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PlaceAddress&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@PlacePhone
+                </center>
+                
+                <div class="tree-node">
+                    <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Services</h2>
+                    <div class="tree-node-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="ch4-service-category">@serviceCategory</h4>
+                                <button class="btn btn-default cbtn-panel-control" type="button"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Name:</label> @serviceName<br />
+                                        <label>Cost:</label> @cost L.E.<br /><br />
+                                        <label>About service:</label><br />@serviceDescription
+                                    </div>
+                                    <div class="col-sm-6 cdiv-schedule-visualized">
+                                        <div id="@serviceID-AM" class="clock am">
+                                            <div class="clock-face">
+                                                <div class="piechart"></div>
+                                                <div class="position position1"><span>12</span></div>
+                                                <div class="position position2"><span>1</span></div>
+                                                <div class="position position3"><span>2</span></div>
+                                                <div class="position position4"><span>3</span></div>
+                                                <div class="position position5"><span>4</span></div>
+                                                <div class="position position6"><span>5</span></div>
+                                                <div class="position position7"><span>6</span></div>
+                                                <div class="position position8"><span>7</span></div>
+                                                <div class="position position9"><span>8</span></div>
+                                                <div class="position position10"><span>9</span></div>
+                                                <div class="position position11"><span>10</span></div>
+                                                <div class="position position12"><span>11</span></div>
+                                            </div>
+                                        </div>
+                                        <div id="@serviceID-PM" class="clock pm hidden">
+                                            <div class="clock-face">
+                                                <div class="piechart"></div>
+                                                <div class="position position1"><span>12</span></div>
+                                                <div class="position position2"><span>1</span></div>
+                                                <div class="position position3"><span>2</span></div>
+                                                <div class="position position4"><span>3</span></div>
+                                                <div class="position position5"><span>4</span></div>
+                                                <div class="position position6"><span>5</span></div>
+                                                <div class="position position7"><span>6</span></div>
+                                                <div class="position position8"><span>7</span></div>
+                                                <div class="position position9"><span>8</span></div>
+                                                <div class="position position10"><span>9</span></div>
+                                                <div class="position position11"><span>10</span></div>
+                                                <div class="position position12"><span>11</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group btn-toggle"> 
+                                            <button class="btn btn-primary active">AM</button>
+                                            <button class="btn btn-default">PM</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><hr />
+                <div class="tree-node">
+                    <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Care Units</h2>
+                    <div class="tree-node-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="ch4-service-category">@careUnitType</h4>
+                                <button class="btn btn-default cbtn-panel-control" type="button"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                            </div>
+                            <div class="panel-body">
+                                <label>Name:</label> @careUnitName<br />
+                                <label>Cost:</label> @cost L.E.<br />
+                                <label>Available rooms:</label> @availableRoomCount <span class="cspn-last-updated">(last updated on @lastUpdated)</span><br /><br />
+                                <label>About care unit:</label><br />@serviceDescription
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="ch4-service-category">@careUnitType</h4>
+                                <button class="btn btn-default cbtn-panel-control" type="button"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                            </div>
+                            <div class="panel-body">
+                                <label>Name:</label> @careUnitName<br />
+                                <label>Cost:</label> @cost L.E.<br />
+                                <label>Available rooms:</label> @availableRoomCount <span class="cspn-last-updated">(last updated on @lastUpdated)</span><br /><br />
+                                <label>About care unit:</label><br />@serviceDescription
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary" onclick="showICUReminder('@workplaceName', '@linkURL')">
+                    Click for reminder!
+                </button>
+            </div>
+            <div class="col-md-2">This is for Adds</div>
+        </div>
+    </div>
+</body>
+
+</html>

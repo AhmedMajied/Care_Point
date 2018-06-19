@@ -20,10 +20,16 @@ namespace BLL
 
         public Citizen GetCitizenByQR(string citizenQRCode)
         {
-            // decode QR to original national ID
-            var base64EncodedBytes = Convert.FromBase64String(citizenQRCode);
-            string nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
-
+            string nationalID;
+            try
+            {
+                // decode QR to original national ID
+                var base64EncodedBytes = Convert.FromBase64String(citizenQRCode);
+                nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
+            }catch(Exception)
+            {
+                return null;// if it is non base-64 character
+            }
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.NationalIDNumber == nationalID);
         }   
 

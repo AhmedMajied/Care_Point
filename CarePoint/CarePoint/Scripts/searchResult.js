@@ -1,3 +1,4 @@
+// Start Search Account
 function getMarkAsDropDown(id) {
     markAsDropDown = `<div class='col-md-4 dropdown'>
                             <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
@@ -103,9 +104,9 @@ $(function () {
 $("#idiv-searchfor").keydown(function () {
     $("#cspan-searchfor-error").text("");
 });
+//End Search Account
 
-
-// start functionality for search medicalPlace
+// Start Search MedicalPlace
 $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
     $("#idiv-search-place-result hr").remove();
@@ -193,4 +194,72 @@ $('#ichk-rate').on('change', function () {
 $('#ichk-popularity').on('change', function () {
     $('#cspan-priority-error').text("");
 });
+// End Search MedicalPlace
+//searchResult.js
+
+// Start Search Drug
+$("#ibtn-close-drug-result").click(function () {
+    $("#idiv-search-drug-result .row").remove();
+    $("#idiv-search-drug-result hr").remove();
+    $("#imodal-drug-title").text("");
+});
+function searchDrugResult(pharmacyLogo, pharmacyName, pharmacyAddress, pharmacyPhone) {
+    html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img style='max-width: 60px;' id='iimg-pharmacy-logo' src='" + pharmacyLogo + "'/></div>")
+        .append("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + pharmacyName + "</label></div>")
+        .append("<div class='col-md-4 cdiv-vcenter'> <span class='fa fa-map-marker fa-lg cspn-awsome'></span>&nbsp;&nbsp;" + pharmacyAddress
+            + "<br/> <br/><span class='fa fa-phone fa-lg cspn-awsome'></span>&nbsp;&nbsp;" + pharmacyPhone + "</div >");
+    $("<div class='row'>").append("</div>");
+    $("#idiv-search-drug-result").append(html);
+    $("#idiv-search-drug-result").append("<hr>");
+}
+$("#ibtn-search-drug").click(function () {
+    var drugName = $("#iinp-drug-name").val();
+    if (drugName != "") {
+        $("#ibtn-search-drug").prop("disabled", true);
+        $("#iiloading-drug-search").css("display", "block");
+        getUserLocation().then(function (data) {
+            latitude = data.latitude;
+            longitude = data.longitude;
+            var model = {
+                drugName: drugName,
+                latitude: latitude,
+                longitude: longitude
+            }
+            var count = 0;
+            $.ajax({
+                type: 'POST',
+                url: '/Pharmacy/SearchPharmacyMedicine',
+                data: { model },
+                dataType: 'json',
+                success: function (data) {
+                    var pharmacies = data.pharmacies;
+                    var pharmaciesCount = pharmacies.length;
+                    alert(pharmaciesCount);
+                    for (var i = 0; i < pharmaciesCount; i++)
+                    {
+                        searchDrugResult(pharmacies[i].Photo, pharmacies[i].Name, pharmacies[i].Address, pharmacies[i].Phone);
+                    }
+                    
+                    $("#iiloading-drug-search").css("display", "none");
+                    $("#ibtn-search-drug").prop("disabled", false);
+                    $("#imodal-drug-srch-result").modal('show');
+                    if (pharmaciesCount == 0) {
+                        $("#imodal-drug-srch-result #imodal-drug-title").text(data.drugName + " isn't available");
+                    }
+                    else
+                    {
+                        $("#imodal-drug-srch-result #imodal-drug-title").text("Pharmacies where " + data.drugName + " is available");
+                    }
+                }
+            });
+        });
+    }
+    else {
+        $("#ispan-drug-name-error").text("This Field is Required").css("color", "red");;
+    }
+})
+$("#iinp-drug-name").keydown(function () {
+    $("#ispan-drug-name-error").text("");
+});
+// End Search Drug
 

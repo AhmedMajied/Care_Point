@@ -184,12 +184,14 @@ $(document).ready(function () {
     });
 
     $("#iForm-prescription").submit(function () {
+        $("#imodal-saving").modal('show');
         event.preventDefault();
         var url = $(this).attr("action");
         
         $.post(url, $(this).serialize()).done(function (fileName) {
+            $("#imodal-saving").modal('hide');
+            $('#imodal-history-record').modal('hide');
             window.location = "/MedicalHistory/DownloadPrescription?fileName=" + fileName;
-            alert("remove load bar here");
         });
 
     });

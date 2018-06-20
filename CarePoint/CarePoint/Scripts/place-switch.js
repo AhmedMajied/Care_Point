@@ -73,12 +73,12 @@ $(function () {
                 }
                 $("#imodal-place-switch .tab-content .cspn-proxy").remove();
                 if (numOfTypes == 0) {
-                    $("#imodal-place-switch .tab-content").text("No WorkPlaces Available");
+                    $("#imodal-place-switch .tab-content").removeClass('hidden');
                 }
                 $("#imodal-place-switch button.close").prop('disabled', false);
             },
             error: function (msg) {
-                console.log(JSON.stringify(msg));
+                alert("An Error Occured Please Try Again!");
             }
         });
     });

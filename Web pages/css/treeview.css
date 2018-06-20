@@ -1,0 +1,5 @@
+.tree-node-header {
+    user-select: none;
+    cursor: pointer;
+    color: #54a854;
+}

@@ -368,7 +368,6 @@ namespace CarePoint.Controllers
                 url = cookie.Values["url"];
                 type = cookie.Values["type"];
             }
-            Debug.WriteLine("ID : " + id + " TYPE : " + type + " URL : " + url);
             return Json(new { id,type, url });
         }
     }

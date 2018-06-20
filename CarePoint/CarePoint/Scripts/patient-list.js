@@ -31,6 +31,7 @@ function PatientsModalFill(parent, usrName, img, showHistoryHref) {
     $(parent).append(html);
     $(parent).append("<hr>");
 }
+/*
 $(function () {
     $("#ilink-patient-list").click(function () {
         $("#imodal-patient-list button.close").prop('disabled', true);
@@ -69,5 +70,72 @@ $(function () {
                 console.log(JSON.stringify(msg));
             }
         });
+    });
+});
+*/
+function getCurrentWorkPlace()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/MedicalPlace/GetCurrentWorkPlace',
+        dataType: 'json',
+        success: function (data) {
+             getPatientList(data);
+        },
+        error: function (msg)
+        {
+            alert("Sorry An Error Happened Please Try Again");
+        }
+    });
+}
+function getPatientList(data)
+{
+    if (data.url != "#" && data.url != null)
+    {
+        $("#imodal-patient-list").modal("show");
+        $("#imodal-patient-list button.close").prop('disabled', true);
+        $("#imodal-patient-list .cdiv-custom-alert").addClass('hidden');
+        $("#imodal-patient-list #itab-males, #imodal-patient-list #itab-females").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+
+        var docId = $("#iinput-usr").val();
+        $.ajax({
+            type: 'POST',
+            url: '/Citizen/PatientsList',
+            data: { doctorId: docId, placeId: data.id},
+            dataType: 'json',
+            success: function (data) {
+                var males = data[0];
+                var malescount = males.length;
+
+                for (var i = 0; i < malescount; i++) {
+                    PatientsModalFill("#itab-males", males[i].Name, males[i].Photo, "/Citizen/CurrentPatient?citizenID=" + males[i].Id);
+                }
+                $("#imodal-patient-list #itab-males .cspn-proxy").remove();
+                if (malescount == 0) {
+                    $("#imodal-patient-list #itab-males .cdiv-custom-alert").removeClass('hidden');
+                }
+                var females = data[1];
+                var femalescount = females.length;
+                for (var i = 0; i < femalescount; i++) {
+                    PatientsModalFill("#itab-females", females[i].Name, females[i].Photo, "/Citizen/CurrentPatient?citizenID=" + females[i].Id);
+                }
+                $("#imodal-patient-list #itab-females .cspn-proxy").remove();
+                if (femalescount == 0) {
+                    $("#imodal-patient-list #itab-females .cdiv-custom-alert").removeClass('hidden');
+                }
+                $("#imodal-patient-list button.close").prop('disabled', false);
+            },
+            error: function (msg) {
+                console.log(JSON.stringify(msg));
+            }
+        });
+    }
+    else {
+        alert("Please Choose Your WorkPlace First");
+    }
+}
+$(function () {
+    $("#ilink-patient-list").click(function () {
+        getCurrentWorkPlace();
     });
 });

@@ -14,6 +14,7 @@ using CarePoint.AuthorizeAttributes;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -206,9 +207,9 @@ namespace CarePoint.Controllers
         }
 
         [AccessDeniedAuthorize(Roles = "Doctor")]
-        public JsonResult PatientsList(long doctorId)
+        public JsonResult PatientsList(long doctorId, long placeId)
         {
-            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId);
+            List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId,placeId);
             List<Citizen> maleList = new List<Citizen>();
             List<Citizen> femaleList = new List<Citizen>();
             foreach (Citizen c in list)
@@ -274,5 +275,29 @@ namespace CarePoint.Controllers
         {
             CitizenBusinessLayer.ReadAttachmentsOfType(User.Identity.GetUserId<long>(), typeId);
         }
+        [HttpPost]
+        public JsonResult GetSpecialistWorkPlaces(long specialistId)
+        {
+            string speciality = CitizenBusinessLayer.GetSpeciality(specialistId);
+            var result=new object();
+            var medicalPlaceTypes = new object();
+            if(speciality.Equals("Pharmacist"))
+            {
+                List<Pharmacy> pharmacies = new List<Pharmacy>();
+                pharmacies = CitizenBusinessLayer.GetSpecialistPharmacyPlace(specialistId).ToList();
+                result = pharmacies.Select(m => new { Type = "Pharmacy", m.ID, m.Name, Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(m.Photo)), url= "/Pharmacy/PharmacyProfile?Id="+m.ID});
+                medicalPlaceTypes = new { Type = "Pharmacy" };
+            }
+            else
+            {
+                List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+                medicalPlaces = CitizenBusinessLayer.GetSpecialistWorkPlaces(specialistId).ToList();
+                result = medicalPlaces.Select(m => new {Type=m.MedicalPlaceType.Name, m.ID, m.Name , Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(m.Photo)), url = "/MedicalPlace/ProfilePage?id="+m.ID});
+                medicalPlaceTypes = medicalPlaces.GroupBy(m=>m.MedicalPlaceType.ID).Select(m => new { Type = m.First().MedicalPlaceType.Name });
+            }
+            var res = new {result, medicalPlaceTypes};
+            return Json(res);
+        }
+
     }
 }

@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/_Layout.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-notify.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/drug-search-result.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/place-switch.css"/>
 
     @RenderSection("styles", false)
 
@@ -66,6 +67,7 @@
     {
         @Html.Partial("_PatientsList")
         @Html.Partial("_NewPatient")
+        @Html.Partial("_SwitchWorkPlace")
     }
 
 
@@ -133,6 +135,7 @@
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>
+    <script src="~/Scripts/place-switch.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

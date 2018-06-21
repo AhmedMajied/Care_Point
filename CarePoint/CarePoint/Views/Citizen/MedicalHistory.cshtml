@@ -101,7 +101,7 @@
                 {
                     photo = Convert.ToBase64String(record.MedicalPlace.Photo);
                 }
-                <tr id="itbl-row-@cnt++" onclick="populatePanel('@photo','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString("dd/MM/yyyy")','@symptoms','@diseases','@medicines','@record.Remarks');">
+                <tr id="itbl-row-@cnt++" onclick='populatePanel("@photo","@record.MedicalPlace.Name","@record.Specialist.Name","@record.Date.Date.ToString("dd/MM/yyyy")","@symptoms","@diseases","@medicines","@record.Remarks");'>
                     <td>@record.Date.Date.ToString()</td>
                     <td>@record.MedicalPlace.Name</td>
                     <td>@record.Specialist.Name</td>

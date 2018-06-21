@@ -22,7 +22,6 @@ namespace DAL
             this.UserClaims = new HashSet<UserClaim>();
             this.UserLogins = new HashSet<UserLogin>();
             this.HistoryRecords = new HashSet<HistoryRecord>();
-            this.Notifications = new HashSet<Notification>();
             this.PharmacyRatings = new HashSet<PharmacyRating>();
             this.Receipts = new HashSet<Receipt>();
             this.AddedRelatives = new HashSet<Relative>();
@@ -65,8 +64,6 @@ namespace DAL
         public virtual ICollection<UserLogin> UserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryRecord> HistoryRecords { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notification> Notifications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyRating> PharmacyRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

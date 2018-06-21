@@ -11,6 +11,7 @@ using System.IO;
 using Extensions;
 using System.Diagnostics;
 using CarePoint.AuthorizeAttributes;
+using System.Web;
 
 namespace CarePoint.Controllers
 {
@@ -337,7 +338,37 @@ namespace CarePoint.Controllers
 
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
                 place.Phone,Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(place.Photo))}).ToList();
-            return Json(result);
+            return Json(new { places = result });
+        }
+        public JsonResult SwitchPlace(long id,string type,string url)
+        {
+            HttpCookie cookie = Request.Cookies["placeInfo"];
+            if (cookie == null)
+            {
+                cookie = new HttpCookie("placeInfo");
+            }
+            cookie.Values["id"] = id.ToString();
+            cookie.Values["type"] = type;
+            cookie.Values["url"] = url;
+            cookie.Expires = DateTime.UtcNow.AddDays(2);
+            Response.Cookies.Add(cookie);
+            return Json(true);
+        }
+        public JsonResult GetCurrentWorkPlace()
+        {
+            var url = new object();
+            var id = new object();
+            var type=new object(); 
+            var cookie = Request.Cookies["placeInfo"];
+            if (cookie == null)
+                url = "#";
+            else
+            {
+                id = cookie.Values["id"];
+                url = cookie.Values["url"];
+                type = cookie.Values["type"];
+            }
+            return Json(new { id,type, url });
         }
     }
     

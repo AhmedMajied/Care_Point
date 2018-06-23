@@ -9,7 +9,6 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
         <ul class="nav navbar-nav navbar-right">
             @if (user is Specialist)
             {
@@ -50,15 +49,17 @@
                         else
                         {
                             <span class="badge" style="display:none">0</span>
+
                         }
-                    </a>
+                        </a>
                     </li>
-                </ul>
-            </li>
+                    </ul>
+                </li>
             }
             <li><a id="ilink-medical-history" href="/Citizen/MedicalHistory" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Medical history">
                     <span class="fa fa-history fa-2x cspn-nav"></span>
-                </a></li>
+                </a>
+            </li>
             <li data-toggle="tooltip" data-container="body" data-placement="bottom" title="Attachments"><a id="ilink-attachments" href="/Citizen/Attachments">
                     @{ int attachmentsNotificationsCount = user.Attachments.Count(a => !a.IsRead??false); }
                     <span class="fa fa-paperclip fa-2x cspn-nav">
@@ -90,14 +91,14 @@
                 <a id="ilink-prognosis" href="/Citizen/Prognosis">
                     @{ int prognosisNotificationsCount = user.PotentialDiseases.Count(p => !p.IsRead); }
                     <span class="fa fa-heart-o fa-2x cspn-nav">
-                    @if (prognosisNotificationsCount == 0)
-                    {
-                        <mark class="cmark-notif" style="display:none">0</mark>
-                    }
-                    else
-                    {
-                        <mark class="cmark-notif">@prognosisNotificationsCount</mark>
-                    }
+                        @if (prognosisNotificationsCount == 0)
+                        {
+                            <mark class="cmark-notif" style="display:none">0</mark>
+                        }
+                        else
+                        {
+                            <mark class="cmark-notif">@prognosisNotificationsCount</mark>
+                        }
                     </span>
                 </a>
             </li>
@@ -124,3 +125,4 @@ else
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
     </ul>
 }
+

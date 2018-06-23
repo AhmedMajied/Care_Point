@@ -258,6 +258,7 @@
     <Content Include="Content\place-add edit service.css" />
     <Content Include="Content\place-edit schedule.css" />
     <Content Include="Content\place-new.css" />
+    <Content Include="Content\place-switch.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
     <Content Include="Content\_LoginPartial.css" />
@@ -328,6 +329,7 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\place-edit schedule.js" />
+    <Content Include="Scripts\place-switch.js" />
     <Content Include="Scripts\relatives.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -400,6 +402,7 @@
     <Content Include="Views\Shared\_NewPatient.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Pharmacy\Profile.cshtml" />
+    <Content Include="Views\Shared\_SwitchWorkPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

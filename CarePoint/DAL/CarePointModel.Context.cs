@@ -43,7 +43,6 @@ namespace DAL
         public virtual DbSet<MedicineActiveIngredient> MedicineActiveIngredients { get; set; }
         public virtual DbSet<MedicineForm> MedicineForms { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
-        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Pharmacy> Pharmacies { get; set; }
         public virtual DbSet<PharmacyMedicine> PharmacyMedicines { get; set; }
         public virtual DbSet<PharmacyMembershipRequest> PharmacyMembershipRequests { get; set; }

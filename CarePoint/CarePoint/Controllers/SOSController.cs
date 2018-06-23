@@ -65,6 +65,7 @@ namespace CarePoint.Controllers
             sos.Time =time;
             sos.IsAccepted = false;
             sos.Location = location;
+            sos.StatusID = 1; 
             List<Citizen> citizens = new List<Citizen>();
             if (sosViewModel.isMedicalPlace)
             {

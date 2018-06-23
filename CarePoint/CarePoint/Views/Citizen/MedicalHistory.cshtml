@@ -11,7 +11,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-2"><img src="" id="iimg-medical-place" /></div>
+            <div class="col-md-2"><img id="iimg-medical-place" class="cimg-place" src=""/></div>
             <div class="col-md-6" id="idiv-record-header"></div>
         </div>
     </div>
@@ -56,12 +56,12 @@
             @{int cnt = 1;}
             @foreach (var record in Model)
             {
-                string symptoms = "";
+                string symptoms = "None";
                 if (record.Symptoms.Count > 0)
                 {
+                    symptoms = record.Symptoms.FirstOrDefault().Name;
                     if (record.Symptoms.Count > 1)
                     {
-                        symptoms = record.Symptoms.FirstOrDefault().Name;
                         foreach (var symptom in record.Symptoms.Skip(1))
                         {
                             symptoms += ',' + symptom.Name;
@@ -69,24 +69,24 @@
                     }
                 }
 
-                string diseases = "";
+                string diseases = "None";
                 if (record.Diseases.Count > 0)
                 {
+                    diseases = record.Diseases.FirstOrDefault().Name;
                     if (record.Diseases.Count > 1)
                     {
-                        diseases = record.Diseases.FirstOrDefault().Name;
                         foreach (var disease in record.Diseases.Skip(1))
                         {
                             diseases += ',' + disease.Name;
                         }
                     }
                 }
-                string medicines = "";
+                string medicines = "None";
                 if (record.Doses.Count > 0)
                 {
+                    medicines = record.Doses.FirstOrDefault().Medicine.Name + "(" + record.Doses.FirstOrDefault().Description + ")";
                     if (record.Doses.Count > 1)
                     {
-                        medicines = record.Doses.FirstOrDefault().Medicine.Name + "(" + record.Doses.FirstOrDefault().Description + ")";
                         if (record.Doses.Count > 1)
                         {
                             foreach (var dose in record.Doses.Skip(1))
@@ -101,7 +101,7 @@
                 {
                     photo = Convert.ToBase64String(record.MedicalPlace.Photo);
                 }
-                <tr id="itbl-row-@cnt++" onclick="populatePanel('@photo','@record.MedicalPlace.Name','@record.Specialist.Name','@record.Date.Date.ToString("dd/MM/yyyy")','@symptoms','@diseases','@medicines','@record.Remarks');">
+                <tr id="itbl-row-@cnt++" onclick='populatePanel("@photo","@record.MedicalPlace.Name","@record.Specialist.Name","@record.Date.Date.ToString("dd/MM/yyyy")","@symptoms","@diseases","@medicines","@record.Remarks");'>
                     <td>@record.Date.Date.ToString()</td>
                     <td>@record.MedicalPlace.Name</td>
                     <td>@record.Specialist.Name</td>

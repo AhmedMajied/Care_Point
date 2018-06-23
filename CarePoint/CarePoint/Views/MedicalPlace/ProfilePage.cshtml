@@ -1,6 +1,8 @@
 ﻿@using CarePoint.Models
 @using CarePoint.Custom_HtmlHelpers
 @model MedicalPlaceProfileViewModel
+@using Microsoft.AspNet.Identity
+
 @{
     ViewBag.Title = "ProfilePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,7 +39,10 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@service.ServiceCategory.Name</h4>
-                                <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                               @if (service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                               {
+                                   <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                               }
                             </div>
                             <div class="panel-body">
                                 <div id="row-@service.ID" class="row">
@@ -112,7 +117,10 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@careUnit.CareUnitType.Name</h4>
-                                <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                                @if (careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                {
+                                     <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                                }
                             </div>
                             <div class="panel-body">
                                 <label>Name:</label>@careUnit.Name<br />

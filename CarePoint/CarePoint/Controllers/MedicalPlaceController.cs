@@ -374,7 +374,7 @@ namespace CarePoint.Controllers
         private List<SlotViewModel> splitSlots(long serviceId, string dayName)
         {
             // first Get WorkSlots
-            List<WorkSlot> workSlots = (ServiceBusinessLayer.GetWorkSlots(serviceId, dayName)).OrderBy(s => s.StartTime).ToList();
+            List<WorkSlot> workSlots = (ServiceBusinessLayer.GetWorkSlots(serviceId, dayName)).ToList();
             // Add Slot to Slots
             List<SlotViewModel> slots = new List<SlotViewModel>();
             SlotViewModel slot = new SlotViewModel();

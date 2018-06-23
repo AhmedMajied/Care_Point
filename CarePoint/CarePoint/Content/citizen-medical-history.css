@@ -2,3 +2,6 @@
     width:60px;
     height:60px;
 }
+#itbl-medical-history td {
+    cursor: pointer;
+}

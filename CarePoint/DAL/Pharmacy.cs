@@ -31,6 +31,8 @@ namespace DAL
         public bool IsConfirmed { get; set; }
         public byte[] Permission { get; set; }
         public Nullable<long> MedicalPlaceID { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
     
         public virtual MedicalPlace MedicalPlace { get; set; }
         public virtual Specialist Specialist { get; set; }

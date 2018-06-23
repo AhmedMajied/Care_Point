@@ -214,6 +214,7 @@
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MedicineController.cs" />
+    <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Controllers\SOSController.cs" />
     <Compile Include="Custom AuthorizationAttributes\AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="Custom HtmlHelpers\CustomHtmlHelpers.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MedicalPlaceViewModels.cs" />
+    <Compile Include="Models\MedicineViewModels.cs" />
     <Compile Include="Models\SOSViewModel.cs" />
     <Compile Include="Models\PotentialDiseaseViewModel.cs" />
     <Compile Include="Models\RelativeViewModels.cs" />
@@ -246,6 +248,7 @@
     <Content Include="Content\citizen-prognosis.css" />
     <Content Include="Content\citizen-relatives.css" />
     <Content Include="Content\current-patient.css" />
+    <Content Include="Content\drug-search-result.css" />
     <Content Include="Content\guest-home.css" />
     <Content Include="Content\guest-sign up.css" />
     <Content Include="Content\modal.css" />
@@ -255,6 +258,7 @@
     <Content Include="Content\place-add edit service.css" />
     <Content Include="Content\place-edit schedule.css" />
     <Content Include="Content\place-new.css" />
+    <Content Include="Content\place-switch.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
     <Content Include="Content\_LoginPartial.css" />
@@ -325,6 +329,7 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\place-edit schedule.js" />
+    <Content Include="Scripts\place-switch.js" />
     <Content Include="Scripts\relatives.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -396,6 +401,8 @@
     <Content Include="Views\Citizen\_AttachmentTabPartial.cshtml" />
     <Content Include="Views\Shared\_NewPatient.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Pharmacy\Profile.cshtml" />
+    <Content Include="Views\Shared\_SwitchWorkPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

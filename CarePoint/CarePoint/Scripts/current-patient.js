@@ -13,6 +13,17 @@ function updateIDSerial(oldID) {
     return newID;
 }
 
+function uploadAllowed() {
+    var allowed = true;
+    $('#imodal-upload-attachment .cdiv-list').find("input, select").each(function () {
+        if ($(this).is("select:has(> option:selected:disabled)") || $(this).val().trim() == "") {
+            allowed = false;
+        }
+    });
+
+    return allowed;
+}
+
 $(document).ready(function () {
     $('input, textarea, select').on('focus', function () {
         $(this).removeClass('input-error');
@@ -23,6 +34,12 @@ $(document).ready(function () {
             var input = $(this);
             var fileName = input.val().replace(/\\/g, '/').replace(/.*\//, '');
             input.trigger('fileselected', fileName);
+
+            if (uploadAllowed()) {
+                $('#ibtn-upload').prop('disabled', false);
+            } else {
+                $('#ibtn-upload').prop('disabled', true);
+            }
         });
 
         $(':file').on('fileselected', function (event, fileName) {
@@ -30,7 +47,16 @@ $(document).ready(function () {
         });
     });
 
+    $('.cselect-attachment-type').change(function () {
+        if (uploadAllowed()) {
+            $('#ibtn-upload').prop('disabled', false);
+        } else {
+            $('#ibtn-upload').prop('disabled', true);
+        }
+    });
+
     $(".cbtn-add").click(function () {
+        $('#ibtn-upload').prop('disabled', true);
         var originalElement = $(this).closest('.row');
         var empty_input = false;
         // fields validation
@@ -128,6 +154,7 @@ $(document).ready(function () {
     });
 
     $("#ibtn-upload-attachment").click(function () {
+        $('#ibtn-upload').prop('disabled', true);
         if (attachmentTypes == null) {
             $.ajaxSetup({ async: false });
             $.post("/MedicalHistory/GetAttachmentTypes", {}, function (data) {
@@ -156,9 +183,16 @@ $(document).ready(function () {
         $(this).find(".alert").addClass("hidden");
     });
 
-    $("#ibtn-submit").submit(function () {
+    $("#iForm-prescription").submit(function () {
+        $("#imodal-saving").modal('show');
+        event.preventDefault();
         var url = $(this).attr("action");
-        $.ajaxSetup({ async: false });
-        $.post(url, $(this).serialize());
+        
+        $.post(url, $(this).serialize()).done(function (fileName) {
+            $("#imodal-saving").modal('hide');
+            $('#imodal-history-record').modal('hide');
+            window.location = "/MedicalHistory/DownloadPrescription?fileName=" + fileName;
+        });
+
     });
 });

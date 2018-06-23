@@ -1,3 +1,4 @@
+// Start Search Account
 function getMarkAsDropDown(id) {
     markAsDropDown = `<div class='col-md-4 dropdown'>
                             <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>
@@ -50,11 +51,11 @@ $(function () {
     $("#ibtn-srch-account").click(function () {
         var searchBy = $("#iselect-srch-by").val();
         var searchFor = $("#idiv-searchfor").val();
-        $("#imodal-people-srch-result button.close").prop('disabled', true);
-        $("#imodal-people-srch-result .cdiv-custom-alert").addClass('hidden');
-        $("#imodal-people-srch-result #itab-non-specialists, #imodal-people-srch-result #itab-doctors, #imodal-people-srch-result #itab-pharmacists").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
-
         if (!(searchFor === "")) {
+            $("#imodal-people-srch-result").modal('show');
+            $("#imodal-people-srch-result button.close").prop('disabled', true);
+            $("#imodal-people-srch-result .cdiv-custom-alert").addClass('hidden');
+            $("#imodal-people-srch-result #itab-non-specialists, #imodal-people-srch-result #itab-doctors, #imodal-people-srch-result #itab-pharmacists").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
             $.ajax({
                 type: 'POST',
                 url: '/Citizen/SearchAccount',
@@ -103,17 +104,14 @@ $(function () {
 $("#idiv-searchfor").keydown(function () {
     $("#cspan-searchfor-error").text("");
 });
+//End Search Account
 
-
-// start functionality for search medicalPlace
+// Start Search MedicalPlace
 $("#place-close-button").click(function () {
     $("#idiv-search-place-result .row").remove();
     $("#idiv-search-place-result hr").remove();
 });
 function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, placeAddress, placePhone) {
-    if (profilePicture === null) {
-        profilePicture = '../../Images/placenotfound.png';
-    }
     html = $("<div class='row'>").append("<div class='col-md-2'><img id='iimg-place'style='width: 40px;' src='" + profilePicture + "'/></div>").append("<div class='col-md-7'> <a href=" + placeURL + ">" + placeName + "</a>" + " (" + placeType + ") " + "<h5> <b>Address: </b>" + placeAddress + "</h5><h5><b>Phone: </b>" + placePhone + "</h5></div> ")
     $("<div class='row'>").append("</div>");
     $("#idiv-search-place-result").append(html);
@@ -139,29 +137,35 @@ $("#ibtn-srch-place").click(function () {
     getUserLocation().then(function (data) {
         latitude = data.latitude;
         longitude = data.longitude;
-    if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
-        $("#ibtn-srch-place").prop("disabled", true);
-        $("#iiloading-place-result").css("display", "block");
-        var model = {
-            serviceType: sType, placeName: pName,
-            checkDistance: cDistance, checkCost: cCost,
-            checkRate: cRate, checkPopularity: cPopularity,
-            latitude: latitude, longitude: longitude
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/MedicalPlace/SearchPlace',
-            data: { model },
-            dataType: 'json',
-            success: function (data) {
-                data.forEach(function (place) {
-                    MedicalPlaceResultHtml(place.Photo, "/MedicalPlace/ProfilePage?id=" + place.ID, place.Name, place.placeType, place.Address, place.Phone)
-                });
-                $("#iiloading-place-result").css("display", "none");
-                $("#ibtn-srch-place").prop("disabled", false);
-                $("#imodal-place-srch-result").modal('show');
+        if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
+            $("#imodal-place-srch-result").modal('show');
+            $("#imodal-place-srch-result button.close").prop('disabled', true);
+            $("#imodal-place-srch-result .cdiv-custom-alert").addClass('hidden');
+            $("#imodal-place-srch-result #idiv-search-place-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+            var model = {
+                serviceType: sType, placeName: pName,
+                checkDistance: cDistance, checkCost: cCost,
+                checkRate: cRate, checkPopularity: cPopularity,
+                latitude: latitude, longitude: longitude
             }
-        });
+            $.ajax({
+                type: 'POST',
+                url: '/MedicalPlace/SearchPlace',
+                data: { model },
+                dataType: 'json',
+                success: function (data) {
+                    var places = data.places;
+                    var placesCount = places.length;
+                    for (var i = 0; i < placesCount; i++) {
+                        MedicalPlaceResultHtml(places[i].Photo, "/MedicalPlace/ProfilePage?id=" + places[i].ID, places[i].Name, places[i].placeType, places[i].Address, places[i].Phone);
+                    }
+                    $("#imodal-place-srch-result #idiv-search-place-result .cspn-proxy").remove();
+                    if (placesCount == 0) {
+                        $("#imodal-place-srch-result #idiv-search-place-result .cdiv-custom-alert").removeClass('hidden');
+                    }
+                    $("#imodal-place-srch-result button.close").prop('disabled', false);
+                }
+            });
     }
     else {
         if (sType == "" && pName == "") {
@@ -193,4 +197,71 @@ $('#ichk-rate').on('change', function () {
 $('#ichk-popularity').on('change', function () {
     $('#cspan-priority-error').text("");
 });
+// End Search MedicalPlace
+//searchResult.js
+
+// Start Search Drug
+$("#ibtn-close-drug-result").click(function () {
+    $("#idiv-search-drug-result .row").remove();
+    $("#idiv-search-drug-result hr").remove();
+    $("#imodal-drug-title").text("");
+});
+function searchDrugResult(pharmacyLogo, pharmacyName, pharmacyAddress, pharmacyPhone) {
+    html = $("<div class='row'>").append("<div class='col-md-2 cdiv-vcenter'><img style='max-width: 60px;' id='iimg-pharmacy-logo' src='" + pharmacyLogo + "'/></div>")
+        .append("<div class='col-md-5 cdiv-vcenter'><label class='clbl-name'>" + pharmacyName + "</label></div>")
+        .append("<div class='col-md-4 cdiv-vcenter'> <span class='fa fa-map-marker fa-lg cspn-awsome'></span>&nbsp;&nbsp;" + pharmacyAddress
+            + "<br/> <br/><span class='fa fa-phone fa-lg cspn-awsome'></span>&nbsp;&nbsp;" + pharmacyPhone + "</div >");
+    $("<div class='row'>").append("</div>");
+    $("#idiv-search-drug-result").append(html);
+    $("#idiv-search-drug-result").append("<hr>");
+}
+$("#ibtn-search-drug").click(function () {
+    var drugName = $("#iinp-drug-name").val();
+    if (drugName != "") {
+        $("#imodal-drug-srch-result").modal('show');
+        $("#imodal-drug-srch-result button.close").prop('disabled', true);
+        $("#imodal-drug-srch-result .cdiv-custom-alert").addClass('hidden');
+        $("#imodal-drug-srch-result #idiv-search-drug-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+
+        getUserLocation().then(function (data) {
+            latitude = data.latitude;
+            longitude = data.longitude;
+            var model = {
+                drugName: drugName,
+                latitude: latitude,
+                longitude: longitude
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/Pharmacy/SearchPharmacyMedicine',
+                data: { model },
+                dataType: 'json',
+                success: function (data) {
+                    var pharmacies = data.pharmacies;
+                    var pharmaciesCount = pharmacies.length;
+                    for (var i = 0; i < pharmaciesCount; i++)
+                    {
+                        searchDrugResult(pharmacies[i].Photo, pharmacies[i].Name, pharmacies[i].Address, pharmacies[i].Phone);
+                    }
+                    $("#imodal-drug-srch-result #idiv-search-drug-result .cspn-proxy").remove();
+                    if (pharmaciesCount == 0) {
+                        $("#imodal-drug-srch-result #idiv-search-drug-result .cdiv-custom-alert").removeClass('hidden');
+                    }
+                    else
+                    {
+                        $("#imodal-drug-srch-result #imodal-drug-title").text("Pharmacies where " + data.drugName + " is available");
+                    }
+                    $("#imodal-drug-srch-result button.close").prop('disabled', false);
+                }
+            });
+        });
+    }
+    else {
+        $("#ispan-drug-name-error").text("This Field is Required").css("color", "red");;
+    }
+})
+$("#iinp-drug-name").keydown(function () {
+    $("#ispan-drug-name-error").text("");
+});
+// End Search Drug
 

@@ -217,16 +217,6 @@
           <Property Name="FormID" Type="bigint" Nullable="false" />
           <Property Name="ShelfLife" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Notifications">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="Read" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="CitizenID" Type="bigint" Nullable="false" />
-        </EntityType>
         <EntityType Name="Pharmacies">
           <Key>
             <PropertyRef Name="ID" />
@@ -239,6 +229,8 @@
           <Property Name="IsConfirmed" Type="bit" Nullable="false" />
           <Property Name="Permission" Type="image" />
           <Property Name="MedicalPlaceID" Type="bigint" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="PharmacyMedicines">
           <Key>
@@ -945,20 +937,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Notifications_Citizens">
-          <End Role="Citizens" Type="Self.Citizens" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Notifications" Type="Self.Notifications" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Citizens">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="CitizenID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Pharmacies_MedicalPlace">
           <End Role="MedicalPlace" Type="Self.MedicalPlace" Multiplicity="0..1" />
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="*" />
@@ -1301,7 +1279,6 @@
           <EntitySet Name="MedicineActiveIngredients" EntityType="Self.MedicineActiveIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicineForms" EntityType="Self.MedicineForms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medicines" EntityType="Self.Medicines" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequests" Schema="dbo" store:Type="Tables" />
@@ -1480,10 +1457,6 @@
           <AssociationSet Name="FK_Medicines_MedicineForms" Association="Self.FK_Medicines_MedicineForms">
             <End Role="MedicineForms" EntitySet="MedicineForms" />
             <End Role="Medicines" EntitySet="Medicines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notifications_Citizens" Association="Self.FK_Notifications_Citizens">
-            <End Role="Citizens" EntitySet="Citizens" />
-            <End Role="Notifications" EntitySet="Notifications" />
           </AssociationSet>
           <AssociationSet Name="FK_Pharmacies_MedicalPlace" Association="Self.FK_Pharmacies_MedicalPlace">
             <End Role="MedicalPlace" EntitySet="MedicalPlace" />
@@ -1722,7 +1695,6 @@
           <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_UserClaims_dbo_Citizens_UserId" FromRole="Citizens" ToRole="UserClaims" />
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogins_dbo_Citizens_UserId" FromRole="Citizens" ToRole="UserLogins" />
           <NavigationProperty Name="HistoryRecords" Relationship="Self.FK_HistoryRecords_Citizens" FromRole="Citizens" ToRole="HistoryRecords" />
-          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notifications_Citizens" FromRole="Citizens" ToRole="Notifications" />
           <NavigationProperty Name="PharmacyRatings" Relationship="Self.FK_PharmacyRatings_Citizens" FromRole="Citizens" ToRole="PharmacyRatings" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Citizens" FromRole="Citizens" ToRole="Receipts" />
           <NavigationProperty Name="AddedRelatives" Relationship="Self.FK_Relatives_Citizens" FromRole="Citizens" ToRole="Relatives" />
@@ -1841,17 +1813,6 @@
           <NavigationProperty Name="ReceiptMedicines" Relationship="Self.FK_ReceiptMedicines_Medicines" FromRole="Medicines" ToRole="ReceiptMedicines" />
           <Property Name="ShelfLife" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Read" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="CitizenID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Citizen" Relationship="Self.FK_Notifications_Citizens" FromRole="Notifications" ToRole="Citizens" />
-        </EntityType>
         <EntityType Name="Pharmacy">
           <Key>
             <PropertyRef Name="ID" />
@@ -1870,6 +1831,8 @@
           <NavigationProperty Name="PharmacyRatings" Relationship="Self.FK_PharmacyRatings_Pharmacies" FromRole="Pharmacies" ToRole="PharmacyRatings" />
           <NavigationProperty Name="PharmacyMembershipRequests" Relationship="Self.FK_PharmacySpecialists_Pharmacies" FromRole="Pharmacies" ToRole="PharmacyMembershipRequests" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Pharmacies" FromRole="Pharmacies" ToRole="Receipts" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="PharmacyMedicine">
           <Key>
@@ -2313,20 +2276,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Notifications_Citizens">
-          <End Role="Citizens" Type="Self.Citizen" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Notifications" Type="Self.Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Citizens">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Notifications">
-              <PropertyRef Name="CitizenID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        
         <Association Name="FK_PharmacyRatings_Citizens">
           <End Role="Citizens" Type="Self.Citizen" Multiplicity="1" />
           <End Role="PharmacyRatings" Type="Self.PharmacyRating" Multiplicity="*" />
@@ -2812,7 +2762,6 @@
           <EntitySet Name="MedicineActiveIngredients" EntityType="Self.MedicineActiveIngredient" />
           <EntitySet Name="MedicineForms" EntityType="Self.MedicineForm" />
           <EntitySet Name="Medicines" EntityType="Self.Medicine" />
-          <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="Pharmacies" EntityType="Self.Pharmacy" />
           <EntitySet Name="PharmacyMedicines" EntityType="Self.PharmacyMedicine" />
           <EntitySet Name="PharmacyMembershipRequests" EntityType="Self.PharmacyMembershipRequest" />
@@ -2901,10 +2850,7 @@
             <End Role="Citizens" EntitySet="Citizens" />
             <End Role="HistoryRecords" EntitySet="HistoryRecords" />
           </AssociationSet>
-          <AssociationSet Name="FK_Notifications_Citizens" Association="Self.FK_Notifications_Citizens">
-            <End Role="Citizens" EntitySet="Citizens" />
-            <End Role="Notifications" EntitySet="Notifications" />
-          </AssociationSet>
+          
           <AssociationSet Name="FK_PharmacyRatings_Citizens" Association="Self.FK_PharmacyRatings_Citizens">
             <End Role="Citizens" EntitySet="Citizens" />
             <End Role="PharmacyRatings" EntitySet="PharmacyRatings" />
@@ -3341,20 +3287,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="CarePointModel.Notification">
-              <MappingFragment StoreEntitySet="Notifications">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Read" ColumnName="Read" />
-                <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Pharmacies">
             <EntityTypeMapping TypeName="CarePointModel.Pharmacy">
               <MappingFragment StoreEntitySet="Pharmacies">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />

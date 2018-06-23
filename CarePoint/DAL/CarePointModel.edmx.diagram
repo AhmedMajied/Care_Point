@@ -62,7 +62,6 @@
         <AssociationConnector Association="CarePointModel.FK_dbo_UserClaims_dbo_Citizens_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_dbo_UserLogins_dbo_Citizens_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_HistoryRecords_Citizens" ManuallyRouted="false" />
-        <AssociationConnector Association="CarePointModel.FK_Notifications_Citizens" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_PharmacyRatings_Citizens" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_Receipts_Citizens" ManuallyRouted="false" />
         <AssociationConnector Association="CarePointModel.FK_Relatives_Citizens" ManuallyRouted="false" />

@@ -10,19 +10,19 @@
     {
     <ul class="nav nav-tabs">
         @{ var firstElement = Model.First(); }
-        <li class="active"><a onclick="readAttachmentsOfType.call(this,@firstElement.Key.ID)" id="itab-@firstElement.Key.Name.ToLower()" href="#idiv-@firstElement.Key.Name.ToLower()-tab" data-toggle="tab">@firstElement.Key.Name</a></li>
+        <li class="active"><a onclick="readAttachmentsOfType.call(this,@firstElement.Key.ID)" id="itab-@firstElement.Key.Name.ToLower().Replace(' ','-')" href="#idiv-@firstElement.Key.Name.ToLower().Replace(' ','-')-tab" data-toggle="tab">@firstElement.Key.Name</a></li>
         @foreach (var element in Model.Skip(1))
         {
-        <li><a onclick="readAttachmentsOfType.call(this,@element.Key.ID)" id="itab-@element.Key.Name.ToLower()" href="#idiv-@element.Key.Name.ToLower()-tab" data-toggle="tab">@element.Key.Name</a></li>
+        <li><a onclick="readAttachmentsOfType.call(this,@element.Key.ID)" id="itab-@element.Key.Name.ToLower().Replace(' ','-')" href="#idiv-@element.Key.Name.ToLower().Replace(' ','-')-tab" data-toggle="tab">@element.Key.Name</a></li>
         }
     </ul>
     <div class="tab-content">
-        <div id="idiv-@firstElement.Key.Name.ToLower()-tab" class="tab-pane fade in active">
+        <div id="idiv-@firstElement.Key.Name.ToLower().Replace(' ','-')-tab" class="tab-pane fade in active">
             @Html.Partial("_AttachmentTabPartial", firstElement.Value, new ViewDataDictionary{ { "includeIsRead", true } });
         </div>
         @foreach (var element in Model.Skip(1))
         {
-            <div id="idiv-@element.Key.Name.ToLower()-tab" class="tab-pane fade">
+            <div id="idiv-@element.Key.Name.ToLower().Replace(' ','-')-tab" class="tab-pane fade">
                 @Html.Partial("_AttachmentTabPartial", element.Value, new ViewDataDictionary { { "includeIsRead", true } })
             </div>
         }

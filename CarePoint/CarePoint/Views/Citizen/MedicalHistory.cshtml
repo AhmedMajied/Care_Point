@@ -59,9 +59,9 @@
                 string symptoms = "None";
                 if (record.Symptoms.Count > 0)
                 {
+                    symptoms = record.Symptoms.FirstOrDefault().Name;
                     if (record.Symptoms.Count > 1)
                     {
-                        symptoms = record.Symptoms.FirstOrDefault().Name;
                         foreach (var symptom in record.Symptoms.Skip(1))
                         {
                             symptoms += ',' + symptom.Name;
@@ -72,9 +72,9 @@
                 string diseases = "None";
                 if (record.Diseases.Count > 0)
                 {
+                    diseases = record.Diseases.FirstOrDefault().Name;
                     if (record.Diseases.Count > 1)
                     {
-                        diseases = record.Diseases.FirstOrDefault().Name;
                         foreach (var disease in record.Diseases.Skip(1))
                         {
                             diseases += ',' + disease.Name;
@@ -84,9 +84,9 @@
                 string medicines = "None";
                 if (record.Doses.Count > 0)
                 {
+                    medicines = record.Doses.FirstOrDefault().Medicine.Name + "(" + record.Doses.FirstOrDefault().Description + ")";
                     if (record.Doses.Count > 1)
                     {
-                        medicines = record.Doses.FirstOrDefault().Medicine.Name + "(" + record.Doses.FirstOrDefault().Description + ")";
                         if (record.Doses.Count > 1)
                         {
                             foreach (var dose in record.Doses.Skip(1))

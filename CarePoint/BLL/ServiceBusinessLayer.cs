@@ -44,5 +44,11 @@ namespace BLL
             DBEntities.Services.Add(service);
             DBEntities.SaveChanges();
         }
+        public List<WorkSlot> GetWorkSlots(long serviceId,string dayName)
+        {
+            List<WorkSlot> workSlots = new List<WorkSlot>();
+            workSlots = DBEntities.WorkSlots.Where(slot => slot.ServiceID == serviceId && slot.DayName.ToLower()==(dayName.ToLower())).OrderBy(s=>s.StartTime).ToList();
+            return workSlots;
+        }
     }
 }

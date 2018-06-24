@@ -32,10 +32,10 @@ namespace BLL
         public ICollection<MedicalPlace> SearchCareUnitsPlace(double latitude, double longitude, string serviceType, string placeType, bool distance, bool cost, bool rate, bool popularity)
         {
             List<CareUnit> careUnits = new List<CareUnit>();
-            List<CareUnit> sortedDistance = new List<CareUnit>();// ascending
-            List<CareUnit> sortedPopularity = new List<CareUnit>();// descending
-            List<CareUnit> sortedCost = new List<CareUnit>();// ascending
-            List<CareUnit> sortedRate = new List<CareUnit>();//descending
+            List<CareUnit> sortedDistance = new List<CareUnit>();
+            List<CareUnit> sortedPopularity = new List<CareUnit>();
+            List<CareUnit> sortedCost = new List<CareUnit>();
+            List<CareUnit> sortedRate = new List<CareUnit>();
             Dictionary<MedicalPlace, int> result = new Dictionary<MedicalPlace, int>();
             careUnits = DBEntities.CareUnits.Where(careUnit => careUnit.Name == serviceType || careUnit.ProviderID == (DBEntities.MedicalPlaces.SingleOrDefault(medicalPlace => medicalPlace.Name == placeType)).ID).ToList();
             if (distance)
@@ -58,17 +58,19 @@ namespace BLL
                 Rate = sortedRate.IndexOf(careUnit) + 1;
                 //Popularity = sortedPopularity.IndexOf(careUnit) + 1;
                 Cost = sortedCost.IndexOf(careUnit) + 1;
-                result.Add((DBEntities.MedicalPlaces.SingleOrDefault(medical => medical.ID == careUnit.ID)), (int)((1 / Distance * 1.0) + 2 * Cost + 2 * Rate + Popularity));
+                MedicalPlace m = (DBEntities.MedicalPlaces.SingleOrDefault(medical => medical.ID == careUnit.ID));
+                if (!result.ContainsKey(m))
+                    result.Add(m, (int)((1 / Distance * 1.0) + 2 * Cost + 2 * Rate + Popularity));
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }
         public ICollection<MedicalPlace> SearchMedicalPlace(double latitude, double longitude, string serviceName, string placeName, bool isDistance, bool isCost, bool isRate, bool isPopularity)
         {
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
-            List<MedicalPlace> sortedDistance = new List<MedicalPlace>();// ascending
-            List<MedicalPlace> sortedPopularity = new List<MedicalPlace>();// descending
-            List<MedicalPlace> sortedCost = new List<MedicalPlace>();// ascending
-            List<MedicalPlace> sortedRate = new List<MedicalPlace>();//descending
+            List<MedicalPlace> sortedDistance = new List<MedicalPlace>();
+            List<MedicalPlace> sortedPopularity = new List<MedicalPlace>();
+            List<MedicalPlace> sortedCost = new List<MedicalPlace>();
+            List<MedicalPlace> sortedRate = new List<MedicalPlace>();
             Dictionary<MedicalPlace, int> result = new Dictionary<MedicalPlace, int>();
             if (placeName != "" && serviceName == "")
             {
@@ -113,7 +115,8 @@ namespace BLL
                 Rate = sortedRate.IndexOf(medicalPlace) + 1;
                 Popularity = sortedPopularity.IndexOf(medicalPlace) + 1;
                 Cost = sortedCost.IndexOf(medicalPlace) + 1;
-                result.Add(medicalPlace, (int)((1 / Distance * 1.0) + 2 * Cost + 2 * Rate + Popularity));
+                if(!result.ContainsKey(medicalPlace))
+                     result.Add(medicalPlace, (int)((1 / Distance * 1.0) + 2 * Cost + 2 * Rate + Popularity));
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }

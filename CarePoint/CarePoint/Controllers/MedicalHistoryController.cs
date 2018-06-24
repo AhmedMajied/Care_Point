@@ -101,6 +101,7 @@ namespace CarePoint.Controllers
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
                                      Path.GetRandomFileName().Replace(".", "") + ".jpg";
             List<List<string>> medicinesAlternatives = new List<List<string>>();
+            long medicalPlaceID = Convert.ToInt64(Request.Cookies["placeInfo"].Values["id"]);
 
             string[] symptoms = form.GetValues("symptomName");
             string[] diseases = form.GetValues("diseaseName");
@@ -113,7 +114,7 @@ namespace CarePoint.Controllers
             {
                 Date = DateTime.Now,
                 Remarks = remarks,
-                MedicalPlaceID = 6, //TODO get from session
+                MedicalPlaceID = medicalPlaceID,
                 CitizenID = Convert.ToInt64(form["Id"]),
                 SpecialistID = User.Identity.GetUserId<long>()
             };

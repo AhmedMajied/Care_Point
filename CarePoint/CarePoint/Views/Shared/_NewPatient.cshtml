@@ -8,8 +8,13 @@
                 </div>
                 <div class="modal-body">
                     <video id="scanner"></video>
+                    <div id="idiv-invalid-card-msg" class="cdiv-custom-alert hidden">
+                        <span class="fa fa-qrcode fa-4x"></span><br />
+                        <h4>The QR-Code on your patient's card is invalid!</h4><br /><br />
+                        <button id="ibtn-rescan-card" class="btn btn-success" type="button">Try again</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer hidden">
                     <center><label>Approach your patient's card from your camera</label></center>
                 </div>
             </div>

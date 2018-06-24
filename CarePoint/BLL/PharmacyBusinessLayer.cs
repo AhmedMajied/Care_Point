@@ -31,7 +31,7 @@ namespace BLL
             List<Pharmacy> sortedPhrmacies = new List<Pharmacy>();
             pharmacies = DBEntities.PharmacyMedicines.Where(m => m.Medicine.Name.Contains(drugName) && m.Quantity>0).Select(p => p.Pharmacy).ToList();
             pharmacies = pharmacies.GroupBy(pharmacy => pharmacy.ID).Select(pharmacy=>pharmacy.First()).ToList();
-            sortedPhrmacies = pharmacies.OrderByDescending(m => m.Location.Distance(DbGeography.FromText(location, 4326))).ToList();
+            sortedPhrmacies = pharmacies.OrderBy(m => m.Location.Distance(DbGeography.FromText(location, 4326))).ToList();
             return sortedPhrmacies;
         }
     }

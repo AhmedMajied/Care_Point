@@ -258,9 +258,11 @@
     <Content Include="Content\place-add edit service.css" />
     <Content Include="Content\place-edit schedule.css" />
     <Content Include="Content\place-new.css" />
+    <Content Include="Content\place-profile.css" />
     <Content Include="Content\place-switch.css" />
     <Content Include="Content\scrollbar.css" />
     <Content Include="Content\step-wizard.css" />
+    <Content Include="Content\treeview.css" />
     <Content Include="Content\_LoginPartial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -329,6 +331,8 @@
     <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\place-edit schedule.js" />
+    <Content Include="Scripts\place-profile.js" />
+    <Content Include="Scripts\place-reminder.js" />
     <Content Include="Scripts\place-switch.js" />
     <Content Include="Scripts\relatives.js" />
     <Content Include="Scripts\respond.js" />
@@ -340,6 +344,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\sos.js" />
     <Content Include="Scripts\step-wizard.js" />
+    <Content Include="Scripts\treeview.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

@@ -81,12 +81,13 @@ namespace CarePoint.Controllers
             var medicalPlace = MedicalPlaceBusinessLayer.GetMedicalPlace(id);
             MedicalPlaceProfileViewModel model = new MedicalPlaceProfileViewModel()
             {
-                MedicalPlaceID=medicalPlace.ID,
+                MedicalPlaceID = medicalPlace.ID,
                 Services = new List<ServiceViewModel>(),
-                CareUnits =  new List<CareUnitViewModel>(),
+                CareUnits = new List<CareUnitViewModel>(),
                 ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
-                IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>())
+                IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>()),
+                medicalPlace = medicalPlace,
             };
             
             
@@ -369,6 +370,157 @@ namespace CarePoint.Controllers
                 type = cookie.Values["type"];
             }
             return Json(new { id,type, url });
+        }
+        private List<SlotViewModel> splitSlots(long serviceId, string dayName)
+        {
+            // first Get WorkSlots
+            List<WorkSlot> workSlots = (ServiceBusinessLayer.GetWorkSlots(serviceId, dayName)).ToList();
+            // Add Slot to Slots
+            List<SlotViewModel> slots = new List<SlotViewModel>();
+            SlotViewModel slot = new SlotViewModel();
+            if(workSlots.Count()>0)
+            {
+                if (workSlots[0].StartTime.Value.Hours != 12)
+                {
+                    slot = new SlotViewModel();
+                    slot.Type = "free-slot";
+                    slot.Time = "";
+                    slot.description = "";
+                    slot.duration = 0;
+                    slot.EndTime = workSlots[0].StartTime.Value;
+                    if (workSlots[0].StartTime.Value.Hours < 12)
+                    {
+                        slot.StartTime = new TimeSpan(00, 00, 00);
+                    }
+                    else
+                    {
+                        slot.StartTime = new TimeSpan(12, 00, 00);
+                    }
+                    slots.Add(slot);
+                }
+                slot = new SlotViewModel()
+                {
+                    Type = "work-slot",
+                    Time = "",
+                    description = "",
+                    StartTime = workSlots[0].StartTime.Value,
+                    EndTime = workSlots[0].EndTime.Value,
+                    duration = 0
+                };
+                slots.Add(slot);
+            }
+            for (int i = 1; i < workSlots.Count(); i++)
+            {
+                // Work Slot
+                slot = new SlotViewModel()
+                {
+                    Type = "work-slot",
+                    Time = "",
+                    description = "",
+                    StartTime = workSlots[i].StartTime.Value,
+                    EndTime = workSlots[i].EndTime.Value,
+                    duration = 0
+                };
+                slots.Add(slot);
+                // check if There is time so it will be Free Slot
+                if ((workSlots[i - 1].EndTime.Value.Hours - workSlots[i].StartTime.Value.Hours != 0) ||
+                   (workSlots[i - 1].EndTime.Value.Minutes - workSlots[i].StartTime.Value.Minutes) != 0)
+                {
+                    slot = new SlotViewModel()
+                    {
+                        Type = "free-slot",
+                        Time = "",
+                        description = "",
+                        StartTime = workSlots[i - 1].EndTime.Value,
+                        EndTime = workSlots[i].StartTime.Value,
+                        duration = 0
+                    };
+                    slots.Add(slot);
+                }
+            }
+            return slots;
+        }
+        private dynamic GetServiceSlots(long serviceId,string dayName)
+        {
+            List<SlotViewModel> slots = splitSlots(serviceId, dayName);
+            SlotViewModel slot = new SlotViewModel();
+            int count = slots.Count();
+            for(int i=0;i<count;i++)
+            {
+                if (slots[i].StartTime.Hours <12 && slots[i].EndTime.Hours <=12)
+                {
+                    slots[i].Time = "AM";
+                    if(slots[i].EndTime.Hours>=12 && slots[i].EndTime.Minutes>0)
+                    {
+                        slot = new SlotViewModel()
+                        {
+                            Type = "PM",
+                            StartTime = new TimeSpan(12, 00, 00),
+                            EndTime = slots[i].EndTime
+                        };
+                        slots[i].EndTime = new TimeSpan(12, 00, 00);
+                        slots.Add(slot);
+                    }
+                }
+                else if(slots[i].StartTime.Hours >=12 && slots[i].EndTime.Hours >= 12)
+                {
+                    slots[i].Time = "PM";
+                    slots[i].StartTime = new TimeSpan(slots[i].StartTime.Hours - 12, slots[i].StartTime.Minutes, 00);
+                    slots[i].EndTime = new TimeSpan(slots[i].EndTime.Hours - 12, slots[i].EndTime.Minutes, 00);
+                }
+                else if(slots[i].StartTime.Hours>=12 && slots[i].EndTime.Hours<12)
+                {
+                    slots[i].Time = "PM";
+                    slots[i].StartTime = new TimeSpan(24-slots[i].StartTime.Hours, slots[i].StartTime.Minutes,00);
+                    slot = new SlotViewModel()
+                    {
+                        Time = "AM",
+                        Type=slots[i].Type,
+                        StartTime = new TimeSpan(00, 00, 00),
+                        EndTime=slots[i].EndTime
+                    };
+                    slots[i].EndTime= new TimeSpan(24, 00, 00);
+                    slots.Add(slot);
+                }
+                else if(slots[i].StartTime.Hours<12&&slots[i].EndTime.Hours>=12)
+                {
+                    slots[i].Time = "AM";
+                    slot = new SlotViewModel()
+                    {
+                        Time = "PM",
+                        Type = slots[i].Type,
+                        StartTime = new TimeSpan(00, 00, 00),
+                        EndTime = new TimeSpan(slots[i].EndTime.Hours-12, slots[i].EndTime.Minutes, 00)
+                    };
+                    slots[i].EndTime = new TimeSpan(12, 00, 00);
+                    slots.Add(slot);
+                }
+            }
+            slots.OrderBy(s => s.StartTime);
+            for(int i=0;i<slots.Count();i++)
+            {
+                int endHours, endMinuits, startHours;
+                endHours = (slots[i].EndTime.Hours == 0) ? 24 : slots[i].EndTime.Hours;
+                endMinuits = slots[i].EndTime.Minutes;
+                startHours= (slots[i].StartTime.Hours == 0) ? 12 : slots[i].StartTime.Hours;
+                string isWorking = (slots[i].Type == "work-slot") ? "Working from " : "Off from ";
+                slots[i].description = isWorking + startHours + ":" + slots[i].StartTime.Minutes + " to " + endHours + ":" + endMinuits;
+                slots[i].duration = (endHours - slots[i].StartTime.Hours) * 60 + (endMinuits - slots[i].StartTime.Minutes);
+            }
+            var AM = slots.Where(x => x.Time.Equals("AM")).Select(t => new { type = t.Type, durationInMinutes = t.duration, description = t.description });
+            var PM = slots.Where(x => x.Time.Equals("PM")).Select(t => new { type = t.Type, durationInMinutes = t.duration, description = t.description });
+            dynamic res = new { ID=serviceId , AM , PM };
+            return res;
+        }
+        [HttpPost]
+        public JsonResult GetServicesSlots(List<ServiceDayViewModel> services)
+        {
+            List<dynamic> result = new List<dynamic>();
+            for(int i=0;i<services.Count();i++)
+            {
+                result.Add(GetServiceSlots(services[i].ID, services[i].day));
+            }
+            return Json(result);
         }
     }
     

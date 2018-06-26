@@ -25,6 +25,7 @@ namespace CarePoint.Models
         public ICollection<CareUnitType> CareUnitTypes { get; set; }
 
         public Service NewService { get; set; }
+        public MedicalPlace medicalPlace { get; set; }
     }
 
     public class ServiceViewModel
@@ -142,5 +143,19 @@ namespace CarePoint.Models
         public bool checkPopularity { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
+    }
+    public class SlotViewModel
+    {
+        public string Type { get; set; }
+        public double duration { get; set; }
+        public string description { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        public string Time { get; set; }
+    }
+    public class ServiceDayViewModel
+    {
+        public string day { get; set; }
+        public int ID { get; set; }
     }
 }

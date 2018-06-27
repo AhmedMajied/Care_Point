@@ -139,11 +139,6 @@
                     Click for reminder!
                 </button>
             }
-
-            <!-- <button class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.medicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
-                 Click for reminder!
-             </button>-->
-            <!-- End Display MedicalPlace Info-->
         </div>
     </div>
 </div>
@@ -474,6 +469,8 @@
 
 
 @section scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

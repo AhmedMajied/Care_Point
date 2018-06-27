@@ -9,11 +9,10 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
         <ul class="nav navbar-nav navbar-right">
             @if (user is Specialist)
             {
-            <li class="dropdown">
+            <li class="dropdown" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Work">
                 <a class="dropdown-toggle" data-toggle="dropdown" style="background-color: #21c2eb;">
                     @{ 
                         int membershipRequestsCount = (user as Specialist).AdministratedMedicalPlaces
@@ -32,16 +31,15 @@
                     </span>
                     <span class="fa fa-chevron-down fa-fw cspn-nav"></span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul id="iul-work-menu" class="dropdown-menu">
                     <li><a data-toggle="modal" href="#imodal-new-patient" id="ilink-new-patient">New patient</a></li>
-                    <li><a href="#" id="ilink-curr-patient">Current patient</a></li>
                     @{ string id = User.Identity.GetUserId<long>().ToString();}
                     @Html.HiddenFor(usr => id, new { @Id = "iinput-usr", @Value = id })
-                    <li><a data-toggle="modal" href="#imodal-patient-list" id="ilink-patient-list">My patients</a></li>
+                    <li><a href="#" id="ilink-patient-list">My patients</a></li>
                     <li class="divider"></li>
                     <li><a href="/MedicalPlace/MedicalPlace" id="ilink-new-place">New workplace</a></li>
                     <li><a href="#" id="ilink-place-settings">My workplace</a></li>
-                    <li><a href="#" id="ilink-change-place">Switch workplace</a></li>
+                    <li><a data-toggle="modal" href="#imodal-place-switch" id="ilink-change-place">Switch workplace</a></li>
                     <li class="divider"></li>
                     <li><a href="#" id="ilink-curr-patient">Membership requests 
                         @if (membershipRequestsCount > 0)
@@ -51,16 +49,18 @@
                         else
                         {
                             <span class="badge" style="display:none">0</span>
+
                         }
-                    </a>
+                        </a>
                     </li>
-                </ul>
-            </li>
+                    </ul>
+                </li>
             }
-            <li><a id="ilink-medical-history" href="/Citizen/MedicalHistory">
+            <li><a id="ilink-medical-history" href="/Citizen/MedicalHistory" data-toggle="tooltip" data-container="body" data-placement="bottom" title="Medical history">
                     <span class="fa fa-history fa-2x cspn-nav"></span>
-                </a></li>
-            <li><a id="ilink-attachments" href="/Citizen/Attachments">
+                </a>
+            </li>
+            <li data-toggle="tooltip" data-container="body" data-placement="bottom" title="Attachments"><a id="ilink-attachments" href="/Citizen/Attachments">
                     @{ int attachmentsNotificationsCount = user.Attachments.Count(a => !a.IsRead??false); }
                     <span class="fa fa-paperclip fa-2x cspn-nav">
                         @if (attachmentsNotificationsCount > 0)
@@ -73,7 +73,7 @@
                         }
                     </span>
                 </a></li>
-            <li><a id="ilink-relatives" href="/Citizen/Relatives">
+            <li data-toggle="tooltip" data-container="body" data-placement="bottom" title="Family and friends"><a id="ilink-relatives" href="/Citizen/Relatives">
                 @{ int relativesNotificationsCount = user.Relatives.Count(r => r.RelativeConfirmed == false || r.RelativeConfirmed == null) + user.AddedRelatives.Count(r => r.CitizenConfirmed == false || r.CitizenConfirmed == null); }
                     <span class="fa fa-users fa-2x cspn-nav">
                         @if (relativesNotificationsCount == 0)
@@ -87,24 +87,19 @@
                     </span>
                 </a>
             </li>
-            <li>
+            <li data-toggle="tooltip" data-container="body" data-placement="bottom" title="Family health">
                 <a id="ilink-prognosis" href="/Citizen/Prognosis">
                     @{ int prognosisNotificationsCount = user.PotentialDiseases.Count(p => !p.IsRead); }
                     <span class="fa fa-heart-o fa-2x cspn-nav">
-                    @if (prognosisNotificationsCount == 0)
-                    {
-                        <mark class="cmark-notif" style="display:none">0</mark>
-                    }
-                    else
-                    {
-                        <mark class="cmark-notif">@prognosisNotificationsCount</mark>
-                    }
+                        @if (prognosisNotificationsCount == 0)
+                        {
+                            <mark class="cmark-notif" style="display:none">0</mark>
+                        }
+                        else
+                        {
+                            <mark class="cmark-notif">@prognosisNotificationsCount</mark>
+                        }
                     </span>
-                </a>
-            </li>
-            <li>
-                <a id="ilink-notif" href="#">
-                    <span class="fa fa-bell fa-2x cspn-nav"><mark class="cmark-notif">8</mark></span>
                 </a>
             </li>
             <li class="dropdown">
@@ -130,3 +125,4 @@ else
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
     </ul>
 }
+

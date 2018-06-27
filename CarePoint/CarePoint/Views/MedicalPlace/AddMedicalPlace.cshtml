@@ -8,7 +8,7 @@
 }
 @using DAL;
 <div class="row">
-    @using (Html.BeginForm("AddMedicalPlace", "MedicalPlace", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AddMedicalPlace", "MedicalPlace", FormMethod.Post, new { enctype = "multipart/form-data" , @Id = "iform-add-new-place" }))
     {
         <div class="container-fluid">
             <div class="row form-group">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="selectContainer">
-                        @Html.DropDownListFor(model => model.medicalPlace.TypeID, Model.medicalPlaceTypes, "Organization type", new { @Class = "form-control" })
+                        @Html.DropDownListFor(model => model.medicalPlace.TypeID, Model.medicalPlaceTypes, "Organization type", new { @Class = "form-control" , @Id = "iselect-options-place-types" })
                         <span class="cspn-validation-msg">
                             @Html.ValidationMessageFor(model => model.medicalPlace.TypeID, "", new { @Class = "cspan-error text-danger" })
                         </span>

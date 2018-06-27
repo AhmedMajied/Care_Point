@@ -1,5 +1,8 @@
 ﻿@using CarePoint.Models
+@using CarePoint.Custom_HtmlHelpers
 @model MedicalPlaceProfileViewModel
+@using Microsoft.AspNet.Identity
+
 @{
     ViewBag.Title = "ProfilePage";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,8 +13,134 @@
     <link rel="stylesheet" type="text/css" href="~/Content/place-about service.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/place-edit schedule.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/place-add edit service.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/place-profile.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/treeview.css" />
 }
+<div class="container-fluid">
+    <div class="row" style="margin-top: 7em;">
+        <div class="col-md-12">
+            <!-- Start Display MedicalPlace Info-->
+            <center>
+                @Html.Image(Model.medicalPlace.Photo, new { @Class = "cimg-medical-place" })
+                <br />
+                <h1 class="ch1-section">@Model.medicalPlace.Name</h1><br />
+                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Phone
+            </center>
+            <div class="tree-node">
+                <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Services</h2>
+                <div class="tree-node-body">
+                    <!-- Start Display Services-->
+                    @{ int count = 0;}
+                    @foreach (var service in Model.medicalPlace.Services)
+                    {
+                        <input type="hidden" id="ihidden-service-id-@count" value="@service.ID"/>
+                        count++;
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="ch4-service-category">@service.ServiceCategory.Name</h4>
+                               @if (service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                               {
+                                   <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                               }
+                            </div>
+                            <div class="panel-body">
+                                <div id="row-@service.ID" class="row">
+                                    <div class="col-sm-6">
+                                        <label>Name:</label>@service.Name<br />
+                                        <label>Cost:</label> @service.Cost L.E.<br /><br />
+                                        <label>About service:</label><br />@service.Description
+                                    </div>
+                                    <select id="iselect-options-@service.ID" onchange="changeDay(@service.ID)">
+                                        <option value="Saturday"selected>Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                    </select>
+                                    <div class="col-sm-6 cdiv-schedule-visualized">
+                                        <div id="@service.ID-AM" class="clock am">
+                                            <div class="clock-face">
+                                                <div id="piechart-@service.ID-AM" class="piechart"></div>
+                                                <div class="position position1"><span>12</span></div>
+                                                <div class="position position2"><span>1</span></div>
+                                                <div class="position position3"><span>2</span></div>
+                                                <div class="position position4"><span>3</span></div>
+                                                <div class="position position5"><span>4</span></div>
+                                                <div class="position position6"><span>5</span></div>
+                                                <div class="position position7"><span>6</span></div>
+                                                <div class="position position8"><span>7</span></div>
+                                                <div class="position position9"><span>8</span></div>
+                                                <div class="position position10"><span>9</span></div>
+                                                <div class="position position11"><span>10</span></div>
+                                                <div class="position position12"><span>11</span></div>
+                                            </div>
+                                        </div>
+                                        <div id="@service.ID-PM" class="clock pm hidden">
+                                            <div class="clock-face">
+                                                <div id="piechart-@service.ID-PM" class="piechart"></div>
+                                                <div class="position position1"><span>12</span></div>
+                                                <div class="position position2"><span>1</span></div>
+                                                <div class="position position3"><span>2</span></div>
+                                                <div class="position position4"><span>3</span></div>
+                                                <div class="position position5"><span>4</span></div>
+                                                <div class="position position6"><span>5</span></div>
+                                                <div class="position position7"><span>6</span></div>
+                                                <div class="position position8"><span>7</span></div>
+                                                <div class="position position9"><span>8</span></div>
+                                                <div class="position position10"><span>9</span></div>
+                                                <div class="position position11"><span>10</span></div>
+                                                <div class="position position12"><span>11</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group btn-toggle">
+                                            <button class="btn btn-primary active">AM</button>
+                                            <button class="btn btn-default">PM</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <input type="hidden" value="@count" id="ihidden-count"/>
+                    <!-- End Display Services-->
+                </div>
+            </div><hr />
+            <div class="tree-node">
+                <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Care Units</h2>
+                <div class="tree-node-body">
+                    <!-- Start Display CareUnits-->
+                    @foreach (var careUnit in Model.medicalPlace.CareUnits)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="ch4-service-category">@careUnit.CareUnitType.Name</h4>
+                                @if (careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                {
+                                     <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                                }
+                            </div>
+                            <div class="panel-body">
+                                <label>Name:</label>@careUnit.Name<br />
+                                <label>Cost:</label>@careUnit.Cost L.E.<br />
+                                <label>Available rooms:</label>@careUnit.AvailableRoomCount <span class="cspn-last-updated">(last updated on @careUnit.LastUpdate)</span><br /><br />
+                                <label>About care unit:</label><br />@careUnit.Description
+                            </div>
+                        </div>
+                    }
+                    <!-- End Display CareUnits-->
+                </div>
+            </div>
 
+            <button class="btn btn-lg btn-primary" onclick="showICUReminder('<!---->workplaceName', '<!---->linkURL')">
+                Click for reminder!
+            </button>
+            <!-- End Display MedicalPlace Info-->
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <!-- Begin Add Service -->
     <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
@@ -51,15 +180,12 @@
         </div>
     }
     <!-- End Add Service -->
-
-
     <!-- Begin Update Services -->
     @for (int i = 0; i < Model.Services.Count; ++i)
     {
         var service = Model.Services.ElementAt(i);
         if (!Model.IsAdmin)
         { // Enable it After Testing
-            <button class="btn btn-default" data-toggle="modal" data-target="#imodal-schedule-@service.ID">Edit schedule</button>
             using (Html.BeginForm("UpdateSchedule", "MedicalPlace", FormMethod.Post))
             {
                 <div id="imodal-schedule-@service.ID" class="modal fade" role="dialog">
@@ -244,56 +370,55 @@
         }
     }
     <!-- End Update Services -->
-
     <!-- Begin Add CareUnit -->
     <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
-    @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post)) {
-    <div id="imodal-careunit-new" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">New Care Unit</h4>
-                </div>
-                <div class="modal-body cscrollbar-container cscrollbar-modal">
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            @Html.HiddenFor(model => model.MedicalPlaceID)
-                            @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
-                            @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
-                        </div>
-                        <div class="col-md-6">
-                            @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type"})
-                        </div>
+    @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post))
+    {
+        <div id="imodal-careunit-new" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Care Unit</h4>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            @Html.TextBoxFor(model => model.NewCareUnit.Cost, new { @Id = "iinp-careunit-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
-                            @Html.ValidationMessageFor(model => model.NewCareUnit.Cost, "", new { @Class = "text-danger" })
+                    <div class="modal-body cscrollbar-container cscrollbar-modal">
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.HiddenFor(model => model.MedicalPlaceID)
+                                @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
+                                @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NewCareUnit.Cost, new { @Id = "iinp-careunit-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                                @Html.ValidationMessageFor(model => model.NewCareUnit.Cost, "", new { @Class = "text-danger" })
 
+                            </div>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.NewCareUnit.AvailableRoomCount, new { @Id = "iinp-careunit-count-new", @Class = "form-control", @Placeholder = "Rooms Available Now", @Type = "number", @Min = "0", @Step = "1" })
+                                @Html.ValidationMessageFor(model => model.NewCareUnit.AvailableRoomCount, "", new { @Class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            @Html.TextBoxFor(model => model.NewCareUnit.AvailableRoomCount, new { @Id = "iinp-careunit-count-new", @Class = "form-control", @Placeholder = "Rooms Available Now", @Type = "number", @Min = "0", @Step = "1" })
-                            @Html.ValidationMessageFor(model => model.NewCareUnit.AvailableRoomCount, "", new {  @Class = "text-danger" })
-                        </div>
+                        @Html.TextAreaFor(model => model.NewCareUnit.Description, new { @Id = "itextarea-careunit-desc-new", @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
                     </div>
-                    @Html.TextAreaFor(model => model.NewCareUnit.Description, new { @Id = "itextarea-careunit-desc-new" , @Class = "form-control", @Placeholder = "Add some description ...", @Rows = "18" })
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-success" value="Done" />
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" value="Done" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     }
     <!-- End Add CareUnit -->
-
     <!-- Begin CareUnits -->
     @for (int i = 0; i < Model.CareUnits.Count; ++i)
     {
         var careunit = Model.CareUnits.ElementAt(i);
-        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-@careunit.ID">Edit CareUnit</button>
-        using (Html.BeginForm("UpdateCareUnit", "MedicalPlace", FormMethod.Post)) {
+        using (Html.BeginForm("UpdateCareUnit", "MedicalPlace", FormMethod.Post))
+        {
             <div id="imodal-careunit-@careunit.ID" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -307,7 +432,7 @@
                                     @Html.HiddenFor(model => model.MedicalPlaceID)
                                     @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ID, new { @Name = "CareUnits[0].ID", @Value = careunit.ID })
                                     @Html.HiddenFor(model => model.CareUnits.ElementAt(i).ProviderID, new { @Name = "CareUnits[0].ProviderID", @Value = careunit.ProviderID })
-                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Name, new { @Name = "CareUnits[0].Name",@Id = "iinp-careunit-name-"+@careunit.ID, @Class="form-control", @Placeholder="CareUnit Name" , @Value = careunit.Name})
+                                    @Html.TextBoxFor(model => model.CareUnits.ElementAt(i).Name, new { @Name = "CareUnits[0].Name", @Id = "iinp-careunit-name-" + @careunit.ID, @Class = "form-control", @Placeholder = "CareUnit Name", @Value = careunit.Name })
                                 </div>
                                 <div class="col-md-6">
                                     @Html.DropDownListFor(model => model.CareUnits.ElementAt(i).CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name", careunit.CareUnitTypeID), new { @Id = "iinp-careunit-type-" + careunit.ID, @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type", @Name = "CareUnits[0].CareUnitTypeID", @Value = careunit.CareUnitTypeID })
@@ -324,7 +449,7 @@
                                     @Html.ValidationMessageFor(model => model.CareUnits.ElementAt(i).AvailableRoomCount, "", new { @Data_valmsg_for = "CareUnits[0].AvailableRoomCount", @Class = "text-danger" })
                                 </div>
                             </div>
-                            @Html.TextAreaFor(model => model.CareUnits.ElementAt(i).Description, new { @Name = "CareUnits[0].Description", @Id = "itextarea-careunit-desc-" + @careunit.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Value = careunit.Description,@Rows = "18" })
+                            @Html.TextAreaFor(model => model.CareUnits.ElementAt(i).Description, new { @Name = "CareUnits[0].Description", @Id = "itextarea-careunit-desc-" + @careunit.ID, @Class = "form-control", @Placeholder = "Add some description ...", @Value = careunit.Description, @Rows = "18" })
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-success" value="Done" />
@@ -344,9 +469,16 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
     <script src="~/Scripts/timepicker.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
     <script src="~/Scripts/place-edit schedule.js" type="application/javascript"></script>
+    <script src="~/Scripts/place-reminder.js"></script>
+    <script src="~/Scripts/place-profile.js"></script>
+    <script src="~/Scripts/treeview.js"></script>
 
 
     <script>
@@ -388,7 +520,7 @@
                 newSlot.find(".cbtn-remove-workslot").attr("onclick", "removeWorkSlot(" + (count + 1) + "," + serviceId + ",'" + startTime + "','" + endTime + "')");
                 newSlot.find(".cbtn-remove-workslot").attr("id", "ibtn-remove-workslot-" + serviceId + "-" + (count + 1));
 
-                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count+1) + "].StartTime");
+                newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("name", "Services[0].WorkSlots[" + (count + 1) + "].StartTime");
 
                 newSlot.find("#iinp-slot-start-time-" + serviceId + "-" + count).attr("value", startTime);
 
@@ -449,7 +581,7 @@
             });
         }
 
-        function removeWorkSlot(count,serviceId, startTime, endTime) {
+        function removeWorkSlot(count, serviceId, startTime, endTime) {
             $.post("/MedicalPlace/RemoveWorkslot", { ServiceID: serviceId, StartTime: startTime, EndTime: endTime }, function () {
                 $("#idiv-workslot-" + serviceId + "-" + count).hide();
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);

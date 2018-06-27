@@ -20,10 +20,16 @@ namespace BLL
 
         public Citizen GetCitizenByQR(string citizenQRCode)
         {
-            // decode QR to original national ID
-            var base64EncodedBytes = Convert.FromBase64String(citizenQRCode);
-            string nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
-
+            string nationalID;
+            try
+            {
+                // decode QR to original national ID
+                var base64EncodedBytes = Convert.FromBase64String(citizenQRCode);
+                nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
+            }catch(Exception)
+            {
+                return null;// if it is non base-64 character
+            }
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.NationalIDNumber == nationalID);
         }   
 
@@ -121,11 +127,11 @@ namespace BLL
             return DBEntities.Relatives.Where(r => r.CitizenID == citizenId || r.RelativeID == citizenId).ToList();
         }
 
-        public List<Citizen> GetPatientList(long doctorId)
+        public List<Citizen> GetPatientList(long doctorId,long placeId)
         {
             List<Citizen> initialList = new List<Citizen>();
             List<Citizen> patientList = new List<Citizen>();
-            initialList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId).Select(p => p.Citizen).ToList();
+            initialList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
             patientList = (initialList.GroupBy(patient => patient.Id)).
                            Select(p => p.OrderBy(patient => patient.Name).First()).ToList();
             return patientList;
@@ -217,6 +223,25 @@ namespace BLL
 
             }
             DBEntities.SaveChanges();
+        }    
+        public string GetSpeciality(long specialistId)
+        {
+            Specialist specialist = (Specialist)DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == specialistId);
+            string speciality = specialist.Speciality.Name;
+            return speciality;
+        }
+        public ICollection<Pharmacy> GetSpecialistPharmacyPlace(long specialistId)
+        {
+            List<Pharmacy> pharmacies = new List<Pharmacy>();
+            pharmacies = DBEntities.PharmacyMembershipRequests.Where(pharmacy => pharmacy.SpecialistID == specialistId && pharmacy.IsConfirmed == true).Select(p => p.Pharmacy).ToList();
+            return pharmacies;
+        }
+        public ICollection<MedicalPlace>GetSpecialistWorkPlaces(long specialistId)
+        {
+            List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
+            medicalPlaces = DBEntities.ServiceMembershipRequests.Where(service => service.IsConfirmed == true && service.SpecialistID == specialistId).Select(service => service.Service.MedicalPlace).ToList();
+            medicalPlaces.Union(DBEntities.CareUnitMembershipRequests.Where(careUnit => careUnit.IsConfirmed == true && careUnit.SpecialistID == specialistId).Select(care => care.CareUnit.MedicalPlace).ToList());
+            return medicalPlaces;
         }
     }
 }

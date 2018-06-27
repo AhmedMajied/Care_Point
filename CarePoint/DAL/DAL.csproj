@@ -118,9 +118,6 @@
     <Compile Include="MedicineForm.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Notification.cs">
-      <DependentUpon>CarePointModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Pharmacy.cs">
       <DependentUpon>CarePointModel.tt</DependentUpon>
     </Compile>

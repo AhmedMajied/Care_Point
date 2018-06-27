@@ -86,11 +86,10 @@ $(document).ready(function () {
                     url: '/MedicalPlace/GetCurrentWorkPlace',
                     dataType: 'json',
                     success: function (data) {
-                        var url = (window.location.href).split("=");
+                        var url = (window.location.href);
                         var placeId = data.id;
-                        if (url[1] == placeId && url[0] == 'http://localhost:51902/MedicalPlace/ProfilePage?id')
+                        if ((url.split("=")[1] == placeId || placeId == url.split("/")[5]) && url.includes('http://localhost:51902/MedicalPlace/ProfilePage'))
                         {
-                            console.log("place expired");
                             $("#ibtn-click-reminder").click();
                         }
                     },

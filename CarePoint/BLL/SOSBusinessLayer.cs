@@ -51,15 +51,6 @@ namespace BLL
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
-        public void SaveNotifications(long citizenId ,DateTime time,string Text)
-        {
-          /*  Notification notification = new Notification();
-            notification.CitizenID = citizenId;
-            notification.Text = Text;
-            notification.Time = time;
-            DBEntities.Notifications.Add(notification);
-            DBEntities.SaveChanges();*/
-        }
         public ICollection<Specialist> GetContributersOfSOSsServices(string location, int numberOfPlaces)
         {
             ICollection<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
@@ -67,12 +58,12 @@ namespace BLL
             ICollection<Service> services = new List<Service>();
             List<Specialist> providers = new List<Specialist>();
             services = medicalPlaces.Select(s => s.Services.SingleOrDefault(service => service.ServiceCategory.Name.Equals("Ambulance"))).ToList();
-            int min = Math.Min(services.ToArray().Length, numberOfPlaces);
+            int min = Math.Min(services.Count(), numberOfPlaces);
             services = services.Take(min).ToList();
             foreach (Service service in services)
             {
-                providers.Union(service.ServiceMembershipRequests.
-                        Where(request => request.IsConfirmed == true).Select(s => s.Specialist));
+                providers=providers.Union(service.ServiceMembershipRequests.
+                        Where(request => request.IsConfirmed == true).Select(s => s.Specialist)).ToList();
             }
             return providers;
         }

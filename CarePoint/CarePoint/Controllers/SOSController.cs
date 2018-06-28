@@ -48,8 +48,9 @@ namespace CarePoint.Controllers
                 _citizenBusinessLayer = value;
             }
         }
-        public JsonResult SendSos(SOSViewModel sosViewModel)
+        public JsonResult SendSos(SOSViewModel model)
         {
+
             List<RelationType> relationTypes = citizenBusinessLayer.GetRelationTypes().ToList();
             long friend = relationTypes.Single(r => r.Name == "Friend").ID;
             long parent = relationTypes.Single(r => r.Name == "Parent").ID;
@@ -57,38 +58,39 @@ namespace CarePoint.Controllers
             int numberOfPlaces = 5;
             SOSs sos = new SOSs();
             var user = User.Identity.GetCitizen();
-            var pointString = string.Format("POINT({0} {1})", sosViewModel.longitude.ToString(), sosViewModel.latitude.ToString());
+            var pointString = string.Format("POINT({0} {1})", model.longitude.ToString(), model.latitude.ToString());
             var location = System.Data.Entity.Spatial.DbGeography.FromText(pointString);
             DateTime time = DateTime.Now;
-            sos.Description = sosViewModel.description;
+            sos.Description = model.description;
             sos.SenderID =user.Id;
+            sos.StatusID = 1; // Pending 
             sos.Time =time;
             sos.IsAccepted = false;
             sos.Location = location;
-            sos.StatusID = 1; 
-            List<Citizen> citizens = new List<Citizen>();
-            if (sosViewModel.isMedicalPlace)
+            List<long> citizens = new List<long>();
+            List<long> contributers = new List<long>();
+            if (model.isMedicalPlace)
             {
-                citizens=(List<Citizen>)(sosBusinessLayer.GetContributersOfSOSsServices(pointString, numberOfPlaces));
+                 contributers = (sosBusinessLayer.GetContributersOfSOSsServices(pointString, numberOfPlaces)).Where(s=>s.Id!=user.Id).Select(s=>s.Id).ToList();
             }
-            if (sosViewModel.isFriend)
+            if (model.isFriend)
             {
-                citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, friend).ToList());
+                citizens = (citizenBusinessLayer.GetCitizenRelatives(user.Id, friend)).Select(c=>c.Id).ToList();
             }
-            if (sosViewModel.isFamily)
+            if (model.isFamily)
             {
-                citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, parent).ToList());
-                citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling).ToList());
+                citizens=citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, parent).Select(c=>c.Id)).ToList();
+                citizens=citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling).Select(c => c.Id)).ToList();
             }
             try
             {
+                int citizensType = 2;
+                int contributersType = 1;
                 sosBusinessLayer.AddSOS(sos);
-                foreach(Citizen citizen in citizens)
-                {
-                    sosBusinessLayer.SaveNotifications(citizen.Id, time, user.Name + " Requests SOS and Says : " + sosViewModel.description);
-                }
-                NotificationsHub.NotifySOS(citizens.Select(c=>c.Id).ToList(), sosViewModel.description, sosViewModel.latitude
-                                    ,sosViewModel.longitude, user.PhoneNumber);
+                NotificationsHub.NotifySOS(sos.ID,citizens,citizensType, model.description, model.latitude
+                                    , model.longitude, user.PhoneNumber);
+                NotificationsHub.NotifySOS(sos.ID,contributers, contributersType, model.description, model.latitude
+                                    , model.longitude, user.PhoneNumber);
                 return Json("Your Request is Successfully Sent");
             }
             catch (Exception e)
@@ -96,9 +98,22 @@ namespace CarePoint.Controllers
                 return Json(e.Message);
             }
         }
-        public void AcceptSOS(long sosId , long hospitalId)
+        public JsonResult AcceptSOS(long sosId , long hospitalId)
         {
-            sosBusinessLayer.AcceptSOS(sosId, hospitalId);
+            try
+            {
+                List<long> contributers = new List<long>();
+                int numberOfPlaces = 5;
+                string location = sosBusinessLayer.GetSOS(sosId).Location.ToString();
+                sosBusinessLayer.AcceptSOS(sosId, hospitalId);
+                contributers=(sosBusinessLayer.GetContributersOfSOSsServices(location, numberOfPlaces)).Select(s => s.Id).ToList();
+                NotificationsHub.HideSOSNotification(contributers);
+                return Json("SOS is Accepted");
+            }
+            catch(Exception e)
+            {
+                return Json(e.Message);
+            }
         }
     }
 }

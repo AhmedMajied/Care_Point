@@ -34,15 +34,15 @@
                     @{ int count = 0;}
                     @foreach (var service in Model.medicalPlace.Services)
                     {
-                        <input type="hidden" id="ihidden-service-id-@count" value="@service.ID"/>
+                        <input type="hidden" id="ihidden-service-id-@count" value="@service.ID" />
                         count++;
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@service.ServiceCategory.Name</h4>
-                               @if (service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
-                               {
-                                   <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
-                               }
+                                @if (Model.isCurrentPlace && service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                {
+                                    <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                                }
                             </div>
                             <div class="panel-body">
                                 <div id="row-@service.ID" class="row">
@@ -52,7 +52,7 @@
                                         <label>About service:</label><br />@service.Description
                                     </div>
                                     <select id="iselect-options-@service.ID" onchange="changeDay(@service.ID)">
-                                        <option value="Saturday"selected>Saturday</option>
+                                        <option value="Saturday" selected>Saturday</option>
                                         <option value="Sunday">Sunday</option>
                                         <option value="Monday">Monday</option>
                                         <option value="Tuesday">Tuesday</option>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     }
-                    <input type="hidden" value="@count" id="ihidden-count"/>
+                    <input type="hidden" value="@count" id="ihidden-count" />
                     <!-- End Display Services-->
                 </div>
             </div><hr />
@@ -117,9 +117,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@careUnit.CareUnitType.Name</h4>
-                                @if (careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                @if (Model.isCurrentPlace && careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
                                 {
-                                     <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
+                                    <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
                                 }
                             </div>
                             <div class="panel-body">
@@ -133,11 +133,12 @@
                     <!-- End Display CareUnits-->
                 </div>
             </div>
-
-            <button class="btn btn-lg btn-primary" onclick="showICUReminder('<!---->workplaceName', '<!---->linkURL')">
-                Click for reminder!
-            </button>
-            <!-- End Display MedicalPlace Info-->
+            @if (Model.isCurrentPlace && Model.medicalPlace.CareUnits.Any(Membership => Membership.CareUnitMembershipRequests.Any(request => request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId()) && request.IsConfirmed == true)))
+            {
+                <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.medicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
+                    Click for reminder!
+                </button>
+            }
         </div>
     </div>
 </div>
@@ -468,6 +469,8 @@
 
 
 @section scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

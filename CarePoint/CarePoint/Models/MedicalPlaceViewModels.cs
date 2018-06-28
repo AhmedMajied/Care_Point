@@ -26,6 +26,7 @@ namespace CarePoint.Models
 
         public Service NewService { get; set; }
         public MedicalPlace medicalPlace { get; set; }
+        public bool isCurrentPlace { get; set;}
     }
 
     public class ServiceViewModel

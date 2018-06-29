@@ -87,6 +87,7 @@
     <script src="~/Scripts/notification-summary.js"></script>
     <script src="~/Scripts/instascan.min.js"></script>
     <script src="~/Scripts/QRScanner.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDknmD-bIczC5pP5WPolW9zsx8xA8Ty6Cw"></script>
     <script>
         var notificationsHub = $.connection.notificationsHub;
         $.connection.hub.start();
@@ -131,8 +132,11 @@
             notificationMark.removeAttr("style");
             showAttachmentNotifSummary(doctorName, fileName, "#");
         }
-        notificationsHub.client.notifySOS = function (description, lat, lng, phoneNumber) {
-            showSOSNotifSummary(lat + " " + lng, description, phoneNumber);//get address from lat and lng
+        notificationsHub.client.notifySOS = function (sosId, type, description, lat, lng, phoneNumber) {
+            showSOSNotifSummary(lat, lng, description, phoneNumber, type, sosId);
+        }
+        notificationsHub.client.hideSOSNotification = function () {
+            $("#idiv-displays-notification").hide();
         }
     </script>
     <script src="~/Scripts/relatives.js"></script>

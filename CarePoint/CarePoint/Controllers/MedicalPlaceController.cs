@@ -88,6 +88,7 @@ namespace CarePoint.Controllers
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
                 IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>()),
                 medicalPlace = medicalPlace,
+                isCurrentPlace=Request.Cookies["placeInfo"]!=null &&Convert.ToInt64(Request.Cookies["placeInfo"].Values["id"])==id?true : false,
             };
             
             
@@ -226,13 +227,13 @@ namespace CarePoint.Controllers
             return ProfilePage(model.Services.First().ProviderID);
         }
 
-        [HttpPost]
+      /*  [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public void UpdateCareUnitsCount(List<CareUnit> careUnits)
         {
             CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
         }
-
+        */
         [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
@@ -522,6 +523,59 @@ namespace CarePoint.Controllers
             }
             return Json(result);
         }
-    }
-    
+        [HttpPost]
+        public JsonResult PlaceReminder(long minuits,long placeId,string placeName)
+        {
+            HttpCookie cookie = Request.Cookies["placeReminder"];
+            if (cookie == null)
+            {
+                cookie = new HttpCookie("placeReminder");
+            }
+            cookie.Values["placeId"] = placeId.ToString();
+            cookie.Values["placeName"] = placeName;
+            cookie.Expires = DateTime.Now.AddMinutes(minuits);
+            Response.Cookies.Add(cookie);
+            return Json(new
+            {
+                expired = false,
+                placeName = cookie.Values["placeName"],
+                placeId = cookie.Values["placeId"],
+                year = cookie.Expires.Year,
+                month = cookie.Expires.Month,
+                day = cookie.Expires.Day,
+                hours = cookie.Expires.Hour,
+                minuits = cookie.Expires.Minute,
+                seconds = cookie.Expires.Second,
+             });
+        }
+        [HttpPost]
+        public JsonResult GetExpirationDate()
+        {
+            Debug.WriteLine("Called");
+            var cookie = Request.Cookies["placeReminder"];
+            if(cookie!=null)
+            {
+                return Json(new
+                {
+                    expired = false,
+                    placeName=cookie.Values["placeName"],
+                    placeId=cookie.Values["placeId"],
+                    year = cookie.Expires.Year,
+                    month = cookie.Expires.Month,
+                    day = cookie.Expires.Day,
+                    hours = cookie.Expires.Hour,
+                    minuits = cookie.Expires.Minute,
+                    seconds = cookie.Expires.Second
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    expired = true,
+                });
+            }
+        }
+
+    }   
 }

@@ -87,7 +87,7 @@ namespace CarePoint.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //return "ERROR:" + ex.Message.ToString();
+                    return View(ex.ToString());
                 }
             }
 

@@ -129,11 +129,9 @@ namespace BLL
 
         public List<Citizen> GetPatientList(long doctorId,long placeId)
         {
-            List<Citizen> initialList = new List<Citizen>();
             List<Citizen> patientList = new List<Citizen>();
-            initialList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
-            patientList = (initialList.GroupBy(patient => patient.Id)).
-                           Select(p => p.OrderBy(patient => patient.Name).First()).ToList();
+            patientList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
+            patientList = patientList.Distinct().ToList();
             return patientList;
         }
         public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)
@@ -240,7 +238,7 @@ namespace BLL
         {
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
             medicalPlaces = DBEntities.ServiceMembershipRequests.Where(service => service.IsConfirmed == true && service.SpecialistID == specialistId).Select(service => service.Service.MedicalPlace).ToList();
-            medicalPlaces.Union(DBEntities.CareUnitMembershipRequests.Where(careUnit => careUnit.IsConfirmed == true && careUnit.SpecialistID == specialistId).Select(care => care.CareUnit.MedicalPlace).ToList());
+            medicalPlaces=medicalPlaces.Union(DBEntities.CareUnitMembershipRequests.Where(careUnit => careUnit.IsConfirmed == true && careUnit.SpecialistID == specialistId).Select(care => care.CareUnit.MedicalPlace).ToList()).ToList();
             return medicalPlaces;
         }
     }

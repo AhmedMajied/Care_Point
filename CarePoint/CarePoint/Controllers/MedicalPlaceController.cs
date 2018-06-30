@@ -87,8 +87,8 @@ namespace CarePoint.Controllers
                 ServiceCategories = ServiceBusinessLayer.GetServiceCategories(),
                 CareUnitTypes = CareUnitBusinessLayer.GetCareUnitTypes(),
                 IsAdmin = medicalPlace.Admins.Select(m => m.Id).Contains(User.Identity.GetUserId<long>()),
-                medicalPlace = medicalPlace,
-                isCurrentPlace=Request.Cookies["placeInfo"]!=null &&Convert.ToInt64(Request.Cookies["placeInfo"].Values["id"])==id?true : false,
+                MedicalPlace = medicalPlace,
+                IsCurrentPlace=Request.Cookies["placeInfo"]!=null &&Convert.ToInt64(Request.Cookies["placeInfo"].Values["id"])==id?true : false,
             };
             
             
@@ -226,14 +226,6 @@ namespace CarePoint.Controllers
             }
             return ProfilePage(model.Services.First().ProviderID);
         }
-
-      /*  [HttpPost]
-        [AccessDeniedAuthorize(Roles = "Doctor")]
-        public void UpdateCareUnitsCount(List<CareUnit> careUnits)
-        {
-            CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
-        }
-        */
         [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)
@@ -289,7 +281,7 @@ namespace CarePoint.Controllers
             {
                 dropDownList.Add(new SelectListItem { Text = medicalType.Name, Value = medicalType.ID.ToString() });
             }
-            model.medicalPlaceTypes = dropDownList;
+            model.MedicalPlaceTypes = dropDownList;
             return View("AddMedicalPlace", model);
         }
 
@@ -297,25 +289,25 @@ namespace CarePoint.Controllers
         public ActionResult AddMedicalPlace(MedicalPlaceViewModels model)
         {
             DAL.MedicalPlace newPlace = new DAL.MedicalPlace();
-            newPlace.Address = model.medicalPlace.Address;
-            newPlace.Description = model.medicalPlace.Description;
-            newPlace.Name = model.medicalPlace.Name;
+            newPlace.Address = model.MedicalPlace.Address;
+            newPlace.Description = model.MedicalPlace.Description;
+            newPlace.Name = model.MedicalPlace.Name;
             newPlace.IsConfirmed = false;
             newPlace.OwnerID = User.Identity.GetCitizen().Id;
-            newPlace.Phone = model.medicalPlace.Phone;
-            newPlace.TypeID = model.medicalPlace.TypeID;
-            double latitude = model.latitude;
-            double longitude = model.longitude;
+            newPlace.Phone = model.MedicalPlace.Phone;
+            newPlace.TypeID = model.MedicalPlace.TypeID;
+            double latitude = model.Latitude;
+            double longitude = model.Longitude;
             var pointString = string.Format("POINT({0} {1})", longitude.ToString(), latitude.ToString());
             var point = DbGeography.FromText(pointString);
             newPlace.Location = point;
-            using (var binaryReader = new BinaryReader(model.medicalPlace.Photo.InputStream))
+            using (var binaryReader = new BinaryReader(model.MedicalPlace.Photo.InputStream))
             {
-                newPlace.Photo = binaryReader.ReadBytes(model.medicalPlace.Photo.ContentLength);
+                newPlace.Photo = binaryReader.ReadBytes(model.MedicalPlace.Photo.ContentLength);
             }
-            using (var binaryReader = new BinaryReader(model.medicalPlace.Permission.InputStream))
+            using (var binaryReader = new BinaryReader(model.MedicalPlace.Permission.InputStream))
             {
-                newPlace.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
+                newPlace.Permission = binaryReader.ReadBytes(model.MedicalPlace.Permission.ContentLength);
             }
             MedicalPlaceBusinessLayer.AddMedicalPlace(newPlace);
             return ProfilePage(newPlace.ID);
@@ -323,19 +315,19 @@ namespace CarePoint.Controllers
 
         public JsonResult SearchPlace(SearchPlaceViewModel model)
         {
-            if (model.serviceType == null)
-                model.serviceType = "";
-            if (model.placeName == null)
-                model.placeName = "";
+            if (model.ServiceType == null)
+                model.ServiceType = "";
+            if (model.PlaceName == null)
+                model.PlaceName = "";
             Citizen user = User.Identity.GetCitizen();
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
-            if (model.serviceType.ToUpper().Equals("ICU") || model.placeName.ToUpper().Equals("ICU"))
+            if (model.ServiceType.ToUpper().Equals("ICU") || model.PlaceName.ToUpper().Equals("ICU"))
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchCareUnitsPlace(model.Latitude, model.Longitude, model.ServiceType, model.PlaceName, model.IsDistance, model.IsCost, model.IsRate, model.IsPopularity).ToList();
             }
             else
             {
-                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.latitude, model.longitude, model.serviceType, model.placeName, model.checkDistance, model.checkCost, model.checkRate, model.checkPopularity).ToList();
+                medicalPlaces = MedicalPlaceBusinessLayer.SearchMedicalPlace(model.Latitude, model.Longitude, model.ServiceType, model.PlaceName, model.IsDistance, model.IsCost, model.IsRate, model.IsPopularity).ToList();
             }
 
             var result = medicalPlaces.Select(place => new { place.ID ,placeType=place.MedicalPlaceType.Name, place.Name , place.Address,
@@ -372,7 +364,7 @@ namespace CarePoint.Controllers
             }
             return Json(new { id,type, url });
         }
-        private List<SlotViewModel> splitSlots(long serviceId, string dayName)
+        private List<SlotViewModel> SplitSlots(long serviceId, string dayName)
         {
             // first Get WorkSlots
             List<WorkSlot> workSlots = (ServiceBusinessLayer.GetWorkSlots(serviceId, dayName)).ToList();
@@ -386,8 +378,8 @@ namespace CarePoint.Controllers
                     slot = new SlotViewModel();
                     slot.Type = "free-slot";
                     slot.Time = "";
-                    slot.description = "";
-                    slot.duration = 0;
+                    slot.Description = "";
+                    slot.Duration = 0;
                     slot.EndTime = workSlots[0].StartTime.Value;
                     if (workSlots[0].StartTime.Value.Hours < 12)
                     {
@@ -403,10 +395,10 @@ namespace CarePoint.Controllers
                 {
                     Type = "work-slot",
                     Time = "",
-                    description = "",
+                    Description = "",
                     StartTime = workSlots[0].StartTime.Value,
                     EndTime = workSlots[0].EndTime.Value,
-                    duration = 0
+                    Duration = 0
                 };
                 slots.Add(slot);
             }
@@ -417,10 +409,10 @@ namespace CarePoint.Controllers
                 {
                     Type = "work-slot",
                     Time = "",
-                    description = "",
+                    Description = "",
                     StartTime = workSlots[i].StartTime.Value,
                     EndTime = workSlots[i].EndTime.Value,
-                    duration = 0
+                    Duration = 0
                 };
                 slots.Add(slot);
                 // check if There is time so it will be Free Slot
@@ -431,10 +423,10 @@ namespace CarePoint.Controllers
                     {
                         Type = "free-slot",
                         Time = "",
-                        description = "",
+                        Description = "",
                         StartTime = workSlots[i - 1].EndTime.Value,
                         EndTime = workSlots[i].StartTime.Value,
-                        duration = 0
+                        Duration = 0
                     };
                     slots.Add(slot);
                 }
@@ -443,7 +435,7 @@ namespace CarePoint.Controllers
         }
         private dynamic GetServiceSlots(long serviceId,string dayName)
         {
-            List<SlotViewModel> slots = splitSlots(serviceId, dayName);
+            List<SlotViewModel> slots = SplitSlots(serviceId, dayName);
             SlotViewModel slot = new SlotViewModel();
             int count = slots.Count();
             for(int i=0;i<count;i++)
@@ -505,11 +497,11 @@ namespace CarePoint.Controllers
                 endMinuits = slots[i].EndTime.Minutes;
                 startHours= (slots[i].StartTime.Hours == 0) ? 12 : slots[i].StartTime.Hours;
                 string isWorking = (slots[i].Type == "work-slot") ? "Working from " : "Off from ";
-                slots[i].description = isWorking + startHours + ":" + slots[i].StartTime.Minutes + " to " + endHours + ":" + endMinuits;
-                slots[i].duration = (endHours - slots[i].StartTime.Hours) * 60 + (endMinuits - slots[i].StartTime.Minutes);
+                slots[i].Description = isWorking + startHours + ":" + slots[i].StartTime.Minutes + " to " + endHours + ":" + endMinuits;
+                slots[i].Duration = (endHours - slots[i].StartTime.Hours) * 60 + (endMinuits - slots[i].StartTime.Minutes);
             }
-            var AM = slots.Where(x => x.Time.Equals("AM")).Select(t => new { type = t.Type, durationInMinutes = t.duration, description = t.description });
-            var PM = slots.Where(x => x.Time.Equals("PM")).Select(t => new { type = t.Type, durationInMinutes = t.duration, description = t.description });
+            var AM = slots.Where(x => x.Time.Equals("AM")).Select(t => new { type = t.Type, durationInMinutes = t.Duration, description = t.Description });
+            var PM = slots.Where(x => x.Time.Equals("PM")).Select(t => new { type = t.Type, durationInMinutes = t.Duration, description = t.Description });
             dynamic res = new { ID=serviceId , AM , PM };
             return res;
         }
@@ -517,9 +509,12 @@ namespace CarePoint.Controllers
         public JsonResult GetServicesSlots(List<ServiceDayViewModel> services)
         {
             List<dynamic> result = new List<dynamic>();
-            for(int i=0;i<services.Count();i++)
+            if (services != null)
             {
-                result.Add(GetServiceSlots(services[i].ID, services[i].day));
+                for (int i = 0; i < services.Count(); i++)
+                {
+                    result.Add(GetServiceSlots(services[i].ID, services[i].Day));
+                }
             }
             return Json(result);
         }

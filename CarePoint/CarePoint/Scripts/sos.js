@@ -47,9 +47,9 @@ function sendSOS() {
         Longitude = data.longitude;
         if ((Description != "") && (IsMedicalPlace || IsFriend || IsFamily)) {
         var model = {
-            isMedicalPlace: IsMedicalPlace, isFamily: IsFamily,
-            isFriend: IsFriend, description: Description,
-            latitude: Latitude, longitude: Longitude
+            IsMedicalPlace: IsMedicalPlace, IsFamily: IsFamily,
+            IsFriend: IsFriend, Description: Description,
+            Latitude: Latitude, Longitude: Longitude
             }
         $("#iisend-sos").prop("disabled", true);
         $.ajax({

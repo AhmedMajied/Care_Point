@@ -210,17 +210,8 @@ namespace CarePoint.Controllers
         public JsonResult PatientsList(long doctorId, long placeId)
         {
             List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId,placeId);
-            List<Citizen> maleList = new List<Citizen>();
-            List<Citizen> femaleList = new List<Citizen>();
-            foreach (Citizen c in list)
-            {
-                if (c.Gender.ToLower().Equals("male"))
-                    maleList.Add(c);
-                else if (c.Gender.ToLower().Equals("female"))
-                    femaleList.Add(c);
-            }
-            var males = maleList.Select(x => new { x.Name, x.Id, x.Photo });
-            var females = femaleList.Select(x => new { x.Name, x.Id, x.Photo });
+            var males = (list.Where(c => c.Gender.ToLower().Equals("male"))).Select(x => new { x.Name, x.Id, x.Photo });
+            var females = (list.Where(c => c.Gender.ToLower().Equals("female"))).Select(x => new { x.Name, x.Id, x.Photo });
             var result = new[] { males, females };
             return Json(result);
         }

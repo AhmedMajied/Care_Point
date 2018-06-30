@@ -9,9 +9,9 @@ namespace CarePoint.Models
     {
         public class SearchMedicineViewModel
         {
-            public string drugName { get; set; }
-            public double latitude { get; set; }
-            public double longitude { get; set; }
+            public string DrugName { get; set; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
         }
     }
 }

@@ -65,7 +65,7 @@ namespace CarePoint.Controllers
                     fileExtension = Path.GetExtension(files[i].FileName);
 
                     if (fileExtension != ".jpg" && fileExtension !=".pdf" && fileExtension != ".png")
-                        throw new Exception("invalid extension");
+                        throw new Exception("Error, Invalid extension");
 
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
                         Path.GetRandomFileName().Replace(".", "")+Path.GetExtension(files[i].FileName));
@@ -87,7 +87,7 @@ namespace CarePoint.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return View(ex.ToString());
+                    return Content(ex.Message);
                 }
             }
 

@@ -21,25 +21,25 @@
         <div class="col-md-12">
             <!-- Start Display MedicalPlace Info-->
             <center>
-                @Html.Image(Model.medicalPlace.Photo, new { @Class = "cimg-medical-place" })
+                @Html.Image(Model.MedicalPlace.Photo, new { @Class = "cimg-medical-place" })
                 <br />
-                <h1 class="ch1-section">@Model.medicalPlace.Name</h1><br />
-                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Phone
+                <h1 class="ch1-section">@Model.MedicalPlace.Name</h1><br />
+                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Phone
             </center>
             <div class="tree-node">
                 <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Services</h2>
                 <div class="tree-node-body">
                     <!-- Start Display Services-->
                     @{ int count = 0;}
-                    @foreach (var service in Model.medicalPlace.Services)
+                    @foreach (var service in Model.MedicalPlace.Services)
                     {
                         <input type="hidden" id="ihidden-service-id-@count" value="@service.ID" />
                         count++;
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@service.ServiceCategory.Name</h4>
-                                @if (Model.isCurrentPlace && service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                @if (Model.IsCurrentPlace && service.ServiceMembershipRequests.Any(s => s.IsConfirmed == true && s.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
                                 {
                                     <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-schedule-@service.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
                                 }
@@ -112,12 +112,12 @@
                 <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Care Units</h2>
                 <div class="tree-node-body">
                     <!-- Start Display CareUnits-->
-                    @foreach (var careUnit in Model.medicalPlace.CareUnits)
+                    @foreach (var careUnit in Model.MedicalPlace.CareUnits)
                     {
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="ch4-service-category">@careUnit.CareUnitType.Name</h4>
-                                @if (Model.isCurrentPlace && careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
+                                @if (Model.IsCurrentPlace && careUnit.CareUnitMembershipRequests.Any(request => request.IsConfirmed == true && request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId())))
                                 {
                                     <button class="btn btn-default cbtn-panel-control" type="button" data-toggle="modal" data-target="#imodal-careunit-@careUnit.ID"><span class="fa fa-pencil fa-fw"></span> Edit</button>
                                 }
@@ -133,9 +133,9 @@
                     <!-- End Display CareUnits-->
                 </div>
             </div>
-            @if (Model.isCurrentPlace && Model.medicalPlace.CareUnits.Any(Membership => Membership.CareUnitMembershipRequests.Any(request => request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId()) && request.IsConfirmed == true)))
+            @if (Model.IsCurrentPlace && Model.MedicalPlace.CareUnits.Any(Membership => Membership.CareUnitMembershipRequests.Any(request => request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId()) && request.IsConfirmed == true)))
             {
-                <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.medicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
+                <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.MedicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
                     Click for reminder!
                 </button>
             }

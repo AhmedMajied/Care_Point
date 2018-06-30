@@ -58,25 +58,25 @@ namespace CarePoint.Controllers
             int numberOfPlaces = 5;
             SOSs sos = new SOSs();
             var user = User.Identity.GetCitizen();
-            var pointString = string.Format("POINT({0} {1})", model.longitude.ToString(), model.latitude.ToString());
+            var pointString = string.Format("POINT({0} {1})", model.Longitude.ToString(), model.Latitude.ToString());
             var location = System.Data.Entity.Spatial.DbGeography.FromText(pointString);
             DateTime time = DateTime.Now;
-            sos.Description = model.description;
+            sos.Description = model.Description;
             sos.SenderID =user.Id;
             sos.Time =time;
             sos.IsAccepted = false;
             sos.Location = location;
             List<long> citizens = new List<long>();
             List<long> contributers = new List<long>();
-            if (model.isMedicalPlace)
+            if (model.IsMedicalPlace)
             {
                  contributers = (sosBusinessLayer.GetContributersOfSOSsServices(pointString, numberOfPlaces)).Where(s=>s.Id!=user.Id).Select(s=>s.Id).ToList();
             }
-            if (model.isFriend)
+            if (model.IsFriend)
             {
                 citizens = (citizenBusinessLayer.GetCitizenRelatives(user.Id, friend)).Select(c=>c.Id).ToList();
             }
-            if (model.isFamily)
+            if (model.IsFamily)
             {
                 citizens=citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, parent).Select(c=>c.Id)).ToList();
                 citizens=citizens.Union(citizenBusinessLayer.GetCitizenRelatives(user.Id, sibling).Select(c => c.Id)).ToList();
@@ -86,10 +86,10 @@ namespace CarePoint.Controllers
                 int citizensType = 2;
                 int contributersType = 1;
                 sosBusinessLayer.AddSOS(sos);
-                NotificationsHub.NotifySOS(sos.ID,citizens,citizensType, model.description, model.latitude
-                                    , model.longitude, user.PhoneNumber);
-                NotificationsHub.NotifySOS(sos.ID,contributers, contributersType, model.description, model.latitude
-                                    , model.longitude, user.PhoneNumber);
+                NotificationsHub.NotifySOS(sos.ID,citizens,citizensType, model.Description, model.Latitude
+                                    , model.Longitude, user.PhoneNumber);
+                NotificationsHub.NotifySOS(sos.ID,contributers, contributersType, model.Description, model.Latitude
+                                    , model.Longitude, user.PhoneNumber);
                 return Json("Your Request is Successfully Sent");
             }
             catch (Exception e)

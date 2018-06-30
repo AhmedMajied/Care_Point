@@ -129,11 +129,9 @@ namespace BLL
 
         public List<Citizen> GetPatientList(long doctorId,long placeId)
         {
-            List<Citizen> initialList = new List<Citizen>();
             List<Citizen> patientList = new List<Citizen>();
-            initialList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
-            patientList = (initialList.GroupBy(patient => patient.Id)).
-                           Select(p => p.OrderBy(patient => patient.Name).First()).ToList();
+            patientList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
+            patientList = patientList.Distinct().ToList();
             return patientList;
         }
         public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)

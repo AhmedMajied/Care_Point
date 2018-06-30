@@ -60,7 +60,7 @@ $(document).ready(function () {
         service = {};
         var id = $("#ihidden-service-id-" + i + "").val();
         var daySelected = $("#iselect-options-" + id + " option:selected").val();
-        service = { ID: id, day: daySelected };
+        service = { ID: id, Day: daySelected };
         services.push(service);
     }
     GetServicesTime(services);

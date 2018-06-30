@@ -25,8 +25,8 @@ namespace CarePoint.Models
         public ICollection<CareUnitType> CareUnitTypes { get; set; }
 
         public Service NewService { get; set; }
-        public MedicalPlace medicalPlace { get; set; }
-        public bool isCurrentPlace { get; set;}
+        public MedicalPlace MedicalPlace { get; set; }
+        public bool IsCurrentPlace { get; set;}
     }
 
     public class ServiceViewModel
@@ -98,14 +98,13 @@ namespace CarePoint.Models
 
 
 
-    // Needs Revision !
 
     public class MedicalPlaceViewModels
     {
-        public MedicalPlaceViewModel medicalPlace { get; set; }
-        public List<SelectListItem> medicalPlaceTypes { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public MedicalPlaceViewModel MedicalPlace { get; set; }
+        public List<SelectListItem> MedicalPlaceTypes { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
     public class MedicalPlaceViewModel
     {
@@ -136,27 +135,27 @@ namespace CarePoint.Models
     }
     public class SearchPlaceViewModel
     {
-        public string serviceType { get; set; }
-        public string placeName { get; set; }
-        public bool checkDistance { get; set; }
-        public bool checkCost { get; set; }
-        public bool checkRate { get; set; }
-        public bool checkPopularity { get; set; }
-        public double latitude { get; set; }
-        public double longitude { get; set; }
+        public string ServiceType { get; set; }
+        public string PlaceName { get; set; }
+        public bool IsDistance { get; set; }
+        public bool IsCost { get; set; }
+        public bool IsRate { get; set; }
+        public bool IsPopularity { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
     public class SlotViewModel
     {
         public string Type { get; set; }
-        public double duration { get; set; }
-        public string description { get; set; }
+        public double Duration { get; set; }
+        public string Description { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public string Time { get; set; }
     }
     public class ServiceDayViewModel
     {
-        public string day { get; set; }
+        public string Day { get; set; }
         public int ID { get; set; }
     }
 }

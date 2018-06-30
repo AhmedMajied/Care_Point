@@ -63,6 +63,7 @@ namespace CarePoint.Controllers
             DateTime time = DateTime.Now;
             sos.Description = model.Description;
             sos.SenderID =user.Id;
+            sos.StatusID = 1; // Pending 
             sos.Time =time;
             sos.IsAccepted = false;
             sos.Location = location;

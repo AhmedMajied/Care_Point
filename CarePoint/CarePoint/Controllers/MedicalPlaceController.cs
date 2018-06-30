@@ -226,14 +226,6 @@ namespace CarePoint.Controllers
             }
             return ProfilePage(model.Services.First().ProviderID);
         }
-
-      /*  [HttpPost]
-        [AccessDeniedAuthorize(Roles = "Doctor")]
-        public void UpdateCareUnitsCount(List<CareUnit> careUnits)
-        {
-            CareUnitBusinessLayer.UpdateAvailableRoomCount(careUnits);
-        }
-        */
         [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnit(MedicalPlaceProfileViewModel model)

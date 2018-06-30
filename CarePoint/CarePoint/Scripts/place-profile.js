@@ -96,6 +96,6 @@ function changeDay(serviceId) {
     $("#piechart-" + serviceId + "-AM").empty();
     $("#piechart-" + serviceId + "-PM").empty();
     var daySelected = $("#iselect-options-" + serviceId + " option:selected").val();
-    service = [{ ID: serviceId, day: daySelected }];
+    service = [{ ID: serviceId, Day: daySelected }];
     GetServicesTime(service);
 }

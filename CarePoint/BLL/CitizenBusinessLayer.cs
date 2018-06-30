@@ -238,7 +238,7 @@ namespace BLL
         {
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
             medicalPlaces = DBEntities.ServiceMembershipRequests.Where(service => service.IsConfirmed == true && service.SpecialistID == specialistId).Select(service => service.Service.MedicalPlace).ToList();
-            medicalPlaces.Union(DBEntities.CareUnitMembershipRequests.Where(careUnit => careUnit.IsConfirmed == true && careUnit.SpecialistID == specialistId).Select(care => care.CareUnit.MedicalPlace).ToList());
+            medicalPlaces=medicalPlaces.Union(DBEntities.CareUnitMembershipRequests.Where(careUnit => careUnit.IsConfirmed == true && careUnit.SpecialistID == specialistId).Select(care => care.CareUnit.MedicalPlace).ToList()).ToList();
             return medicalPlaces;
         }
     }

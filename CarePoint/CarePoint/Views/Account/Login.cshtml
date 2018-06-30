@@ -54,6 +54,8 @@
                         <span class="cspn-radio-chck">
                             @Html.CheckBoxFor(model => model.RememberMe, new { @Id = "icheck-remember", @Class = "cchck-primary" })
                             <label for="icheck-remember">Remember me?</label>
+                            <br/>
+                            @Html.ValidationMessage("InvalidCredentials",new { @Class = "text-danger" })
                         </span>
                         <br />
 

@@ -144,7 +144,10 @@
 </div>
 <div class="container-fluid">
     <!-- Begin Add Service -->
-    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+    @if (Model.IsCurrentPlace)
+    {
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+    }
     @using (Html.BeginForm("AddService", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-service-new" class="modal fade" role="dialog">
@@ -372,7 +375,10 @@
     }
     <!-- End Update Services -->
     <!-- Begin Add CareUnit -->
-    <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
+    @if (Model.IsCurrentPlace)
+    {
+        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
+    }
     @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-careunit-new" class="modal fade" role="dialog">
@@ -590,6 +596,5 @@
                 $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);
             });
         }
-        $(".cdropdown-search").select2();
     </script>
 }

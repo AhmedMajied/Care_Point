@@ -16,10 +16,17 @@ namespace BLL
         {
             DBEntities = new CarePointEntities();
         }
+
+        /// <summary>
+        /// Gets medical place given its Id
+        /// </summary>
+        /// <param name="id">Medical Place Id</param>
+        /// <returns></returns>
         public MedicalPlace GetMedicalPlace(long id)
         {
             return DBEntities.MedicalPlaces.SingleOrDefault(place => place.ID == id);
         }
+
         public void AddMedicalPlace(MedicalPlace medicalPlace)
         {
             DBEntities.MedicalPlaces.Add(medicalPlace);

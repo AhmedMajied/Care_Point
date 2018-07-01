@@ -83,14 +83,9 @@ namespace SeleniumTests
             driver.FindElement(By.Id("ipasswd")).Clear();
             driver.FindElement(By.Id("ipasswd")).SendKeys("123456");
             driver.FindElement(By.Id("ifrm-login")).Submit();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//form[@id='logoutForm']/ul/li/a/span")).Click();
-            Thread.Sleep(500);
-            driver.FindElement(By.Id("ilink-patient-list")).Click();
-            Thread.Sleep(500);
-            driver.FindElement(By.LinkText("Females")).Click();
-            Thread.Sleep(500);
-            driver.FindElement(By.XPath("//div[@id='itab-females']/div[3]/div[3]/a/button")).Click();
+            Thread.Sleep(1000);
+            driver.Navigate().GoToUrl("http://carepoint.com:3000/Citizen/CurrentPatient?citizenId=25");
+
             driver.FindElement(By.XPath("//button[@id='ibtn-add-prescription']/span")).Click();
             Thread.Sleep(1000);
             if (Int32.Parse(TestContext.DataRow["NumberOfSymptoms"].ToString()) > 0)
@@ -119,12 +114,12 @@ namespace SeleniumTests
                 if (Boolean.Parse(TestContext.DataRow["IsGenetic1"].ToString()))
                 {
                     driver.FindElement(By.XPath("//div[@id='idiv-step-2']/div/span/label")).Click();
+
                 }
                 if (Int32.Parse(TestContext.DataRow["NumberOfDiseases"].ToString()) > 1)
                 {
-                    driver.FindElement(By.XPath("(//button[@type='button'])[8]")).Click();
-                    Thread.Sleep(500);
-
+                    ((IJavaScriptExecutor)driver).ExecuteScript("document.querySelector('#idiv-step-2 > div > div.col-md-2 > button.btn.btn-default.cbtn-modal.cbtn-add').click()");
+                    Thread.Sleep(1000);
                     driver.FindElement(By.XPath("(//input[@name='diseaseName'])[2]")).Click();
                     driver.FindElement(By.XPath("(//input[@name='diseaseName'])[2]")).Clear();
                     driver.FindElement(By.XPath("(//input[@name='diseaseName'])[2]")).SendKeys(TestContext.DataRow["Disease2"].ToString());
@@ -163,7 +158,7 @@ namespace SeleniumTests
 
             try
             {
-                if(!String.IsNullOrEmpty(TestContext.DataRow["Warning"].ToString()))
+                if (!String.IsNullOrEmpty(TestContext.DataRow["Warning"].ToString()))
                     Assert.AreEqual(TestContext.DataRow["Warning"].ToString().Trim(), driver.FindElement(By.Id("idiv-warning")).Text);
                 child.Log(Status.Pass, "Test Passed");
 
@@ -171,7 +166,7 @@ namespace SeleniumTests
             catch (Exception e)
             {
                 verificationErrors.Append(e.Message);
-                child.Log(Status.Fail, "Test Failed");
+                child.Log(Status.Fail, e.Message);
 
             }
             driver.FindElement(By.Id("itxtarea-remarks")).Click();

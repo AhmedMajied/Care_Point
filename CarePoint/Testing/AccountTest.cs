@@ -102,7 +102,7 @@ namespace SeleniumTests
                 ((IJavaScriptExecutor)driver).ExecuteScript("$('#ifile-national-id').removeClass('hidden')");
                 Thread.Sleep(500);
                 driver.FindElement(By.Id("ifile-national-id")).SendKeys(TestContext.DataRow["NationalId Photo"].ToString());
-               
+
             }
             (new SelectElement(driver.FindElement(By.Id("iselect-speciality")))).SelectByValue(TestContext.DataRow["Speciality"].ToString());
             driver.FindElement(By.Id("iselect-speciality")).Click();
@@ -148,7 +148,7 @@ namespace SeleniumTests
                 verificationErrors.Append(e.Message);
                 child.Log(Status.Fail, e.Message);
             }
-            
+
         }
         private bool IsElementPresent(By by)
         {

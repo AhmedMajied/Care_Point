@@ -32,41 +32,7 @@ namespace BLL
         {
             return DBEntities.SOSses.SingleOrDefault(sos => sos.ID == id);
         }
-        /// <summary>
-        /// Get SOS requests for specific medicalPlace
-        /// </summary>
-        /// <param name="hospitalID">a long value</param>
-        /// <returns>list Of SOSs </returns>
-        public ICollection<SOSs>GetAllSosRequests(long hospitalID)
-        {
-            ICollection<SOSs> all = new List<SOSs>();
-            all = DBEntities.SOSses.Where(sos => sos.MedicalPlaceID == hospitalID).ToList();
-            return all;
-        }
-        /// <summary>
-        /// get all sos for a citizen
-        /// </summary>
-        /// <param name="citizenID">a long value</param>
-        /// <returns>List of SOS</returns>
-        public ICollection<SOSs> GetAll(long citizenID)
-        {
-            ICollection<SOSs> all = new List<SOSs>();
-            all = DBEntities.SOSses.Where(sos => sos.SenderID == citizenID).ToList();
-            return all;
-        }
-        /// <summary>
-        /// chanfe status of sos
-        /// </summary>
-        /// <param name="sosID">a long value</param>
-        /// <param name="status">a long value</param>
-        public void ChangeStatus(long sosID,int status)
-        {
-            SOSs s=DBEntities.SOSses.Single(sos => sos.ID == sosID);
-            s.StatusID = status;
-            DBEntities.SOSses.Attach(s);
-            DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
-            DBEntities.SaveChanges();
-        }
+      
         /// <summary>
         ///  medical place accept sos request
         /// </summary>
@@ -76,6 +42,8 @@ namespace BLL
         {
             SOSs s = DBEntities.SOSses.Single(sos => sos.ID == sosID);
             s.MedicalPlaceID = hopsitalID;
+            s.StatusID = 2; // accepted
+            s.IsAccepted = true;
             DBEntities.SOSses.Attach(s);
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();

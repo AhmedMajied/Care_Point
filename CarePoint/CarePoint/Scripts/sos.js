@@ -58,7 +58,7 @@ function sendSOS() {
             data: { model },
             dataType: 'json',
             success: function (data) {
-                alert(data);
+//                alert(data);
                 $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {

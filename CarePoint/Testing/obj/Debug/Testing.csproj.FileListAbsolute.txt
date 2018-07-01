@@ -32,4 +32,3 @@ F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\Testing\bin\Debug\System.Web.
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\Testing\bin\Debug\WebDriver.Support.dll
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\Testing\bin\Debug\WebDriver.Support.xml
 F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\Testing\bin\Debug\Testing.dll.config
-F:\FCI\4th Year\GP\Repository\Care_Point\CarePoint\Testing\obj\Debug\Testing.csprojResolveAssemblyReference.cache

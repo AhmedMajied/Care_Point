@@ -97,6 +97,14 @@ namespace BLL
             return bitmap;
         }
 
+        /// <summary>
+        /// Notify Citizen for potential disease
+        /// </summary>
+        /// <param name="citizen">Citize</param>
+        /// <param name="record">History Record</param>
+        /// <param name="level">Level</param>
+        /// <param name="includeSiblings">Notify Siblings of current Citizen</param>
+        /// <param name="notifyPrognosis">a delegate for notification function</param>
         private void NotifyForGeneticDiseases(Citizen citizen,HistoryRecord record, int level,bool includeSiblings, Action<long, string> notifyPrognosis = null)
         {
             if (level > citizen.PrognosisMaxLevel)

@@ -203,7 +203,7 @@ namespace CarePoint.Controllers
                 };
                 ServiceBusinessLayer.AddService(service);
             }
-            return ProfilePage(model.Services.First().ProviderID);
+            return RedirectToAction("ProfilePage", new { id = model.NewService.ProviderID });
         }
 
         [HttpPost]

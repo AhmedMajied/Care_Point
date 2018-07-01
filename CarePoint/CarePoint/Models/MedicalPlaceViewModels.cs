@@ -24,7 +24,7 @@ namespace CarePoint.Models
 
         public ICollection<CareUnitType> CareUnitTypes { get; set; }
 
-        public Service NewService { get; set; }
+        public ServiceViewModel NewService { get; set; }
         public MedicalPlace medicalPlace { get; set; }
         public bool isCurrentPlace { get; set;}
     }
@@ -40,7 +40,7 @@ namespace CarePoint.Models
 
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Category field is required.")]
         public long CategoryID { get; set; }
 
         [Required]
@@ -74,7 +74,6 @@ namespace CarePoint.Models
 
         public TimeSpan EndTime { get; set; }
 
-        public bool IsRemoved { get; set; }
     }
 
     public class CareUnitViewModel
@@ -83,16 +82,22 @@ namespace CarePoint.Models
 
         public long? ProviderID { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Cost must be greater than or equal 1")]
         public Nullable<decimal> Cost { get; set; }
 
+        [Required(ErrorMessage = "The Available Rooms field is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Available Rooms must be greater than or equal 0")]
         public int AvailableRoomCount { get; set; }
 
         public DateTime? LastUpdate { get; set; }
 
+        [Required(ErrorMessage = "The Type field is required.")]
         public long CareUnitTypeID { get; set; }
     }
 

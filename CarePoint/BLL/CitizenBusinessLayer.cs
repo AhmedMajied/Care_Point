@@ -172,6 +172,10 @@ namespace BLL
                                               .Select(relative => relative.RelativeCitizen).ToList();
             return relatives;
         }
+        /// <summary>
+        ///  get Relation Types from database
+        /// </summary>
+        /// <returns>list of all RelationType</returns>
         public ICollection<RelationType> GetRelationTypes()
         {
             return DBEntities.RelationTypes.ToList();

@@ -14,7 +14,6 @@ using CarePoint.AuthorizeAttributes;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -40,6 +39,10 @@ namespace CarePoint.Controllers
             }
         }
 
+        /// <summary>
+        /// decode QR Code to national ID then search for it in database
+        /// then prepare patient Card and download it
+        /// </summary>
         public FileResult DownloadMyCard()
         {
             PatientCardCanvas canvas = new PatientCardCanvas();
@@ -65,6 +68,9 @@ namespace CarePoint.Controllers
             };
         }
 
+        /// <summary>
+        /// search for citizen by ID then go to his/her medical history
+        /// </summary>
         public JavaScriptResult GetCitizenByQR(string citizenQRCode)
         {
             Citizen citizen = CitizenBusinessLayer.GetCitizenByQR(citizenQRCode);

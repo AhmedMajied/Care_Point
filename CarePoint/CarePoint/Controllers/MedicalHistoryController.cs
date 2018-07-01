@@ -1,5 +1,4 @@
 ﻿using BLL;
-using CarePoint.Models;
 using Extensions;
 using System;
 using System.Collections.Generic;
@@ -191,6 +190,5 @@ namespace CarePoint.Controllers
 
             return Json(attachmentTypes);
         }
-
     }
 }

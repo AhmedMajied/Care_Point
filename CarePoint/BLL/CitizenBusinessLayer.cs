@@ -18,6 +18,11 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
+        /// <summary>
+        /// get citizen by converting QR code to its original national ID
+        /// then search for it in database
+        /// </summary>  
+        /// <exception>thrown when citizenQRCode is not base-64 character</exception> 
         public Citizen GetCitizenByQR(string citizenQRCode)
         {
             string nationalID;
@@ -28,16 +33,23 @@ namespace BLL
                 nationalID = Encoding.UTF8.GetString(base64EncodedBytes);
             }catch(Exception)
             {
-                return null;// if it is non base-64 character
+                return null;
             }
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.NationalIDNumber == nationalID);
-        }   
+        }
 
+        /// <summary>
+        /// get citizen by ID
+        /// </summary> 
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == citizenID);
         }
         
+        /// <summary>
+        /// get all specialities stored in database that doctor can 
+        /// be specialized in 
+        /// </summary> 
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();

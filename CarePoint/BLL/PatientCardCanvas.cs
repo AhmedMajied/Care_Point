@@ -1,11 +1,6 @@
 ﻿using DAL;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -36,6 +31,10 @@ namespace BLL
             BlueBruch = new SolidBrush(ColorTranslator.FromHtml("#0D47A1"));
         }
 
+        /// <summary>
+        /// draw patient card that includes citizen name, image and QR code and care point logo  
+        /// </summary>
+        /// <returns>patient card image</returns>
         public Bitmap Draw(Citizen citizen, Bitmap QRCode, Bitmap logo, Bitmap photo)
         {
             int headerHeight = 46, footerHeight = 42;

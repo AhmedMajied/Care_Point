@@ -19,17 +19,38 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
+        /// <summary>
+        /// save an attachment to database 
+        /// </summary>
         public void SaveAttachment(Attachment attachment)
         {
             DBEntities.Attachments.Add(attachment);
             DBEntities.SaveChanges();
         }
 
+        /// <summary>
+        /// get attachment types from databse such as (Radiology, lab investigation, ...)
+        /// </summary>
         public ICollection<AttachmentType> GetAttachmentTypes()
         {
             return DBEntities.AttachmentTypes.ToList();
         }
 
+        /// <summary>
+        /// save prescription as an history record to patient 
+        /// and as an prescription image attachment
+        /// </summary>
+        /// <param name="historyRecord">
+        /// record that contains symptoms, diseases, medicines and remarks that was writen to patient
+        /// </param>
+        /// <param name="patientMedicines">written medicines names</param>
+        /// <param name="dosesDescription">written medicines doses</param>
+        /// <param name="medicinesAlternatives">written medicines alternatives</param>
+        /// <param name="savingPath">
+        /// path that will be saved as attribute in attachment for prscription image
+        /// </param>
+        /// <param name="notifyPrognosis">user ID and diseases that marked as genetic by doctor</param>
+        /// <returns>bitmap prescription image to be saved to server then downloaded</returns>
         public Bitmap SavePrescription(HistoryRecord historyRecord, string[] patientMedicines,
             string[] dosesDescription, List<List<string>> medicinesAlternatives, string savingPath,Action<long,string> notifyPrognosis = null)
         {

@@ -60,7 +60,7 @@ $(document).ready(function () {
         service = {};
         var id = $("#ihidden-service-id-" + i + "").val();
         var daySelected = $("#iselect-options-" + id + " option:selected").val();
-        service = { ID: id, day: daySelected };
+        service = { ID: id, Day: daySelected };
         services.push(service);
     }
     GetServicesTime(services);
@@ -96,6 +96,6 @@ function changeDay(serviceId) {
     $("#piechart-" + serviceId + "-AM").empty();
     $("#piechart-" + serviceId + "-PM").empty();
     var daySelected = $("#iselect-options-" + serviceId + " option:selected").val();
-    service = [{ ID: serviceId, day: daySelected }];
+    service = [{ ID: serviceId, Day: daySelected }];
     GetServicesTime(service);
 }

@@ -143,10 +143,10 @@ $("#ibtn-srch-place").click(function () {
             $("#imodal-place-srch-result .cdiv-custom-alert").addClass('hidden');
             $("#imodal-place-srch-result #idiv-search-place-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
             var model = {
-                serviceType: sType, placeName: pName,
-                checkDistance: cDistance, checkCost: cCost,
-                checkRate: cRate, checkPopularity: cPopularity,
-                latitude: latitude, longitude: longitude
+                ServiceType: sType, PlaceName: pName,
+                IsDistance: cDistance, IsCost: cCost,
+                IsRate: cRate, IsPopularity: cPopularity,
+                Latitude: latitude, Longitude: longitude
             }
             $.ajax({
                 type: 'POST',
@@ -227,9 +227,9 @@ $("#ibtn-search-drug").click(function () {
             latitude = data.latitude;
             longitude = data.longitude;
             var model = {
-                drugName: drugName,
-                latitude: latitude,
-                longitude: longitude
+                DrugName: drugName,
+                Latitude: latitude,
+                Longitude: longitude
             }
             $.ajax({
                 type: 'POST',

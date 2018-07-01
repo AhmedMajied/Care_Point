@@ -17,6 +17,8 @@ namespace CarePoint.Controllers
         {
             _medicineBusinessLayer = new MedicineBusinessLayer();
         }
+        
+        /// <returns>only medicines names</returns>
         public ActionResult GetAllMedicines()
         {
             var medicines = _medicineBusinessLayer.GetAllMedicines().Select(medicine =>
@@ -25,6 +27,7 @@ namespace CarePoint.Controllers
             return Json(medicines);
         }
 
+        /// <returns>only medicine alternatives names</returns>
         public ActionResult GetMedicineAlternatives(string medicineName)
         {
             if (!medicineName.Equals(""))
@@ -37,6 +40,5 @@ namespace CarePoint.Controllers
 
             return null;
         }
-
     }
 }

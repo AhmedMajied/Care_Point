@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Linq;
-using System.Web;
 using DAL;
 
 namespace BLL
@@ -46,6 +42,11 @@ namespace BLL
             alignmentRight.Alignment = StringAlignment.Far;
         }
 
+        /// <summary>
+        /// draw prescription that includes medicines were written to patient
+        /// with these doses and these alternatives
+        /// </summary>
+        /// <returns>prescription image</returns>
         public Bitmap Draw(HistoryRecord historyRecord, string[] medicines,
             List<List<string>> medicinesAlternatives,string [] doses)
         {
@@ -66,7 +67,6 @@ namespace BLL
             graphics = Graphics.FromImage(bitmap);
             graphics.Clear(Color.White); // white background
 
-            
             // Drawing
             DrawPrescriptionHeader(historyRecord.MedicalPlace.Name, historyRecord.MedicalPlace.Photo);
             DrawPrescriptionBody(historyRecord.Citizen.Name, historyRecord.Specialist.Name,
@@ -78,7 +78,10 @@ namespace BLL
 
             return bitmap;
         }
-
+        
+        /// <summary>
+        /// draw prescription header that includes medical place name and its logo
+        /// </summary>
         private void DrawPrescriptionHeader(string medicalPlaceName, byte[] medicalPlaceImg)
         {
             int upperPadding = 10;
@@ -107,6 +110,10 @@ namespace BLL
             newLine += "\n\n";
         }
 
+        /// <summary>
+        /// draw prescription body that includes patient name, doctor name, 
+        /// medicines, their alternatives and their doses
+        /// </summary>
         private void DrawPrescriptionBody(string patientName, string doctorName, DateTime date, 
                             string[] medicines, List<List<string>> medicinesAlternatives, string[] doses)
         {
@@ -184,6 +191,9 @@ namespace BLL
             newLine += "\n";
         }
 
+        /// <summary>
+        /// draw prescription footer that includes medical place address and its phone
+        /// </summary>
         private void DrawPrescriptionFooter(string address, string phone)
         {
             Font smallBold = new Font("Helvetica", 12, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -203,6 +213,10 @@ namespace BLL
                             pageWidth - padding, 0, alignmentRight);
         }
 
+        /// <summary>
+        /// measure right padding according to words length 
+        /// to make data word centered under head word
+        /// </summary>
         private int MeasureRightPadding(string headWord, string dataword)
         {
             if (dataword == null)
@@ -212,6 +226,10 @@ namespace BLL
                     +(int)graphics.MeasureString(headWord, bold).Width / 2 + 1- padding;
         }
 
+        /// <summary>
+        /// measure left padding according to words length 
+        /// to make data word centered under head word
+        /// </summary>
         private int MeasureLeftPadding(string headWord, string dataWord)
         {
             int headWordWidth = (int)graphics.MeasureString(headWord, bold).Width;

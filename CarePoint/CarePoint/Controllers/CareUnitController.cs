@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BLL;
 using CarePoint.AuthorizeAttributes;
@@ -26,6 +23,7 @@ namespace CarePoint.Controllers
             ICollection<CareUnit> careUnits = _careUnitBusinessLayer.GetMedicalPlaceCareUnits(id);
             return View(careUnits);
         }
+
         [HttpPost]
         [AccessDeniedAuthorize(Roles = "Doctor")]
         public ActionResult UpdateCareUnitsCount(List<CareUnit> careUnits)

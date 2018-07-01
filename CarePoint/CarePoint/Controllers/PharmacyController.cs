@@ -52,32 +52,32 @@ namespace CarePoint.Controllers
         {
             Pharmacy pharmacy = new Pharmacy();
             pharmacy.IsConfirmed = false;
-            double latitude = model.latitude;
-            double longitude = model.longitude;
+            double latitude = model.Latitude;
+            double longitude = model.Longitude;
             var pointString = string.Format("POINT({0} {1})", longitude.ToString(), latitude.ToString());
             var location = DbGeography.FromText(pointString);
             pharmacy.Location = location;
-            pharmacy.Name = model.medicalPlace.Name;
-            pharmacy.Address = model.medicalPlace.Address;
-            pharmacy.Phone = model.medicalPlace.Phone;
+            pharmacy.Name = model.MedicalPlace.Name;
+            pharmacy.Address = model.MedicalPlace.Address;
+            pharmacy.Phone = model.MedicalPlace.Phone;
             pharmacy.OwnerID = User.Identity.GetCitizen().Id;
-            using (var binaryReader = new BinaryReader(model.medicalPlace.Photo.InputStream))
+            using (var binaryReader = new BinaryReader(model.MedicalPlace.Photo.InputStream))
             {
-                pharmacy.Photo = binaryReader.ReadBytes(model.medicalPlace.Photo.ContentLength);
+                pharmacy.Photo = binaryReader.ReadBytes(model.MedicalPlace.Photo.ContentLength);
             }
-            using (var binaryReader = new BinaryReader(model.medicalPlace.Permission.InputStream))
+            using (var binaryReader = new BinaryReader(model.MedicalPlace.Permission.InputStream))
             {
-                pharmacy.Permission = binaryReader.ReadBytes(model.medicalPlace.Permission.ContentLength);
+                pharmacy.Permission = binaryReader.ReadBytes(model.MedicalPlace.Permission.ContentLength);
             }
             PharmacyBusinessLayer.AddPharmacy(pharmacy);
             return PharmacyProfile(pharmacy.ID);
         }
         public JsonResult SearchPharmacyMedicine(SearchMedicineViewModel model)
         {
-            string location = string.Format("POINT({0} {1})", model.longitude, model.latitude);
-            List<Pharmacy> result = PharmacyBusinessLayer.SearchMedicineInPharmacies(model.drugName, location).ToList();
+            string location = string.Format("POINT({0} {1})", model.Longitude, model.Latitude);
+            List<Pharmacy> result = PharmacyBusinessLayer.SearchMedicineInPharmacies(model.DrugName, location).ToList();
             var pharmacies = result.Select(pharmacy => new { pharmacy.Name, Photo = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(pharmacy.Photo)) , pharmacy.Address , pharmacy.Phone});
-            string drugName = model.drugName;
+            string drugName = model.DrugName;
             return Json(new { pharmacies, drugName });
         }
     }

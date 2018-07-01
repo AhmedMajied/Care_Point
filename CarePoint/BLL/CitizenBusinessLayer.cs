@@ -67,7 +67,15 @@ namespace BLL
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
         }
-
+        /// <summary>
+        /// Search citizens Accounts from database and split them based on citizen type
+        /// specialists and pharmacists and non specialists
+        /// </summary>
+        /// <param name="citizenId">A long Value</param>
+        /// <param name="searchBy">A string value</param>
+        /// <param name="searchValue">A string value</param>
+        /// <param name="searchValue">A string value</param>
+        /// <returns> List of Citizens That match the searchValue of Type SearchBy</returns>
         public List<List<Citizen>> SearchAccounts(long citizenId,string searchBy, string searchValue)
         {
             List<Citizen> result = new List<Citizen>();
@@ -75,6 +83,7 @@ namespace BLL
             List<Citizen> pharmacists = new List<Citizen>();
             List<Citizen> non_specialists = new List<Citizen>();
             String[] split = searchValue.Split(' ');
+            // if key is search by Name
             if (searchBy.Equals("Name"))
             {
                 foreach (string val in split)
@@ -126,11 +135,20 @@ namespace BLL
         {
             return DBEntities.Relatives.Where(r => r.CitizenID == citizenId || r.RelativeID == citizenId).ToList();
         }
-
+        /// <summary>
+        /// get doctor patient list based on specific medical place
+        /// </summary>
+        /// <param name="doctorId">a long value</param>
+        /// <param name="placeId">a long value</param>
+        /// <returns> PatientList that doctor wrote historyRecord 
+        /// to them in this medical place
+        /// </returns>
         public List<Citizen> GetPatientList(long doctorId,long placeId)
         {
             List<Citizen> patientList = new List<Citizen>();
+            //get patient list based on history records writen by doctor for specific medical place
             patientList = DBEntities.HistoryRecords.Where(patient => patient.SpecialistID == doctorId && patient.MedicalPlaceID==placeId).Select(p => p.Citizen).ToList();
+            // remove duplicates records 
             patientList = patientList.Distinct().ToList();
             return patientList;
         }
@@ -222,18 +240,39 @@ namespace BLL
             }
             DBEntities.SaveChanges();
         }    
+        /// <summary>
+        ///  get speciality name for specialist from database based on specialist id
+        /// </summary>
+        /// <param name="specialistId">A long value</param>
+        /// <returns>
+        /// the speciality name for the specialist
+        /// </returns>
         public string GetSpeciality(long specialistId)
         {
             Specialist specialist = (Specialist)DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == specialistId);
             string speciality = specialist.Speciality.Name;
             return speciality;
         }
+        /// <summary>
+        ///  get specialist pharmacyPlaces that he works in
+        /// </summary>
+        /// <param name="specialistId">a long value</param>
+        /// <returns>
+        /// list of pharmacies that the specislist works in
+        /// </returns>
         public ICollection<Pharmacy> GetSpecialistPharmacyPlace(long specialistId)
         {
             List<Pharmacy> pharmacies = new List<Pharmacy>();
             pharmacies = DBEntities.PharmacyMembershipRequests.Where(pharmacy => pharmacy.SpecialistID == specialistId && pharmacy.IsConfirmed == true).Select(p => p.Pharmacy).ToList();
             return pharmacies;
         }
+        /// <summary>
+        /// get specislist MedicalPlaces that he works in
+        /// </summary>
+        /// <param name="specialistId">a long value</param>
+        /// <returns>
+        /// list of medical places that the specialist works in
+        /// </returns>
         public ICollection<MedicalPlace>GetSpecialistWorkPlaces(long specialistId)
         {
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();

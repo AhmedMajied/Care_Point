@@ -8,6 +8,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium.Chrome;
 
 namespace SeleniumTests
 {
@@ -34,7 +35,7 @@ namespace SeleniumTests
             report = new ExtentReports();
             report.AttachReporter(htmlReporter);
             sosTest = report.CreateTest("SOS");
-            driver = new FirefoxDriver();
+            driver = new ChromeDriver();
             baseURL = "https://www.katalon.com/";
         }
 

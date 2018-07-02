@@ -43,7 +43,7 @@
         <ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 
             <a>
-                <span class='suite-start-time label blue darken-3'>6/23/2018 10:57:53 PM Egypt Standard Time</span>
+                <span class='suite-start-time label blue darken-3'>7/2/2018 9:16:07 PM Egypt Standard Time</span>
             </a>
             <a>
                 <span class="label blue darken-3">3.1.0</span>
@@ -126,11 +126,25 @@
                     <span><span class='strong'>1</span> test(s) passed</span>
                 </div>
                 <div class='block text-small'>
-                    <span class='strong'>0</span> test(s) failed, <span class='strong'>0</span> others
+                    <span class='strong'>1</span> test(s) failed, <span class='strong'>0</span> others
                 </div>
             </div>
         </div>
 
+            <div class='col s12 m6 l6 np-h'>
+                <div class='card-panel nm-v'>
+                    <div class='left panel-name'>Steps</div>
+                    <div class='chart-box'>
+                        <canvas id='child-analysis' width='100' height='80'></canvas>
+                    </div>
+                    <div class='block text-small'>
+                        <span><span class='strong'>1</span> step(s) passed</span>
+                    </div>
+                    <div class='block text-small'>
+                        <span class='strong'>1</span> step(s) failed, <span class='strong'>0</span> others
+                    </div>
+                </div>
+            </div>
 
     </div>
 </div>
@@ -142,18 +156,74 @@
             <ul id='test-collection' class='test-collection'>
 
 
-                    <li class='test displayed active  pass' status='pass' test-id='1'>
+                    <li class='test displayed active has-leaf fail' status='fail' test-id='1'>
                         <div class='test-heading'>
                             <span class='test-name'>SOS</span>
-                            <span class='test-time'>6/23/2018 10:57:53 PM</span>
-                            <span class='test-status right pass'>Pass</span>
+                            <span class='test-time'>7/2/2018 9:16:07 PM</span>
+                            <span class='test-status right fail'>Fail</span>
                         </div>
                         <div class='test-content hide'>
                                 <div class='test-time-info'>
-                                    <span class='label start-time'>6/23/2018 10:57:53 PM</span>
-                                    <span class='label end-time'>6/23/2018 10:57:53 PM</span>
-                                    <span class='label time-taken grey lighten-1 white-text'>00:00:00</span>
+                                    <span class='label start-time'>7/2/2018 9:16:07 PM</span>
+                                    <span class='label end-time'>7/2/2018 9:16:30 PM</span>
+                                    <span class='label time-taken grey lighten-1 white-text'>00:00:22.6662935</span>
                                 </div>
+                                    <ul class='collapsible node-list' data-collapsible='accordion'>
+                                            <li class='node level-1 fail' status='fail' test-id='2'>
+                                                <div class='collapsible-header'>
+                                                    <div class='node-name'>Test Case 9</div>
+                                                    <span class='node-time'>7/2/2018 9:16:11 PM</span>
+                                                    <span class='test-status right fail'>Fail</span>
+                                                </div>
+                                                <div class='collapsible-body'>
+                                                    <div class='node-steps'>
+                                                        <table class='bordered table-results'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Status</th>
+                                                                    <th>Timestamp</th>
+                                                                    <th>Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                    <tr class='log' status='fail'>
+                                                                        <td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+                                                                        <td class='timestamp'>7/2/2018 9:16:21 PM</td>
+                                                                        <td class='step-details'>Assert.AreEqual failed. Expected:<select at least one option>. Actual:<>.</td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class='node level-1 pass' status='pass' test-id='3'>
+                                                <div class='collapsible-header'>
+                                                    <div class='node-name'>Test Case 10</div>
+                                                    <span class='node-time'>7/2/2018 9:16:21 PM</span>
+                                                    <span class='test-status right pass'>Pass</span>
+                                                </div>
+                                                <div class='collapsible-body'>
+                                                    <div class='node-steps'>
+                                                        <table class='bordered table-results'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Status</th>
+                                                                    <th>Timestamp</th>
+                                                                    <th>Details</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                    <tr class='log' status='pass'>
+                                                                        <td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+                                                                        <td class='timestamp'>7/2/2018 9:16:30 PM</td>
+                                                                        <td class='step-details'>Test Passed</td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                    </ul>
 
                         </div>
                     </li>
@@ -231,30 +301,30 @@
         <div class='row'>
             <div class='col s2'>
                 <div class='card-panel r'>
- <span>Tests</span>                     <div class='panel-lead'>1</div>
+ <span>Tests</span>                     <div class='panel-lead'>2</div>
                 </div>
             </div>
             <div class='col s2'>
                 <div class='card-panel r'>
- <span>Steps</span>                     <div class='panel-lead'>0</div>
+ <span>Steps</span>                     <div class='panel-lead'>2</div>
                 </div>
             </div>
             <div class='col s2'>
                 <div class='card-panel r'>
                     Start
-                    <div class='panel-lead'>6/23/2018 10:57:53 PM</div>
+                    <div class='panel-lead'>7/2/2018 9:16:07 PM</div>
                 </div>
             </div>
             <div class='col s2'>
                 <div class='card-panel r'>
                     End
-                    <div class='panel-lead'>6/23/2018 10:58:29 PM</div>
+                    <div class='panel-lead'>7/2/2018 9:16:35 PM</div>
                 </div>
             </div>
             <div class='col s2'>
                 <div class='card-panel r'>
                     Time Taken
-                    <div class='panel-lead'>00:00:36.1656827</div>
+                    <div class='panel-lead'>00:00:27.6607228</div>
                 </div>
             </div>
 
@@ -274,14 +344,14 @@
 		<script>
 			var statusGroup = {
 			    passParent: 1,
-			    failParent: 0,
+			    failParent: 1,
 			    fatalParent: 0,
 			    errorParent: 0,
 			    warningParent: 0,
 			    skipParent: 0,
 				
-			    passChild: 0,
-			    failChild: 0,
+			    passChild: 1,
+			    failChild: 1,
 			    fatalChild: 0,
 			    errorChild: 0,
 			    warningChild: 0,

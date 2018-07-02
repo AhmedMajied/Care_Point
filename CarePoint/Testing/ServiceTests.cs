@@ -8,11 +8,12 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium.Chrome;
 
 namespace SeleniumTests
 {
     [TestClass]
-    public class MedicalPlaceTests
+    public class ServiceTests
     {
         private static IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -20,9 +21,8 @@ namespace SeleniumTests
         private bool acceptNextAlert = true;
         public static ExtentReports report;
         public static ExtentTest addService;
-        public static ExtentTest addCareUnit;
         private static ExtentHtmlReporter htmlReporter;
-        private static String filePath = "../../Reports/MedicalPlace Testing Report.html";
+        private static String filePath = "../../Reports/Services Testing Report.html";
 
         public TestContext TestContext { get; set; }
         [ClassInitialize]
@@ -35,8 +35,7 @@ namespace SeleniumTests
             report = new ExtentReports();
             report.AttachReporter(htmlReporter);
             addService = report.CreateTest("Add Service");
-            addCareUnit = report.CreateTest("Add CareUnit");
-            driver = new FirefoxDriver();
+            driver = new ChromeDriver();
             baseURL = "https://www.katalon.com/";
         }
 
@@ -120,64 +119,6 @@ namespace SeleniumTests
                 child.Log(Status.Fail, e.Message);
             }
         }
-
-        [DataSource("System.Data.Odbc",
-            "Dsn=Excel Files;dbq=|DataDirectory|\\Testing.xlsx;driverid=1046;maxbuffersize=2048;pagetimeout=5",
-            "Add CareUnit TC$",
-            DataAccessMethod.Sequential),
-            TestMethod]
-        public void TheAddCareUnitTest()
-        {
-            ExtentTest child = addCareUnit.CreateNode(TestContext.DataRow["Key"].ToString());
-            driver.Navigate().GoToUrl("http://carepoint.com:3000/");
-            driver.FindElement(By.Id("itext-mail-phone")).Click();
-            driver.FindElement(By.Id("itext-mail-phone")).Clear();
-            driver.FindElement(By.Id("itext-mail-phone")).SendKeys("doctor@carepoint.com");
-            driver.FindElement(By.Id("ipasswd")).Click();
-            driver.FindElement(By.Id("ipasswd")).Clear();
-            driver.FindElement(By.Id("ipasswd")).SendKeys("123456");
-            driver.FindElement(By.Id("ifrm-login")).Submit();
-            Thread.Sleep(5000);
-            driver.FindElement(By.XPath("//form[@id='logoutForm']/ul/li/a/span")).Click();
-            Thread.Sleep(2000);
-            driver.FindElement(By.Id("ilink-change-place")).Click();
-            Thread.Sleep(1000);
-            driver.FindElement(By.XPath("//button[@onclick=\"switchWorkPlace('6','Hospital','/MedicalPlace/ProfilePage?id=6')\"]")).Click();
-            driver.FindElement(By.XPath("//div[2]/button[2]")).Click();
-            driver.FindElement(By.Id("iinp-careunit-name-new")).Click();
-            driver.FindElement(By.Id("iinp-careunit-name-new")).Clear();
-            driver.FindElement(By.Id("iinp-careunit-name-new")).SendKeys(TestContext.DataRow["Name"].ToString());
-            (new SelectElement(driver.FindElement(By.Id("iinp-careunit-type-new")))).SelectByValue(TestContext.DataRow["TypeId"].ToString());
-            driver.FindElement(By.Id("iinp-careunit-cost-new")).Click();
-            driver.FindElement(By.Id("iinp-careunit-cost-new")).Clear();
-            driver.FindElement(By.Id("iinp-careunit-cost-new")).SendKeys(TestContext.DataRow["Cost"].ToString());
-            driver.FindElement(By.Id("iinp-careunit-count-new")).Click();
-            driver.FindElement(By.Id("iinp-careunit-count-new")).Clear();
-            driver.FindElement(By.Id("iinp-careunit-count-new")).SendKeys(TestContext.DataRow["AvailableRoomCount"].ToString());
-            driver.FindElement(By.Id("itextarea-careunit-desc-new")).Click();
-            driver.FindElement(By.Id("itextarea-careunit-desc-new")).Clear();
-            driver.FindElement(By.Id("itextarea-careunit-desc-new")).SendKeys(TestContext.DataRow["Description"].ToString());
-            ((IJavaScriptExecutor)driver).ExecuteScript("document.querySelector('#imodal-careunit-new > div > div > div.modal-footer > input').click()");
-            Thread.Sleep(500);
-            try
-            {
-                if (!String.IsNullOrEmpty(TestContext.DataRow["NameError"].ToString()))
-                    Assert.AreEqual(TestContext.DataRow["NameError"].ToString(), driver.FindElement(By.Id("iinp-careunit-name-new-error")).Text);
-                if (!String.IsNullOrEmpty(TestContext.DataRow["CostError"].ToString()))
-                    Assert.AreEqual(TestContext.DataRow["CostError"].ToString(), driver.FindElement(By.Id("iinp-careunit-cost-new-error")).Text);
-                if (!String.IsNullOrEmpty(TestContext.DataRow["TypeIdError"].ToString()))
-                    Assert.AreEqual(TestContext.DataRow["TypeIdError"].ToString(), driver.FindElement(By.Id("iinp-careunit-type-new-error")).Text);
-                if (!String.IsNullOrEmpty(TestContext.DataRow["AvailableRoomCountError"].ToString()))
-                    Assert.AreEqual(TestContext.DataRow["AvailableRoomCountError"].ToString(), driver.FindElement(By.Id("iinp-careunit-count-new-error")).Text);
-                child.Log(Status.Pass, "Test Passed");
-            }
-            catch (Exception e)
-            {
-                verificationErrors.Append(e.Message);
-                child.Log(Status.Fail, e.Message);
-            }
-        }
-
 
         private bool IsElementPresent(By by)
         {

@@ -1,4 +1,7 @@
+/* Authors: Ahmed Hussein, Mariam Ashraf */
+
 $(document).ready(function () {
+    //SOS form
     popoverContent = `<div id='idiv-sos-pop'>
                         <form action='#' onsubmit='return false;'>
                             <textarea class='form-control input-lg ctextarea-description' placeholder="What's wrong ?!" rows=10 cols=25 style='resize: none;'></textarea>

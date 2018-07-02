@@ -1,3 +1,5 @@
+/*Authors: Ahmed Hussein, Andrew Emad */
+
 $(document).ready(function () {
     $(".panel").hide();
     $('#itbl-medical-history').DataTable({
@@ -7,6 +9,8 @@ $(document).ready(function () {
         "sPaginationType": "full_numbers"
     });
 });
+
+//Show medical history a table
 function populatePanel(img, medicalPlaceName, specialistName, date, symptom, disease, medicine, remarks) {
     $(".panel").show();
     var symptoms = symptom.split(',');

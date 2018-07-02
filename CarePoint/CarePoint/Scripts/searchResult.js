@@ -127,7 +127,6 @@ function searchMedicalPlace(position) {
     var latitude, longitude;
     latitude = position.coords.latitude;;
     longitude = position.coords.longitude;
-    alert(latitude + " " + longitude + " " + sType + " " + pName + " " + cDistance + " " + cCost + " " + cRate + " " + cPopularity);
     if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
         $("#imodal-place-srch-result").modal('show');
         $("#imodal-place-srch-result button.close").prop('disabled', true);
@@ -214,7 +213,6 @@ function searchDrug(position) {
     var drugName = $("#iinp-drug-name").val();
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    alert(latitude + " " + longitude + " " + drugName);
     if (drugName != "") {
         $("#imodal-drug-srch-result").modal('show');
         $("#imodal-drug-srch-result button.close").prop('disabled', true);

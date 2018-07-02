@@ -43,7 +43,6 @@ function sendSOS(position) {
     var Latitude, Longitude;
     Latitude = position.coords.latitude;
     Longitude = position.coords.longitude;
-    alert(Description + " " + IsFamily + " " + IsFriend + " " + IsMedicalPlace + " " + Latitude + " " + Longitude);
         if ((Description != "") && (IsMedicalPlace || IsFriend || IsFamily)) {
         var model = {
             IsMedicalPlace: IsMedicalPlace, IsFamily: IsFamily,

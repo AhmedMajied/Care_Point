@@ -16,11 +16,21 @@ namespace BLL
             DBEntities = new CarePointEntities();
         }
 
+        /// <summary>
+        /// get all medicines stored in database
+        /// </summary>
         public ICollection<Medicine> GetAllMedicines()
         {
             return DBEntities.Medicines.ToList();
         }
 
+        /// <summary>
+        /// get all alternatives to specific medicine 
+        /// </summary>
+        /// <remarks>
+        /// two medicines are alternatives to each others if and only if 
+        /// their active incredients are exactly the same
+        /// </remarks>
         public ICollection<Medicine> getMedicineAlternatives(string medicineName)
         {
             List<Medicine> medicineAlternatives = null;

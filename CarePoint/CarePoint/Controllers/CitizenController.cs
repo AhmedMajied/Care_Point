@@ -14,7 +14,6 @@ using CarePoint.AuthorizeAttributes;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Diagnostics;
 
 namespace CarePoint.Controllers
 {
@@ -40,6 +39,10 @@ namespace CarePoint.Controllers
             }
         }
 
+        /// <summary>
+        /// decode QR Code to national ID then search for it in database
+        /// then prepare patient Card and download it
+        /// </summary>
         public FileResult DownloadMyCard()
         {
             PatientCardCanvas canvas = new PatientCardCanvas();
@@ -65,6 +68,9 @@ namespace CarePoint.Controllers
             };
         }
 
+        /// <summary>
+        /// search for citizen by ID then go to his/her medical history
+        /// </summary>
         public JavaScriptResult GetCitizenByQR(string citizenQRCode)
         {
             Citizen citizen = CitizenBusinessLayer.GetCitizenByQR(citizenQRCode);
@@ -210,17 +216,8 @@ namespace CarePoint.Controllers
         public JsonResult PatientsList(long doctorId, long placeId)
         {
             List<Citizen> list = _citizenBusinessLayer.GetPatientList(doctorId,placeId);
-            List<Citizen> maleList = new List<Citizen>();
-            List<Citizen> femaleList = new List<Citizen>();
-            foreach (Citizen c in list)
-            {
-                if (c.Gender.ToLower().Equals("male"))
-                    maleList.Add(c);
-                else if (c.Gender.ToLower().Equals("female"))
-                    femaleList.Add(c);
-            }
-            var males = maleList.Select(x => new { x.Name, x.Id, x.Photo });
-            var females = femaleList.Select(x => new { x.Name, x.Id, x.Photo });
+            var males = (list.Where(c => c.Gender.ToLower().Equals("male"))).Select(x => new { x.Name, x.Id, x.Photo });
+            var females = (list.Where(c => c.Gender.ToLower().Equals("female"))).Select(x => new { x.Name, x.Id, x.Photo });
             var result = new[] { males, females };
             return Json(result);
         }

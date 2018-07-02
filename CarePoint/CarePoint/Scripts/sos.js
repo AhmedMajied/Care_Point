@@ -39,21 +39,21 @@ function getUserLocation() {
     });
 }
 function sendSOS() {
-    var isMedicalPlace = $("#ichk-hospitals").is(':checked');
-    var isFamily = $("#ichk-family").is(':checked');
-    var isFriend = $("#ichk-friends").is(':checked');
-    var description = $(".ctextarea-description").val();
-    var latitude, longitude;
+    var IsMedicalPlace = $("#ichk-hospitals").is(':checked');
+    var IsFamily = $("#ichk-family").is(':checked');
+    var IsFriend = $("#ichk-friends").is(':checked');
+    var Description = $(".ctextarea-description").val();
+    var Latitude, Longitude;
     // to get current location of user
     getUserLocation().then(function (data) {
-        latitude = data.latitude;
-        longitude = data.longitude;
-    if ((description != "") && (isMedicalPlace || isFriend || isFamily)) {
+        Latitude = data.latitude;
+        Longitude = data.longitude;
+        if ((Description != "") && (IsMedicalPlace || IsFriend || IsFamily)) {
         var model = {
-            isMedicalPlace: isMedicalPlace, isFamily: isFamily,
-            isFriend: isFriend, description: description,
-            latitude: latitude, longitude: longitude
-        }
+            IsMedicalPlace: IsMedicalPlace, IsFamily: IsFamily,
+            IsFriend: IsFriend, Description: Description,
+            Latitude: Latitude, Longitude: Longitude
+            }
         $("#iisend-sos").prop("disabled", true);
         $.ajax({
             type: 'POST',
@@ -61,7 +61,7 @@ function sendSOS() {
             data: { model },
             dataType: 'json',
             success: function (data) {
-                alert(data);
+//                alert(data);
                 $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {
@@ -71,16 +71,15 @@ function sendSOS() {
         });
     }
     else {
-        if (description == "") {
+        if (Description == "") {
             $(".cspan-description-error").text("please fill What's Wrong field").css("color","red");
             $('.cspan-description-error').fadeIn('fast').delay(5000).fadeOut('slow');
 
         }
-        if (!(isMedicalPlace || isFriend || isFamily)) {
+        if (!(IsMedicalPlace || IsFriend || IsFamily)) {
             $(".cspan-error-send").text("select at least one option").css("color", "red");
             $('.cspan-error-send').fadeIn('fast').delay(5000).fadeOut('slow');
         }
-
     }
     });
 }

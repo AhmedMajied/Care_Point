@@ -1,5 +1,4 @@
 ﻿using BLL;
-using CarePoint.Models;
 using Extensions;
 using System;
 using System.Collections.Generic;
@@ -65,7 +64,7 @@ namespace CarePoint.Controllers
                     fileExtension = Path.GetExtension(files[i].FileName);
 
                     if (fileExtension != ".jpg" && fileExtension !=".pdf" && fileExtension != ".png")
-                        throw new Exception("invalid extension");
+                        throw new Exception("Error, Invalid extension");
 
                     string path = Path.Combine(Server.MapPath("~/Attachments"),
                         Path.GetRandomFileName().Replace(".", "")+Path.GetExtension(files[i].FileName));
@@ -87,7 +86,7 @@ namespace CarePoint.Controllers
                 }
                 catch (Exception ex)
                 {
-                    //return "ERROR:" + ex.Message.ToString();
+                    return Content(ex.Message);
                 }
             }
 
@@ -101,6 +100,7 @@ namespace CarePoint.Controllers
             string prescriptionFilePath = "~/Attachments/Prescriptions/" +
                                      Path.GetRandomFileName().Replace(".", "") + ".jpg";
             List<List<string>> medicinesAlternatives = new List<List<string>>();
+            long medicalPlaceID = Convert.ToInt64(Request.Cookies["placeInfo"].Values["id"]);
 
             string[] symptoms = form.GetValues("symptomName");
             string[] diseases = form.GetValues("diseaseName");
@@ -113,7 +113,7 @@ namespace CarePoint.Controllers
             {
                 Date = DateTime.Now,
                 Remarks = remarks,
-                MedicalPlaceID = 6, //TODO get from session
+                MedicalPlaceID = medicalPlaceID,
                 CitizenID = Convert.ToInt64(form["Id"]),
                 SpecialistID = User.Identity.GetUserId<long>()
             };
@@ -190,6 +190,5 @@ namespace CarePoint.Controllers
 
             return Json(attachmentTypes);
         }
-
     }
 }

@@ -1,4 +1,4 @@
-/*Prognosis part*/
+﻿/*Prognosis part*/
 function showPrognosisNotifSummary(diseaseName, clickURL){
     $.notify({
         // options

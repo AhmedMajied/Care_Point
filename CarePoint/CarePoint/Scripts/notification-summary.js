@@ -109,13 +109,30 @@ function showAttachmentNotifSummary(doctorName, fileName, clickURL){
 }
 
 /*SOS part*/
-function showSOSNotifSummary(senderLocation, situationSummary, senderContact){
+function showSOSNotifSummary(latitude,longitude, situationSummary, senderContact, type,sosId) {
+    if (type == 1) {
+        Template = `<div id="idiv-displays-notification" data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
+                        <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
+                        <span data-notify="icon"></span>
+                        <h4 data-notify="title">{1}</h4><hr/>
+                        <span class="cspn-notif-summary" data-notify="message">{2}</span><hr />
+                        <button onclic="getWorkPlace('`+ sosId +`');" class="btn btn-default cbtn-going"><span class="fa fa-check"></span>Ok, Going</button>
+                    </div>`
+    }
+    else {
+        Template =`<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
+                        <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
+                        <span data-notify="icon"></span>
+                        <h4 data-notify="title">{1}</h4><hr/>
+                        <span class="cspn-notif-summary" data-notify="message">{2}</span><hr />
+                    </div>`
+    }
     $.notify({
         // options
         icon: 'fa fa-exclamation-triangle fa-2x',
         title: 'Emergency alert',
         message: '<b>Summary:</b><p>' + situationSummary + '</p>' +
-                 '<span class="fa fa-map-marker fa-lg cspn-awsome"></span> ' + senderLocation + '<br />' +
+                 '<span class="fa fa-map-marker fa-lg cspn-awsome"></span><div style="width:150px; height:150px;" id="imap-citizen-location"> <br />' +
                  '<span class="fa fa-phone fa-lg cspn-awsome"></span> ' + senderContact
     },{
         // settings
@@ -132,12 +149,61 @@ function showSOSNotifSummary(senderLocation, situationSummary, senderContact){
             exit: 'animated fadeOutUp'
         },
         icon_type: 'class',
-        template: `<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
+        template: Template
+            /*
+             * `<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">
                         <button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>
                         <span data-notify="icon"></span>
                         <h4 data-notify="title">{1}</h4><hr/>
                         <span class="cspn-notif-summary" data-notify="message">{2}</span><hr />
                         <button class="btn btn-default cbtn-going"><span class="fa fa-check"></span>Ok, Going</button>
                     </div>`
+             */
+        });
+    initMap(latitude, longitude);
+}
+function initMap(latitude, longitude) {
+    var location = { lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('imap-citizen-location'), {
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center: location
     });
+    var marker = new google.maps.Marker({ position: location, map: map });
+}
+
+function getWorkPlace(sosId) {
+    $.ajax({
+        type: 'POST',
+        url: '/MedicalPlace/GetCurrentWorkPlace',
+        dataType: 'json',
+        success: function (data) {
+            acceptSOS(data, sosId);
+        },
+        error: function (msg) {
+            alert("Sorry An Error Happened Please Try Again");
+        }
+    });
+}
+function acceptSOS(data,sosId)
+{
+    if (data.url != "#") {
+        var placeId = data.id;
+        $.ajax({
+            type: 'POST',
+            url: '/SOS/AcceptSOS',
+            data: { sosId: sosId, hospitalId: placeId },
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+
+            }, error: function (msg) {
+                alert("Sorry An Error Happened Please Try Again");
+            }
+        });
+    }
+    else
+        {
+            alert("Please Choose Your Current WorkPlace First");
+        }
 }

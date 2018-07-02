@@ -42,15 +42,28 @@ namespace CarePoint.Hubs
                 hubContext.Clients.Client(connectionId).notifyAttachment(doctorName,fileName);
             }
         }
-        public static void NotifySOS(List<long>citizens,string description,float lat,float lng,string phoneNumber)
+        public static void NotifySOS(long sosId,List<long>citizens,int type,string description,float lat,float lng,string phoneNumber)
         {
-            foreach(long citizenID in citizens)
+            // type here to know if citizen or specialist
+            foreach(long citizen in citizens)
             {
                 string connectionId;
-                Connections.TryGetValue(citizenID, out connectionId);
+                Connections.TryGetValue(citizen, out connectionId);
                 if (!String.IsNullOrWhiteSpace(connectionId))
                 {
-                    hubContext.Clients.Client(connectionId).notifySOS(description,lat,lng,phoneNumber);
+                    hubContext.Clients.Client(connectionId).notifySOS(sosId,type,description,lat,lng,phoneNumber);
+                }
+            }
+        }
+        public static void HideSOSNotification(List<long>contributers)
+        {
+            foreach(long contributer in contributers)
+            {
+                string connectionId;
+                Connections.TryGetValue(contributer, out connectionId);
+                if (!String.IsNullOrWhiteSpace(connectionId))
+                {
+                    hubContext.Clients.Client(connectionId).hideSOSNotification();
                 }
             }
         }

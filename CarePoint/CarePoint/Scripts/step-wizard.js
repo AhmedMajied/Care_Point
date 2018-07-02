@@ -1,4 +1,6 @@
-﻿current_step = 1;
+﻿/* Authors: Ahmed Hussein, Ahmed Mohamed */
+
+current_step = 1;
 
 function bar_progress(progress_line_object, direction) {
     var number_of_steps = progress_line_object.data('number-of-steps');
@@ -16,6 +18,7 @@ function bar_progress(progress_line_object, direction) {
     progress_line_object.attr('style', 'width: ' + new_value + '%;').data('now-value', new_value);
 }
 
+//Show/Hide and Enable/Disable step wizard buttons depending on current step
 function update_step_nav_buttons() {
     if (current_step == 1) {
         $("#ibtn-nxt").css('display', 'inline-block');

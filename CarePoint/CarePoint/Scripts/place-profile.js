@@ -1,7 +1,10 @@
-﻿let maxSlotDuration = 360; //6 hours
+﻿/* Authors: Ahmed Hussein, Mariam Ashraf */
+
+let maxSlotDuration = 360; //6 hours
 var workSlotColor = "#44ff44cc";
 var emptySlotColor = "#ffffff";
 
+// If a workslot is more than 6 hours, break it into two separate workslots
 function breakSlots(slots) {
     for (var i = 0; i < slots.length; i++) {
         var duration = slots[i].durationInMinutes;
@@ -40,6 +43,7 @@ function addSlot(slotID, slotType, size, pieElement, offset) {
     });
 }
 
+//Highlight service working hours on the clock like a pie chart
 function createPieChart(pieElement, serviceIndex, slots) {
     var offset = 0;
     for (var i = 0; i < slots.length; i++) {
@@ -64,6 +68,8 @@ $(document).ready(function () {
         services.push(service);
     }
     GetServicesTime(services);
+
+    //toggle AM between and PM schedules
     $('.btn-toggle').on('click', function () {
         $(this).find('.btn').toggleClass('active btn-primary btn-default');
         $(this).closest('.cdiv-schedule-visualized').find('.clock').toggleClass('hidden');

@@ -1,5 +1,8 @@
+/* Authors: Ahmed Hussein, Ahmed Mohamed */
+
 var drugs;
 var attachmentTypes;
+
 
 function updateIDSerial(oldID) {
     var serial = oldID.split('-').pop(), newID;
@@ -13,6 +16,7 @@ function updateIDSerial(oldID) {
     return newID;
 }
 
+//Check whether all files are not null and a type is chosen for each file
 function uploadAllowed() {
     var allowed = true;
     $('#imodal-upload-attachment .cdiv-list').find("input, select").each(function () {
@@ -29,6 +33,7 @@ $(document).ready(function () {
         $(this).removeClass('input-error');
     });
 
+    //show the name of the chosen file
     $(function () {
         $(document).on('change', ':file', function () {
             var input = $(this);

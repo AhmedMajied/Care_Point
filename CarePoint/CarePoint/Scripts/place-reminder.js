@@ -1,4 +1,5 @@
-﻿/*Prognosis part*/
+﻿/* Author: Ahmed Hussein */
+
 function showICUReminder(workplaceName, linkURL) {
     $.notify({
         // options

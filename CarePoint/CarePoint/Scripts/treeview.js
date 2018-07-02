@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿/* Author: Ahmed Hussein */
+
+$(document).ready(function () {
     $('.tree-node-header').on('click', function () {
         $(this).closest('.tree-node').find('.tree-node-body').toggle();
 

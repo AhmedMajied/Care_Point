@@ -1,3 +1,5 @@
+/* Author: Ahmed Hussein */
+
 /*Prognosis part*/
 function showPrognosisNotifSummary(diseaseName, clickURL){
     $.notify({

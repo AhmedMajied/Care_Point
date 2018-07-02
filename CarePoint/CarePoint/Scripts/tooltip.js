@@ -1,3 +1,5 @@
+/* Author: Ahmed Hussein */
+
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip({
         'delay': { show: 1000, hide: 0 },

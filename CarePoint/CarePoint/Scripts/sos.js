@@ -21,7 +21,7 @@ $(document).ready(function () {
                                 <label for='ichk-friends'>Friends</label>
                             </span>
                             <span class='cspan-error-send'></span>
-                            <input type='submit' value='Send' id='iisend-sos' onclick='sendSOS()' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
+                            <input type='submit' value='Send' id='iisend-sos' onclick='getUserLocation()' class='btn btn-danger' style='width: 100%; margin-top: 1em;'>
                         </form>
                     </div>`;
     $('#ibtn-sos-pop').popover({
@@ -31,23 +31,19 @@ $(document).ready(function () {
     });
 });
 function getUserLocation() {
-    return $.getJSON("http://freegeoip.net/json/").then(function (data) {
-        return {
-            latitude: data.latitude,
-            longitude: data.longitude
-        }
-    });
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendSOS);
+    }
 }
-function sendSOS() {
+function sendSOS(position) {
     var IsMedicalPlace = $("#ichk-hospitals").is(':checked');
     var IsFamily = $("#ichk-family").is(':checked');
     var IsFriend = $("#ichk-friends").is(':checked');
     var Description = $(".ctextarea-description").val();
     var Latitude, Longitude;
-    // to get current location of user
-    getUserLocation().then(function (data) {
-        Latitude = data.latitude;
-        Longitude = data.longitude;
+    Latitude = position.coords.latitude;
+    Longitude = position.coords.longitude;
+    alert(Description + " " + IsFamily + " " + IsFriend + " " + IsMedicalPlace + " " + Latitude + " " + Longitude);
         if ((Description != "") && (IsMedicalPlace || IsFriend || IsFamily)) {
         var model = {
             IsMedicalPlace: IsMedicalPlace, IsFamily: IsFamily,
@@ -61,7 +57,6 @@ function sendSOS() {
             data: { model },
             dataType: 'json',
             success: function (data) {
-//                alert(data);
                 $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {
@@ -71,15 +66,14 @@ function sendSOS() {
         });
     }
     else {
-        if (Description == "") {
+            if (Description == "") {
             $(".cspan-description-error").text("please fill What's Wrong field").css("color","red");
             $('.cspan-description-error').fadeIn('fast').delay(5000).fadeOut('slow');
 
         }
-        if (!(IsMedicalPlace || IsFriend || IsFamily)) {
+            if (!(IsMedicalPlace || IsFriend || IsFamily)) {
             $(".cspan-error-send").text("select at least one option").css("color", "red");
             $('.cspan-error-send').fadeIn('fast').delay(5000).fadeOut('slow');
         }
     }
-    });
 }

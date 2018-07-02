@@ -23,9 +23,11 @@
             <center>
                 @Html.Image(Model.MedicalPlace.Photo, new { @Class = "cimg-medical-place" })
                 <br />
-                <h1 class="ch1-section">@Model.MedicalPlace.Name</h1><br />
-                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Phone
+                <h1 class="ch1-section">@Model.medicalPlace.Name</h1><br />
+                <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.medicalPlace.Phone<br /><br />
+                <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+                <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
             </center>
             <div class="tree-node">
                 <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Services</h2>
@@ -133,6 +135,7 @@
                     <!-- End Display CareUnits-->
                 </div>
             </div>
+            <!-- End Display MedicalPlace Info-->
             @if (Model.IsCurrentPlace && Model.MedicalPlace.CareUnits.Any(Membership => Membership.CareUnitMembershipRequests.Any(request => request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId()) && request.IsConfirmed == true)))
             {
                 <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.MedicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
@@ -144,10 +147,6 @@
 </div>
 <div class="container-fluid">
     <!-- Begin Add Service -->
-    @if (Model.IsCurrentPlace)
-    {
-        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
-    }
     @using (Html.BeginForm("AddService", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-service-new" class="modal fade" role="dialog">
@@ -376,10 +375,6 @@
     }
     <!-- End Update Services -->
     <!-- Begin Add CareUnit -->
-    @if (Model.IsCurrentPlace)
-    {
-        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
-    }
     @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-careunit-new" class="modal fade" role="dialog">

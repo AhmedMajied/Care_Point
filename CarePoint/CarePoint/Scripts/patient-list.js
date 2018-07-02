@@ -1,4 +1,8 @@
-﻿$(document).ready(function () {
+﻿/* Authors: Ahmed Hussein, Mariam Ashraf */
+
+$(document).ready(function () {
+
+    //Search for a patient in the patient list and filter the list
     $('#iinp-srch').on('input', function (e) {
         var srch_query = $(this).val();
         var patient_names = $('div.active .clbl-name');

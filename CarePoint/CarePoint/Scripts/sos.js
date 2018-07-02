@@ -1,4 +1,7 @@
+/* Authors: Ahmed Hussein, Mariam Ashraf */
+
 $(document).ready(function () {
+    //SOS form
     popoverContent = `<div id='idiv-sos-pop'>
                         <form action='#' onsubmit='return false;'>
                             <textarea class='form-control input-lg ctextarea-description' placeholder="What's wrong ?!" rows=10 cols=25 style='resize: none;'></textarea>
@@ -58,7 +61,7 @@ function sendSOS() {
             data: { model },
             dataType: 'json',
             success: function (data) {
-                alert(data);
+//                alert(data);
                 $("#iisend-sos").prop("disabled", false);
             },
             error: function (msg) {

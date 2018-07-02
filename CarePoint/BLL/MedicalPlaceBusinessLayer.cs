@@ -16,15 +16,17 @@ namespace BLL
         {
             DBEntities = new CarePointEntities();
         }
+
         /// <summary>
-        ///  get medical place from database based on id
+        /// Gets medical place given its Id
         /// </summary>
-        /// <param name="id">a long value</param>
-        /// <returns>MedicalPlace</returns>
+        /// <param name="id">Medical Place Id</param>
+        /// <returns></returns>
         public MedicalPlace GetMedicalPlace(long id)
         {
             return DBEntities.MedicalPlaces.SingleOrDefault(place => place.ID == id);
         }
+
         /// <summary>
         /// Add new medicalPlace to database in table MedicalPlaces
         /// </summary>
@@ -34,6 +36,7 @@ namespace BLL
             DBEntities.MedicalPlaces.Add(medicalPlace);
             DBEntities.SaveChanges();
         }
+
         /// <summary>
         /// get all types of medical places saved to database in table MedicalPlaceTypes
         /// </summary>
@@ -44,6 +47,7 @@ namespace BLL
         {
             return DBEntities.MedicalPlaceTypes.ToList();
         }
+
         /// <summary>
         /// Search For MedicalPlaces that have careUnits
         /// </summary>
@@ -91,6 +95,7 @@ namespace BLL
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }
+
         /// <summary>
         /// Search For MedicalPlaces based on placeName or ServiceType
         /// </summary>
@@ -159,6 +164,7 @@ namespace BLL
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }
+
         /// <summary>
         /// Sort MedicalPlaces based on Popularity Attributes
         /// </summary>
@@ -176,6 +182,7 @@ namespace BLL
             // sort them based on counter of historyRecords
             return result.OrderBy(res => res.Value).Select(res => res.Key).ToList();
         }
+
         /// <summary>
         /// Sort MedicalPlaces based on Distance
         /// </summary>

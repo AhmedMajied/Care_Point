@@ -16,6 +16,7 @@ namespace BLL
         {
             DBEntities = new CarePointEntities();
         }
+
         /// <summary>
         /// Add new Pharmacy to Pharmacies in database
         /// </summary>
@@ -25,6 +26,7 @@ namespace BLL
             DBEntities.Pharmacies.Add(pharmacy);
             DBEntities.SaveChanges();
         }
+
         /// <summary>
         /// Get Pharmacy from database by id
         /// </summary>
@@ -34,6 +36,7 @@ namespace BLL
         {
             return DBEntities.Pharmacies.SingleOrDefault(pharmacy => pharmacy.ID == id);
         }
+
         /// <summary>
         /// search Medicine in Pharmacies that have drugName and sort Pharmacies
         /// by distance from nearest to the furthest

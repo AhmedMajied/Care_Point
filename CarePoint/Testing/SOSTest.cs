@@ -73,6 +73,7 @@ namespace SeleniumTests
             TestMethod]
         public void TheSOSTest()
         {
+            ExtentTest child = sosTest.CreateNode(TestContext.DataRow["Key"].ToString());
             driver.Navigate().GoToUrl("http://carepoint.com:3000/");
             driver.FindElement(By.Id("itext-mail-phone")).Click();
             driver.FindElement(By.Id("itext-mail-phone")).Clear();
@@ -107,10 +108,14 @@ namespace SeleniumTests
                     Assert.AreEqual(TestContext.DataRow["Description Error"].ToString(), driver.FindElement(By.XPath("//div[@id='idiv-sos-pop']/form/span")).Text);
                 if (!String.IsNullOrEmpty(TestContext.DataRow["Options Error"].ToString()))
                     Assert.AreEqual(TestContext.DataRow["Options Error"].ToString(), driver.FindElement(By.XPath("//div[@id='idiv-sos-pop']/form/span[5]")).Text);
+                child.Log(Status.Pass, "Test Passed");
+
             }
+
             catch (Exception e)
             {
                 verificationErrors.Append(e.Message);
+                child.Log(Status.Fail, e.Message);
             }
         }
         private bool IsElementPresent(By by)

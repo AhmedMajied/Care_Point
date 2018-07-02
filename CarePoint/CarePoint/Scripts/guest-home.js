@@ -1,3 +1,5 @@
+
+/* Author: Ahmed Hussein */
 $(document).ready(function () {
     $("#ilink-features").on('click', function(){
         var targetScrollPosition = $("#idiv-middle").offset().top;
@@ -10,6 +12,7 @@ $(document).ready(function () {
     });
 });
 
+//Scroll animation when a link in the navbar is clicked
 function animateScroll(targetScrollPosition){
     var currentTop = $(window).scrollTop(), rate = 2;
     var distance = Math.abs(currentTop - targetScrollPosition);

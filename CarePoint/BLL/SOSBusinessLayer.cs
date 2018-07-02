@@ -14,6 +14,7 @@ namespace BLL
         {
             DBEntities = new CarePointEntities();
         }
+
         /// <summary>
         ///  Add new SOS to SOSses table in database
         /// </summary>
@@ -23,6 +24,7 @@ namespace BLL
             DBEntities.SOSses.Add(sos);
             DBEntities.SaveChanges();
         }
+
         /// <summary>
         /// get SOS from database by id
         /// </summary>
@@ -48,6 +50,7 @@ namespace BLL
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
+
         /// <summary>
         /// get contributers of sos service based on nearest medicalPlaces
         /// </summary>

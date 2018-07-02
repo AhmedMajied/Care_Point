@@ -9,6 +9,9 @@ using System.Collections;
 
 namespace BLL
 {
+    /// <summary>
+    /// Responsible for all business logic associated with Citizen
+    /// </summary>
     public class CitizenBusinessLayer
     {
         private CarePointEntities DBEntities;
@@ -39,46 +42,73 @@ namespace BLL
         }
 
         /// <summary>
-        /// get citizen by ID
-        /// </summary> 
+        /// Gets a citizen from database by Id
+        /// </summary>
+        /// <param name="citizenID">Citizen Id</param>
+        /// <returns>Citizen</returns>
         public Citizen GetCitizen(long citizenID)
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.Id == citizenID);
         }
-        
+
         /// <summary>
-        /// get all specialities stored in database that doctor can 
-        /// be specialized in 
-        /// </summary> 
+        /// Gets all specialities from database
+        /// </summary>
+        /// <returns>ICollection</returns>
         public ICollection<Speciality> GetSpecialities()
         {
             return DBEntities.Specialities.ToList();
         }
-
+        
+        /// <summary>
+        /// Gets all Blood Types from database
+        /// </summary>
+        /// <returns>ICollection</returns>
         public ICollection<BloodType> GetBloodTypes()
         {
             return DBEntities.BloodTypes.ToList();
         }
 
+        /// <summary>
+        /// Checks if the email exists in the database
+        /// </summary>
+        /// <param name="email">Email</param>
+        /// <returns>bool</returns>
         public bool IsEmailExists(string email)
         {
             return DBEntities.Citizens.Any(citizen => citizen.Email == email);
         }
 
+        /// <summary>
+        /// Checks if the phone number exists in the database
+        /// </summary>
+        /// <param name="phone">Phone Numer</param>
+        /// <returns>bool</returns>
         public bool IsPhoneNumberExists(string phone)
         {
             return DBEntities.Citizens.Any(citizen => citizen.PhoneNumber == phone);
         }
 
+        /// <summary>
+        /// Checks if the national Id exists in the database
+        /// </summary>
+        /// <param name="id">National Id Number</param>
+        /// <returns>bool</returns>
         public bool IsNationalIDExists(string id)
         {
             return DBEntities.Citizens.Any(citizen => citizen.NationalIDNumber == id);
         }
 
+        /// <summary>
+        /// Gets citizen from database by phone number
+        /// </summary>
+        /// <param name="phone">Phone Number</param>
+        /// <returns>Citizen</returns>
         public Citizen GetCitizenByPhone(string phone)
         {
             return DBEntities.Citizens.SingleOrDefault(citizen => citizen.PhoneNumber == phone);
         }
+
         /// <summary>
         /// Search citizens Accounts from database and split them based on citizen type
         /// specialists and pharmacists and non specialists
@@ -143,10 +173,17 @@ namespace BLL
             allCitizens.Add(pharmacists);//2
             return allCitizens;
         }
+
+        /// <summary>
+        /// Gets all relatives of the citizen whose id matches the given citizenId
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <returns>ICollection</returns>
         public ICollection<Relative> GetRelatives(long citizenId)
         {
             return DBEntities.Relatives.Where(r => r.CitizenID == citizenId || r.RelativeID == citizenId).ToList();
         }
+
         /// <summary>
         /// get doctor patient list based on specific medical place
         /// </summary>
@@ -164,6 +201,13 @@ namespace BLL
             patientList = patientList.Distinct().ToList();
             return patientList;
         }
+
+        /// <summary>
+        /// Gets all relatives of a citizen that match the relationId
+        /// </summary>
+        /// <param name="citizenID">Citizen Id</param>
+        /// <param name="relationID">Relation Type Id</param>
+        /// <returns>ICollection</returns>
         public ICollection<Citizen> GetCitizenRelatives(long citizenID, long relationID)
         {
             ICollection<Citizen> relatives = (DBEntities.Relatives.Where(relative => relative.CitizenID == citizenID 
@@ -172,14 +216,20 @@ namespace BLL
                                               .Select(relative => relative.RelativeCitizen).ToList();
             return relatives;
         }
+
         /// <summary>
-        ///  get Relation Types from database
+        /// Gets all relation types from database
         /// </summary>
-        /// <returns>list of all RelationType</returns>
+        /// <returns>ICollection</returns>
         public ICollection<RelationType> GetRelationTypes()
         {
             return DBEntities.RelationTypes.ToList();
         }
+
+        /// <summary>
+        /// Confirms all relation requests to the citizen whose Id matches the given citizenId
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
         public void ConfirmAllRelatives(long citizenId)
         {
             var relatives = GetRelatives(citizenId);
@@ -192,6 +242,10 @@ namespace BLL
             DBEntities.SaveChanges();
         }
 
+        /// <summary>
+        /// Sets IsRead to true for all Potential Diseases for the citizen
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
         public void ReadAllPotentialDiseases(long citizenId)
         {
             var potentialDiseases = DBEntities.PotentialDiseases.Where(p => p.CitizenID == citizenId);
@@ -203,6 +257,13 @@ namespace BLL
             DBEntities.SaveChanges();
         }
 
+        /// <summary>
+        /// Adds Relative to Specific Citizen
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <param name="relativeId">Relative Id</param>
+        /// <param name="relationId">Relation Type Id</param>
+        /// <param name="notifyRelative">delegate that runs after adding relative to notify user</param>
         public void AddRelative(long citizenId,long relativeId,int relationId,Action notifyRelative = null)
         {
             Relative relative = new Relative();
@@ -228,6 +289,12 @@ namespace BLL
             notifyRelative?.Invoke();
         }
 
+        /// <summary>
+        /// Removes Relation between two citizens
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <param name="relativeId">Relative Id</param>
+        /// <param name="notifyRelative">delegate that runs after removing relation to notify user</param>
         public void RemoveRelation(long citizenId,long relativeId,Action notifyRelative = null)
         {
             DBEntities.Relatives.Remove(DBEntities.Relatives.SingleOrDefault(r => (r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)));
@@ -235,16 +302,32 @@ namespace BLL
             notifyRelative?.Invoke();
         }
 
+        /// <summary>
+        /// Checks if the relation between two citizens is confirmed
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <param name="relativeId">Relative Id</param>
+        /// <returns>bool</returns>
         public bool IsRelationConfirmed(long citizenId, long relativeId)
         {
             return DBEntities.Relatives.Any(r => ((r.CitizenID == citizenId && r.RelativeID == relativeId) || (r.RelativeID == citizenId && r.CitizenID == relativeId)) && (r.CitizenConfirmed ?? false) && (r.RelativeConfirmed ?? false));
         }
 
+        /// <summary>
+        /// Gets all potential diseases for specific citizen
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <returns>ICollection</returns>
         public ICollection<PotentialDisease> GetPotintialDiseases(long citizenId)
         {
             return DBEntities.Citizens.SingleOrDefault(c => c.Id == citizenId).PotentialDiseases.ToList();
         }
 
+        /// <summary>
+        /// Sets all attachments of specific type as Read
+        /// </summary>
+        /// <param name="citizenId">Citizen Id</param>
+        /// <param name="typeId">Relative Id</param>
         public void ReadAttachmentsOfType(long citizenId, int typeId)
         {
             var attachments = DBEntities.Attachments.Where( a => a.TypeID == typeId && a.CitizenID == citizenId);
@@ -256,6 +339,7 @@ namespace BLL
             }
             DBEntities.SaveChanges();
         }    
+
         /// <summary>
         ///  get speciality name for specialist from database based on specialist id
         /// </summary>
@@ -269,6 +353,7 @@ namespace BLL
             string speciality = specialist.Speciality.Name;
             return speciality;
         }
+
         /// <summary>
         ///  get specialist pharmacyPlaces that he works in
         /// </summary>
@@ -282,6 +367,7 @@ namespace BLL
             pharmacies = DBEntities.PharmacyMembershipRequests.Where(pharmacy => pharmacy.SpecialistID == specialistId && pharmacy.IsConfirmed == true).Select(p => p.Pharmacy).ToList();
             return pharmacies;
         }
+
         /// <summary>
         /// get specislist MedicalPlaces that he works in
         /// </summary>

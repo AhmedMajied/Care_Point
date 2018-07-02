@@ -1,4 +1,7 @@
-﻿.cspn-nav{
+﻿.navbar {
+    z-index: 1000;
+}
+.cspn-nav{
     position: relative;
     text-align: center;
     color: #ffffff;

@@ -25,7 +25,9 @@
                 <br />
                 <h1 class="ch1-section">@Model.MedicalPlace.Name</h1><br />
                 <span class="fa fa-map-marker fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Address&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Phone
+                <span class="fa fa-phone fa-lg cspn-awsome"></span>&nbsp;&nbsp;@Model.MedicalPlace.Phone<br /><br />
+                <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
+                <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
             </center>
             <div class="tree-node">
                 <h2 class="tree-node-header"><span class="fa fa-minus tree-node-icon"></span> Services</h2>
@@ -133,9 +135,10 @@
                     <!-- End Display CareUnits-->
                 </div>
             </div>
+            <!-- End Display MedicalPlace Info-->
             @if (Model.IsCurrentPlace && Model.MedicalPlace.CareUnits.Any(Membership => Membership.CareUnitMembershipRequests.Any(request => request.SpecialistID == Convert.ToInt64(User.Identity.GetUserId()) && request.IsConfirmed == true)))
             {
-                <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.MedicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')">
+                <button id="ibtn-click-reminder" class="btn btn-lg btn-primary" onclick="showICUReminder('@Model.MedicalPlace.Name', '/CareUnit/Index?id=@Model.MedicalPlaceID')"style="display:none;">
                     Click for reminder!
                 </button>
             }
@@ -144,10 +147,6 @@
 </div>
 <div class="container-fluid">
     <!-- Begin Add Service -->
-    @if (Model.IsCurrentPlace)
-    {
-        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-service-new">Add Service</button>
-    }
     @using (Html.BeginForm("AddService", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-service-new" class="modal fade" role="dialog">
@@ -163,14 +162,16 @@
                                 @Html.HiddenFor(model => model.NewService.ProviderID, new { @Value = Model.MedicalPlaceID })
                                 @Html.HiddenFor(model => model.MedicalPlaceID)
                                 @Html.TextBoxFor(model => model.NewService.Name, new { @Id = "iinp-service-name-new", @Class = "form-control", @Placeholder = "Service Name" })
+                                @Html.ValidationMessageFor(model => model.NewService.Name,"", new {  @Class = "text-danger" })
                             </div>
                             <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.NewService.CategoryID, new SelectList(Model.ServiceCategories, "ID", "Name"), new { @Id = "iinp-service-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                                @Html.DropDownListFor(model => model.NewService.CategoryID, new SelectList(Model.ServiceCategories, "ID", "Name"),"Category", new { @Id = "iinp-service-type-new", @Class = "form-control cdropdown-search" })
+                                @Html.ValidationMessageFor(model => model.NewService.CategoryID, "", new { @Class = "text-danger" })
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-md-6">
-                                @Html.TextBoxFor(model => model.NewService.Cost, new { @Id = "iinp-service-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01" })
+                                @Html.TextBoxFor(model => model.NewService.Cost, new { @Id = "iinp-service-cost-new", @Class = "form-control", @Placeholder = "Cost", @Type = "number", @Min = "0", @Step = "0.01"  })
                                 @Html.ValidationMessageFor(model => model.NewService.Cost, "", new { @Class = "text-danger" })
                             </div>
                         </div>
@@ -231,7 +232,6 @@
                                         @for (int j = 0; j < service.WorkSlots.Count; ++j)
                                         {
                                             <div class="container-fluid cdiv-workslot cdiv-workslot-@service.ID" data-count="@j" id="idiv-workslot-@service.ID-@j">
-                                                @Html.CheckBoxFor(model => model.Services.ElementAt(i).WorkSlots.ElementAt(j).IsRemoved, new { @Id = "iinp-slot-removed-" + service.ID + "-" + j, @Class = "form-control chkbox-remove-workslot", @Style = "display:none", @Name = "Services[0].WorkSlots[" + j + "].IsRemoved" })
                                                 <div class="row cdiv-timing-row">
                                                     <div class="col-md-1 cdiv-vcenter">
                                                         <b>Start:</b>
@@ -375,10 +375,6 @@
     }
     <!-- End Update Services -->
     <!-- Begin Add CareUnit -->
-    @if (Model.IsCurrentPlace)
-    {
-        <button class="btn btn-default" data-toggle="modal" data-target="#imodal-careunit-new">Add CareUnit</button>
-    }
     @using (Html.BeginForm("AddCareUnit", "MedicalPlace", FormMethod.Post))
     {
         <div id="imodal-careunit-new" class="modal fade" role="dialog">
@@ -394,9 +390,11 @@
                                 @Html.HiddenFor(model => model.MedicalPlaceID)
                                 @Html.HiddenFor(model => model.NewCareUnit.ProviderID, new { @Value = Model.MedicalPlaceID })
                                 @Html.TextBoxFor(model => model.NewCareUnit.Name, new { @Id = "iinp-careunit-name-new", @Class = "form-control", @Placeholder = "CareUnit Name" })
+                                @Html.ValidationMessageFor(model => model.NewCareUnit.Name, "",new { @Class = "text-danger"})
                             </div>
                             <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                                @Html.DropDownListFor(model => model.NewCareUnit.CareUnitTypeID, new SelectList(Model.CareUnitTypes, "ID", "Name"), "Type",new { @Id = "iinp-careunit-type-new", @Class = "form-control cdropdown-search", @Placeholder = "CareUnit Type" })
+                                @Html.ValidationMessageFor(model => model.NewCareUnit.CareUnitTypeID, "", new { @Class = "text-danger" })
                             </div>
                         </div>
                         <div class="row form-group">
@@ -480,7 +478,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/select2.min.js"></script>
     <script src="~/Scripts/bootstrap-notify.min.js"></script>
     <script src="~/Scripts/timepicker.js"></script>
     <script src="~/Scripts/modal.js" type="application/javascript"></script>
@@ -488,7 +485,8 @@
     <script src="~/Scripts/place-reminder.js"></script>
     <script src="~/Scripts/place-profile.js"></script>
     <script src="~/Scripts/treeview.js"></script>
-
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
         function showNewWorkslotPanel(selector) {
@@ -524,7 +522,6 @@
                 newSlot.attr("id", "idiv-workslot-" + serviceId + "-" + (count + 1));
 
                 newSlot.find(".chkbox-remove-workslot").attr("Id", "iinp-slot-removed-" + serviceId + "-" + (count + 1));
-                newSlot.find(".chkbox-remove-workslot").prop("checked", false);
 
                 newSlot.find(".cbtn-remove-workslot").attr("onclick", "removeWorkSlot(" + (count + 1) + "," + serviceId + ",'" + startTime + "','" + endTime + "')");
                 newSlot.find(".cbtn-remove-workslot").attr("id", "ibtn-remove-workslot-" + serviceId + "-" + (count + 1));
@@ -593,7 +590,6 @@
         function removeWorkSlot(count, serviceId, startTime, endTime) {
             $.post("/MedicalPlace/RemoveWorkslot", { ServiceID: serviceId, StartTime: startTime, EndTime: endTime }, function () {
                 $("#idiv-workslot-" + serviceId + "-" + count).hide();
-                $("#iinp-slot-removed-" + serviceId + "-" + count).prop("checked", true);
             });
         }
     </script>

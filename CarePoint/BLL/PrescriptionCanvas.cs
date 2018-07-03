@@ -51,7 +51,7 @@ namespace BLL
             List<List<string>> medicinesAlternatives,string [] doses)
         {
             // decide page structure to know the sutable legth of it 
-            string pageStructure = "\n\n\n\nName \n Patient name \n\n Medicines " + "\n\n"
+            string pageStructure = "\n\n\n\nName \n Patient name \n\n Drugs " + "\n\n"
                     + " Doctor \n Doctor name \n\n\n Address \n medicalPlaceAddress\n\n";
             for (int i = 0; i < medicinesAlternatives.Count; i++)
             {
@@ -135,7 +135,7 @@ namespace BLL
             
             if(medicines[0] != "")
             {
-                graphics.DrawString(newLine + "Medicines", bold,BlueBrush, padding, 0);
+                graphics.DrawString(newLine + "Drugs", bold,BlueBrush, padding, 0);
                 newLine += "\n";
                 extraNewLine += "\n";
             }

@@ -27,15 +27,39 @@ namespace BLL
             return DBEntities.MedicalPlaces.SingleOrDefault(place => place.ID == id);
         }
 
+        /// <summary>
+        /// Add new medicalPlace to database in table MedicalPlaces
+        /// </summary>
+        /// <param name="medicalPlace">A MedicalPlace object</param>
         public void AddMedicalPlace(MedicalPlace medicalPlace)
         {
             DBEntities.MedicalPlaces.Add(medicalPlace);
             DBEntities.SaveChanges();
         }
+
+        /// <summary>
+        /// get all types of medical places saved to database in table MedicalPlaceTypes
+        /// </summary>
+        /// <returns>
+        /// list of medical places saved in database
+        /// </returns>
         public ICollection<MedicalPlaceType> GetAllTypes()
         {
             return DBEntities.MedicalPlaceTypes.ToList();
         }
+
+        /// <summary>
+        /// Search For MedicalPlaces that have careUnits
+        /// </summary>
+        /// <param name="latitude">a double precision number</param>
+        /// <param name="longitude">a double precision number</param>
+        /// <param name="serviceType">a string value</param>
+        /// <param name="placeType">a string value</param>
+        /// <param name="distance">a boolean value</param>
+        /// <param name="cost">a boolean value</param>
+        /// <param name="rate">a boolean value</param>
+        /// <param name="popularity">a boolean value</param>
+        /// <returns>list of medical places that have a careUnit</returns>
         public ICollection<MedicalPlace> SearchCareUnitsPlace(double latitude, double longitude, string serviceType, string placeType, bool distance, bool cost, bool rate, bool popularity)
         {
             List<CareUnit> careUnits = new List<CareUnit>();
@@ -71,6 +95,19 @@ namespace BLL
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }
+
+        /// <summary>
+        /// Search For MedicalPlaces based on placeName or ServiceType
+        /// </summary>
+        /// <param name="latitude">a double precision number</param>
+        /// <param name="longitude">a double precision number</param>
+        /// <param name="serviceType">a string value</param>
+        /// <param name="placeType">a string value</param>
+        /// <param name="distance">a boolean value</param>
+        /// <param name="cost">a boolean value</param>
+        /// <param name="rate">a boolean value</param>
+        /// <param name="popularity">a boolean value</param>
+        /// <returns>list of medical places</returns>
         public ICollection<MedicalPlace> SearchMedicalPlace(double latitude, double longitude, string serviceName, string placeName, bool isDistance, bool isCost, bool isRate, bool isPopularity)
         {
             List<MedicalPlace> medicalPlaces = new List<MedicalPlace>();
@@ -127,17 +164,30 @@ namespace BLL
             }
             return result.OrderByDescending(res => res.Value).Select(res => res.Key).ToList();
         }
+
+        /// <summary>
+        /// Sort MedicalPlaces based on Popularity Attributes
+        /// </summary>
+        /// <param name="medicalPlaces">A List<MedicalPlace></param>
+        /// <returns>Sorted List Of MedicalPlaces</returns>
         private List<MedicalPlace> SortMedicalPlacesOnPopularity(List<MedicalPlace> medicalPlaces)
         {
             Dictionary<MedicalPlace, long> result = new Dictionary<MedicalPlace, long>();
             foreach (MedicalPlace m in medicalPlaces)
             {
+                // count history records writen in the medicalPlace and add them to result
                 long count=DBEntities.HistoryRecords.Where(h => h.MedicalPlace.ID == m.ID).Count();
                 result.Add(m, count);
             }
+            // sort them based on counter of historyRecords
             return result.OrderBy(res => res.Value).Select(res => res.Key).ToList();
         }
 
+        /// <summary>
+        /// Sort MedicalPlaces based on Distance
+        /// </summary>
+        /// <param name="location">a string value</param>
+        /// <returns>sorted medicalPlaces</returns>
         public ICollection<MedicalPlace> SortMedicalPlacesByDistance(string location)
         {
             ICollection<MedicalPlace> medicalPlaces = new List<MedicalPlace>();

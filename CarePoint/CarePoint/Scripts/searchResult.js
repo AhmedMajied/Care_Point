@@ -117,15 +117,7 @@ function MedicalPlaceResultHtml(profilePicture, placeURL, placeName, placeType, 
     $("#idiv-search-place-result").append(html);
     $("#idiv-search-place-result").append("<hr>");
 }
-function getUserLocation() {
-    return $.getJSON("http://freegeoip.net/json/").then(function (data) {
-        return {
-            latitude: data.latitude,
-            longitude: data.longitude
-        }
-    });
-}
-$("#ibtn-srch-place").click(function () {
+function searchMedicalPlace(position) {
     var sType = $("#iinp-service-type").val();
     var pName = $("#iinp-place-type").val();
     var cDistance = $("#ichk-distance").is(':checked');
@@ -133,39 +125,37 @@ $("#ibtn-srch-place").click(function () {
     var cRate = $("#ichk-rate").is(':checked');
     var cPopularity = $("#ichk-popularity").is(':checked');
     var latitude, longitude;
-    // to get current location of user
-    getUserLocation().then(function (data) {
-        latitude = data.latitude;
-        longitude = data.longitude;
-        if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
-            $("#imodal-place-srch-result").modal('show');
-            $("#imodal-place-srch-result button.close").prop('disabled', true);
-            $("#imodal-place-srch-result .cdiv-custom-alert").addClass('hidden');
-            $("#imodal-place-srch-result #idiv-search-place-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
-            var model = {
-                ServiceType: sType, PlaceName: pName,
-                IsDistance: cDistance, IsCost: cCost,
-                IsRate: cRate, IsPopularity: cPopularity,
-                Latitude: latitude, Longitude: longitude
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/MedicalPlace/SearchPlace',
-                data: { model },
-                dataType: 'json',
-                success: function (data) {
-                    var places = data.places;
-                    var placesCount = places.length;
-                    for (var i = 0; i < placesCount; i++) {
-                        MedicalPlaceResultHtml(places[i].Photo, "/MedicalPlace/ProfilePage?id=" + places[i].ID, places[i].Name, places[i].placeType, places[i].Address, places[i].Phone);
-                    }
-                    $("#imodal-place-srch-result #idiv-search-place-result .cspn-proxy").remove();
-                    if (placesCount == 0) {
-                        $("#imodal-place-srch-result #idiv-search-place-result .cdiv-custom-alert").removeClass('hidden');
-                    }
-                    $("#imodal-place-srch-result button.close").prop('disabled', false);
+    latitude = position.coords.latitude;;
+    longitude = position.coords.longitude;
+    if ((sType != "" || pName != "") && (cDistance || cCost || cRate || cPopularity)) {
+        $("#imodal-place-srch-result").modal('show');
+        $("#imodal-place-srch-result button.close").prop('disabled', true);
+        $("#imodal-place-srch-result .cdiv-custom-alert").addClass('hidden');
+        $("#imodal-place-srch-result #idiv-search-place-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
+        var model = {
+            ServiceType: sType, PlaceName: pName,
+            IsDistance: cDistance, IsCost: cCost,
+            IsRate: cRate, IsPopularity: cPopularity,
+            Latitude: latitude, Longitude: longitude
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/MedicalPlace/SearchPlace',
+            data: { model },
+            dataType: 'json',
+            success: function (data) {
+                var places = data.places;
+                var placesCount = places.length;
+                for (var i = 0; i < placesCount; i++) {
+                    MedicalPlaceResultHtml(places[i].Photo, "/MedicalPlace/ProfilePage?id=" + places[i].ID, places[i].Name, places[i].placeType, places[i].Address, places[i].Phone);
                 }
-            });
+                $("#imodal-place-srch-result #idiv-search-place-result .cspn-proxy").remove();
+                if (placesCount == 0) {
+                    $("#imodal-place-srch-result #idiv-search-place-result .cdiv-custom-alert").removeClass('hidden');
+                }
+                $("#imodal-place-srch-result button.close").prop('disabled', false);
+            }
+        });
     }
     else {
         if (sType == "" && pName == "") {
@@ -175,9 +165,13 @@ $("#ibtn-srch-place").click(function () {
             $("#cspan-priority-error").text("select at least one option").css("color", "red");
 
         }
-
     }
-    });
+
+}
+$("#ibtn-srch-place").click(function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(searchMedicalPlace);
+    }
 });
 $("#iinp-service-type").keydown(function () {
     $("#cspan-service-place-error").text("");
@@ -215,51 +209,51 @@ function searchDrugResult(pharmacyLogo, pharmacyName, pharmacyAddress, pharmacyP
     $("#idiv-search-drug-result").append(html);
     $("#idiv-search-drug-result").append("<hr>");
 }
-$("#ibtn-search-drug").click(function () {
+function searchDrug(position) {
     var drugName = $("#iinp-drug-name").val();
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
     if (drugName != "") {
         $("#imodal-drug-srch-result").modal('show');
         $("#imodal-drug-srch-result button.close").prop('disabled', true);
         $("#imodal-drug-srch-result .cdiv-custom-alert").addClass('hidden');
         $("#imodal-drug-srch-result #idiv-search-drug-result").append('<span class="cspn-proxy"><span class="cspn-loader"></span><br />Loading...</span>');
-
-        getUserLocation().then(function (data) {
-            latitude = data.latitude;
-            longitude = data.longitude;
-            var model = {
-                DrugName: drugName,
-                Latitude: latitude,
-                Longitude: longitude
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/Pharmacy/SearchPharmacyMedicine',
-                data: { model },
-                dataType: 'json',
-                success: function (data) {
-                    var pharmacies = data.pharmacies;
-                    var pharmaciesCount = pharmacies.length;
-                    for (var i = 0; i < pharmaciesCount; i++)
-                    {
-                        searchDrugResult(pharmacies[i].Photo, pharmacies[i].Name, pharmacies[i].Address, pharmacies[i].Phone);
-                    }
-                    $("#imodal-drug-srch-result #idiv-search-drug-result .cspn-proxy").remove();
-                    if (pharmaciesCount == 0) {
-                        $("#imodal-drug-srch-result #idiv-search-drug-result .cdiv-custom-alert").removeClass('hidden');
-                    }
-                    else
-                    {
-                        $("#imodal-drug-srch-result #imodal-drug-title").text("Pharmacies where " + data.drugName + " is available");
-                    }
-                    $("#imodal-drug-srch-result button.close").prop('disabled', false);
+        var model = {
+            DrugName: drugName,
+            Latitude: latitude,
+            Longitude: longitude
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Pharmacy/SearchPharmacyMedicine',
+            data: { model },
+            dataType: 'json',
+            success: function (data) {
+                var pharmacies = data.pharmacies;
+                var pharmaciesCount = pharmacies.length;
+                for (var i = 0; i < pharmaciesCount; i++) {
+                    searchDrugResult(pharmacies[i].Photo, pharmacies[i].Name, pharmacies[i].Address, pharmacies[i].Phone);
                 }
-            });
+                $("#imodal-drug-srch-result #idiv-search-drug-result .cspn-proxy").remove();
+                if (pharmaciesCount == 0) {
+                    $("#imodal-drug-srch-result #idiv-search-drug-result .cdiv-custom-alert").removeClass('hidden');
+                }
+                else {
+                    $("#imodal-drug-srch-result #imodal-drug-title").text("Pharmacies where " + data.drugName + " is available");
+                }
+                $("#imodal-drug-srch-result button.close").prop('disabled', false);
+            }
         });
     }
     else {
         $("#ispan-drug-name-error").text("This Field is Required").css("color", "red");;
     }
-})
+}
+$("#ibtn-search-drug").click(function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(searchDrug);
+    }
+});
 $("#iinp-drug-name").keydown(function () {
     $("#ispan-drug-name-error").text("");
 });

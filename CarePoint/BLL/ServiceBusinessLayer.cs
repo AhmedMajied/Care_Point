@@ -67,6 +67,13 @@ namespace BLL
             DBEntities.Services.Add(service);
             DBEntities.SaveChanges();
         }
+
+        /// <summary>
+        ///  get WorkSlots for specific service on specific Day
+        /// </summary>
+        /// <param name="serviceId">a long value</param>
+        /// <param name="dayName">a string value</param>
+        /// <returns>Workslots of Services in Specific Day</returns>
         public List<WorkSlot> GetWorkSlots(long serviceId,string dayName)
         {
             List<WorkSlot> workSlots = new List<WorkSlot>();

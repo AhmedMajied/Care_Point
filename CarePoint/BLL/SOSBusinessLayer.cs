@@ -14,43 +14,49 @@ namespace BLL
         {
             DBEntities = new CarePointEntities();
         }
+
+        /// <summary>
+        ///  Add new SOS to SOSses table in database
+        /// </summary>
+        /// <param name="sos">A SOSs object</param>
         public void AddSOS(SOSs sos)
         {
             DBEntities.SOSses.Add(sos);
             DBEntities.SaveChanges();
         }
+
+        /// <summary>
+        /// get SOS from database by id
+        /// </summary>
+        /// <param name="id">a long value</param>
+        /// <returns>SOS object </returns>
         public SOSs GetSOS(long id)
         {
             return DBEntities.SOSses.SingleOrDefault(sos => sos.ID == id);
         }
-        public ICollection<SOSs>GetAllSosRequests(long hospitalID)
-        {
-            ICollection<SOSs> all = new List<SOSs>();
-            all = DBEntities.SOSses.Where(sos => sos.MedicalPlaceID == hospitalID).ToList();
-            return all;
-        }
-        public ICollection<SOSs> GetAll(long citizenID)
-        {
-            ICollection<SOSs> all = new List<SOSs>();
-            all = DBEntities.SOSses.Where(sos => sos.SenderID == citizenID).ToList();
-            return all;
-        }
-        public void ChangeStatus(long sosID,int status)
-        {
-            SOSs s=DBEntities.SOSses.Single(sos => sos.ID == sosID);
-            s.StatusID = status;
-            DBEntities.SOSses.Attach(s);
-            DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
-            DBEntities.SaveChanges();
-        }
+      
+        /// <summary>
+        ///  medical place accept sos request
+        /// </summary>
+        /// <param name="sosID">a long value</param>
+        /// <param name="hopsitalID">a long value</param>
         public void AcceptSOS(long sosID,long hopsitalID)
         {
             SOSs s = DBEntities.SOSses.Single(sos => sos.ID == sosID);
             s.MedicalPlaceID = hopsitalID;
+            s.StatusID = 2; // accepted
+            s.IsAccepted = true;
             DBEntities.SOSses.Attach(s);
             DBEntities.Entry(s).State = System.Data.Entity.EntityState.Modified;
             DBEntities.SaveChanges();
         }
+
+        /// <summary>
+        /// get contributers of sos service based on nearest medicalPlaces
+        /// </summary>
+        /// <param name="location">a string value</param>
+        /// <param name="numberOfPlaces"></param>
+        /// <returns>List of Specialists joined these sos services</returns>
         public ICollection<Specialist> GetContributersOfSOSsServices(string location, int numberOfPlaces)
         {
             ICollection<MedicalPlace> medicalPlaces = new List<MedicalPlace>();

@@ -10,6 +10,9 @@
     display: block;
     margin-bottom: 1em;
 }
+ul.dropdown-menu li {
+    cursor: pointer;
+}
 
 /* Checkbox and radiobutton styling */
 /* Base for label styling */

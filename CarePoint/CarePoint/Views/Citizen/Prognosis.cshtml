@@ -24,6 +24,15 @@
     </span>
 
     <ul class="list-group">
+        <li id="ili-prognosis-hdr" class="list-group-item">
+            <div class="row">
+                <div class="col-md-1"><Label>Status</Label></div>
+                <div class="col-md-3"><label>Disease</label></div>
+                <div class="col-md-3"><label>Relation Level</label></div>
+                <div class="col-md-3"><label>Last Injury Date</label></div>
+                <div class="col-md-2"><label># Victims</label></div>
+            </div>
+        </li>
         @foreach (var disease in Model)
         {
         <li class="list-group-item @(disease.IsRead ? String.Empty: "clifnotif")">

@@ -2,6 +2,10 @@
     display: inline-block;
     margin-bottom: 2rem;
 }
+#ili-prognosis-hdr {
+    background-color: #197bb4;
+    color: #ffffff;
+}
 .ch1-section {
     color: #386f94;
 }
